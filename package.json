@@ -1,0 +1,23 @@
+{
+  "name": "masseuse",
+  "version": "0.0.0",
+  "description": "...",
+  "main": " ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Solid-Interactive/masseuse.git"
+  },
+  "keywords": [
+    "Backbone"
+  ],
+  "author": "SOLID Interactive",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "56581e51a6dc834d9d4e424b0b45e38ed3331fa4",
+  "bugs": {
+    "url": "https://github.com/Solid-Interactive/masseuse/issues"
+  }
+}
