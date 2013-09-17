@@ -19,5 +19,22 @@
   "gitHead": "56581e51a6dc834d9d4e424b0b45e38ed3331fa4",
   "bugs": {
     "url": "https://github.com/Solid-Interactive/masseuse/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-contrib-livereload": "~0.1.2",
+    "mocha": "~1.12.0",
+    "chai": "~1.7.2",
+    "grunt-open": "~0.2.0",
+    "matchdep": "~0.1.2",
+    "grunt-contrib-connect": "~0.3.0",
+    "grunt-shell": "~0.2.2",
+    "grunt-build-gh-pages": "0.0.4",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-requirejs": "~0.4.0",
+    "grunt-contrib-sass": "~0.5.0",
+    "notes": "0.0.4",
+    "rivets": "~0.5.12"
   }
 }
