@@ -11,11 +11,12 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
     });
 
     function initialize () {
+        var ModelType = this.options.ModelType || Backbone.Model;
         if (this.options.templateHtml) {
             this.template = _.template(this.options.templateHtml);
         }
         if (this.options.modelData) {
-            this.model = new Backbone.Model(this.options.modelData);
+            this.model = new ModelType(this.options.modelData);
         }
     }
 
