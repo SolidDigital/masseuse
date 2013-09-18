@@ -1,4 +1,4 @@
-define(['underscore', 'jquery', 'backbone'], function (_, $, Backbone) {
+define(['underscore', 'jquery'], function (_, $) {
 
     /**
      * mixin allows the reuse of a function
@@ -24,6 +24,8 @@ define(['underscore', 'jquery', 'backbone'], function (_, $, Backbone) {
      * }
      * ```
      *
+     * If events are used, then there is a dependency on Backbone or something with the same Events interface.
+     *
      * @param defaultOptions
      * @param mixinFunction
      * @returns {Function}
@@ -39,6 +41,7 @@ define(['underscore', 'jquery', 'backbone'], function (_, $, Backbone) {
 
             // Return the final function that can be attached to the object
             return function () {
+                // Arguments is not an array, so we create an array out of it
                 var args = Array.prototype.slice.call(arguments),
                     $deferred,
                     returned;

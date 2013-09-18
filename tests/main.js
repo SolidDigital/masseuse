@@ -31,13 +31,16 @@ require.config({
 
         channels : '../app/channels',
 
-        mixin : '../app/mixin'
+        mixin : '../app/mixin',
+
+        deferredStateMachineFactory : '../app/deferredStateMachineFactory'
     }
 });
 
 require([
     'mocha',
-    './baseViewTests'
+    './baseViewTests',
+    './deferredStateMachineFactoryTests.js'
 ], function (mocha) {
     mocha.run();
 });
