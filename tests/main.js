@@ -33,6 +33,10 @@ require.config({
 
         mixin : '../app/mixin',
 
+        MasseuseModel : '../app/MasseuseModel',
+
+        ComputedProperty : '../app/ComputedProperty',
+
         deferredStateMachineFactory : '../app/deferredStateMachineFactory'
     }
 });
@@ -40,7 +44,8 @@ require.config({
 require([
     'mocha',
     './baseViewTests',
-    './deferredStateMachineFactoryTests.js'
+//    './deferredStateMachineFactoryTests.js',
+    './MasseuseModelTests.js'
 ], function (mocha) {
     mocha.run();
 });
