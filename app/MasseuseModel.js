@@ -1,10 +1,12 @@
 define(['backbone', 'ComputedProperty', 'underscore'], function (Backbone, ComputedProperty, _) {
     return Backbone.Model.extend({
         unsettableProperties: [],
-        set: function (key, val, options) {
+        computedCallbacks: {},
+
+        set: function(key, val, options) {
             var self = this,
                 attrs = {},
-                computedCallbacks = [];
+                stack = [];
 
             if (key == null) {
                 return this;
@@ -13,40 +15,47 @@ define(['backbone', 'ComputedProperty', 'underscore'], function (Backbone, Compu
                 options = val;
 
                 _.each(key, function (attrValue, attrKey) {
-                    computedCallbacks.push(self.bindComputed(attrs, attrKey, attrValue));
+                    if (attrValue instanceof ComputedProperty) {
+                        self.bindComputed(attrs, attrKey, attrValue);
+                        delete key[attrValue];
+                    } else {
+                        if (self.computedCallbacks[attrKey]) {
+                            stack.push(self.computedCallbacks[attrKey]);
+                        }
+                    }
                 });
             } else {
                 attrs[key] = val;
-                computedCallbacks.push(this.bindComputed(attrs, key, val));
+                if (val instanceof ComputedProperty) {
+                    this.bindComputed(attrs, key, val)
+                    return;
+                } else {
+                    if (this.computedCallbacks[key]) {
+                        stack.push(this.computedCallbacks[key]);
+                    }
+                }
             }
 
             Backbone.Model.prototype.set.apply(this, [attrs, options]);
-
-            _.each(computedCallbacks, function (callback) {
-                if (callback) {
-                    callback();
-                }
+            _.forEach(stack, function(callbackArray) {
+                _.forEach(callbackArray, function(callback) {
+                    callback.call(self);
+                });
             });
         },
         bindComputed: function (attributes, key, computed) {
             var self = this,
                 callback;
 
-            if (computed instanceof ComputedProperty) {
-                callback = function () {
-                    this.set(key, computed.callback.apply(this, this.getListenableValues(computed.listenables)));
-                };
+            callback = function () {
+                this.set(key, computed.callback.apply(this, this.getListenableValues(computed.listenables)));
+            };
 
-                this.listenTo(this, "change:" + computed.listenables.join(" change:"), callback);
-
-                delete attributes[key];
-
-                return function () {
-                    callback.apply(self);
-                };
-            }
-
-            return false;
+            _.forEach(computed.listenables, function(listenTo) {
+                self.computedCallbacks[listenTo] = self.computedCallbacks[listenTo] || [];
+                self.computedCallbacks[listenTo].push(callback);
+                callback.call(self);
+            });
         },
         getListenableValues: function (listenables) {
             var args = [],

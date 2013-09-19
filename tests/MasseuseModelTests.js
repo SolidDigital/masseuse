@@ -3,7 +3,8 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
 
     'use strict';
     var injector = new Squire(),
-        should = chai.should();
+        should = chai.should(),
+        expect = chai.expect;
 
 
     require(['underscore', 'sinonCall', 'sinonSpy']);
@@ -17,13 +18,24 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
 
         //-----------Setup-----------
         var Model,
-            modelInstance;
+            ModelNoEvents,
+            modelInstance,
+            modelNoEventsInstance,
+            ComputedProperty;
 
         beforeEach(function (done) {
-            injector.require(['MasseuseModel'], function (MasseuseModel) {
+            var afterDone = _.after(2, done);
+            injector.require(['ComputedProperty'], function (Computed) {
+                    ComputedProperty = Computed;
+                    afterDone();
+                },
+                function () {
+                    console.log('Computed error.')
+                });
+            injector.require(['MasseuseModelEvents'], function (MasseuseModel) {
                     Model = MasseuseModel;
                     modelInstance = new Model();
-                    done();
+                    afterDone();
                 },
                 function () {
                     console.log('Model error.')
@@ -36,17 +48,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
         });
 
         describe("set method", function () {
-            var ComputedProperty;
 
-            beforeEach(function (done) {
-                injector.require(['ComputedProperty'], function (Computed) {
-                        ComputedProperty = Computed;
-                        done();
-                    },
-                    function () {
-                        console.log('Computed error.')
-                    });
-            });
 
             it("should exist", function () {
                 should.exist(Model.prototype.set);
@@ -132,6 +134,61 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 modelInstance.get("propB").should.equal(12);
             });
         });
+
+        describe("speed test", function() {
+            beforeEach(function(done) {
+                injector.require(['MasseuseModel'], function (MasseuseModel) {
+                        ModelNoEvents = MasseuseModel;
+                        modelNoEventsInstance = new ModelNoEvents();
+                        done();
+                    },
+                    function () {
+                        console.log('Model error.')
+                    });
+            });
+
+            xit("no events model is faster", function() {
+                var start, finish, time, i = 0, loops = 100000;
+                modelInstance.set("propB", ComputedProperty(["propA"], function (propA) {
+                    return propA * 2;
+                }));
+                modelNoEventsInstance.set("propB", ComputedProperty(["propA"], function (propA) {
+                    return propA * 2;
+                }));
+
+                modelInstance.set("propC", ComputedProperty(["propB"], function (propA) {
+                    return propA * .25;
+                }));
+                modelNoEventsInstance.set("propC", ComputedProperty(["propB"], function (propA) {
+                    return propA * .25;
+                }));
+
+                start = new Date().getTime();
+                while(i < loops) {
+                    modelNoEventsInstance.set('propA', ++i);
+                }
+                finish = new Date().getTime();
+                time = finish - start;
+
+                i = 0;
+                start = new Date().getTime();
+                while(i < loops) {
+                    modelInstance.set('propA', ++i);
+                }
+                finish = new Date().getTime();
+
+                console.log("---")
+                console.log(time - (finish - start));
+                expect(true).to.be.true;
+
+                console.log("---")
+                expect(time < finish - start).to.be.true;
+
+                console.log(modelInstance.attributes);
+                console.log(modelNoEventsInstance.attributes);
+
+            });
+        })
 
     });
 

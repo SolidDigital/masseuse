@@ -34,6 +34,7 @@ require.config({
         mixin : '../app/mixin',
 
         MasseuseModel : '../app/MasseuseModel',
+        MasseuseModelEvents : '../app/MasseuseModelEvents',
 
         ComputedProperty : '../app/ComputedProperty',
 
