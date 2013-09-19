@@ -13,55 +13,65 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
     describe("Deferred State Machine Factory", function() {
         var stateMachine,
             obj,
-            stateOptions;
+            options;
 
         beforeEach(function(done) {
 
-            obj = {
-                walkThrough: function() {},
-                lock: function() {},
-                unlock: function() {},
-                openDoor: function() {},
-                closeDoor: function() {},
-                kickDown: function() {}
+            obj = function() {
+                return {
+                    walkThrough: function() {},
+                    lock: function() {},
+                    unlock: function() {},
+                    openDoor: function() {},
+                    closeDoor: function() {},
+                    kickDown: function() {}
+                }
             };
 
-            stateOptions = {
-                open: {
-                    allowedMethods: [
-                        obj.walkThrough, obj.closeDoor
-                    ],
-                    allowedTransitions: [
-                        'shut'
-                    ]
+            options = {
+                open: function() {
+                    return {
+                        allowedMethods: [
+                            this.walkThrough, this.closeDoor
+                        ],
+                        allowedTransitions: [
+                            this.options.shut
+                        ]
+                    }
                 },
-                shut: {
-                    allowedMethods: [
-                        obj.lock, obj.openDoor
-                    ],
-                    allowedTransitions: [
-                        'open', 'destroyed'
-                    ]
+                shut: function() {
+                    return {
+                        allowedMethods: [
+                            this.lock, this.openDoor
+                        ],
+                        allowedTransitions: [
+                            this.options.open, this.options.destroyed
+                        ]
+                    }
                 },
-                locked: {
-                    allowedMethods: [
-                        obj.unlock, obj.kickDown()
-                    ],
-                    allowedTransitions: [
-                        'shut', 'destroyed'
-                    ]
+                locked: function() {
+                    return {
+                        allowedMethods: [
+                            this.unlock, this.kickDown
+                        ],
+                        allowedTransitions: [
+                            this.options.shut, this.options.destroyed
+                        ]
+                    }
                 },
-                destroyed: {
-                    // End state
+                destroyed: function() {
+                    return {
+                        // End state
+                    }
                 }
             };
 
             injector.require(['deferredStateMachineFactory'], function (factory) {
-                    stateMachine = factory(obj, stateOptions);
+                    stateMachine = factory(obj, options);
                     done();
                 },
                 function () {
-                    console.log('Squire error.')
+                    console.log('Squire error.');
                 });
         });
 
