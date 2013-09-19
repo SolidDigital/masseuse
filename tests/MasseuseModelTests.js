@@ -133,9 +133,56 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 modelInstance.set("propA", 6);
                 modelInstance.get("propB").should.equal(12);
             });
+
+            it("should update computed properties when they are computed off of more than one property", function () {
+                modelInstance.set({
+                    "propA": 5,
+                    "propB": 5,
+                    "propC": ComputedProperty(["propA", "propB"], function (propA, propB) {
+                        return propA + propB
+                    })
+                });
+
+                modelInstance.get("propC").should.equal(10);
+
+                modelInstance.set("propA", 6);
+
+                modelInstance.get('propC').should.equal(11);
+
+                modelInstance.set("propB", 6);
+
+                modelInstance.get("propC").should.equal(12);
+
+                modelInstance.set({
+                    "propA": 7,
+                    "propB": 7
+                });
+
+                modelInstance.get("propC").should.equal(14);
+            });
+
+            it("should update multiple computed properties off of the same property", function () {
+                modelInstance.set({
+                    "propA": 5,
+                    "propB": ComputedProperty(["propA"], function (propA) {
+                        return propA;
+                    }),
+                    "propC": ComputedProperty(["propA"], function (propA) {
+                        return propA;
+                    })
+                });
+
+                modelInstance.get('propB').should.equal(5);
+                modelInstance.get('propC').should.equal(5);
+
+                modelInstance.set('propA', 10);
+
+                modelInstance.get('propB').should.equal(10);
+                modelInstance.get('propC').should.equal(10);
+            });
         });
 
-        describe("speed test", function() {
+        xdescribe("speed test", function() {
             beforeEach(function(done) {
                 injector.require(['MasseuseModel'], function (MasseuseModel) {
                         ModelNoEvents = MasseuseModel;
@@ -147,7 +194,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                     });
             });
 
-            xit("no events model is faster", function() {
+            it("no events model is faster", function() {
                 var start, finish, time, i = 0, loops = 100000;
                 modelInstance.set("propB", ComputedProperty(["propA"], function (propA) {
                     return propA * 2;
