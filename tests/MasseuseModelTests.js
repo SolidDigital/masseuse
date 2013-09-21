@@ -32,7 +32,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 function () {
                     console.log('Computed error.')
                 });
-            injector.require(['MasseuseModelEvents'], function (MasseuseModel) {
+            injector.require(['MasseuseModel'], function (MasseuseModel) {
                     Model = MasseuseModel;
                     modelInstance = new Model();
                     afterDone();

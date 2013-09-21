@@ -1,13 +1,14 @@
 define(['backbone', 'ComputedProperty', 'underscore'], function (Backbone, ComputedProperty, _) {
     return Backbone.Model.extend({
         unsettableProperties: [],
-        computedCallbacks: {},
 
         set: function(key, val, options) {
             var self = this,
                 attrs = {},
-                stack = [];
+                stack = [],
+                callSelf = false;
 
+            this.computedCallbacks = this.computedCallbacks || {};
             if (key == null) {
                 return this;
             } else if (typeof key == 'object') {
@@ -17,7 +18,8 @@ define(['backbone', 'ComputedProperty', 'underscore'], function (Backbone, Compu
                 _.each(key, function (attrValue, attrKey) {
                     if (attrValue instanceof ComputedProperty) {
                         self.bindComputed(attrs, attrKey, attrValue);
-                        delete key[attrValue];
+                        callSelf = true;
+                        delete attrs[attrKey];
                     } else {
                         if (self.computedCallbacks[attrKey]) {
                             stack.push(self.computedCallbacks[attrKey]);
@@ -36,12 +38,17 @@ define(['backbone', 'ComputedProperty', 'underscore'], function (Backbone, Compu
                 }
             }
 
-            Backbone.Model.prototype.set.apply(this, [attrs, options]);
+            if (!callSelf) {
+                Backbone.Model.prototype.set.apply(this, [attrs, options]);
+            }
             _.forEach(stack, function(callbackArray) {
                 _.forEach(callbackArray, function(callback) {
                     callback.call(self);
                 });
             });
+            if (callSelf) {
+                this.set.apply(this, [attrs, options]);
+            }
         },
         bindComputed: function (attributes, key, computed) {
             var self = this,
