@@ -7,7 +7,9 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
         initialize : initialize,
         start : start,
         render : render,
-        dataToJSON : dataToJSON
+        dataToJSON : dataToJSON,
+        selectorsForCache : [],
+        cachedElements: {}
     });
 
     function initialize () {
@@ -40,9 +42,13 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
     }
 
     function render () {
+        var self = this;
         if (this.$el && this.template) {
             this.$el.html(this.template(this.dataToJSON()));
         }
+        _.forEach(this.options.selectorsForCache, function(selector) {
+            self.cachedElements[selector] = self.$el.find(selector);
+        });
     }
 
     function dataToJSON () {
