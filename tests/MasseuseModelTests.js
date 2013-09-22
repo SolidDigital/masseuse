@@ -180,6 +180,37 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 modelInstance.get('propB').should.equal(10);
                 modelInstance.get('propC').should.equal(10);
             });
+
+            it("should not set the initial computed value if 3rd paremeter is true", function() {
+                modelInstance.set({
+                    "propA": 5,
+                    "propB": 5,
+                    "propC": ComputedProperty(["propA", "propB"], function (propA, propB) {
+                        return propA + propB
+                    }, true)
+                });
+
+                modelInstance.get('propA').should.equal(5);
+                modelInstance.get('propB').should.equal(5);
+                should.not.exist(modelInstance.get('propC'));
+                modelInstance.set('propA', 6);
+                modelInstance.get('propC').should.equal(11);
+                modelInstance.set('propB', 7);
+                modelInstance.get('propC').should.equal(13);
+            });
+
+            it("should be able to set computed values on instantiation", function() {
+                modelInstance = new Model({
+                    "propA": 5,
+                    "propB": 5,
+                    "propC": ComputedProperty(["propA", "propB"], function (propA, propB) {
+                        return propA + propB
+                    })});
+
+                modelInstance.get('propA').should.equal(5);
+                modelInstance.get('propB').should.equal(5);
+                modelInstance.get('propC').should.equal(10);
+            })
         });
 
         xdescribe("speed test", function() {

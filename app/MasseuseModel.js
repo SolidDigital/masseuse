@@ -6,6 +6,7 @@ define(['backbone', 'ComputedProperty', 'underscore'], function (Backbone, Compu
             var self = this,
                 attrs = {},
                 stack = [],
+                delayInitial = [],
                 callSelf = false;
 
             this.computedCallbacks = this.computedCallbacks || {};
@@ -17,8 +18,14 @@ define(['backbone', 'ComputedProperty', 'underscore'], function (Backbone, Compu
 
                 _.each(key, function (attrValue, attrKey) {
                     if (attrValue instanceof ComputedProperty) {
-                        self.bindComputed(attrs, attrKey, attrValue);
-                        callSelf = true;
+                        if (!attrValue.skipInitialComputation) {
+                            self.bindComputed(attrs, attrKey, attrValue);
+                            callSelf = true;
+                        } else {
+                            delayInitial.push(function() {
+                                self.bindComputed(attrs, attrKey, attrValue);
+                            })
+                        }
                         delete attrs[attrKey];
                     } else {
                         if (self.computedCallbacks[attrKey]) {
@@ -38,16 +45,20 @@ define(['backbone', 'ComputedProperty', 'underscore'], function (Backbone, Compu
                 }
             }
 
-            if (!callSelf) {
-                Backbone.Model.prototype.set.apply(this, [attrs, options]);
-            }
-            _.forEach(stack, function(callbackArray) {
-                _.forEach(callbackArray, function(callback) {
-                    callback.call(self);
-                });
-            });
             if (callSelf) {
                 this.set.apply(this, [attrs, options]);
+            } else {
+                Backbone.Model.prototype.set.apply(this, [attrs, options]);
+                _.forEach(stack, function(callbackArray) {
+                    _.forEach(callbackArray, function(callback) {
+                        callback.call(self);
+                    });
+                });
+            }
+            if (delayInitial) {
+                _.forEach(delayInitial, function(cb) {
+                    cb();
+                });
             }
         },
         bindComputed: function (attributes, key, computed) {
@@ -61,7 +72,9 @@ define(['backbone', 'ComputedProperty', 'underscore'], function (Backbone, Compu
             _.forEach(computed.listenables, function(listenTo) {
                 self.computedCallbacks[listenTo] = self.computedCallbacks[listenTo] || [];
                 self.computedCallbacks[listenTo].push(callback);
-                callback.call(self);
+                if (!computed.skipInitialComputation) {
+                    callback.call(self);
+                }
             });
         },
         getListenableValues: function (listenables) {
