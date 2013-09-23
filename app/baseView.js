@@ -7,14 +7,14 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
         initialize : initialize,
         start : start,
         render : render,
-        dataToJSON : dataToJSON,
-        selectorsForCache : [],
-        cachedElements: {},
-        cacheElements: cacheElements
+        dataToJSON : dataToJSON
+        // Dynamically created, so the cache is not shared on the prototype:
+        // elementCache: elementCache
     });
 
     function initialize () {
         var ModelType = this.options.ModelType || Backbone.Model;
+        this.elementCache = _.memoize(elementCache);
         if (this.options.templateHtml) {
             this.template = _.template(this.options.templateHtml);
         }
@@ -46,16 +46,10 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
         if (this.$el && this.template) {
             this.$el.html(this.template(this.dataToJSON()));
         }
-        this.cacheElements();
     }
 
-    // Method called after rendering to cache elements by selector
-    // can be called subsequently as needed
-    function cacheElements() {
-        var self = this;
-        _.forEach(this.options.selectorsForCache, function(selector) {
-            self.cachedElements[selector] = self.$el.find(selector);
-        });
+    function elementCache(selector) {
+        return this.$el.find(selector);
     }
 
     function dataToJSON () {
