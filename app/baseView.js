@@ -9,7 +9,8 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
         render : render,
         dataToJSON : dataToJSON,
         selectorsForCache : [],
-        cachedElements: {}
+        cachedElements: {},
+        cacheElements: cacheElements
     });
 
     function initialize () {
@@ -42,10 +43,16 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
     }
 
     function render () {
-        var self = this;
         if (this.$el && this.template) {
             this.$el.html(this.template(this.dataToJSON()));
         }
+        this.cacheElements();
+    }
+
+    // Method called after rendering to cache elements by selector
+    // can be called subsequently as needed
+    function cacheElements() {
+        var self = this;
         _.forEach(this.options.selectorsForCache, function(selector) {
             self.cachedElements[selector] = self.$el.find(selector);
         });
