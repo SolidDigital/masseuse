@@ -2,12 +2,18 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
 
     var BaseView = Backbone.View.extend({
         options : {
-            name : 'BaseView'
+            name : 'BaseView',
+            bindings: [
+                // Example: [objectToListenTo, stringEventName, callbackFunction]
+                //          ['model', 'change:something', callbackFunction]
+            ]
         },
+        defaultBindings: [],
         initialize : initialize,
         start : start,
         render : render,
-        dataToJSON : dataToJSON
+        dataToJSON : dataToJSON,
+        bindEventListener: bindEventListeners
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
     });
@@ -20,6 +26,9 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
         }
         if (this.options.modelData) {
             this.model = new ModelType(this.options.modelData);
+        }
+        if (this.options.bindings) {
+            this.bindEventListeners(this.options.bindings);
         }
     }
 
@@ -54,6 +63,42 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
 
     function dataToJSON () {
         return this.model ? this.model.toJSON() : {};
+    }
+    
+    /**
+     * bindEventListeners
+     * Bind all event listerns specified in 'defaultListeners' and 'options.listeners' using 'listenTo'
+     * 
+     * @param (Array[Array]) listenerArray - A collection of arrays of arguments that will be used with 'Backbone.Events.listenTo'
+     * 
+     * @example:
+     *      bindEventListeners([[myModel, 'change:something', myCallbackFunction]]);
+     * 
+     * @remarks 
+     * Passing in an array with a string as the first parameter will attempt to bind to this[firstArgument] so that
+     * it is possible to listen to view properties that have not yet been instantiated (i.e. viewModels)
+     */
+    function bindEventListeners (listenerArray) {
+        var self = this,
+            listenerArgs = [];
+        
+        this.stopListening();
+        
+        listenerArgs = _.map(listenerArray.concat(this.defaultBindings), function (argsArray) {
+            if (_.isString(argsArray[0])) {
+                argsArray[0] = this[argsArray[0]];
+            }
+            
+            return argsArray;
+        });
+        
+        listnerArray = _.uniq(listenerArgs, function (a, b) {
+            return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
+        });
+        
+        _.each(listenerArray, function (listenerArgs) {
+            self.listenTo.apply(self, listenerArgs);
+        });
     }
 
     // Share channels among all Views
