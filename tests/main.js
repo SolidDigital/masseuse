@@ -45,7 +45,7 @@ require.config({
 require([
     'mocha',
     './baseViewTests',
-//    './deferredStateMachineFactoryTests.js',
+    './deferredStateMachineFactoryTests',
     './MasseuseModelTests.js'
 ], function (mocha) {
     mocha.run();

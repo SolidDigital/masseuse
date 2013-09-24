@@ -9,6 +9,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
     // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
     chai.use(sinonChai);
     mocha.setup('bdd');
+    mocha.stacktrace = true;
 
     describe("Deferred State Machine Factory", function() {
         var stateMachine,
@@ -17,53 +18,44 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
 
         beforeEach(function(done) {
 
-            obj = function() {
-                return {
+            obj = {
                     walkThrough: function() {},
                     lock: function() {},
                     unlock: function() {},
                     openDoor: function() {},
                     closeDoor: function() {},
                     kickDown: function() {}
-                }
             };
 
-            options = {
-                open: function() {
-                    return {
+            this.options = {
+                open: {
                         allowedMethods: [
-                            this.walkThrough, this.closeDoor
+                           'walkThrough', 'closeDoor'
                         ],
                         allowedTransitions: [
-                            this.options.shut
+                            'shut'
                         ]
-                    }
-                },
-                shut: function() {
-                    return {
+                    },
+
+                shut: {
                         allowedMethods: [
-                            this.lock, this.openDoor
+                            'lock', 'openDoor'
                         ],
                         allowedTransitions: [
-                            this.options.open, this.options.destroyed
+                            'open', 'destroyed'
                         ]
-                    }
-                },
-                locked: function() {
-                    return {
+                    },
+                locked: {
                         allowedMethods: [
-                            this.unlock, this.kickDown
+                            'unlock', 'kickDown'
                         ],
                         allowedTransitions: [
-                            this.options.shut, this.options.destroyed
+                            'shut', 'destroyed'
                         ]
-                    }
-                },
-                destroyed: function() {
-                    return {
+                    },
+                destroyed: {
                         // End state
                     }
-                }
             };
 
             injector.require(['deferredStateMachineFactory'], function (factory) {
@@ -77,6 +69,16 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
 
         it("returns an object", function() {
             should.exist(stateMachine);
+        });
+
+        it("returns an object that is the original object", function() {
+            stateMachine.should.equal(obj);
+            console.log(obj);
+        });
+
+        it("transition returns a promise", function() {
+            var transition = stateMachine.transition();
+            transition.should.be.a.Function;
         });
     })
 });
