@@ -28,7 +28,7 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
             this.model = new ModelType(this.options.modelData);
         }
         if (this.options.bindings) {
-            this.bindEventListeners(this.options.bindings);
+            bindEventListeners.call(this, this.options.bindings);
         }
     }
 
