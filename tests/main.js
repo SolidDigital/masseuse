@@ -46,7 +46,7 @@ require([
     'mocha',
     './baseViewTests',
     './deferredStateMachineFactoryTests',
-    './MasseuseModelTests.js'
+    './MasseuseModelTests'
 ], function (mocha) {
     mocha.run();
 });
