@@ -49,8 +49,7 @@ define(['underscore', 'jquery'], function(_, $) {
                 allowedMethods = states[_currentState].allowedMethods;
 
                 if (allowedMethods && _.contains(allowedMethods, methodName)) {
-                    method.apply(obj, args);
-                    deferred.resolve();
+                    deferred.resolve(method.apply(obj, args));
                 } else {
                     deferred.reject(Factory.METHOD_NOT_ALLOWED);
                 }

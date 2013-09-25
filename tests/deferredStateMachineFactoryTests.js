@@ -31,7 +31,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                     lock: function() {},
                     unlock: function() {},
                     openDoor: function() { console.log('openDoor'); },
-                    closeDoor: function(a) { console.log('closeDoor: ' + a); },
+                    closeDoor: function() { return 42 },
                     kickDown: function() {}
             };
 
@@ -141,6 +141,25 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 it('resolve if they are available in the current state', function(done) {
                     stateMachine.transition('open').done(function() {
                         stateMachine.closeDoor('now').done(function() {
+                            done();
+                        });
+                    });
+                });
+                it('resolve with their return values', function(done) {
+                    stateMachine.transition('open').done(function() {
+                        stateMachine.closeDoor().done(function(returned) {
+                            returned.should.equal(42);
+                            done();
+                        });
+                    });
+                });
+                it('are called with the correct arguments', function(done) {
+                    sinon.spy(obj, 'closeDoor');
+
+                    stateMachine.transition('open').done(function() {
+                        stateMachine.closeDoor(1, 2, 3).done(function(returned) {
+                            obj.closeDoor.should.have.been.calledOnce;
+                            obj.closeDoor.should.have.been.calledWithExactly(1,2,3);
                             done();
                         });
                     });
