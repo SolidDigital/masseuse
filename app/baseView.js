@@ -102,7 +102,7 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
     }
 
     // Share channels among all Views
-    BaseView.prototype.channels = channels;
+    BaseView.prototype.channels = BaseView.prototype.channels || channels;
 
     // --------------------------
     // Private Methods
