@@ -66,17 +66,17 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
     function dataToJSON () {
         return this.model ? this.model.toJSON() : {};
     }
-    
+
     /**
      * bindEventListeners
      * Bind all event listerns specified in 'defaultListeners' and 'options.listeners' using 'listenTo'
-     * 
+     *
      * @param (Array[Array]) listenerArray - A collection of arrays of arguments that will be used with 'Backbone.Events.listenTo'
-     * 
+     *
      * @example:
      *      bindEventListeners([['myModel', 'change:something', 'myCallbackFunction']]);
-     * 
-     * @remarks 
+     *
+     * @remarks
      * Passing in an array with a string as the first parameter will attempt to bind to this[firstArgument] so that
      * it is possible to listen to view properties that have not yet been instantiated (i.e. viewModels)
      */
@@ -91,7 +91,7 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
             // Since the view config object doesn't have access to the view's context, we must provide it
             _.each([argsArray[0], argsArray[2]], function(arg, index) {
                 if (_.isString(arg)) {
-                    argsArray[index] = this[arg];
+                    argsArray[index] = _getProperty(this, arg);
                 }
             });
 
@@ -163,6 +163,23 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
             $deferred.reject();
         }.bind(this);
     }
+
+    function _getProperty(obj, parts, create) {
+        if (typeof parts === 'string') {
+            parts = parts.split('.');
+        }
+
+        var part;
+        while (typeof obj === 'object' && obj && parts.length) {
+            part = parts.shift();
+            if (!(part in obj) && create) {
+                obj[part] = {};
+            }
+            obj = obj[part];
+        }
+
+        return obj;
+    };
 
     return BaseView;
 });
