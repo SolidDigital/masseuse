@@ -99,7 +99,7 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
         });
 
         // TODO: test that duplicate itmems will pick the bindings from options, throwing out defaults
-        listenerArray = _.uniq(listenerArgs, true, function (a, b) {
+        listenerArray = _.uniq(listenerArgs, function (a, b) {
             return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
         });
 
