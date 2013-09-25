@@ -157,7 +157,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                     sinon.spy(obj, 'closeDoor');
 
                     stateMachine.transition('open').done(function() {
-                        stateMachine.closeDoor(1, 2, 3).done(function(returned) {
+                        stateMachine.closeDoor(1, 2, 3).done(function() {
                             obj.closeDoor.should.have.been.calledOnce;
                             obj.closeDoor.should.have.been.calledWithExactly(1,2,3);
                             done();
