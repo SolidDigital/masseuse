@@ -4,8 +4,10 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
         options : {
             name : 'BaseView',
             bindings: [
-                // Example: [objectToListenTo, stringEventName, callbackFunction]
-                //          ['model', 'change:something', callbackFunction]
+                // Example: [stringObjectToListenTo, stringEventName, stringCallbackFunction]
+                //          ['model', 'change:something', 'callbackFunction']
+                // Bindings have to be all strings, since config does not have access to the view's context
+                // if strings are provided it is assumed that the context is the view
             ]
         },
         defaultBindings: [],
@@ -13,7 +15,7 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
         start : start,
         render : render,
         dataToJSON : dataToJSON,
-        bindEventListener: bindEventListeners
+        bindEventListeners: bindEventListeners
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
     });
@@ -28,7 +30,7 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
             this.model = new ModelType(this.options.modelData);
         }
         if (this.options.bindings) {
-            bindEventListeners.call(this, this.options.bindings);
+            this.bindEventListeners(this.options.bindings);
         }
     }
 
@@ -72,7 +74,7 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
      * @param (Array[Array]) listenerArray - A collection of arrays of arguments that will be used with 'Backbone.Events.listenTo'
      * 
      * @example:
-     *      bindEventListeners([[myModel, 'change:something', myCallbackFunction]]);
+     *      bindEventListeners([['myModel', 'change:something', 'myCallbackFunction']]);
      * 
      * @remarks 
      * Passing in an array with a string as the first parameter will attempt to bind to this[firstArgument] so that
@@ -80,22 +82,27 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
      */
     function bindEventListeners (listenerArray) {
         var self = this,
-            listenerArgs = [];
-        
+            listenerArgs;
+
         this.stopListening();
-        
+
         listenerArgs = _.map(listenerArray.concat(this.defaultBindings), function (argsArray) {
-            if (_.isString(argsArray[0])) {
-                argsArray[0] = this[argsArray[0]];
-            }
-            
+
+            // Since the view config object doesn't have access to the view's context, we must provide it
+            _.each([argsArray[0], argsArray[2]], function(arg, index) {
+                if (_.isString(arg)) {
+                    argsArray[index] = this[arg];
+                }
+            });
+
             return argsArray;
         });
-        
-        listnerArray = _.uniq(listenerArgs, function (a, b) {
+
+        // TODO: test that duplicate itmems will pick the bindings from options, throwing out defaults
+        listenerArray = _.uniq(listenerArgs, true, function (a, b) {
             return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
         });
-        
+
         _.each(listenerArray, function (listenerArgs) {
             self.listenTo.apply(self, listenerArgs);
         });
