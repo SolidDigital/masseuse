@@ -89,9 +89,11 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
         listenerArgs = _.map(listenerArray.concat(this.defaultBindings), function (argsArray) {
 
             // Since the view config object doesn't have access to the view's context, we must provide it
-            _.each([argsArray[0], argsArray[2]], function(arg, index) {
-                if (_.isString(arg)) {
-                    argsArray[index] = _getProperty(this, arg);
+            _.each([argsArray[0], argsArray[1] ,argsArray[2]], function(arg, index) {
+                if (_.isString(arg) && index != 1) {
+                    argsArray[index] = _getProperty(self, arg);
+                } else if (index == 1) {
+                    argsArray[index] = arg;
                 }
             });
 
