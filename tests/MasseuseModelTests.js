@@ -25,7 +25,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
 
         beforeEach(function (done) {
             var afterDone = _.after(2, done);
-            injector.require(['ComputedProperty'], function (Computed) {
+            injector.require(['computedProperty'], function (Computed) {
                     ComputedProperty = Computed;
                     afterDone();
                 },

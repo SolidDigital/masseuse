@@ -36,7 +36,7 @@ require.config({
         MasseuseModel : '../app/MasseuseModel',
         MasseuseModelEvents : '../app/MasseuseModelEvents',
 
-        ComputedProperty : '../app/ComputedProperty',
+        computedProperty : '../app/computedProperty',
 
         deferredStateMachineFactory : '../app/deferredStateMachineFactory'
     }
