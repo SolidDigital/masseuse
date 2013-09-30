@@ -32,7 +32,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 function () {
                     console.log('Computed error.')
                 });
-            injector.require(['MasseuseModel'], function (MasseuseModel) {
+            injector.require(['masseuseModel'], function (MasseuseModel) {
                     Model = MasseuseModel;
                     modelInstance = new Model();
                     afterDone();
@@ -215,7 +215,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
 
         xdescribe("speed test", function() {
             beforeEach(function(done) {
-                injector.require(['MasseuseModel'], function (MasseuseModel) {
+                injector.require(['masseuseModel'], function (MasseuseModel) {
                         ModelNoEvents = MasseuseModel;
                         modelNoEventsInstance = new ModelNoEvents();
                         done();

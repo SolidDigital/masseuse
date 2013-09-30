@@ -33,8 +33,7 @@ require.config({
 
         mixin : '../app/mixin',
 
-        MasseuseModel : '../app/MasseuseModel',
-        MasseuseModelEvents : '../app/MasseuseModelEvents',
+        masseuseModel : '../app/masseuseModel',
 
         computedProperty : '../app/computedProperty',
 
@@ -46,7 +45,7 @@ require([
     'mocha',
     './baseViewTests',
     './deferredStateMachineFactoryTests',
-    './MasseuseModelTests'
+    './masseuseModelTests'
 ], function (mocha) {
     mocha.run();
 });
