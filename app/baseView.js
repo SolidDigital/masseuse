@@ -33,7 +33,8 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         if(this.options.rivetConfig) {
             this.rivetView = rivetView({
                 rivetScope : this.options.rivetConfig.scope,
-                rivetPrefix : this.options.rivetConfig.prefix
+                rivetPrefix : this.options.rivetConfig.prefix,
+                instaUpdateRivets : (this.options.rivetConfig.instaUpdateRivets ? true : false)
             })
         }
     }
