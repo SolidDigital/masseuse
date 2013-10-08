@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, channels, mixin) {
+define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (Backbone, _, channels, mixin, rivetView) {
 
     var BaseView = Backbone.View.extend({
         options : {
@@ -29,6 +29,12 @@ define(['backbone', 'underscore', 'channels', 'mixin'], function (Backbone, _, c
         this.model = new ModelType(this.options.modelData);
         if (this.options.bindings) {
             this.bindEventListeners(this.options.bindings);
+        }
+        if(this.options.rivetConfig) {
+            this.rivetView = rivetView({
+                rivetScope : this.options.rivetConfig.scope,
+                rivetPrefix : this.options.rivetConfig.prefix
+            })
         }
     }
 
