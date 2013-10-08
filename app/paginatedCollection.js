@@ -1,14 +1,29 @@
-define(['backbone', 'resources', 'underscore', 'LocalStorage'], function (Backbone, resources, _, LocalStorage) {
+define(['backbone', 'underscore'], function (Backbone, _) {
 
     return Backbone.Collection.extend({
-        // make sure you override this empty config with necessary information
+        /**
+         * Paginated Collection
+         * make sure you override this empty config with necessary information
+         * paginationConfig {
+         *      pageSize : '', - results per page
+         *      skipPages : '', - number of results to skip
+         *      url : '', - endpoint
+         *      pageLink : '',- paginated page numbers link, example : '#users/page/'. this automatically concats with its page number in the fetch success method to create -> '#users/page/3'
+         *      showLink : '', - attached on the end of pageLink for the limit attribute in the request
+         *      pageLimits : { - used in creating a show # dropdown
+         *      start : '',
+         *      stop : '',
+         *      step : ''
+         * }
+         */
+
         paginationConfig : {
-            pageSize : '', // results per page
-            skipPages : '', // number of results to skip
-            url : '', // endpoint
-            pageLink : '',// paginated page numbers link, example : '#users/page/'. this automatically concats with its page number in the fetch success method to create -> '#users/page/3'
-            showLink : '', //attached on the end of pageLink for the limit attribute in the request
-            pageLimits : { // used in creating a show # dropdown
+            pageSize : '',
+            skipPages : '',
+            url : '',
+            pageLink : '',
+            showLink : '',
+            pageLimits : {
                 start : '',
                 stop : '',
                 step : ''
@@ -37,10 +52,6 @@ define(['backbone', 'resources', 'underscore', 'LocalStorage'], function (Backbo
         fetchOptions.data = {
             limit : this.paginationConfig.pageSize,
             skip : this.paginationConfig.skipPages
-        };
-
-        fetchOptions.headers = {
-            'Authorization' : 'Token ' + LocalStorage.get('authToken')
         };
 
         fetchOptions.success = function (collection, response, options) {
