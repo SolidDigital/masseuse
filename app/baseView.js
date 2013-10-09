@@ -30,6 +30,13 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         if (this.options.bindings) {
             this.bindEventListeners(this.options.bindings);
         }
+        if (this.options.appendView) {
+            this.model.set('viewId', this.cid.toLowerCase());
+            this.rivetView = rivetView({
+                rivetScope : this.cid,
+                rivetPrefix : this.cid
+            })
+        }
         if(this.options.rivetConfig) {
             this.rivetView = rivetView({
                 rivetScope : this.options.rivetConfig.scope,
