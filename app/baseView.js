@@ -3,19 +3,19 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
     var BaseView = Backbone.View.extend({
         options : {
             name : 'BaseView',
-            bindings: [
+            bindings : [
                 // Example: [stringObjectToListenTo, stringEventName, stringCallbackFunction]
                 //          ['model', 'change:something', 'callbackFunction']
                 // Bindings have to be all strings, since config does not have access to the view's context
                 // if strings are provided it is assumed that the context is the view
             ]
         },
-        defaultBindings: [],
+        defaultBindings : [],
         initialize : initialize,
         start : start,
         render : render,
         dataToJSON : dataToJSON,
-        bindEventListeners: bindEventListeners
+        bindEventListeners : bindEventListeners
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
     });
@@ -31,13 +31,13 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
             this.bindEventListeners(this.options.bindings);
         }
         if (this.options.appendView) {
-            this.model.set('viewId', this.cid.toLowerCase());
+            this.model.set('viewId', this.cid);
             this.rivetView = rivetView({
-                rivetScope : this.cid,
-                rivetPrefix : this.cid
+                rivetScope : '#' + this.cid,
+                rivetPrefix : 'rv'
             })
         }
-        if(this.options.rivetConfig) {
+        if (this.options.rivetConfig) {
             this.rivetView = rivetView({
                 rivetScope : this.options.rivetConfig.scope,
                 rivetPrefix : this.options.rivetConfig.prefix,
@@ -76,7 +76,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         }
     }
 
-    function elementCache(selector) {
+    function elementCache (selector) {
         return this.$el.find(selector);
     }
 
@@ -106,7 +106,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         listenerArgs = _.map(listenerArray.concat(this.defaultBindings), function (argsArray) {
 
             // Since the view config object doesn't have access to the view's context, we must provide it
-            _.each([argsArray[0], argsArray[1] ,argsArray[2]], function(arg, index) {
+            _.each([argsArray[0], argsArray[1] , argsArray[2]], function (arg, index) {
                 if (_.isString(arg) && index != 1) {
                     argsArray[index] = _getProperty(self, arg);
                 } else if (index == 1) {
@@ -183,7 +183,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         }.bind(this);
     }
 
-    function _getProperty(obj, parts, create) {
+    function _getProperty (obj, parts, create) {
         if (typeof parts === 'string') {
             parts = parts.split('.');
         }
