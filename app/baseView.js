@@ -37,6 +37,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
                 instaUpdateRivets : (this.options.rivetConfig.instaUpdateRivets ? true : false)
             })
         }
+
     }
 
     function start () {
@@ -60,7 +61,11 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
 
     function render () {
         if (this.$el && this.template) {
-            this.$el.html(this.template(this.dataToJSON()));
+            if (this.options.appendView) {
+                this.$el.append(this.template(this.dataToJSON()));
+            } else {
+                this.$el.html(this.template(this.dataToJSON()));
+            }
         }
     }
 
