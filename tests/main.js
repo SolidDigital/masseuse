@@ -17,6 +17,7 @@ require.config({
     paths : {
         underscore : '../app/vendor/lodash/dist/lodash.underscore',
         jquery : '../app/vendor/jquery/jquery',
+        rivets : '../app/vendor/rivets/dist/rivets',
         backbone : '../app/vendor/backbone-amd/backbone',
         text : '../app/vendor/requirejs-text/text',
         mocha : '../app/vendor/mocha/mocha',
@@ -28,6 +29,7 @@ require.config({
         sinonCall : '../app/vendor/sinon/lib/sinon/call',
 
         baseView : '../app/baseView',
+        rivetView : '../app/rivetView',
 
         channels : '../app/channels',
 
