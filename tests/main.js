@@ -38,6 +38,7 @@ require.config({
         masseuseModel : '../app/masseuseModel',
 
         computedProperty : '../app/computedProperty',
+        proxyProperty : '../app/proxyProperty',
 
         deferredStateMachineFactory : '../app/deferredStateMachineFactory'
     }

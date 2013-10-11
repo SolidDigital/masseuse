@@ -47,7 +47,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
             should.exist(Model);
         });
 
-        describe("set method", function () {
+        describe("set method (preserved original functionality) ", function () {
 
 
             it("should exist", function () {
@@ -96,7 +96,9 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
 
                 listenerFired.should.be.false;
             });
+        });
 
+        describe("ComputedProperty", function() {
             it("should allow the user to use a computed property when setting a single model property", function () {
                 modelInstance.set("propA", 5);
                 modelInstance.set("propB", ComputedProperty(["propA"], function (propA) {
@@ -266,7 +268,11 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 console.log(modelNoEventsInstance.attributes);
 
             });
-        })
+        });
+
+        describe("ProxyProperty", function() {
+
+        });
 
     });
 
