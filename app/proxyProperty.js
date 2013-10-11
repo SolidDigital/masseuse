@@ -6,15 +6,14 @@ define([], function () {
      * @returns {ProxyProperty}
      * @constructor
      */
-    function ProxyProperty (propertyName, propertyNameOnModel, model) {
+    function ProxyProperty (propertyNameOnModel, model) {
         if (!(this instanceof ProxyProperty)) {
-            return new ProxyProperty(propertyName, propertyNameOnModel, model);
+            return new ProxyProperty(propertyNameOnModel, model);
         }
 
-        this.propertyName = propertyName;
         this.propertyNameOnModel = propertyNameOnModel;
         this.model = model;
     }
 
-    return ComputedProperty;
+    return ProxyProperty;
 });

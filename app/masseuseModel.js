@@ -1,4 +1,9 @@
-define(['backbone', 'computedProperty', 'underscore'], function (Backbone, ComputedProperty, _) {
+define([
+    'backbone',
+    'computedProperty',
+    'proxyProperty',
+    'underscore'], function (Backbone, ComputedProperty, ProxyProperty, _) {
+
     return Backbone.Model.extend({
         unsettableProperties: [],
 

@@ -21,16 +21,24 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
             ModelNoEvents,
             modelInstance,
             modelNoEventsInstance,
-            ComputedProperty;
+            ComputedProperty,
+            ProxyProperty;
 
         beforeEach(function (done) {
-            var afterDone = _.after(2, done);
+            var afterDone = _.after(3, done);
             injector.require(['computedProperty'], function (Computed) {
                     ComputedProperty = Computed;
                     afterDone();
                 },
                 function () {
                     console.log('Computed error.')
+                });
+            injector.require(['proxyProperty'], function (Proxy) {
+                    ProxyProperty = Proxy;
+                    afterDone();
+                },
+                function () {
+                    console.log('Proxy error.')
                 });
             injector.require(['masseuseModel'], function (MasseuseModel) {
                     Model = MasseuseModel;
@@ -271,7 +279,22 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
         });
 
         describe("ProxyProperty", function() {
+            var otherModel;
 
+            beforeEach(function() {
+                otherModel = new Model({
+                    name : 'Jack'
+                });
+            });
+
+            it("should allow the user to see changes of a property on another model", function() {
+
+                modelInstance.set('nameProxy', ProxyProperty('name', otherModel));
+                modelInstance.get('nameProxy').should.equal('Jack');
+
+                otherModle.set('name', 'Jill');
+                modelInstance.get('nameProxy').should.equal('Jill');
+            });
         });
 
     });
