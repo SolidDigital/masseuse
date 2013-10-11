@@ -292,7 +292,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 modelInstance.set('nameProxy', ProxyProperty('name', otherModel));
                 modelInstance.get('nameProxy').should.equal('Jack');
 
-                otherModle.set('name', 'Jill');
+                otherModel.set('name', 'Jill');
                 modelInstance.get('nameProxy').should.equal('Jill');
             });
         });

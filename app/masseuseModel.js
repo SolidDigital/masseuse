@@ -24,13 +24,16 @@ define([
                 _.each(key, function (attrValue, attrKey) {
                     if (attrValue instanceof ComputedProperty) {
                         if (!attrValue.skipInitialComputation) {
-                            self.bindComputed(attrs, attrKey, attrValue);
+                            self.bindComputed(attrKey, attrValue);
                             callSelf = true;
                         } else {
                             delayInitial.push(function() {
-                                self.bindComputed(attrs, attrKey, attrValue);
+                                self.bindComputed(attrKey, attrValue);
                             })
                         }
+                        delete attrs[attrKey];
+                    } else if (attrValue instanceof ProxyProperty) {
+                        self.bindProxy(attrs, attrKey, attrValue);
                         delete attrs[attrKey];
                     } else {
                         if (self.computedCallbacks[attrKey]) {
@@ -41,7 +44,10 @@ define([
             } else {
                 attrs[key] = val;
                 if (val instanceof ComputedProperty) {
-                    this.bindComputed(attrs, key, val)
+                    this.bindComputed(key, val);
+                    return;
+                } else if (val instanceof ProxyProperty) {
+                    this.bindProxy(key, val);
                     return;
                 } else {
                     if (this.computedCallbacks[key]) {
@@ -66,7 +72,7 @@ define([
                 });
             }
         },
-        bindComputed: function (attributes, key, computed) {
+        bindComputed: function (key, computed) {
             var self = this,
                 callback;
 
@@ -81,6 +87,19 @@ define([
                     callback.call(self);
                 }
             });
+        },
+        bindProxy: function (key, proxy) {
+            var self = this,
+                model = proxy.model,
+                modelAttribute = proxy.propertyNameOnModel;
+
+            console.log(proxy);
+            this.set(key, model.get(modelAttribute));
+
+            model.on('change:' + modelAttribute, function() {
+                self.set(key, model.get(modelAttribute));
+            });
+
         },
         getListenableValues: function (listenables) {
             var args = [],
