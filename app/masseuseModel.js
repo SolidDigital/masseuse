@@ -100,6 +100,10 @@ define([
                 self.set(key, model.get(modelAttribute));
             });
 
+            this.on('change:' + key, function() {
+                model.set(modelAttribute, self.get(key));
+            });
+
         },
         getListenableValues: function (listenables) {
             var args = [],

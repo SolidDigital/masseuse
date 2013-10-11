@@ -295,6 +295,14 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 otherModel.set('name', 'Jill');
                 modelInstance.get('nameProxy').should.equal('Jill');
             });
+
+            it("should allow the user to see changes of another model on the current model", function() {
+
+                modelInstance.set('nameProxy', ProxyProperty('name', otherModel));
+                modelInstance.set('nameProxy', 'George');
+                otherModel.get('name').should.equal('George');
+
+            });
         });
 
     });
