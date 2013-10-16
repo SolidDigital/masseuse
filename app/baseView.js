@@ -43,15 +43,13 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
             this.bindEventListeners(this.options.bindings);
         }
 
-        // TODO: why is this only for appendView
-        if (this.options.appendView) {
+        if ('auto' === this.options.rivetConfig) {
             this.model.set('viewId', this.cid);
             this.rivetView = rivetView({
                 rivetScope : '#' + this.cid,
                 rivetPrefix : 'rv'
             })
-        }
-        if (this.options.rivetConfig) {
+        } else if (this.options.rivetConfig) {
             this.rivetView = rivetView({
                 rivetScope : this.options.rivetConfig.scope,
                 rivetPrefix : this.options.rivetConfig.prefix,
