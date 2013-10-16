@@ -10,7 +10,7 @@ Masseuse is a collection of helpers for Backbone. It includes the following:
 * A Channels Backbone event bus for View to View communication
 * A custom router
 * A mixin pattern that allows functions to be customized with default and actual properties as well as jQuery deferred.
-* A BaseView
+* A BaseView with a defined life cycle
 
 ## Computed Properties
 
@@ -89,6 +89,20 @@ Proxy Properties are test in `masseuseModelTests.js`.
 
 ## Rivet Views
 
-Masseuse depends on Rivets, and Masseuse comes with a custom Rivets adapter that works with Backbone Collections.
+Masseuse depends on Rivets, and Masseuse comes with a custom Rivets adapter that works with Backbone Collections. This
+functionality is built into the BaseView.
 
 Rivets is a library that two way binds the DOM to Backbone data.
+
+For example, to Rivet a BaseView to the DOM include the `rivetConfig` options:
+
+```javascript
+var view new BaseView({
+                        rivetConfig : {
+                            scope : '#my-view',
+                            prefix : 'myprefix'
+                        }
+                    });
+```
+
+`scope` is the sizzle selector within which the riveting works.

@@ -3,12 +3,17 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
     var BaseView = Backbone.View.extend({
         options : {
             name : 'BaseView',
+            appendView : undefined,
+            ModelType : undefined,
             bindings : [
                 // Example: [stringObjectToListenTo, stringEventName, stringCallbackFunction]
                 //          ['model', 'change:something', 'callbackFunction']
                 // Bindings have to be all strings, since config does not have access to the view's context
                 // if strings are provided it is assumed that the context is the view
-            ]
+            ],
+            templateHtml : undefined,
+            modelData : undefined,
+            rivetConfig : undefined
         },
         defaultBindings : [],
         initialize : initialize,
@@ -20,6 +25,11 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         // elementCache: elementCache
     });
 
+    // Share channels among all Views
+    BaseView.prototype.channels = BaseView.prototype.channels || channels;
+
+    return BaseView;
+
     function initialize () {
         var ModelType = this.options.ModelType || Backbone.Model;
         this.elementCache = _.memoize(elementCache);
@@ -27,9 +37,13 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
             this.template = _.template(this.options.templateHtml);
         }
         this.model = new ModelType(this.options.modelData);
+
+        // TODO: we should use bindings more
         if (this.options.bindings) {
             this.bindEventListeners(this.options.bindings);
         }
+
+        // TODO: why is this only for appendView
         if (this.options.appendView) {
             this.model.set('viewId', this.cid);
             this.rivetView = rivetView({
@@ -76,6 +90,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         }
     }
 
+    // This function is memoized in initialize
     function elementCache (selector) {
         return this.$el.find(selector);
     }
@@ -126,9 +141,6 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
             self.listenTo.apply(self, listenerArgs);
         });
     }
-
-    // Share channels among all Views
-    BaseView.prototype.channels = BaseView.prototype.channels || channels;
 
     // --------------------------
     // Private Methods
@@ -198,7 +210,5 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         }
 
         return obj;
-    };
-
-    return BaseView;
+    }
 });
