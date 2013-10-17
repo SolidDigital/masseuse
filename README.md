@@ -85,7 +85,7 @@ user.set('role', 'consultant');
 console.log('consultant' === permissions.get('role');
 ```
 
-Proxy Properties are test in `masseuseModelTests.js`.
+Proxy Properties are tested in `masseuseModelTests.js`.
 
 ## BaseView
 
@@ -112,6 +112,12 @@ var view = new BaseView({
         // They are arrays of strings. The context is assumed to be the view.
     templateHtml : '<div><%= price %> : <%= discount %></div>',
         // Underscore templating that will - if provided - be turned into this.template using _.template(templateHtml)
+    rivetConfig : 'auto'
+        // The configuration options for Rivets that this view uses. If left out the view doesn't use Rivets.
+        // Setting to auto will have the scope of Rivets be `# + this.cid`, the Rivets prefix `rv` and `this.model.viewId`
+        // will be ths cid. A templating solution would have to be used to populate the DOM with the cid
+        // Otherwise, the RivetConfigs can be set manually.
+
 });
 ```
 
@@ -128,9 +134,84 @@ For example, to Rivet a BaseView to the DOM include the `rivetConfig` options:
 var view new BaseView({
                         rivetConfig : {
                             scope : '#my-view',
-                            prefix : 'myprefix'
+                            prefix : 'myprefix',
+                            instaUpdateRivets : true
                         }
                     });
 ```
 
-`scope` is the sizzle selector within which the riveting works.
+`scope` is the sizzle selector within which the riveting works. `prefix` is needed by Rivets. It can be the same for all
+views. `instaUpdateRivets` is false by default. If it is set to truthy, then all input box changes will trigger Rivet
+updates. Specifically, `keypress paste textInput input` will all trigger change events in addition to change itself.
+
+## Finite State Machine
+
+`deferredStateMachineFatory.js` is a Finite State Machine Factory that takes an object and a finite state machine
+configuration. Only the methods reference in the configuration are affected, and those methods are turned into resolved
+that only resolve and call the original method if in the correct state. They fail and the original method is not fired
+if in the incorrect state.
+
+The state machines can work with any types of objects including View instances.
+
+For example:
+
+```javascript
+obj = {
+    walkThrough: function() { ... },
+    lock: function() { ... },
+    unlock: function() { ... },
+    openDoor: function() { ... },
+    closeDoor: function() { ... },
+    kickDown: function() { ... }
+},
+states = {
+    open: {
+            allowedMethods: [
+               'walkThrough', 'closeDoor'
+            ],
+            allowedTransitions: [
+                'shut'
+            ]
+        },
+    shut: {
+            allowedMethods: [
+                'lock', 'openDoor'
+            ],
+            allowedTransitions: [
+                'open', 'destroyed'
+            ]
+        },
+    locked: {
+            allowedMethods: [
+                'unlock', 'kickDown'
+            ],
+            allowedTransitions: [
+                'shut', 'destroyed'
+            ]
+        },
+    destroyed: {
+            // End state
+        }
+};
+
+stateMachine = DeferredStateMachineFactory(obj, states);
+
+stateMachine.getStates(); // output: ['open', 'shut', 'locked', 'destroyed']
+
+stateMachine.transition.open().done(function() {
+    stateMachine.walkThrough();
+});
+```
+
+States are defined as objects. Each object has an `allowedMethods` and an `allowedTransitions` array. These are enforced
+by the state machine.
+
+To start the machine, transition to a state using `.transition()`. `.transition()` returns a promise that is resolved or
+rejected on transition. To call methods on the state machine, simply call them directly. They will each return a promise.
+The promise is resolved with the return value if it was allowed to run; otherwise it is rejected.
+
+The Deferred State Machine Factory is tested in `deferredStateMachineFactoryTests.js`.
+
+## Channels
+
+Channels can be used as

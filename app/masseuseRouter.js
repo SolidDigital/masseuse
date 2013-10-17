@@ -1,10 +1,9 @@
 /*global define*/
 define([
     'backbone',
-    'underscore',
-    'baseView',
+    'underscore'
 ],
-    function (Backbone, _, BaseView) {
+    function (Backbone, _) {
 
         /**
          * @class MasseuseRouter

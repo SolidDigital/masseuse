@@ -38,7 +38,6 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         }
         this.model = new ModelType(this.options.modelData);
 
-        // TODO: we should use bindings more
         if (this.options.bindings) {
             this.bindEventListeners(this.options.bindings);
         }
