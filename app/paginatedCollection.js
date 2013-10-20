@@ -47,7 +47,10 @@ define(['backbone', 'underscore'], function (Backbone, _) {
 
     function fetch (options) {
         var args = Array.prototype.slice.call(arguments, 0);
-        var fetchOptions = {};
+        var fetchOptions = {
+            data: {},
+            headers: {}
+        };
 
         fetchOptions.data = {
             limit : this.paginationConfig.pageSize,
