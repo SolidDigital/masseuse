@@ -93,7 +93,6 @@ define([
                 model = proxy.model,
                 modelAttribute = proxy.propertyNameOnModel;
 
-            console.log(proxy);
             this.set(key, model.get(modelAttribute));
 
             model.on('change:' + modelAttribute, function() {
