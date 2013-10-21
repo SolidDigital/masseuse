@@ -303,6 +303,15 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 otherModel.get('name').should.equal('George');
 
             });
+
+            it("should allow the user to set multiple ProxyProperteis at once", function() {
+                modelInstance.set({
+                    'nameProxy': ProxyProperty('name', otherModel),
+                    'nameProxy2': ProxyProperty('name', otherModel)
+                });
+                modelInstance.get('nameProxy').should.equal('Jack');
+                modelInstance.get('nameProxy2').should.equal('Jack');
+            })
         });
 
     });

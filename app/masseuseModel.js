@@ -33,7 +33,7 @@ define([
                         }
                         delete attrs[attrKey];
                     } else if (attrValue instanceof ProxyProperty) {
-                        self.bindProxy(attrs, attrKey, attrValue);
+                        self.bindProxy(attrKey, attrValue);
                         delete attrs[attrKey];
                     } else {
                         if (self.computedCallbacks[attrKey]) {
