@@ -161,7 +161,13 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         return mixin({}, lifeCycleMethod)({
             async : lifeCycleMethod.length,
             preEvent : {
-                name : this.options.name + ':on' + lifeCycleMethodName,
+                methodName : lifeCycleMethodName,
+                name : this.options.name + ':pre' + lifeCycleMethodName,
+                channel : this.channels.views
+            },
+            postEvent : {
+                methodName : lifeCycleMethodName,
+                name : this.options.name + ':post' + lifeCycleMethodName,
                 channel : this.channels.views
             }
         }).call(this);
