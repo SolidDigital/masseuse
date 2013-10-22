@@ -20,7 +20,8 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         start : start,
         render : render,
         dataToJSON : dataToJSON,
-        bindEventListeners : bindEventListeners
+        bindEventListeners : bindEventListeners,
+        remove : remove
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
     });
@@ -213,5 +214,10 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         }
 
         return obj;
+    }
+
+    function remove () {
+        this.$el.empty();
+        this.stopListening();
     }
 });
