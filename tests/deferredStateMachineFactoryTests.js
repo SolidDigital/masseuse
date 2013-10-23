@@ -118,6 +118,13 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                         done();
                     });
                 });
+                it('does not change the state of the FSM after a failed transition to a disallowed state', function(done) {
+                    stateMachine.transition('open');
+                    stateMachine.transition('locked').fail(function() {
+                        stateMachine.getState().should.equal('open');
+                        done();
+                    });
+                })
                 it('does not change the state of the FSM after a failed transition', function(done) {
                     stateMachine.transition('blargh').fail(function() {
                         should.not.exist(stateMachine.getState());

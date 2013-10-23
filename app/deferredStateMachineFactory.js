@@ -89,7 +89,7 @@ define(['underscore', 'jquery'], function(_, $) {
                 allowed = _.contains(_stateNames, newState);
             } else {
                 allowedTransitions = states[_currentState].allowedTransitions;
-                allowed = allowedTransitions || _.contains(allowedTransitions, newState);
+                allowed = allowedTransitions && _.contains(allowedTransitions, newState);
             }
             return allowed;
         }
