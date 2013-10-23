@@ -3,7 +3,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
     var BaseView = Backbone.View.extend({
         options : {
             name : 'BaseView',
-            appendView : undefined,
+            appendView : true,
             ModelType : undefined,
             bindings : [
                 // Example: [stringObjectToListenTo, stringEventName, stringCallbackFunction]
@@ -60,16 +60,39 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
     }
 
     function start () {
-        var $deferred = new $.Deferred();
+        var $deferred = new $.Deferred(),
+            $beforeRenderDeferred = _runLifeCycleMethod.call(this, this.beforeRender, 'BeforeRender'),
+            $renderDeferred = _lifeCycleMethodReference.call(this, this.render, 'Render'),
+            $afterRenderDeferred = _lifeCycleMethodReference.call(this, this.afterRender, 'AfterRender');
+
+        if ($beforeRenderDeferred && $beforeRenderDeferred.progress ) {
+            $beforeRenderDeferred.progress(function(){
+                $deferred.notify.apply(null, arguments);
+            });
+        }
+
+        if ($renderDeferred.progress) {
+            $renderDeferred.progress(function(){
+                $deferred.notify.apply(null, arguments);
+            });
+        }
+
+        if ($afterRenderDeferred && $afterRenderDeferred.progress) {
+            $afterRenderDeferred.progress(function(){
+                $deferred.notify.apply(null, arguments);
+            });
+        }
 
 
         $
-            .when(_runLifeCycleMethod.call(this, this.beforeRender, 'BeforeRender'))
+            .when(
+                $beforeRenderDeferred
+            )
             .then(
-                _lifeCycleMethodReference.call(this, this.render, 'Render'),
+                $renderDeferred,
                 _rejectStart.call(this, $deferred))
             .then(
-                _lifeCycleMethodReference.call(this, this.afterRender, 'AfterRender'),
+                $afterRenderDeferred,
                 _rejectStart.call(this, $deferred))
             .then(
                 _resolveStart.call(this, $deferred),
