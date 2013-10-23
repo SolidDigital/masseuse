@@ -26,6 +26,10 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         // elementCache: elementCache
     });
 
+    BaseView.beforeRenderDone = 'beforeRenderDone';
+    BaseView.renderDone = 'renderDone';
+    BaseView.afterRenderDone = 'afterRenderDone';
+
     // Share channels among all Views
     BaseView.prototype.channels = BaseView.prototype.channels || channels;
 
@@ -65,23 +69,14 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
             $renderDeferred = _lifeCycleMethodReference.call(this, this.render, 'Render'),
             $afterRenderDeferred = _lifeCycleMethodReference.call(this, this.afterRender, 'AfterRender');
 
-        if ($beforeRenderDeferred && $beforeRenderDeferred.progress ) {
-            $beforeRenderDeferred.progress(function(){
-                $deferred.notify.apply(null, arguments);
-            });
-        }
 
-        if ($renderDeferred.progress) {
-            $renderDeferred.progress(function(){
-                $deferred.notify.apply(null, arguments);
+        $
+            .when(
+                $beforeRenderDeferred
+            )
+            .always(function () {
+                $deferred.notify(BaseView.beforeRenderDone);
             });
-        }
-
-        if ($afterRenderDeferred && $afterRenderDeferred.progress) {
-            $afterRenderDeferred.progress(function(){
-                $deferred.notify.apply(null, arguments);
-            });
-        }
 
 
         $
@@ -89,10 +84,12 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
                 $beforeRenderDeferred
             )
             .then(
-                $renderDeferred,
+                $renderDeferred
+                    ,
                 _rejectStart.call(this, $deferred))
             .then(
-                $afterRenderDeferred,
+                $afterRenderDeferred
+                    ,
                 _rejectStart.call(this, $deferred))
             .then(
                 _resolveStart.call(this, $deferred),
@@ -240,7 +237,12 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
     }
 
     function remove () {
-        this.$el.empty();
+        if (this.options.domEl) {
+            this.$el.find(this.options.domEl).remove();
+        } else {
+            this.$el.find('#' + this.cid).remove();
+        }
+
         this.stopListening();
     }
 });

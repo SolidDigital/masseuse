@@ -55,12 +55,11 @@ define(['underscore', 'jquery'], function (_, $) {
 
                 if (config.preEvent && config.preEvent.name && config.preEvent.channel) {
                     config.preEvent.channel.trigger(config.preEvent.name, $deferred);
-                    $deferred && $deferred.notify('pre:' + config.preEvent.methodName);
                 }
                 returned = configureItFunction.apply(this, args);
+
                 if (config.postEvent && config.postEvent.name && config.postEvent.channel) {
                     config.postEvent.channel.trigger(config.postEvent.name, $deferred);
-                    $deferred && $deferred.notify('post:' + config.postEvent.methodName);
                 }
 
                 return config.async ? $deferred.promise() : returned;
