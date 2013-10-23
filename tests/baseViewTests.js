@@ -63,8 +63,14 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 it('should be a function', function () {
                     viewInstance.render.should.be.a('function');
                 });
-                it("should trigger the onRender event on the view's channel", function (done) {
-                    viewInstance.channels.views.on(VIEW1_NAME + ":onRender", function () {
+                it("should trigger the :preRender event on the view's channel", function (done) {
+                    viewInstance.channels.views.on(VIEW1_NAME + ":preRender", function () {
+                        done();
+                    });
+                    viewInstance.start();
+                });
+                it("should trigger the :postRender event on the view's channel", function (done) {
+                    viewInstance.channels.views.on(VIEW1_NAME + ":postRender", function () {
                         done();
                     });
                     viewInstance.start();
@@ -131,12 +137,19 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
         });
 
         describe("beforeRender method, if implemented", function () {
-            it("should trigger the onBeforeRender event on the view's channel during start()", function (done) {
-                syncInstance.channels.views.on(VIEW1_NAME + ":onBeforeRender", function () {
+            it("should trigger the :preBeforeRender event on the view's channel during start()", function (done) {
+                syncInstance.channels.views.on(VIEW1_NAME + ":preBeforeRender", function () {
                     done();
                 });
                 syncInstance.start();
             });
+            it("should trigger the :postBeforeRender event on the view's channel during start()", function (done) {
+                syncInstance.channels.views.on(VIEW1_NAME + ":postBeforeRender", function () {
+                    done();
+                });
+                syncInstance.start();
+            });
+
             // NOTE: xing out a describe or it will disable it and highlight it blue
             describe("with zero arguments", function () {
                 it("will trigger the beforeRender event, then the render event, then afterRender event in that order", function () {
@@ -175,8 +188,14 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
         });
 
         describe("afterRender method, if implemented", function () {
-            it("should trigger the onAfterRender event on the view's channel during start()", function (done) {
-                syncInstance.channels.views.on(VIEW1_NAME + ":onAfterRender", function () {
+            it("should trigger the :preAfterRender event on the view's channel during start()", function (done) {
+                syncInstance.channels.views.on(VIEW1_NAME + ":preAfterRender", function () {
+                    done();
+                });
+                syncInstance.start();
+            });
+            it("should trigger the :postAfterRender event on the view's channel during start()", function (done) {
+                syncInstance.channels.views.on(VIEW1_NAME + ":postAfterRender", function () {
                     done();
                 });
                 syncInstance.start();
