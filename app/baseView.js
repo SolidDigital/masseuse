@@ -21,10 +21,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         render : render,
         dataToJSON : dataToJSON,
         bindEventListeners : bindEventListeners,
-        remove : remove,
-        spinnerInit : spinnerInit,
-        spinnerDeInit : spinnerDeInit,
-        spinnerTimer : spinnerTimer
+        remove : remove
 
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
@@ -65,30 +62,6 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
             })
         }
 
-    }
-
-    function spinnerInit () {
-        this.$el.addClass('spinner');
-        $('#spinnerImage').show();
-
-    }
-
-    function spinnerDeInit (timer) {
-        clearTimeout(timer);
-        $('#spinnerImage').hide();
-        this.$el.removeClass('spinner');
-    }
-
-    // Creates a loading spinner and opacity change on a view until a deferred is resolved or failed
-    function spinnerTimer ($deferred) {
-        var self = this,
-            timer = setTimeout(function () {
-                self.spinnerInit();
-            }, 3000);
-
-        $deferred.always(function () {
-            self.spinnerDeInit(timer);
-        });
     }
 
     function start () {
