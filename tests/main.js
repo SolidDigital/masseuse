@@ -39,15 +39,12 @@ require.config({
 
         computedProperty : '../app/computedProperty',
         proxyProperty : '../app/proxyProperty',
-
-        deferredStateMachineFactory : '../app/deferredStateMachineFactory'
     }
 });
 
 require([
     'mocha',
     './baseViewTests',
-    './deferredStateMachineFactoryTests',
     './masseuseModelTests'
 ], function (mocha) {
     mocha.run();
