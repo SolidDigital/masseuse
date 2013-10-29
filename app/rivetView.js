@@ -167,8 +167,22 @@ define(['rivets', 'mixin', 'backbone'], function (Rivets, mixin, Backbone) {
             return value + ' ';
         }
 
-        Rivets.formatters.toMinutes = function(value) {
-            return value / 60;
+        Rivets.formatters.secondsToTime = function(secs) {
+            var hours = Math.floor(secs / (60 * 60)),
+                divisor_for_minutes = secs % (60 * 60),
+                minutes = Math.floor(divisor_for_minutes / 60),
+                divisor_for_seconds = divisor_for_minutes % 60,
+                seconds = Math.ceil(divisor_for_seconds),
+                obj = {
+                    "h": hours,
+                    "m": minutes,
+                    "s": seconds
+                },
+                time = (obj.h) ? ((obj.h > 1) ? obj.h + ' hrs ' : obj.h + ' hr ' ) : '';
+                time += (obj.m) ? ((obj.m > 1) ? obj.m + ' mins ' : obj.m + ' min ') : '';
+                time += (obj.s) ? ((obj.s > 1) ? obj.s + ' secs ' : obj.s + ' sec ') : '';
+
+            return time;
         }
 
         Rivets.formatters.equals = function(value, args) {
