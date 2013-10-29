@@ -171,6 +171,10 @@ define(['rivets', 'mixin', 'backbone'], function (Rivets, mixin, Backbone) {
             return value / 60;
         }
 
+        Rivets.formatters.equals = function(value, args) {
+            return (value === args);
+        }
+
         // bind data to rivets values.
         return Rivets.bind($(config.rivetScope), {data : this.model});
 
