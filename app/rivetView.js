@@ -154,6 +154,23 @@ define(['rivets', 'mixin', 'backbone'], function (Rivets, mixin, Backbone) {
 
         Rivets.config.templateDelimiters = ['{{', '}}'];
 
+
+        Rivets.formatters.withComma = function(value) {
+            return value + ', ';
+        }
+
+        Rivets.formatters.withColon = function(value) {
+            return value + ' : ';
+        }
+
+        Rivets.formatters.spaceAfter = function(value) {
+            return value + ' ';
+        }
+
+        Rivets.formatters.toMinutes = function(value) {
+            return value / 60;
+        }
+
         // bind data to rivets values.
         return Rivets.bind($(config.rivetScope), {data : this.model});
 
