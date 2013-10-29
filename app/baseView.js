@@ -3,7 +3,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
     var BaseView = Backbone.View.extend({
         options : {
             name : 'BaseView',
-            appendView : undefined,
+            appendView : true,
             ModelType : undefined,
             bindings : [
                 // Example: [stringObjectToListenTo, stringEventName, stringCallbackFunction]
@@ -22,9 +22,14 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         dataToJSON : dataToJSON,
         bindEventListeners : bindEventListeners,
         remove : remove
+
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
     });
+
+    BaseView.beforeRenderDone = 'beforeRenderDone';
+    BaseView.renderDone = 'renderDone';
+    BaseView.afterRenderDone = 'afterRenderDone';
 
     // Share channels among all Views
     BaseView.prototype.channels = BaseView.prototype.channels || channels;
@@ -60,20 +65,34 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
     }
 
     function start () {
-        var $deferred = new $.Deferred();
+        var $deferred = new $.Deferred(),
+            $beforeRenderDeferred = _runLifeCycleMethod.call(this, this.beforeRender, 'BeforeRender'),
+            $renderDeferred = _lifeCycleMethodReference.call(this, this.render, 'Render'),
+            $afterRenderDeferred = _lifeCycleMethodReference.call(this, this.afterRender, 'AfterRender');
 
 
         $
-            .when(_runLifeCycleMethod.call(this, this.beforeRender, 'BeforeRender'))
+            .when(
+                $beforeRenderDeferred
+            )
+            .always(function () {
+                $deferred.notify(BaseView.beforeRenderDone);
+            });
+
+
+        $
+            .when(
+                $beforeRenderDeferred
+            )
             .then(
-                _lifeCycleMethodReference.call(this, this.render, 'Render'),
+                $renderDeferred,
                 _rejectStart.call(this, $deferred))
             .then(
-                _lifeCycleMethodReference.call(this, this.afterRender, 'AfterRender'),
+                $afterRenderDeferred,
                 _rejectStart.call(this, $deferred))
             .then(
                 _resolveStart.call(this, $deferred),
-                _rejectStart.call(this, $deferred));
+                _rejectStart.call(this, $deferred))
 
         return $deferred.promise();
     }
@@ -217,7 +236,12 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
     }
 
     function remove () {
-        this.$el.empty();
+        if (this.options.domEl) {
+            this.$el.find(this.options.domEl).remove();
+        } else {
+            this.$el.find('#' + this.cid).remove();
+        }
+
         this.stopListening();
     }
 });
