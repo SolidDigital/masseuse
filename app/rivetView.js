@@ -159,6 +159,10 @@ define(['rivets', 'mixin', 'backbone'], function (Rivets, mixin, Backbone) {
             return value + ', ';
         }
 
+        Rivets.formatters.joinWithComma = function(value) {
+            return value.join(', ');
+        }
+
         Rivets.formatters.withColon = function(value) {
             return value + ' : ';
         }
