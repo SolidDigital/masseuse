@@ -189,6 +189,10 @@ define(['rivets', 'mixin', 'backbone'], function (Rivets, mixin, Backbone) {
             return time;
         }
 
+        Rivets.formatters.dollars = function(amount) {
+            return '$' + (amount / 100);
+        }
+
         Rivets.formatters.equals = function(value, args) {
             return (value === args);
         }
