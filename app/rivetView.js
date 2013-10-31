@@ -201,6 +201,10 @@ define(['rivets', 'mixin', 'backbone'], function (Rivets, mixin, Backbone) {
             return value ? value : args;
         }
 
+        Rivets.formatters.limit = function(value, args) {
+            return value.slice(0, args);
+        }
+
         // bind data to rivets values.
         return Rivets.bind($(config.rivetScope), {data : this.model});
 
