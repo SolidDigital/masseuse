@@ -197,6 +197,10 @@ define(['rivets', 'mixin', 'backbone'], function (Rivets, mixin, Backbone) {
             return (value === args);
         }
 
+        Rivets.formatters.exists = function(value, args) {
+            return value ? value : args;
+        }
+
         // bind data to rivets values.
         return Rivets.bind($(config.rivetScope), {data : this.model});
 
