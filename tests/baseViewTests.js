@@ -52,13 +52,25 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
             });
             describe("promise", function () {
                 // Using done as a spy. If it is not called, the test will fail.
-                it('should be resolved after start runs', function (done) {
+                it('should be resolved after start promise is resolved', function (done) {
                     viewInstance.start().done(done);
                 });
-                it('should be notified with beforeRenderDone when beforeRenderDeferred is done or failed', function (done) {
+                it('should not be resolved immediately after start is called', function () {
+                    var $promise = viewInstance.start();
+                    $promise.state().should.equal('pending');
+
+                });
+                it('should be notified with "beforeRenderDone", "renderDone", and "afterRenderDone" in sequence', function (done) {
+                    var eventSpy = sinon.spy();
                     viewInstance.start().progress(function(event){
-                        event.should.equal('beforeRenderDone');
-                        done();
+                        eventSpy(event);
+                        if (3 <= eventSpy.callCount) {
+                            console.log("done");
+                            eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
+                            eventSpy.secondCall.args[0].should.equal('renderDone');
+                            eventSpy.thirdCall.args[0].should.equal('afterRenderDone');
+                            done();
+                        }
                     });
                 });
 
@@ -165,19 +177,18 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                         Render = sinon.spy(syncInstance, "render"),
                         AfterRender = sinon.spy(syncInstance, "afterRender");
 
-                    syncInstance.start();
+                    syncInstance.start().done(function() {
+                        BeforeRender.should.have.been.calledOnce;
+                        Render.should.have.been.calledOnce;
+                        AfterRender.should.have.been.calledOnce;
 
-                    BeforeRender.should.have.been.calledOnce;
-                    Render.should.have.been.calledOnce;
-                    AfterRender.should.have.been.calledOnce;
-
-                    BeforeRender.should.have.been.calledBefore(Render);
-                    BeforeRender.should.have.been.calledBefore(AfterRender);
-                    Render.should.have.been.calledAfter(BeforeRender);
-                    Render.should.have.been.calledBefore(AfterRender);
-                    AfterRender.should.have.been.calledAfter(BeforeRender);
-                    AfterRender.should.have.been.calledAfter(Render);
-
+                        BeforeRender.should.have.been.calledBefore(Render);
+                        BeforeRender.should.have.been.calledBefore(AfterRender);
+                        Render.should.have.been.calledAfter(BeforeRender);
+                        Render.should.have.been.calledBefore(AfterRender);
+                        AfterRender.should.have.been.calledAfter(BeforeRender);
+                        AfterRender.should.have.been.calledAfter(Render);
+                    });
                 });
             });
             describe("with one argument", function () {
@@ -213,32 +224,37 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                         Render = sinon.spy(syncInstance, "render"),
                         AfterRender = sinon.spy(syncInstance, "afterRender");
 
-                    syncInstance.start();
+                    syncInstance.start().done(function() {
+                        BeforeRender.should.have.been.calledOnce;
+                        Render.should.have.been.calledOnce;
+                        AfterRender.should.have.been.calledOnce;
 
-                    BeforeRender.should.have.been.calledOnce;
-                    Render.should.have.been.calledOnce;
-                    AfterRender.should.have.been.calledOnce;
-
-                    BeforeRender.should.have.been.calledBefore(Render);
-                    BeforeRender.should.have.been.calledBefore(AfterRender);
-                    Render.should.have.been.calledAfter(BeforeRender);
-                    Render.should.have.been.calledBefore(AfterRender);
-                    AfterRender.should.have.been.calledAfter(BeforeRender);
-                    AfterRender.should.have.been.calledAfter(Render);
+                        BeforeRender.should.have.been.calledBefore(Render);
+                        BeforeRender.should.have.been.calledBefore(AfterRender);
+                        Render.should.have.been.calledAfter(BeforeRender);
+                        Render.should.have.been.calledBefore(AfterRender);
+                        AfterRender.should.have.been.calledAfter(BeforeRender);
+                        AfterRender.should.have.been.calledAfter(Render);
+                    });
                 });
             });
             describe("with one argument", function () {
                 it("will fail the start method if its deferred is rejected", function (done) {
                     asyncInstance.start().fail(done);
-                    $beforeRenderDeferred.resolve();
-                    $afterRenderDeferred.reject();
+                    _.defer(function() {
+                        $beforeRenderDeferred.resolve();
+                        $afterRenderDeferred.reject();
+                    });
                 });
-                it("will not call the afterRender method if its deferred is rejected", function (done) {
+                it("will not call the afterRender method if the beforeRender deferred is rejected", function (done) {
                     var AfterRender = sinon.spy(asyncInstance, "afterRender");
-                    asyncInstance.start().fail(done);
-                    $beforeRenderDeferred.resolve();
-                    $afterRenderDeferred.reject();
-                    AfterRender.should.not.have.been.called;
+                    asyncInstance.start().fail(function() {
+                        AfterRender.should.not.have.been.called;
+                        done();
+                    });
+                    _.defer(function() {
+                        $beforeRenderDeferred.reject();
+                    });
                 });
             });
         });
