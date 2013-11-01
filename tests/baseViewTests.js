@@ -55,9 +55,10 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 it('should be resolved after start runs', function (done) {
                     viewInstance.start().done(done);
                 });
-                it('should be notified with beforeRenderDone when beforeRenderDeferred is done or failed', function () {
+                it('should be notified with beforeRenderDone when beforeRenderDeferred is done or failed', function (done) {
                     viewInstance.start().progress(function(event){
                         event.should.equal('beforeRenderDone');
+                        done();
                     });
                 });
 

@@ -65,34 +65,44 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
     }
 
     function start () {
-        var $deferred = new $.Deferred(),
-            $beforeRenderDeferred = _runLifeCycleMethod.call(this, this.beforeRender, 'BeforeRender'),
-            $renderDeferred = _lifeCycleMethodReference.call(this, this.render, 'Render'),
-            $afterRenderDeferred = _lifeCycleMethodReference.call(this, this.afterRender, 'AfterRender');
+        var self = this,
+            $deferred = new $.Deferred(),
+            $beforeRenderDeferred = _runLifeCycleMethod.call(this, this.beforeRender, 'BeforeRender');
 
-
-        $
-            .when(
-                $beforeRenderDeferred
-            )
-            .always(function () {
-                $deferred.notify(BaseView.beforeRenderDone);
-            });
-
-
-        $
-            .when(
-                $beforeRenderDeferred
-            )
-            .then(
-                $renderDeferred,
-                _rejectStart.call(this, $deferred))
-            .then(
-                $afterRenderDeferred,
-                _rejectStart.call(this, $deferred))
-            .then(
-                _resolveStart.call(this, $deferred),
-                _rejectStart.call(this, $deferred))
+        _.defer(function () {
+            $
+                .when(
+                    $beforeRenderDeferred
+                )
+                .always(function () {
+                    $deferred.notify(BaseView.beforeRenderDone);
+                })
+                .then(
+                function () {
+                    var $renderDeferred = _runLifeCycleMethod.call(self, self.render, 'Render');
+                    $
+                        .when($renderDeferred)
+                        .always(function () {
+                            $deferred.notify(BaseView.renderDone);
+                        })
+                        .then(
+                        function () {
+                            var $afterRenderDeferred = _runLifeCycleMethod.call(self, self.afterRender, 'AfterRender');
+                            $
+                                .when($afterRenderDeferred)
+                                .always(function () {
+                                    $deferred.notify(BaseView.afterRenderDone);
+                                })
+                                .then(
+                                    _resolveStart.call(self, $deferred),
+                                    _rejectStart.call(self, $deferred)
+                                );
+                        },
+                        _rejectStart.call(self, $deferred)
+                    );
+                },
+                _rejectStart.call(self, $deferred));
+        });
 
         return $deferred.promise();
     }
