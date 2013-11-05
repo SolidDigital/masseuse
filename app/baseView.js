@@ -21,7 +21,10 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         render : render,
         dataToJSON : dataToJSON,
         bindEventListeners : bindEventListeners,
-        remove : remove
+        remove : remove,
+        children: null,
+        addChild: addChild,
+        removeChild: removeChild
 
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
@@ -62,6 +65,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
             })
         }
 
+        this.children = [];
     }
 
     function start () {
@@ -69,6 +73,9 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
             $deferred = new $.Deferred(),
             $beforeRenderDeferred = _runLifeCycleMethod.call(this, this.beforeRender, 'BeforeRender');
 
+        // ParentView calls .start() on all children
+        // ParentView doesn't render until all children have notified that they are done
+        // After rendering, the ParentView notifies all children and they continue their lifecycle
         _.defer(function () {
             $
                 .when(
@@ -253,5 +260,15 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         }
 
         this.stopListening();
+    }
+
+    function addChild(childView) {
+        if (!_(this.children).contains(childView)) {
+            this.children.push(childView);
+        }
+    }
+
+    function removeChild(childView) {
+        this.children = _(this.children).without(childView);
     }
 });
