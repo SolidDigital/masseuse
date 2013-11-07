@@ -3,6 +3,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
 
     'use strict';
     var VIEW1_NAME = "testView1",
+        CHILD_VIEW_NAME = "childView",
         injector = new Squire(),
         should = chai.should();
 
@@ -96,17 +97,135 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 });
 
             });
+
+            it('should call start on any children', function () {
+                var childView = new (BaseView.extend({
+                        name: CHILD_VIEW_NAME
+                    })),
+                    childViewStart = sinon.spy(childView, "start");
+
+                viewInstance.addChild(childView);
+
+                childView.start.should.not.have.been.called;
+
+                viewInstance.start().done(function () {
+                    childView.start.should.have.been.calledOnce;
+                });
+            });
+
+            it("should not render until it's parent has rendered", function () {
+                var childView = new (BaseView.extend({
+                        name: CHILD_VIEW_NAME,
+                        render: function () { }
+                    })),
+                    childRender = sinon.spy(childView, "render");
+
+                viewInstance.addChild(childView);
+
+                childRender.should.not.have.been.called;
+
+                viewInstance.start()
+                    .progress(function (progress) {
+                        if (progress === BaseView.beforeRenderDone) {
+                            childRender.should.not.have.been.called;
+                        } else if (progress === BaseView.renderDone) {
+                            _.defer(function () {
+                                childRender.should.have.been.calledOnce;
+                            });
+                        }
+                    })
+            });
         });
 
-        describe("stop method", function () {
-            // TODO: implement before after etc methods in the same was as for render
+        describe("remove method", function () {
             // method should wrap View.remove
+            it('should call stop on all children', function () {
+                var childView = new (BaseView.extend({
+                        name: CHILD_VIEW_NAME
+                    })),
+                    childRemove = sinon.spy(childView, "remove");
+
+                viewInstance.addChild(childView);
+
+                childRemove.should.not.have.been.called;
+
+                viewInstance.remove();
+
+                childRemove.should.have.been.calledOnce;
+            });
         });
 
         describe("channels", function () {
 //            it("can be triggered by one view and heard by another", function () {
 //                //TODO: create a second view instance
 //            });
+        });
+
+        describe("addChild method", function () {
+            it ('should be a method', function () {
+                viewInstance.addChild.should.be.a('function');
+            });
+
+            it ('should add a child view', function () {
+                var childView = new BaseView({
+                    name: CHILD_VIEW_NAME
+                });
+
+                viewInstance.children.length.should.equal(0);
+
+                viewInstance.addChild(childView);
+
+                viewInstance.children.length.should.equal(1);
+            });
+
+            it ('should not add the same child view twice', function () {
+                var childView = new BaseView({
+                    name: CHILD_VIEW_NAME
+                });
+
+                viewInstance.children.length.should.equal(0);
+
+                viewInstance.addChild(childView);
+
+                viewInstance.children.length.should.equal(1);
+
+                viewInstance.addChild(childView);
+
+                viewInstance.children.length.should.equal(1);
+            });
+        });
+
+        describe("removeChild method", function () {
+            it ('should remove a child view, if it exists', function () {
+                var childView = new BaseView({
+                    name: CHILD_VIEW_NAME
+                });
+
+                viewInstance.addChild(childView);
+
+                viewInstance.children.length.should.equal(1);
+
+                viewInstance.removeChild(childView);
+
+                viewInstance.children.length.should.equal(0);
+            });
+
+            it ('should not remove any child views if a matching view is not found', function () {
+                var childView = new BaseView({
+                        name: CHILD_VIEW_NAME
+                    }),
+                    anotherChildView = new BaseView({
+                        name: "Another Child"
+                    });
+
+                viewInstance.addChild(childView);
+
+                viewInstance.children.length.should.equal(1);
+
+                viewInstance.removeChild(anotherChildView);
+
+                viewInstance.children.length.should.equal(1);
+            });
         });
     });
 
