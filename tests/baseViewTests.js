@@ -100,61 +100,58 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
 
             it('should call start on any children', function () {
                 var childView = new (BaseView.extend({
-                        name: CHILD_VIEW_NAME,
-                        beforeRender: function ($deferred) {
-
-                        },
-                        render: function ($deferred) {
-
-                        },
-                        afterRender: function ($deferred) {
-
-                        }
+                        name: CHILD_VIEW_NAME
                     })),
-                    childViewBeforeRender = sinon.spy(childView, "beforeRender"),
-                    childViewRender = sinon.spy(childView, "render"),
-                    childViewAfterRender = sinon.spy(childView, "afterRender");
+                    childViewStart = sinon.spy(childView, "start");
 
                 viewInstance.addChild(childView);
 
+                childView.start.should.not.have.been.called;
+
                 viewInstance.start().done(function () {
-//                    childViewBeforeRender.should.have.been.calledOnce;
-//                    childViewRender.should.have.been.calledOnce;
-//                    childViewAfterRender.should.have.been.calledOnce;
+                    childView.start.should.have.been.calledOnce;
                 });
             });
 
-            it('should wait for "sync" children', function () {
+            it("should not render until it's parent has rendered", function () {
                 var childView = new (BaseView.extend({
                         name: CHILD_VIEW_NAME,
-                        beforeRender: function ($deferred) {
-                            $beforeRenderDeferred = $deferred;
-
-                            return $deferred.promise();
-                        }
+                        render: function () { }
                     })),
-                    $beforeRenderDeferred,
-                    $promise;
+                    childRender = sinon.spy(childView, "render");
 
                 viewInstance.addChild(childView);
 
-                $promise = viewInstance.start().done(function() {
-//                    $promise.state().should.equal("resolved");
-                });
+                childRender.should.not.have.been.called;
 
-                _.defer(function () {
-//                    $promise.state().should.equal("pending");
-
-//                    $beforeRenderDeferred.resolve();
-                });
+                viewInstance.start()
+                    .progress(function (progress) {
+                        if (progress === BaseView.beforeRenderDone) {
+                            childRender.should.not.have.been.called;
+                        } else if (progress === BaseView.renderDone) {
+                            _.defer(function () {
+                                childRender.should.have.been.calledOnce;
+                            });
+                        }
+                    })
             });
         });
 
-        describe("stop method", function () {
-            // TODO: implement before after etc methods in the same was as for render
+        describe("remove method", function () {
             // method should wrap View.remove
             it('should call stop on all children', function () {
+                var childView = new (BaseView.extend({
+                        name: CHILD_VIEW_NAME
+                    })),
+                    childRemove = sinon.spy(childView, "remove");
 
+                viewInstance.addChild(childView);
+
+                childRemove.should.not.have.been.called;
+
+                viewInstance.remove();
+
+                childRemove.should.have.been.calledOnce;
             });
         });
 

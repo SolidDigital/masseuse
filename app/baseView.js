@@ -68,7 +68,24 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         this.children = [];
     }
 
-    function start () {
+    /**
+     * Wrapper method for lifecycle methods.
+     *
+     * In order, this method:
+     * - Calls this.beforeRender()
+     * - Starts any child views
+     * - Notifies that beforeRender is done
+     * - If the view has a parent, waits for its parent to render
+     * - Calls this.render()
+     * - Notifies that render is done
+     * - Calls this.afterRender()
+     * - Notifies that afterRender is done
+     * - Resolves the returned promise
+     *
+     * @param {jQuery.promise} $parentRenderPromise - If passed in, the start method was called from a parent view start() method.
+     * @returns {jQuery.promise} A promise that is resolved when when the start method has completed
+     */
+    function start ($parentRenderPromise) {
         var self = this,
             $deferred = new $.Deferred(),
             $beforeRenderDeferred = _runLifeCycleMethod.call(this, this.beforeRender, 'BeforeRender');
@@ -79,10 +96,16 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         _.defer(function () {
             $
                 .when(
-                    $beforeRenderDeferred
+                    $beforeRenderDeferred,
+                    startChildren.call(self, $deferred)
                 )
                 .always(function () {
                     $deferred.notify(BaseView.beforeRenderDone);
+                })
+                .then(function () {
+                    if ($parentRenderPromise) {
+                        return $parentRenderPromise;
+                    }
                 })
                 .then(
                 function () {
@@ -112,6 +135,20 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         });
 
         return $deferred.promise();
+    }
+
+    function startChildren ($parentDeferred) {
+        _(this.children).each(function (child) {
+            var $afterRenderDeferred = new $.Deferred();
+
+            $parentDeferred.progress(function (step) {
+                if (step === BaseView.renderDone) {
+                    $afterRenderDeferred.resolve();
+                }
+            });
+
+            child.start($afterRenderDeferred.promise());
+        });
     }
 
     function render () {
@@ -253,6 +290,10 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
     }
 
     function remove () {
+        _(this.children).each(function (child) {
+            child.remove();
+        });
+
         if (this.options.domEl) {
             this.$el.find(this.options.domEl).remove();
         } else {
@@ -260,6 +301,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         }
 
         this.stopListening();
+        this.off();
     }
 
     function addChild(childView) {
