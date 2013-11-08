@@ -156,6 +156,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         if (this.$el && this.template) {
             if (this.options.appendView) {
                 this.$el.append(this.template(this.dataToJSON()));
+                this.setElement(this.$el.children().last());
             } else {
                 this.$el.html(this.template(this.dataToJSON()));
             }
@@ -294,15 +295,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         _(this.children).each(function (child) {
             child.remove();
         });
-
-        if (this.options.domEl) {
-            this.$el.find(this.options.domEl).remove();
-        } else {
-            this.$el.find('#' + this.cid).remove();
-        }
-
-        this.stopListening();
-        this.off();
+        Backbone.View.prototype.remove.apply(this, arguments);
     }
 
     function addChild(childView) {
