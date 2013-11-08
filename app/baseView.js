@@ -173,7 +173,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
 
     /**
      * bindEventListeners
-     * Bind all event listerns specified in 'defaultListeners' and 'options.listeners' using 'listenTo'
+     * Bind all event listeners specified in 'defaultListeners' and 'options.listeners' using 'listenTo'
      *
      * @param (Array[Array]) listenerArray - A collection of arrays of arguments that will be used with 'Backbone.Events.listenTo'
      *
@@ -204,7 +204,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
             return argsArray;
         });
 
-        // TODO: test that duplicate itmems will pick the bindings from options, throwing out defaults
+        // TODO: test that duplicate items will pick the bindings from options, throwing out defaults
         listenerArray = _.uniq(listenerArgs, function (a, b) {
             return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
         });
