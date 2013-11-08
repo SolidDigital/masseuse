@@ -53,6 +53,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
 
         if ('auto' === this.options.rivetConfig) {
             this.model.set('viewId', this.cid);
+            this.domEl = this.cid;
             this.rivetView = rivetView({
                 rivetScope : '#' + this.cid,
                 rivetPrefix : 'rv'
