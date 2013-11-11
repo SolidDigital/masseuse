@@ -156,7 +156,6 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
 
     function render () {
         if (this.$el && this.template) {
-            console.log(this.options.appendView);
             if (this.options.appendView) {
                 this.$el.append(this.template(this.dataToJSON()));
                 this.setElement(this.$el.children().last());
