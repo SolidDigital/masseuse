@@ -209,7 +209,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
 
         // TODO: test that duplicate items will pick the bindings from options, throwing out defaults
         listenerArray = _.uniq(listenerArgs, function (a, b) {
-            return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
+            return _.identity(a);
         });
 
         _.each(listenerArray, function (listenerArgs) {
