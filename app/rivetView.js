@@ -1,5 +1,5 @@
 /* jshint loopfunc: true */
-define(['rivets', 'mixin', 'backbone'], function (Rivets, mixin, Backbone) {
+define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, Backbone, _) {
 
     /**
      * Adapter originally from https://gist.github.com/mogadanez/5728747
