@@ -47,7 +47,12 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView'], function (B
         if (this.options.templateHtml) {
             this.template = _.template(this.options.templateHtml);
         }
-        this.model = new ModelType(this.options.modelData);
+
+        if(!this.model) {
+            this.model = new ModelType(this.options.modelData);
+        } else {
+            this.model = options.model;
+        }
 
         if (this.options.bindings) {
             this.bindEventListeners(this.options.bindings);
