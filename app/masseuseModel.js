@@ -6,7 +6,9 @@ define([
 
     return Backbone.Model.extend({
         unsettableProperties: [],
-
+        toggleAttribute: function(attribute) {
+            this.set(attribute, !this.get(attribute));
+        },
         set: function(key, val, options) {
             var self = this,
                 attrs = {},
