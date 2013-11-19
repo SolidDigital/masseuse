@@ -213,6 +213,17 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
             return JSON.stringify(value);
         }
 
+        Rivets.formatters.includes = function() {
+            var args = Array.prototype.slice.call(arguments),
+                stringToCompare = args.shift();
+
+            if(args.indexOf(stringToCompare) != -1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         Rivets.binders.addclass = function(el, value) {
             if(el.addedClass) {
                 $(el).removeClass(el.addedClass)
