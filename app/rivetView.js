@@ -209,6 +209,10 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
             return value.charAt(0).toUpperCase() + value.slice(1);
         }
 
+        Rivets.formatters.jsonAsString = function(value) {
+            return JSON.stringify(value);
+        }
+
         Rivets.binders.addclass = function(el, value) {
             if(el.addedClass) {
                 $(el).removeClass(el.addedClass)
