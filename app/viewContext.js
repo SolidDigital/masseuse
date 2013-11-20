@@ -2,18 +2,18 @@
 define(function () {
     'use strict';
 
-    Self.prototype.getBoundFunction = function(context) {
+    ViewContext.prototype.getBoundFunction = function(context) {
         return _getProperty(context, this.field);
     }
 
-    function Self(field) {
-        if (!(this instanceof Self)) {
-            return new Self(field);
+    function ViewContext(field) {
+        if (!(this instanceof ViewContext)) {
+            return new ViewContext(field);
         }
         this.field = field;
     }
 
-    return Self;
+    return ViewContext;
 
     function _getProperty (obj, parts, create) {
         if (typeof parts === 'string') {

@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext'], function (Backbone, _, channels, mixin, rivetView, Self) {
+define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext'], function (Backbone, _, channels, mixin, rivetView, ViewContext) {
 
     var BaseView = Backbone.View.extend({
         options : {
@@ -40,7 +40,8 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
     return BaseView;
 
     function initialize (options) {
-        var modelData;
+        var modelData,
+            self = this;
         this.options = _.extend({}, this.options, options);
         var ModelType = this.options.ModelType || Backbone.Model;
 
@@ -52,8 +53,8 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
         if(!this.model) {
             modelData = this.options.modelData;
             _.each(modelData, function(datum, key) {
-                if (datum instanceof Self) {
-                    modelData[key] = datum.getBoundFunction(this);
+                if (datum instanceof ViewContext) {
+                    modelData[key] = datum.getBoundFunction(self);
                 }
             });
             this.model = new ModelType(this.options.modelData);
