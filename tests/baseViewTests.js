@@ -30,7 +30,8 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                     done();
                 },
                 function () {
-                    console.log('BaseView error.')
+                    console.log('BaseView error.');
+                    done();
                 });
         });
 
@@ -66,7 +67,6 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                     viewInstance.start().progress(function(event){
                         eventSpy(event);
                         if (3 <= eventSpy.callCount) {
-                            console.log("done");
                             eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
                             eventSpy.secondCall.args[0].should.equal('renderDone');
                             eventSpy.thirdCall.args[0].should.equal('afterRenderDone');

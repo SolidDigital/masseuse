@@ -30,6 +30,7 @@ require.config({
 
         baseView : '../app/baseView',
         rivetView : '../app/rivetView',
+        viewContext : '../app/viewContext',
 
         channels : '../app/channels',
 
@@ -45,7 +46,8 @@ require.config({
 require([
     'mocha',
     './baseViewTests',
-    './masseuseModelTests'
+    './masseuseModelTests',
+    './viewContextTests'
 ], function (mocha) {
     mocha.run();
 });

@@ -31,14 +31,16 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                     afterDone();
                 },
                 function () {
-                    console.log('Computed error.')
+                    console.log('Computed error.');
+                    done();
                 });
             injector.require(['proxyProperty'], function (Proxy) {
                     ProxyProperty = Proxy;
                     afterDone();
                 },
                 function () {
-                    console.log('Proxy error.')
+                    console.log('Proxy error.');
+                    done();
                 });
             injector.require(['masseuseModel'], function (MasseuseModel) {
                     Model = MasseuseModel;
@@ -46,7 +48,8 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                     afterDone();
                 },
                 function () {
-                    console.log('Model error.')
+                    console.log('Model error.');
+                    done();
                 });
         });
 
@@ -233,48 +236,6 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                     function () {
                         console.log('Model error.')
                     });
-            });
-
-            it("no events model is faster", function() {
-                var start, finish, time, i = 0, loops = 100000;
-                modelInstance.set("propB", ComputedProperty(["propA"], function (propA) {
-                    return propA * 2;
-                }));
-                modelNoEventsInstance.set("propB", ComputedProperty(["propA"], function (propA) {
-                    return propA * 2;
-                }));
-
-                modelInstance.set("propC", ComputedProperty(["propB"], function (propA) {
-                    return propA * .25;
-                }));
-                modelNoEventsInstance.set("propC", ComputedProperty(["propB"], function (propA) {
-                    return propA * .25;
-                }));
-
-                start = new Date().getTime();
-                while(i < loops) {
-                    modelNoEventsInstance.set('propA', ++i);
-                }
-                finish = new Date().getTime();
-                time = finish - start;
-
-                i = 0;
-                start = new Date().getTime();
-                while(i < loops) {
-                    modelInstance.set('propA', ++i);
-                }
-                finish = new Date().getTime();
-
-                console.log("---")
-                console.log(time - (finish - start));
-                expect(true).to.be.true;
-
-                console.log("---")
-                expect(time < finish - start).to.be.true;
-
-                console.log(modelInstance.attributes);
-                console.log(modelNoEventsInstance.attributes);
-
             });
         });
 
