@@ -171,6 +171,10 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
             return value + ' ';
         }
 
+        Rivets.formatters.spaceBefore = function(value) {
+            return ' ' + value;
+        }
+
         Rivets.formatters.secondsToTime = function(secs) {
             var hours = Math.floor(secs / (60 * 60)),
                 divisor_for_minutes = secs % (60 * 60),
