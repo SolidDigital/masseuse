@@ -163,6 +163,10 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
             return value.join(', ');
         }
 
+        Rivets.formatters.withBackslash = function(value) {
+            return value + ' / ';
+        }
+
         Rivets.formatters.withColon = function(value) {
             return value + ' : ';
         }
@@ -173,6 +177,15 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
 
         Rivets.formatters.spaceBefore = function(value) {
             return ' ' + value;
+        }
+
+        Rivets.formatters.bytesToKilobytes = function(value) {
+            return (value / 1000) + ' kb';
+        }
+
+        Rivets.formatters.prettyDate = function(dateStr) {
+            var date = new Date(dateStr);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
         }
 
         Rivets.formatters.secondsToTime = function(secs) {
@@ -191,11 +204,11 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
                 time += (obj.s) ? ((obj.s > 1) ? obj.s + ' secs ' : obj.s + ' sec ') : '';
 
             return time;
-        }
+        };
 
         Rivets.formatters.dollars = function(amount) {
             return '$' + (amount / 100);
-        }
+        };
 
         Rivets.formatters.equals = function(value, args) {
             return (value === args);
