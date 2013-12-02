@@ -154,6 +154,7 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
 
         Rivets.config.templateDelimiters = ['{{', '}}'];
 
+
         Rivets.formatters.withComma = function(value) {
             return value + ', ';
         }
@@ -249,114 +250,6 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
             if(value) {
                 $(el).addClass(value)
                 el.addedClass = value
-            }
-        }
-
-        Rivets.binders['eachwith-*'] = {
-            block: true,
-            bind: function(el) {
-                console.log('bind fired');
-                console.log('the Arguments Passed:');
-                console.log(this.args);
-//                var attr;
-//                if (this.marker == null) {
-//                    attr = ['data', this.view.config.prefix, this.type].join('-').replace('--', '-');
-//                    this.marker = document.createComment(" rivets: " + this.type + " ");
-//                    this.iterated = [];
-//                    el.removeAttribute(attr);
-//                    el.parentNode.insertBefore(this.marker, el);
-//                    return el.parentNode.removeChild(el);
-//                }
-            },
-            unbind: function(el) {
-                console.log('unbind fired');
-                console.log('the arguments passed are:');
-                console.log(this.args);
-//                var view, _i, _len, _ref, _results;
-//                if (this.iterated != null) {
-//                    _ref = this.iterated;
-//                    _results = [];
-//                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-//                        view = _ref[_i];
-//                        _results.push(view.unbind());
-//                    }
-//                    return _results;
-//                }
-            },
-            routine: function(el, collection) {
-                console.log('routine Fired');
-                console.log('the arguments passed are:');
-                console.log(this.args);
-//                var data, i, index, k, key, model, modelName, options, previous, template, v, view, _i, _j, _len, _len1, _ref, _ref1, _ref2, _results;
-//                modelName = this.args[0];
-//                collection = collection || [];
-//                if (this.iterated.length > collection.length) {
-//                    _ref = Array(this.iterated.length - collection.length);
-//                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-//                        i = _ref[_i];
-//                        view = this.iterated.pop();
-//                        view.unbind();
-//                        this.marker.parentNode.removeChild(view.els[0]);
-//                    }
-//                }
-//                _results = [];
-//                for (index = _j = 0, _len1 = collection.length; _j < _len1; index = ++_j) {
-//                    model = collection[index];
-//                    data = {};
-//                    data[modelName] = model;
-//                    if (this.iterated[index] == null) {
-//                        _ref1 = this.view.models;
-//                        for (key in _ref1) {
-//                            model = _ref1[key];
-//                            if (data[key] == null) {
-//                                data[key] = model;
-//                            }
-//                        }
-//                        previous = this.iterated.length ? this.iterated[this.iterated.length - 1].els[0] : this.marker;
-//                        options = {
-//                            binders: this.view.options.binders,
-//                            formatters: this.view.options.formatters,
-//                            config: {}
-//                        };
-//                        _ref2 = this.view.options.config;
-//                        for (k in _ref2) {
-//                            v = _ref2[k];
-//                            options.config[k] = v;
-//                        }
-//                        options.config.preloadData = true;
-//                        template = el.cloneNode(true);
-//                        view = new Rivets.View(template, data, options);
-//                        view.bind();
-//                        this.iterated.push(view);
-//                        _results.push(this.marker.parentNode.insertBefore(template, previous.nextSibling));
-//                    } else if (this.iterated[index].models[modelName] !== model) {
-//                        _results.push(this.iterated[index].update(data));
-//                    } else {
-//                        _results.push(void 0);
-//                    }
-//                }
-//                return _results;
-            },
-            update: function(models) {
-                console.log('update fired');
-                console.log('the arguments passed are:');
-                console.log(this.args);
-
-//                var data, key, model, view, _i, _len, _ref, _results;
-//                data = {};
-//                for (key in models) {
-//                    model = models[key];
-//                    if (key !== this.args[0]) {
-//                        data[key] = model;
-//                    }
-//                }
-//                _ref = this.iterated;
-//                _results = [];
-//                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-//                    view = _ref[_i];
-//                    _results.push(view.update(data));
-//                }
-//                return _results;
             }
         }
 
