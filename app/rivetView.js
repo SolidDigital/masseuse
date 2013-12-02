@@ -180,7 +180,7 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
         }
 
         Rivets.formatters.bytesToKilobytes = function(value) {
-            return (value / 1000) + ' kb';
+            return (value / 1024) + ' kb';
         }
 
         Rivets.formatters.prettyDate = function(dateStr) {
