@@ -159,7 +159,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
         return $deferred.promise();
     }
 
-    function startChildren ($parentDeferred) {;
+    function startChildren ($parentDeferred) {
         _(this.children).each(function (child) {
             var $afterRenderDeferred = new $.Deferred();
 
