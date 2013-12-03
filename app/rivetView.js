@@ -179,8 +179,11 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
             return ' ' + value;
         }
 
-        Rivets.formatters.bytesToKilobytes = function(value) {
-            return (value / 1024) + ' kb';
+        Rivets.formatters.prettyFileSize = function(value) {
+            var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            if (value == 0) return '0 Bytes';
+            var i = parseInt(Math.floor(Math.log(value) / Math.log(1024)));
+            return Math.round(value / Math.pow(1024, i), 2) + ' ' + sizes[i];
         }
 
         Rivets.formatters.prettyDate = function(dateStr) {
