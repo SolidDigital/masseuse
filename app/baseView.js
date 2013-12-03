@@ -42,7 +42,9 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
     function initialize (options) {
         var modelData,
             self = this;
+
         this.options = _.extend({}, this.options, options);
+
         var ModelType = this.options.ModelType || Backbone.Model;
 
         this.elementCache = _.memoize(elementCache);
@@ -112,8 +114,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
         _.defer(function () {
             $
                 .when(
-                    $beforeRenderDeferred,
-                    startChildren.call(self, $deferred)
+                    $beforeRenderDeferred
                 )
                 .always(function () {
                     $deferred.notify(BaseView.beforeRenderDone);
@@ -127,7 +128,9 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
                 function () {
                     var $renderDeferred = _runLifeCycleMethod.call(self, self.render, 'Render');
                     $
-                        .when($renderDeferred)
+                        .when(
+                            $renderDeferred
+                        )
                         .always(function () {
                             $deferred.notify(BaseView.renderDone);
                         })
@@ -135,7 +138,10 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
                         function () {
                             var $afterRenderDeferred = _runLifeCycleMethod.call(self, self.afterRender, 'AfterRender');
                             $
-                                .when($afterRenderDeferred)
+                                .when(
+                                    $afterRenderDeferred,
+                                    startChildren.call(self, $deferred)
+                                )
                                 .always(function () {
                                     $deferred.notify(BaseView.afterRenderDone);
                                 })
@@ -153,7 +159,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
         return $deferred.promise();
     }
 
-    function startChildren ($parentDeferred) {
+    function startChildren ($parentDeferred) {;
         _(this.children).each(function (child) {
             var $afterRenderDeferred = new $.Deferred();
 
@@ -180,6 +186,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
 
     // This function is memoized in initialize
     function elementCache (selector) {
+        console.log(selector);
         return this.$el.find(selector);
     }
 
