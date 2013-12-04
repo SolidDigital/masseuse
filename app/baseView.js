@@ -162,7 +162,6 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
     function startChildren ($parentDeferred) {
         _(this.children).each(function (child) {
             var $afterRenderDeferred = new $.Deferred();
-
             $parentDeferred.progress(function (step) {
                 if (step === BaseView.renderDone) {
                     $afterRenderDeferred.resolve();
@@ -174,7 +173,6 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
     }
 
     function render () {
-
         if (undefined === this.el && undefined !== this.options.el) {
             this.setElement($(this.options.el));
         }
@@ -191,7 +189,6 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
 
     // This function is memoized in initialize
     function elementCache (selector) {
-        console.log(selector);
         return this.$el.find(selector);
     }
 
