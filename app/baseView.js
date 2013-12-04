@@ -174,6 +174,11 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
     }
 
     function render () {
+
+        if (undefined === this.el && undefined !== this.options.el) {
+            this.setElement($(this.options.el));
+        }
+
         if (this.$el && this.template) {
             if (this.options.appendView) {
                 this.$el.append(this.template(this.dataToJSON()));
@@ -323,6 +328,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
     function addChild(childView) {
         if (!_(this.children).contains(childView)) {
             this.children.push(childView);
+            childView.parent = this;
         }
     }
 
