@@ -24,7 +24,8 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
         remove : remove,
         children: null,
         addChild: addChild,
-        removeChild: removeChild
+        removeChild: removeChild,
+        refreshChildren: refreshChildren
 
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
@@ -331,5 +332,12 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
 
     function removeChild(childView) {
         this.children = _(this.children).without(childView);
+    }
+
+    function refreshChildren() {
+        _(this.children).each(function(child) {
+            child.remove();
+            child.start();
+        });
     }
 });
