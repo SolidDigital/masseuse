@@ -233,6 +233,20 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
             return JSON.stringify(value);
         }
 
+        Rivets.formatters.pluralize = function(value, arg) {
+            switch (value) {
+                case 0 :
+                    return value + ' ' + arg + 's';
+                    break;
+                case 1 :
+                    return value + ' ' + arg;
+                    break;
+                default:
+                    return value + ' ' + arg + 's';
+                    break;
+            }
+        }
+
         Rivets.formatters.includes = function() {
             var args = Array.prototype.slice.call(arguments),
                 stringToCompare = args.shift();
