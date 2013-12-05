@@ -182,9 +182,6 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
             if (this.options.appendView) {
                 this.$el.append(this.template(this.dataToJSON()));
                 this.setElement(this.$el.children().last());
-            } else if (this.options.prependView) {
-                this.$el.prepend(this.template(this.dataToJSON()));
-                this.setElement(this.$el.children().first());
             } else {
                 this.$el.html(this.template(this.dataToJSON()));
             }
