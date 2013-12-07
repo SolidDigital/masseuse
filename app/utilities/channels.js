@@ -1,13 +1,13 @@
 /*global define:false*/
-define(['../.', 'backbone'], function(_, Backbone) {
-    "use strict";
+define(['underscore', 'backbone'], function (_, Backbone) {
+    'use strict';
 
     var aChannel,
         channels;
 
     // setup channels
     channels = {
-        views: {
+        views : {
 
         }
     };
@@ -21,7 +21,7 @@ define(['../.', 'backbone'], function(_, Backbone) {
 
     return channels;
 
-    function namespace(ns_string) {
+    function namespace (ns_string) {
 
         var parts = ns_string.split('.'),
             parent = channels,

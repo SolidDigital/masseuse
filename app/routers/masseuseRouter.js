@@ -1,9 +1,10 @@
-/*global define*/
+/*global define:false*/
 define([
     'backbone',
-    '../.'
+    'underscore'
 ],
     function (Backbone, _) {
+        'use strict';
 
         /**
          * @class MasseuseRouter
@@ -11,12 +12,13 @@ define([
          */
         return Backbone.Router.extend({
             initialize : initialize,
-            _bindRoutes: noop
+            _bindRoutes : noop
         });
 
-        function noop() {}
+        function noop () {
+        }
 
-        function initialize() {
+        function initialize () {
             var self = this;
 
             if (this.beforeRouting) {

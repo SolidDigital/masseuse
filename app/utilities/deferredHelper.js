@@ -1,12 +1,10 @@
-/*global define:false */
 /*global define:false*/
-define(['../.'], function (_) {
-
+define(['underscore'], function (_) {
     'use strict';
 
     var methods = {
-            cacheNotification : cacheNotification
-        };
+        cacheNotification : cacheNotification
+    };
 
     return DeferredHelper;
 
@@ -15,16 +13,16 @@ define(['../.'], function (_) {
      * @param $deferred
      * @constructor
      */
-    function DeferredHelper($deferred) {
+    function DeferredHelper ($deferred) {
         var self = this;
 
         this.cache = {};
 
-        _.each($deferred, function(value,method) {
+        _.each($deferred, function (value, method) {
             self[method] = $deferred[method].bind(self);
         });
 
-        _.each(methods, function(value,method) {
+        _.each(methods, function (value, method) {
             self[method] = methods[method].bind(self);
         });
     }
@@ -38,11 +36,11 @@ define(['../.'], function (_) {
      * @param notify
      * @returns {{notifyFromCache: Function}}
      */
-    function cacheNotification(notify) {
+    function cacheNotification (notify) {
         var self = this;
 
         return {
-            notifyFromCache : function() {
+            notifyFromCache : function () {
                 self.notify(notify);
             }
         }

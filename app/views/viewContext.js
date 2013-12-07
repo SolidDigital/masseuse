@@ -2,11 +2,11 @@
 define(function () {
     'use strict';
 
-    ViewContext.prototype.getBoundFunction = function(context) {
+    ViewContext.prototype.getBoundFunction = function (context) {
         return _getProperty(context, this.field);
     }
 
-    function ViewContext(field) {
+    function ViewContext (field) {
         if (!(this instanceof ViewContext)) {
             return new ViewContext(field);
         }

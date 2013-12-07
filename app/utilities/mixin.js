@@ -1,17 +1,25 @@
-define(['../.', 'jquery'], function (_, $) {
+/*global define:false*/
+define(['underscore', 'jquery'], function (_, $) {
+
+    'use strict';
 
     /**
      * configureMethod allows the reuse of a function
      *
-     * a configureMethod is curried twice. in other words, first configureMethod is called with the configureItFunction and the default options.
-     * this creates a "general" configureMethod function. this general function can then be called with the actual, specific
+     * a configureMethod is curried twice. in other words, first configureMethod is called with the configureItFunction
+     * and the default options.
+     * this creates a "general" configureMethod function. this general function can then be called with the actual,
+     * specific
      * options for the situation. this will return the final function that can be attached to your object.
      *
-     * in addition to the availability of options, configureIts provide two other pieces of functionality that can be deployed
+     * in addition to the availability of options, configureIts provide two other pieces of functionality that can be
+     * deployed
      * through options.
      *
-     * 1) configureIts can implement $.Deferred. to do this set options.async to true. if async is true, then the first argument
-     * passed to the configureItFunction will be a deferred instance. this instance can be resolved or rejected as seen fit. its
+     * 1) configureIts can implement $.Deferred. to do this set options.async to true. if async is true, then the first
+     * argument
+     * passed to the configureItFunction will be a deferred instance. this instance can be resolved or rejected as seen
+     * fit. its
      * promise will be returned by the final function attached to the object.
      *
      * 2) pre and post fire events can be triggered by including either or both preEvent or postEvent object. the object

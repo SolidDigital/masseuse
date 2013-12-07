@@ -1,6 +1,9 @@
+/*global define:false*/
 define([
-    'backbone', 'underscore', '../channels', '../mixin', '../views/rivetView', '../views/viewContext', '../deferredHelper'
+    'backbone', 'underscore', '../utilities/channels', '../utilities/mixin', '../views/rivetView',
+    '../views/viewContext', '../utilities/deferredHelper'
 ], function (Backbone, _, channels, mixin, rivetView, ViewContext, DeferredHelper) {
+    'use strict';
 
     var BaseView = Backbone.View.extend({
         options : {
@@ -24,10 +27,10 @@ define([
         dataToJSON : dataToJSON,
         bindEventListeners : bindEventListeners,
         remove : remove,
-        children: null,
-        addChild: addChild,
-        removeChild: removeChild,
-        refreshChildren: refreshChildren
+        children : null,
+        addChild : addChild,
+        removeChild : removeChild,
+        refreshChildren : refreshChildren
 
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
@@ -43,8 +46,6 @@ define([
     return BaseView;
 
     function initialize (options) {
-        var self = this;
-
         this.options = _.extend({}, this.options, options);
         this.elementCache = _.memoize(elementCache);
 
@@ -70,7 +71,8 @@ define([
      * - Notifies that afterRender is done
      * - Resolves the returned promise
      *
-     * @param {jQuery.promise} $parentRenderPromise - If passed in, the start method was called from a parent view start() method.
+     * @param {jQuery.promise} $parentRenderPromise - If passed in, the start method was called from a parent view
+     * start() method.
      * @returns {jQuery.promise} A promise that is resolved when when the start method has completed
      */
     function start ($parentRenderPromise) {
@@ -166,7 +168,8 @@ define([
      * bindEventListeners
      * Bind all event listeners specified in 'defaultListeners' and 'options.listeners' using 'listenTo'
      *
-     * @param (Array[Array]) listenerArray - A collection of arrays of arguments that will be used with 'Backbone.Events.listenTo'
+     * @param (Array[Array]) listenerArray - A collection of arrays of arguments that will be used with
+     * 'Backbone.Events.listenTo'
      *
      * @example:
      *      bindEventListeners([['myModel', 'change:something', 'myCallbackFunction']]);
@@ -212,19 +215,19 @@ define([
         Backbone.View.prototype.remove.apply(this, arguments);
     }
 
-    function addChild(childView) {
+    function addChild (childView) {
         if (!_(this.children).contains(childView)) {
             this.children.push(childView);
             childView.parent = this;
         }
     }
 
-    function removeChild(childView) {
+    function removeChild (childView) {
         this.children = _(this.children).without(childView);
     }
 
-    function refreshChildren() {
-        _(this.children).each(function(child) {
+    function refreshChildren () {
+        _(this.children).each(function (child) {
             child.remove();
             child.start();
         });
