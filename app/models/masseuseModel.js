@@ -1,7 +1,7 @@
 define([
     'backbone',
-    'computedProperty',
-    'proxyProperty',
+    './computedProperty',
+    './proxyProperty',
     'underscore'], function (Backbone, ComputedProperty, ProxyProperty, _) {
 
     return Backbone.Model.extend({

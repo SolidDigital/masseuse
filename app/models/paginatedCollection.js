@@ -1,4 +1,4 @@
-define(['backbone', 'underscore'], function (Backbone, _) {
+define(['backbone', '../.'], function (Backbone, _) {
 
     return Backbone.Collection.extend({
         /**

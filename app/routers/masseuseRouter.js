@@ -1,7 +1,7 @@
 /*global define*/
 define([
     'backbone',
-    'underscore'
+    '../.'
 ],
     function (Backbone, _) {
 

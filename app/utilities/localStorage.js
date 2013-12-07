@@ -1,4 +1,4 @@
-define(['jquery'], function($) {
+define(['../../.'], function($) {
 
     var _localStorage = window.localStorage,
         _existenceCheckInterval = 10;
