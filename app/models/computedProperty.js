@@ -1,4 +1,7 @@
+/*global define:false*/
 define([], function () {
+    'use strict';
+
     /**
      * @param listenablePropertyNames
      * @param callback

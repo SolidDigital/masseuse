@@ -1,14 +1,16 @@
+/*global define:false*/
 define(['backbone', 'underscore'], function (Backbone, _) {
+    'use strict';
 
-    return Backbone.Collection.extend({
-        /**
-         * Paginated Collection
-         * make sure you override this empty config with necessary information
-         * paginationConfig {
+    /**
+     * Paginated Collection
+     * make sure you override this empty config with necessary information
+     * paginationConfig {
          *      pageSize : '', - results per page
          *      skipPages : '', - number of results to skip
          *      url : '', - endpoint
-         *      pageLink : '',- paginated page numbers link, example : '#users/page/'. this automatically concats with its page number in the fetch success method to create -> '#users/page/3'
+         *      pageLink : '',- paginated page numbers link, example : '#users/page/'. this automatically concats with
+         *      its page number in the fetch success method to create -> '#users/page/3'
          *      showLink : '', - attached on the end of pageLink for the limit attribute in the request
          *      pageLimits : { - used in creating a show # dropdown
          *      start : '',
@@ -16,7 +18,7 @@ define(['backbone', 'underscore'], function (Backbone, _) {
          *      step : ''
          * }
          */
-
+    return Backbone.Collection.extend({
         paginationConfig : {
             pageSize : '',
             skipPages : '',
@@ -48,8 +50,8 @@ define(['backbone', 'underscore'], function (Backbone, _) {
     function fetch (options) {
         var args = Array.prototype.slice.call(arguments, 0);
         var fetchOptions = {
-            data: {},
-            headers: {}
+            data : {},
+            headers : {}
         };
 
         fetchOptions.data = {
@@ -120,7 +122,8 @@ define(['backbone', 'underscore'], function (Backbone, _) {
             if (this.grab('currentPage') > 1) {
                 returnObj = {
                     disabled : false,
-                    link : this.paginationConfig.pageLink + (this.grab('currentPage') - 1) + this.paginationConfig.showLink + this.paginationConfig.pageSize,
+                    link : this.paginationConfig.pageLink + (this.grab('currentPage') - 1) +
+                        this.paginationConfig.showLink + this.paginationConfig.pageSize,
                     onClick : ''
                 };
             }
@@ -128,7 +131,8 @@ define(['backbone', 'underscore'], function (Backbone, _) {
             if (this.grab('currentPage') < this.grab('totalPages')) {
                 returnObj = {
                     disabled : false,
-                    link : this.paginationConfig.pageLink + (this.grab('currentPage') + 1) + this.paginationConfig.showLink + this.paginationConfig.pageSize,
+                    link : this.paginationConfig.pageLink + (this.grab('currentPage') + 1) +
+                        this.paginationConfig.showLink + this.paginationConfig.pageSize,
                     onClick : ''
                 };
             }

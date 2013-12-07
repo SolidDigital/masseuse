@@ -1,4 +1,7 @@
-define([], function () {
+/*global define:false*/
+define(function () {
+    'use strict';
+
     /**
      * @param propertyName
      * @param propertyNameOnModel

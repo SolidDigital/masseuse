@@ -1,4 +1,6 @@
-define(['jquery'], function($) {
+/*global define:false*/
+define(['jquery'], function ($) {
+    'use strict';
 
     var _localStorage = window.localStorage,
         _existenceCheckInterval = 10;
@@ -12,11 +14,11 @@ define(['jquery'], function($) {
         remove : remove
     };
 
-    function get(name) {
+    function get (name) {
         return _localStorage.getItem(name);
     }
 
-    function set(name, value) {
+    function set (name, value) {
         return _localStorage.setItem(name, value);
     }
 
@@ -26,7 +28,7 @@ define(['jquery'], function($) {
      * @param name
      * @returns {promise}
      */
-    function remove(name) {
+    function remove (name) {
         var $deferred = new $.Deferred();
 
         _localStorage.removeItem(name);
@@ -36,11 +38,11 @@ define(['jquery'], function($) {
         return $deferred.promise();
     }
 
-    function _checkForExistence(name, $deferred) {
-        if(null === _localStorage.getItem(name)) {
+    function _checkForExistence (name, $deferred) {
+        if (null === _localStorage.getItem(name)) {
             $deferred.resolve();
         } else {
-            setTimeout(function() {
+            setTimeout(function () {
                 _checkForExistence(name, $deferred);
             }, _existenceCheckInterval);
         }

@@ -1,4 +1,9 @@
-define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext'], function (Backbone, _, channels, mixin, rivetView, ViewContext) {
+/*global define:false*/
+define([
+    'backbone', 'underscore', '../utilities/channels', '../utilities/configureMethod', './rivetView',
+    './viewContext', '../utilities/deferredHelper'
+], function (Backbone, _, channels, configureMethod, rivetView, ViewContext, DeferredHelper) {
+    'use strict';
 
     var BaseView = Backbone.View.extend({
         options : {
@@ -22,10 +27,10 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
         dataToJSON : dataToJSON,
         bindEventListeners : bindEventListeners,
         remove : remove,
-        children: null,
-        addChild: addChild,
-        removeChild: removeChild,
-        refreshChildren: refreshChildren
+        children : null,
+        addChild : addChild,
+        removeChild : removeChild,
+        refreshChildren : refreshChildren
 
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
@@ -41,48 +46,13 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
     return BaseView;
 
     function initialize (options) {
-        var modelData,
-            self = this;
-
         this.options = _.extend({}, this.options, options);
-
-        var ModelType = this.options.ModelType || Backbone.Model;
-
         this.elementCache = _.memoize(elementCache);
-        if (this.options.templateHtml) {
-            this.template = _.template(this.options.templateHtml);
-        }
 
-        if(!this.model) {
-            modelData = this.options.modelData;
-            _.each(modelData, function(datum, key) {
-                if (datum instanceof ViewContext) {
-                    modelData[key] = datum.getBoundFunction(self);
-                }
-            });
-            this.model = new ModelType(this.options.modelData);
-        } else {
-            this.model = options.model;
-        }
-
-        if (this.options.bindings) {
-            this.bindEventListeners(this.options.bindings);
-        }
-
-        if ('auto' === this.options.rivetConfig) {
-            this.model.set('viewId', this.cid);
-            this.domEl = this.cid;
-            this.rivetView = rivetView({
-                rivetScope : '#' + this.cid,
-                rivetPrefix : 'rv'
-            })
-        } else if (this.options.rivetConfig) {
-            this.rivetView = rivetView({
-                rivetScope : this.options.rivetConfig.scope,
-                rivetPrefix : this.options.rivetConfig.prefix,
-                instaUpdateRivets : (this.options.rivetConfig.instaUpdateRivets ? true : false)
-            })
-        }
+        _setTemplate.call(this);
+        _setModel.call(this, options);
+        _setBoundEventListeners.call(this);
+        _setViewRiveting.call(this);
 
         this.children = [];
     }
@@ -101,12 +71,14 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
      * - Notifies that afterRender is done
      * - Resolves the returned promise
      *
-     * @param {jQuery.promise} $parentRenderPromise - If passed in, the start method was called from a parent view start() method.
+     * @param {jQuery.promise} $parentRenderPromise - If passed in, the start method was called from a parent view
+     * start() method.
      * @returns {jQuery.promise} A promise that is resolved when when the start method has completed
      */
     function start ($parentRenderPromise) {
         var self = this,
             $deferred = new $.Deferred(),
+            deferredHelper = new DeferredHelper($deferred),
             $beforeRenderDeferred = _runLifeCycleMethod.call(this, this.beforeRender, 'BeforeRender');
 
         // ParentView calls .start() on all children
@@ -117,13 +89,12 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
                 .when(
                     $beforeRenderDeferred
                 )
-                .always(function () {
-                    $deferred.notify(BaseView.beforeRenderDone);
-                })
+                .always(deferredHelper.cacheNotification(BaseView.beforeRenderDone).notifyFromCache)
                 .then(function () {
                     if ($parentRenderPromise) {
                         return $parentRenderPromise;
                     }
+                    return undefined;
                 })
                 .then(
                 function () {
@@ -132,9 +103,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
                         .when(
                             $renderDeferred
                         )
-                        .always(function () {
-                            $deferred.notify(BaseView.renderDone);
-                        })
+                        .always(deferredHelper.cacheNotification(BaseView.renderDone).notifyFromCache)
                         .then(
                         function () {
                             var $afterRenderDeferred = _runLifeCycleMethod.call(self, self.afterRender, 'AfterRender');
@@ -143,9 +112,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
                                     $afterRenderDeferred,
                                     startChildren.call(self, $deferred)
                                 )
-                                .always(function () {
-                                    $deferred.notify(BaseView.afterRenderDone);
-                                })
+                                .always(deferredHelper.cacheNotification(BaseView.afterRenderDone).notifyFromCache)
                                 .then(
                                     _resolveStart.call(self, $deferred),
                                     _rejectStart.call(self, $deferred)
@@ -201,7 +168,8 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
      * bindEventListeners
      * Bind all event listeners specified in 'defaultListeners' and 'options.listeners' using 'listenTo'
      *
-     * @param (Array[Array]) listenerArray - A collection of arrays of arguments that will be used with 'Backbone.Events.listenTo'
+     * @param (Array[Array]) listenerArray - A collection of arrays of arguments that will be used with
+     * 'Backbone.Events.listenTo'
      *
      * @example:
      *      bindEventListeners([['myModel', 'change:something', 'myCallbackFunction']]);
@@ -240,8 +208,81 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
         });
     }
 
-    // --------------------------
-    // Private Methods
+    function remove () {
+        _(this.children).each(function (child) {
+            child.remove();
+        });
+        Backbone.View.prototype.remove.apply(this, arguments);
+    }
+
+    function addChild (childView) {
+        if (!_(this.children).contains(childView)) {
+            this.children.push(childView);
+            childView.parent = this;
+        }
+    }
+
+    function removeChild (childView) {
+        this.children = _(this.children).without(childView);
+    }
+
+    function refreshChildren () {
+        _(this.children).each(function (child) {
+            child.remove();
+            child.start();
+        });
+    }
+
+    /**
+     * Private Methods - must be supplied with context
+     * @private
+     */
+
+    function _setTemplate () {
+        if (this.options.templateHtml) {
+            this.template = _.template(this.options.templateHtml);
+        }
+    }
+
+    function _setModel (options) {
+        var self = this,
+            ModelType = this.options.ModelType || Backbone.Model,
+            modelData;
+        if (!this.model) {
+            modelData = this.options.modelData;
+            _.each(modelData, function (datum, key) {
+                if (datum instanceof ViewContext) {
+                    modelData[key] = datum.getBoundFunction(self);
+                }
+            });
+            this.model = new ModelType(this.options.modelData);
+        } else {
+            this.model = options.model;
+        }
+    }
+
+    function _setBoundEventListeners () {
+        if (this.options.bindings) {
+            this.bindEventListeners(this.options.bindings);
+        }
+    }
+
+    function _setViewRiveting () {
+        if ('auto' === this.options.rivetConfig) {
+            this.model.set('viewId', this.cid);
+            this.domEl = this.cid;
+            this.rivetView = rivetView({
+                rivetScope : '#' + this.cid,
+                rivetPrefix : 'rv'
+            }).methodWithActualOptions;
+        } else if (this.options.rivetConfig) {
+            this.rivetView = rivetView({
+                rivetScope : this.options.rivetConfig.scope,
+                rivetPrefix : this.options.rivetConfig.prefix,
+                instaUpdateRivets : (this.options.rivetConfig.instaUpdateRivets ? true : false)
+            }).methodWithActualOptions;
+        }
+    }
 
     /**
      * Life cycle methods have an event triggered before the run.
@@ -259,7 +300,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
             return undefined;
         }
 
-        return mixin({}, lifeCycleMethod)({
+        return configureMethod({}, lifeCycleMethod).methodWithDefaultOptions({
             async : lifeCycleMethod.length,
             preEvent : {
                 methodName : lifeCycleMethodName,
@@ -271,20 +312,7 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
                 name : this.options.name + ':post' + lifeCycleMethodName,
                 channel : this.channels.views
             }
-        }).call(this);
-    }
-
-    /**
-     * A convenience wrapper for creating life cycle method references.
-     * @param lifeCycleMethod
-     * @param lifeCycleMethodName
-     * @returns {*}
-     * @private
-     */
-    function _lifeCycleMethodReference (lifeCycleMethod, lifeCycleMethodName) {
-        return function () {
-            return _runLifeCycleMethod.call(this, lifeCycleMethod, lifeCycleMethodName);
-        }.bind(this);
+        }).methodWithActualOptions.call(this);
     }
 
     function _resolveStart ($deferred) {
@@ -314,30 +342,5 @@ define(['backbone', 'underscore', 'channels', 'mixin', 'rivetView', 'viewContext
         }
 
         return obj;
-    }
-
-    function remove () {
-        _(this.children).each(function (child) {
-            child.remove();
-        });
-        Backbone.View.prototype.remove.apply(this, arguments);
-    }
-
-    function addChild(childView) {
-        if (!_(this.children).contains(childView)) {
-            this.children.push(childView);
-            childView.parent = this;
-        }
-    }
-
-    function removeChild(childView) {
-        this.children = _(this.children).without(childView);
-    }
-
-    function refreshChildren() {
-        _(this.children).each(function(child) {
-            child.remove();
-            child.start();
-        });
     }
 });

@@ -1,18 +1,19 @@
-/* jshint loopfunc: true */
-define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, Backbone, _) {
+/* jshint loopfunc:true */
+define(['rivets', '../utilities/configureMethod', 'backbone', 'underscore'], function (Rivets, configureMethod, Backbone, _) {
+    'use strict';
 
     /**
      * Adapter originally from https://gist.github.com/mogadanez/5728747
      */
 
-    return mixin({
+    return configureMethod({
         rivetScope : undefined,
         rivetPrefix : undefined,
         instaUpdateRivets : false
     }, function (config) {
         Rivets.configure({
             adapter : {
-                subscribe: function (obj, keypath, callback) {
+                subscribe : function (obj, keypath, callback) {
                     var parts = [keypath];
                     var index = keypath.indexOf('.');
                     if (index > -1) {
@@ -21,7 +22,7 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
                     this.subscribe_nested(parts, obj, callback);
                 },
 
-                subscribe_nested: function rivets_backbone_adapter_subscribe_nested(parts, obj, callback) {
+                subscribe_nested : function rivets_backbone_adapter_subscribe_nested (parts, obj, callback) {
                     if (!obj) {
                         return;
                     }
@@ -31,12 +32,13 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
                         if (obj instanceof Backbone.Collection) {
                             obj.on('add remove reset refresh', function (obj, keypath) {
                                 callback(this.getValue(obj, keypath));
-                            }.bind( this, obj, keypath ), this);
+                            }.bind(this, obj, keypath), this);
                         } else {
                             if (this.getValue(obj, keypath, true) instanceof Backbone.Collection) {
-                                this.getValue(obj, keypath, true).on('add remove reset refresh', function ( obj, keypath ) {
-                                    callback(this.getValue(obj, keypath));
-                                }.bind( this, obj, keypath ), this);
+                                this.getValue(obj, keypath, true).on('add remove reset refresh',
+                                    function (obj, keypath) {
+                                        callback(this.getValue(obj, keypath));
+                                }.bind(this, obj, keypath), this);
                             }
                             if (obj.on) {
                                 obj.on('change:' + keypath, function (tail_parts, key, m, v) {
@@ -58,7 +60,7 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
                     }
                 },
 
-                getValue: function rivets_backbone_adapter_getValue(model, key, not_expand_collection_to_model) {
+                getValue : function rivets_backbone_adapter_getValue (model, key, not_expand_collection_to_model) {
 
                     if (model instanceof Backbone.Collection) {
                         return key ? model[key] : model.models;
@@ -83,7 +85,7 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
 
                 },
 
-                unsubscribe: function (obj, keypath, callback) {
+                unsubscribe : function (obj, keypath, callback) {
                     if (typeof (obj) == 'undefined') {
                         return;
                     }
@@ -93,7 +95,7 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
                         obj.off('change:' + keypath);
                     }
                 },
-                read: function (obj, keypath) {
+                read : function (obj, keypath) {
                     var args = keypath.split(' ');
                     if (args.length > 1) {
                         return _.map(args, function (x) {
@@ -116,7 +118,7 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
                     }
                     return result;
                 },
-                publish: function (obj, keypath, value) {
+                publish : function (obj, keypath, value) {
                     var parts = [keypath];
                     var index = keypath.indexOf('.');
                     if (index > -1) {
@@ -154,117 +156,117 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
 
         Rivets.config.templateDelimiters = ['{{', '}}'];
 
-
-        Rivets.formatters.withComma = function(value) {
+        // TODO: move formatters into their own module
+        Rivets.formatters.withComma = function (value) {
             return value + ', ';
         }
 
-        Rivets.formatters.joinWithComma = function(value) {
+        Rivets.formatters.joinWithComma = function (value) {
             return value.join(', ');
         }
 
-        Rivets.formatters.withBackslash = function(value) {
+        Rivets.formatters.withBackslash = function (value) {
             return value + ' / ';
         }
 
-        Rivets.formatters.withColon = function(value) {
+        Rivets.formatters.withColon = function (value) {
             return value + ' : ';
         }
 
-        Rivets.formatters.spaceAfter = function(value) {
+        Rivets.formatters.spaceAfter = function (value) {
             return value + ' ';
         }
 
-        Rivets.formatters.spaceBefore = function(value) {
+        Rivets.formatters.spaceBefore = function (value) {
             return ' ' + value;
         }
 
-        Rivets.formatters.prettyFileSize = function(value) {
+        Rivets.formatters.prettyFileSize = function (value) {
             var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
             if (value == 0) return '0 Bytes';
             var i = parseInt(Math.floor(Math.log(value) / Math.log(1024)));
             return Math.round(value / Math.pow(1024, i), 2) + ' ' + sizes[i];
         }
 
-        Rivets.formatters.prettyDate = function(dateStr) {
+        Rivets.formatters.prettyDate = function (dateStr) {
             var date = new Date(dateStr);
             return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
         }
 
-        Rivets.formatters.secondsToTime = function(secs) {
+        Rivets.formatters.secondsToTime = function (secs) {
             var hours = Math.floor(secs / (60 * 60)),
                 divisor_for_minutes = secs % (60 * 60),
                 minutes = Math.floor(divisor_for_minutes / 60),
                 divisor_for_seconds = divisor_for_minutes % 60,
                 seconds = Math.ceil(divisor_for_seconds),
                 obj = {
-                    "h": hours,
-                    "m": minutes,
-                    "s": seconds
+                    "h" : hours,
+                    "m" : minutes,
+                    "s" : seconds
                 },
                 time = (obj.h) ? ((obj.h > 1) ? obj.h + ' hrs ' : obj.h + ' hr ' ) : '';
-                time += (obj.m) ? ((obj.m > 1) ? obj.m + ' mins ' : obj.m + ' min ') : '';
-                time += (obj.s) ? ((obj.s > 1) ? obj.s + ' secs ' : obj.s + ' sec ') : '';
+            time += (obj.m) ? ((obj.m > 1) ? obj.m + ' mins ' : obj.m + ' min ') : '';
+            time += (obj.s) ? ((obj.s > 1) ? obj.s + ' secs ' : obj.s + ' sec ') : '';
 
             return time;
         };
 
-        Rivets.formatters.dollars = function(amount) {
+        Rivets.formatters.dollars = function (amount) {
             return '$' + (amount / 100);
         };
 
-        Rivets.formatters.equals = function(value, args) {
+        Rivets.formatters.equals = function (value, args) {
             return (value === args);
         }
 
-        Rivets.formatters.exists = function(value, args) {
+        Rivets.formatters.exists = function (value, args) {
             return value ? value : args;
         }
 
-        Rivets.formatters.limit = function(value, args) {
+        Rivets.formatters.limit = function (value, args) {
             return value.slice(0, args);
         }
 
-        Rivets.formatters.humanize = function(value) {
+        Rivets.formatters.humanize = function (value) {
             return value.charAt(0).toUpperCase() + value.slice(1);
         }
 
-        Rivets.formatters.jsonAsString = function(value) {
+        Rivets.formatters.jsonAsString = function (value) {
             return JSON.stringify(value);
         }
 
-        Rivets.formatters.pluralize = function(value, arg) {
+        Rivets.formatters.pluralize = function (value, arg) {
             switch (value) {
-                case 0 :
-                    return value + ' ' + arg + 's';
-                    break;
-                case 1 :
-                    return value + ' ' + arg;
-                    break;
-                default:
-                    return value + ' ' + arg + 's';
-                    break;
+            case 0 :
+                return value + ' ' + arg + 's';
+                break;
+            case 1 :
+                return value + ' ' + arg;
+                break;
+            default:
+                return value + ' ' + arg + 's';
+                break;
             }
         }
 
-        Rivets.formatters.includes = function() {
+        Rivets.formatters.includes = function () {
             var args = Array.prototype.slice.call(arguments),
                 stringToCompare = args.shift();
 
-            if(args.indexOf(stringToCompare) != -1) {
+            if (args.indexOf(stringToCompare) != -1) {
                 return true;
             } else {
                 return false;
             }
         }
 
-        Rivets.binders.addclass = function(el, value) {
-            if(el.addedClass) {
+        Rivets.binders.addclass = function (el, value) {
+            if (el.addedClass) {
                 $(el).removeClass(el.addedClass)
                 delete el.addedClass
             }
 
-            if(value) {
+            if (value) {
                 $(el).addClass(value)
                 el.addedClass = value
             }
@@ -273,5 +275,5 @@ define(['rivets', 'mixin', 'backbone', 'underscore'], function (Rivets, mixin, B
         // bind data to rivets values.
         return Rivets.bind($(config.rivetScope), {data : this.model});
 
-    });
+    }).methodWithDefaultOptions;
 });
