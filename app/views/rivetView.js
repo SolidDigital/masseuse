@@ -1,12 +1,12 @@
 /* jshint loopfunc:true */
-define(['rivets', '../utilities/mixin', 'backbone', 'underscore'], function (Rivets, mixin, Backbone, _) {
+define(['rivets', '../utilities/configureMethod', 'backbone', 'underscore'], function (Rivets, configureMethod, Backbone, _) {
     'use strict';
 
     /**
      * Adapter originally from https://gist.github.com/mogadanez/5728747
      */
 
-    return mixin({
+    return configureMethod({
         rivetScope : undefined,
         rivetPrefix : undefined,
         instaUpdateRivets : false
@@ -275,5 +275,5 @@ define(['rivets', '../utilities/mixin', 'backbone', 'underscore'], function (Riv
         // bind data to rivets values.
         return Rivets.bind($(config.rivetScope), {data : this.model});
 
-    });
+    }).methodWithDefaultOptions;
 });

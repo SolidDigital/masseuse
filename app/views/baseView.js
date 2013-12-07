@@ -1,8 +1,8 @@
 /*global define:false*/
 define([
-    'backbone', 'underscore', '../utilities/channels', '../utilities/mixin', '../views/rivetView',
-    '../views/viewContext', '../utilities/deferredHelper'
-], function (Backbone, _, channels, mixin, rivetView, ViewContext, DeferredHelper) {
+    'backbone', 'underscore', '../utilities/channels', '../utilities/configureMethod', './rivetView',
+    './viewContext', '../utilities/deferredHelper'
+], function (Backbone, _, channels, configureMethod, rivetView, ViewContext, DeferredHelper) {
     'use strict';
 
     var BaseView = Backbone.View.extend({
@@ -274,13 +274,13 @@ define([
             this.rivetView = rivetView({
                 rivetScope : '#' + this.cid,
                 rivetPrefix : 'rv'
-            })
+            }).methodWithActualOptions;
         } else if (this.options.rivetConfig) {
             this.rivetView = rivetView({
                 rivetScope : this.options.rivetConfig.scope,
                 rivetPrefix : this.options.rivetConfig.prefix,
                 instaUpdateRivets : (this.options.rivetConfig.instaUpdateRivets ? true : false)
-            })
+            }).methodWithActualOptions;
         }
     }
 
@@ -300,7 +300,7 @@ define([
             return undefined;
         }
 
-        return mixin({}, lifeCycleMethod)({
+        return configureMethod({}, lifeCycleMethod).methodWithDefaultOptions({
             async : lifeCycleMethod.length,
             preEvent : {
                 methodName : lifeCycleMethodName,
@@ -312,7 +312,7 @@ define([
                 name : this.options.name + ':post' + lifeCycleMethodName,
                 channel : this.channels.views
             }
-        }).call(this);
+        }).methodWithActualOptions.call(this);
     }
 
     function _resolveStart ($deferred) {
