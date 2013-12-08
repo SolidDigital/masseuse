@@ -33,7 +33,7 @@ define([
         children : null,
         addChild : addChild,
         removeChild : removeChild,
-        refreshChildren : refreshChildren,
+        refreshChildren : refreshChildren
 
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
@@ -117,7 +117,7 @@ define([
      * bindEventListeners
      * Bind all event listeners specified in 'defaultListeners' and 'options.listeners' using 'listenTo'
      *
-     * @param (Array[Array]) listenerArray - A collection of arrays of arguments that will be used with
+     * @param listenerArray (Array[Array])  - A collection of arrays of arguments that will be used with
      * 'Backbone.Events.listenTo'
      *
      * @example:
