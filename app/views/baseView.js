@@ -1,11 +1,14 @@
 /*global define:false*/
 define([
     'backbone', 'underscore', '../utilities/channels', '../utilities/configureMethod', './rivetView',
-    './viewContext', '../utilities/deferredHelper'
-], function (Backbone, _, channels, configureMethod, rivetView, ViewContext, DeferredHelper) {
+    './viewContext', '../utilities/enclose', './lifeCycle'
+], function (Backbone, _, channels, configureMethod, rivetView, ViewContext, enclose, lifeCycle) {
     'use strict';
 
-    var BaseView = Backbone.View.extend({
+    var BEFORE_RENDER_DONE = 'beforeRenderDone',
+        RENDER_DONE = 'renderDone',
+        AFTER_RENDER_DONE = 'afterRenderDone',
+        BaseView = Backbone.View.extend({
         options : {
             name : 'BaseView',
             appendView : true,
@@ -30,15 +33,15 @@ define([
         children : null,
         addChild : addChild,
         removeChild : removeChild,
-        refreshChildren : refreshChildren
+        refreshChildren : refreshChildren,
 
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
     });
 
-    BaseView.beforeRenderDone = 'beforeRenderDone';
-    BaseView.renderDone = 'renderDone';
-    BaseView.afterRenderDone = 'afterRenderDone';
+    BaseView.beforeRenderDone = BEFORE_RENDER_DONE;
+    BaseView.renderDone = RENDER_DONE;
+    BaseView.afterRenderDone = AFTER_RENDER_DONE;
 
     // Share channels among all Views
     BaseView.prototype.channels = BaseView.prototype.channels || channels;
@@ -76,68 +79,14 @@ define([
      * @returns {jQuery.promise} A promise that is resolved when when the start method has completed
      */
     function start ($parentRenderPromise) {
-        var self = this,
-            $deferred = new $.Deferred(),
-            deferredHelper = new DeferredHelper($deferred),
-            $beforeRenderDeferred = _runLifeCycleMethod.call(this, this.beforeRender, 'BeforeRender');
+        var $deferred = new $.Deferred();
 
         // ParentView calls .start() on all children
         // ParentView doesn't render until all children have notified that they are done
         // After rendering, the ParentView notifies all children and they continue their lifecycle
-        _.defer(function () {
-            $
-                .when(
-                    $beforeRenderDeferred
-                )
-                .always(deferredHelper.cacheNotification(BaseView.beforeRenderDone).notifyFromCache)
-                .then(function () {
-                    if ($parentRenderPromise) {
-                        return $parentRenderPromise;
-                    }
-                    return undefined;
-                })
-                .then(
-                function () {
-                    var $renderDeferred = _runLifeCycleMethod.call(self, self.render, 'Render');
-                    $
-                        .when(
-                            $renderDeferred
-                        )
-                        .always(deferredHelper.cacheNotification(BaseView.renderDone).notifyFromCache)
-                        .then(
-                        function () {
-                            var $afterRenderDeferred = _runLifeCycleMethod.call(self, self.afterRender, 'AfterRender');
-                            $
-                                .when(
-                                    $afterRenderDeferred,
-                                    startChildren.call(self, $deferred)
-                                )
-                                .always(deferredHelper.cacheNotification(BaseView.afterRenderDone).notifyFromCache)
-                                .then(
-                                    _resolveStart.call(self, $deferred),
-                                    _rejectStart.call(self, $deferred)
-                                );
-                        },
-                        _rejectStart.call(self, $deferred)
-                    );
-                },
-                _rejectStart.call(self, $deferred));
-        });
+        _.defer(enclose(lifeCycle.runAllMethods).with($deferred, $parentRenderPromise).context(this).closure);
 
         return $deferred.promise();
-    }
-
-    function startChildren ($parentDeferred) {
-        _(this.children).each(function (child) {
-            var $afterRenderDeferred = new $.Deferred();
-            $parentDeferred.progress(function (step) {
-                if (step === BaseView.renderDone) {
-                    $afterRenderDeferred.resolve();
-                }
-            });
-
-            child.start($afterRenderDeferred.promise());
-        });
     }
 
     function render () {
@@ -282,49 +231,6 @@ define([
                 instaUpdateRivets : (this.options.rivetConfig.instaUpdateRivets ? true : false)
             }).methodWithActualOptions;
         }
-    }
-
-    /**
-     * Life cycle methods have an event triggered before the run.
-     * If a life cycle method has one or more arguments, then the first argument passed in is its deferred.
-     * The life cycle method will automatically return this deferred, otherwise it will pass through whatever
-     * the method itself returns.
-     *
-     * @param lifeCycleMethod
-     * @param lifeCycleMethodName
-     * @returns {*}
-     * @private
-     */
-    function _runLifeCycleMethod (lifeCycleMethod, lifeCycleMethodName) {
-        if (!lifeCycleMethod) {
-            return undefined;
-        }
-
-        return configureMethod({}, lifeCycleMethod).methodWithDefaultOptions({
-            async : lifeCycleMethod.length,
-            preEvent : {
-                methodName : lifeCycleMethodName,
-                name : this.options.name + ':pre' + lifeCycleMethodName,
-                channel : this.channels.views
-            },
-            postEvent : {
-                methodName : lifeCycleMethodName,
-                name : this.options.name + ':post' + lifeCycleMethodName,
-                channel : this.channels.views
-            }
-        }).methodWithActualOptions.call(this);
-    }
-
-    function _resolveStart ($deferred) {
-        return function () {
-            $deferred.resolve();
-        }.bind(this);
-    }
-
-    function _rejectStart ($deferred) {
-        return function () {
-            $deferred.reject();
-        }.bind(this);
     }
 
     function _getProperty (obj, parts, create) {

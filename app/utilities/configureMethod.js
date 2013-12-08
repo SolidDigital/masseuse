@@ -22,23 +22,11 @@ define(['underscore', 'jquery'], function (_, $) {
      * fit. its
      * promise will be returned by the final function attached to the object.
      *
-     * 2) pre and post fire events can be triggered by including either or both preEvent or postEvent object. the object
-     * should include the event name and the object to trigger the Backbone event on:
-     *
-     * ```
-     * preEvent : {
-     *  name: 'onBefore',
-     *  channel: channel.views.login
-     * }
-     * ```
-     *
-     * If events are used, then there is a dependency on Backbone or something with the same Events interface.
-     *
      * @param defaultOptions
      * @param configureItFunction
      * @returns {Function}
      */
-    return function configureMethod (defaultOptions, configureItFunction) {
+    return function configureMethod (defaultOptions, methodToConfigure) {
 
         // Return a once curried function that can be customized for a particular use
         return {
@@ -63,14 +51,7 @@ define(['underscore', 'jquery'], function (_, $) {
                             args.unshift($deferred);
                         }
 
-                        if (config.preEvent && config.preEvent.name && config.preEvent.channel) {
-                            config.preEvent.channel.trigger(config.preEvent.name, $deferred);
-                        }
-                        returned = configureItFunction.apply(this, args);
-
-                        if (config.postEvent && config.postEvent.name && config.postEvent.channel) {
-                            config.postEvent.channel.trigger(config.postEvent.name, $deferred);
-                        }
+                        returned = methodToConfigure.apply(this, args);
 
                         return config.async ? $deferred.promise() : returned;
                     }
