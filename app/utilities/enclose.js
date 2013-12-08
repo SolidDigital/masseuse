@@ -5,28 +5,35 @@ define(function () {
     return function(method) {
         return {
             context : function(context) {
-                var args = arguments;
                 return {
                     closure : function() {
-                        method.apply(context, args);
+                        method.apply(context, arguments);
+                    },
+                    using : function() {
+                        var withArguments = arguments;
+                        return {
+                            closure : function() {
+                                method.apply(this, withArguments);
+                            }
+                        }
                     }
                 }
             },
-            with : function() {
-                var args = arguments;
+            using : function() {
+                var withArguments = arguments;
                 return {
                     closure : function() {
-                        method.apply(this, args);
+                        method.apply(this, withArguments);
                     },
                     context : function(context) {
                         return {
                             closure : function() {
-                                method.apply(context, args);
+                                method.apply(context, withArguments);
                             }
                         }
                     }
                 }
             }
         }
-    }
+    };
 });

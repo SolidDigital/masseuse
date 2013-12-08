@@ -13,10 +13,10 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
     }
 
     function runAllMethods ($deferred, $parentRenderPromise) {
-        var notifyBeforeRenderDone = enclose($deferred.notify).with(BEFORE_RENDER_DONE).context($deferred).closure,
-            waitForParentPromiseToBeResolved = enclose(_waitForParentPromiseToBeResolved).with($parentRenderPromise).closure,
-            afterRender = enclose(_afterRender).with($deferred).context(this).closure,
-            renderAndAfterRender = enclose(_renderAndAfterRender).with($deferred, afterRender).context(this).closure,
+        var notifyBeforeRenderDone = enclose($deferred.notify).using(BEFORE_RENDER_DONE).context($deferred).closure,
+            waitForParentPromiseToBeResolved = enclose(_waitForParentPromiseToBeResolved).using($parentRenderPromise).closure,
+            afterRender = enclose(_afterRender).using($deferred).context(this).closure,
+            renderAndAfterRender = enclose(_renderAndAfterRender).using($deferred, afterRender).context(this).closure,
             rejectStart = enclose($deferred.reject).context(this).closure;
 
         $
@@ -59,7 +59,7 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
         var rejectStart = enclose($deferred.reject).context(this).closure;
         $
             .when(_runLifeCycleMethod.call(this, this.render))
-            .always(enclose($deferred.notify).with(RENDER_DONE).context($deferred).closure)
+            .always(enclose($deferred.notify).using(RENDER_DONE).context($deferred).closure)
             .then(
                 afterRender,
                 rejectStart);
@@ -74,7 +74,7 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
                 $afterRenderDeferred,
                 _startChildren.call(this, $deferred)
             )
-            .always(enclose($deferred.notify).with(AFTER_RENDER_DONE).context($deferred).closure)
+            .always(enclose($deferred.notify).using(AFTER_RENDER_DONE).context($deferred).closure)
             .then(
                 resolveStart,
                 rejectStart);
