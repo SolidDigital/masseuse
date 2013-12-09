@@ -4,12 +4,12 @@ define(function () {
 
     return function(method) {
         return {
-            context : function(context) {
+            bindContext : function(context) {
                 return {
                     closure : function() {
                         method.apply(context, arguments);
                     },
-                    using : function() {
+                    withArgs : function() {
                         var withArguments = arguments;
                         return {
                             closure : function() {
@@ -19,13 +19,13 @@ define(function () {
                     }
                 }
             },
-            using : function() {
+            withArgs : function() {
                 var withArguments = arguments;
                 return {
                     closure : function() {
                         method.apply(this, withArguments);
                     },
-                    context : function(context) {
+                    bindContext : function(context) {
                         return {
                             closure : function() {
                                 method.apply(context, withArguments);
