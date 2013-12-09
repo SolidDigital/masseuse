@@ -25,27 +25,12 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
             ProxyProperty;
 
         beforeEach(function (done) {
-            var afterDone = _.after(3, done);
-            injector.require(['computedProperty'], function (Computed) {
-                    ComputedProperty = Computed;
-                    afterDone();
-                },
-                function () {
-                    console.log('Computed error.');
-                    done();
-                });
-            injector.require(['proxyProperty'], function (Proxy) {
-                    ProxyProperty = Proxy;
-                    afterDone();
-                },
-                function () {
-                    console.log('Proxy error.');
-                    done();
-                });
-            injector.require(['masseuseModel'], function (MasseuseModel) {
-                    Model = MasseuseModel;
+            injector.require(['masseuse'], function (masseuse) {
+                    ComputedProperty = masseuse.ComputedProperty;
+                    ProxyProperty = masseuse.ProxyProperty;
+                    Model = masseuse.MasseuseModel;
                     modelInstance = new Model();
-                    afterDone();
+                    done();
                 },
                 function () {
                     console.log('Model error.');

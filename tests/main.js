@@ -26,21 +26,14 @@ require.config({
         sinon : '../app/vendor/sinon/lib/sinon',
         sinonSpy : '../app/vendor/sinon/lib/sinon/spy',
         sinonChai  : '../app/vendor/sinon-chai/lib/sinon-chai',
-        sinonCall : '../app/vendor/sinon/lib/sinon/call',
-
-        baseView : '../app/baseView',
-        rivetView : '../app/rivetView',
-        viewContext : '../app/viewContext',
-
-        channels : '../app/channels',
-
-        mixin : '../app/mixin',
-
-        masseuseModel : '../app/masseuseModel',
-
-        computedProperty : '../app/computedProperty',
-        proxyProperty : '../app/proxyProperty',
-    }
+        sinonCall : '../app/vendor/sinon/lib/sinon/call'
+    },
+    packages : [
+        {
+            name : 'masseuse',
+            location : '../app'
+        }
+    ]
 });
 
 require([

@@ -15,8 +15,8 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
 
         var ViewContext;
         beforeEach(function(done) {
-            injector.require(['viewContext'], function (contextIn) {
-                    ViewContext = contextIn;
+            injector.require(['masseuse'], function (masseuse) {
+                    ViewContext = masseuse.ViewContext;
                     done();
                 },
                 function () {
