@@ -13,11 +13,11 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
     }
 
     function runAllMethods ($deferred, $parentRenderPromise) {
-        var notifyBeforeRenderDone = enclose($deferred.notify).withArgs(BEFORE_RENDER_DONE).bindContext($deferred).closure,
-            waitForParentPromiseToBeResolved = enclose(_waitForParentPromiseToBeResolved).withArgs($parentRenderPromise).closure,
-            afterRender = enclose(_afterRender).withArgs($deferred).bindContext(this).closure,
-            renderAndAfterRender = enclose(_renderAndAfterRender).withArgs($deferred, afterRender).bindContext(this).closure,
-            rejectStart = enclose($deferred.reject).bindContext(this).closure;
+        var notifyBeforeRenderDone = enclose($deferred.notify).prependArgs(BEFORE_RENDER_DONE).bindContext($deferred).final,
+            waitForParentPromiseToBeResolved = enclose(_waitForParentPromiseToBeResolved).prependArgs($parentRenderPromise).final,
+            afterRender = enclose(_afterRender).prependArgs($deferred).bindContext(this).final,
+            renderAndAfterRender = enclose(_renderAndAfterRender).prependArgs($deferred, afterRender).bindContext(this).final,
+            rejectStart = enclose($deferred.reject).bindContext(this).final;
 
         $
             .when(_runLifeCycleMethod.call(this, this.beforeRender))
@@ -56,10 +56,10 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
     }
 
     function _renderAndAfterRender ($deferred, afterRender) {
-        var rejectStart = enclose($deferred.reject).bindContext(this).closure;
+        var rejectStart = enclose($deferred.reject).bindContext(this).closure.final;
         $
             .when(_runLifeCycleMethod.call(this, this.render))
-            .always(enclose($deferred.notify).withArgs(RENDER_DONE).bindContext($deferred).closure)
+            .always(enclose($deferred.notify).prependArgs(RENDER_DONE).bindContext($deferred).closure.final)
             .then(
                 afterRender,
                 rejectStart);
@@ -67,14 +67,14 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
 
     function _afterRender ($deferred) {
         var $afterRenderDeferred = _runLifeCycleMethod.call(this, this.afterRender),
-            resolveStart = enclose($deferred.resolve).bindContext(this).closure,
-            rejectStart = enclose($deferred.reject).bindContext(this).closure;
+            resolveStart = enclose($deferred.resolve).bindContext(this).closure.final,
+            rejectStart = enclose($deferred.reject).bindContext(this).closure.final;
         $
             .when(
                 $afterRenderDeferred,
                 _startChildren.call(this, $deferred)
             )
-            .always(enclose($deferred.notify).withArgs(AFTER_RENDER_DONE).bindContext($deferred).closure)
+            .always(enclose($deferred.notify).prependArgs(AFTER_RENDER_DONE).bindContext($deferred).closure.final)
             .then(
                 resolveStart,
                 rejectStart);

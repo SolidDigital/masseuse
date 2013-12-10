@@ -84,7 +84,7 @@ define([
         // ParentView calls .start() on all children
         // ParentView doesn't render until all children have notified that they are done
         // After rendering, the ParentView notifies all children and they continue their lifecycle
-        _.defer(enclose(lifeCycle.runAllMethods).withArgs($deferred, $parentRenderPromise).bindContext(this).closure);
+        _.defer(enclose(lifeCycle.runAllMethods).prependArgs($deferred, $parentRenderPromise).bindContext(this).closure);
 
         return $deferred.promise();
     }
