@@ -38,9 +38,9 @@ require.config({
 
 require([
     'mocha',
-    './baseViewTests',
-    './masseuseModelTests',
-    './viewContextTests'
+    './views/baseViewTests',
+    './models/masseuseModelTests',
+    './utilities/viewContextTests'
 ], function (mocha) {
     mocha.run();
 });
