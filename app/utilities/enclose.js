@@ -2,12 +2,6 @@
 define(function () {
     'use strict';
 
-    var publicApi = [
-            ['prependArgs',prependArgs],
-            ['bindContext',bindContext]
-        ],
-        apiLength = publicApi.length;
-
     Closure.prototype.bindContext = bindContext;
     Closure.prototype.prependArgs = prependArgs;
     return Closure;
@@ -22,18 +16,16 @@ define(function () {
         this.args = [];
 
         _createClosure.call(this);
-        _exposeClosure.call(this);
-        _attachPublicApi.call(this);
     }
 
     function bindContext(context) {
         this.context = context;
-        return this.closure;
+        return this;
     }
 
     function prependArgs() {
         this.args = _concatArguments.apply(this, arguments);
-        return this.closure;
+        return this;
     }
 
     /**
@@ -53,25 +45,5 @@ define(function () {
 
     function _concatArguments () {
         return this.args.concat(Array.prototype.slice.apply(arguments));
-    }
-
-    function _exposeClosure () {
-        var self = this;
-        this.closure.closure = this.closure;
-        this.closure.final = function () {
-            self.closure();
-        }
-    }
-
-    function _attachPublicApi () {
-        var i,
-            self = this;
-        for (i = 0; i < apiLength; ++i) {
-            (function (i) {
-                self.closure[publicApi[i][0]] = function () {
-                    return publicApi[i][1].apply(self, arguments);
-                };
-            }(i));
-        }
     }
 });
