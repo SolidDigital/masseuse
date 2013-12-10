@@ -13,10 +13,10 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
     };
 
     function runAllMethods ($deferred, $parentRenderPromise) {
-        var notifyBeforeRenderDone = enclose($deferred.notify).prependArgs(BEFORE_RENDER_DONE).bindContext($deferred).closure,
-            waitForParentPromiseToBeResolved = enclose(_waitForParentPromiseToBeResolved).prependArgs($parentRenderPromise).closure,
-            afterRender = enclose(_afterRender).prependArgs($deferred).bindContext(this).closure,
-            renderAndAfterRender = enclose(_renderAndAfterRender).prependArgs($deferred, afterRender).bindContext(this).closure,
+        var notifyBeforeRenderDone = enclose($deferred.notify).appendArgs(BEFORE_RENDER_DONE).bindContext($deferred).closure,
+            waitForParentPromiseToBeResolved = enclose(_waitForParentPromiseToBeResolved).appendArgs($parentRenderPromise).closure,
+            afterRender = enclose(_afterRender).appendArgs($deferred).bindContext(this).closure,
+            renderAndAfterRender = enclose(_renderAndAfterRender).appendArgs($deferred, afterRender).bindContext(this).closure,
             rejectStart = enclose($deferred.reject).bindContext(this).closure;
 
         $
@@ -59,7 +59,7 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
         var rejectStart = enclose($deferred.reject).bindContext(this).closure;
         $
             .when(_runLifeCycleMethod.call(this, this.render))
-            .always(enclose($deferred.notify).prependArgs(RENDER_DONE).bindContext($deferred).closure)
+            .always(enclose($deferred.notify).appendArgs(RENDER_DONE).bindContext($deferred).closure)
             .then(
                 afterRender,
                 rejectStart);
@@ -74,7 +74,7 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
                 $afterRenderDeferred,
                 _startChildren.call(this, $deferred)
             )
-            .always(enclose($deferred.notify).prependArgs(AFTER_RENDER_DONE).bindContext($deferred).closure)
+            .always(enclose($deferred.notify).appendArgs(AFTER_RENDER_DONE).bindContext($deferred).closure)
             .then(
                 resolveStart,
                 rejectStart);

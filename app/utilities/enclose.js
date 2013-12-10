@@ -3,7 +3,7 @@ define(function () {
     'use strict';
 
     Closure.prototype.bindContext = bindContext;
-    Closure.prototype.prependArgs = prependArgs;
+    Closure.prototype.appendArgs = appendArgs;
     return Closure;
 
     function Closure (method) {
@@ -23,7 +23,7 @@ define(function () {
         return this;
     }
 
-    function prependArgs() {
+    function appendArgs() {
         this.args = _concatArguments.apply(this, arguments);
         return this;
     }
