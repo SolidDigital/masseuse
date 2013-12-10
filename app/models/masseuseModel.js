@@ -15,7 +15,7 @@ define(['backbone', './computedProperty', './proxyProperty', 'underscore'],
                     callSelf = false;
 
                 this.computedCallbacks = this.computedCallbacks || {};
-                if (key == null) {
+                if (key === null) {
                     return this;
                 } else if (typeof key == 'object') {
                     attrs = key;
@@ -29,7 +29,7 @@ define(['backbone', './computedProperty', './proxyProperty', 'underscore'],
                             } else {
                                 delayInitial.push(function () {
                                     self.bindComputed(attrKey, attrValue);
-                                })
+                                });
                             }
                             delete attrs[attrKey];
                         } else if (attrValue instanceof ProxyProperty) {

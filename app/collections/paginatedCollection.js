@@ -1,4 +1,3 @@
-/*global define:false*/
 define(['backbone', 'underscore'], function (Backbone, _) {
     'use strict';
 
@@ -106,7 +105,7 @@ define(['backbone', 'underscore'], function (Backbone, _) {
         return _.map(options, function (option) {
             return {
                 option : option,
-                selected : self.paginationConfig.pageSize == option ? true : false
+                selected : self.paginationConfig.pageSize == option
             };
         });
     }

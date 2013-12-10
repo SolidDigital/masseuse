@@ -159,39 +159,42 @@ define(['rivets', '../utilities/configureMethod', 'backbone', 'underscore'], fun
         // TODO: move formatters into their own module
         Rivets.formatters.withComma = function (value) {
             return value + ', ';
-        }
+        };
 
         Rivets.formatters.joinWithComma = function (value) {
             return value.join(', ');
-        }
+        };
 
         Rivets.formatters.withBackslash = function (value) {
             return value + ' / ';
-        }
+        };
 
         Rivets.formatters.withColon = function (value) {
             return value + ' : ';
-        }
+        };
 
         Rivets.formatters.spaceAfter = function (value) {
             return value + ' ';
-        }
+        };
 
         Rivets.formatters.spaceBefore = function (value) {
             return ' ' + value;
-        }
+        };
 
         Rivets.formatters.prettyFileSize = function (value) {
-            var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-            if (value == 0) return '0 Bytes';
-            var i = parseInt(Math.floor(Math.log(value) / Math.log(1024)));
+            var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'],
+                i;
+            if (value === 0) {
+                return '0 Bytes';
+            }
+            i = parseInt(Math.floor(Math.log(value) / Math.log(1024)), 10);
             return Math.round(value / Math.pow(1024, i), 2) + ' ' + sizes[i];
-        }
+        };
 
         Rivets.formatters.prettyDate = function (dateStr) {
             var date = new Date(dateStr);
             return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-        }
+        };
 
         Rivets.formatters.secondsToTime = function (secs) {
             var hours = Math.floor(secs / (60 * 60)),
@@ -200,9 +203,9 @@ define(['rivets', '../utilities/configureMethod', 'backbone', 'underscore'], fun
                 divisor_for_seconds = divisor_for_minutes % 60,
                 seconds = Math.ceil(divisor_for_seconds),
                 obj = {
-                    "h" : hours,
-                    "m" : minutes,
-                    "s" : seconds
+                    'h' : hours,
+                    'm' : minutes,
+                    's' : seconds
                 },
                 time = (obj.h) ? ((obj.h > 1) ? obj.h + ' hrs ' : obj.h + ' hr ' ) : '';
             time += (obj.m) ? ((obj.m > 1) ? obj.m + ' mins ' : obj.m + ' min ') : '';
@@ -217,37 +220,34 @@ define(['rivets', '../utilities/configureMethod', 'backbone', 'underscore'], fun
 
         Rivets.formatters.equals = function (value, args) {
             return (value === args);
-        }
+        };
 
         Rivets.formatters.exists = function (value, args) {
             return value ? value : args;
-        }
+        };
 
         Rivets.formatters.limit = function (value, args) {
             return value.slice(0, args);
-        }
+        };
 
         Rivets.formatters.humanize = function (value) {
             return value.charAt(0).toUpperCase() + value.slice(1);
-        }
+        };
 
         Rivets.formatters.jsonAsString = function (value) {
             return JSON.stringify(value);
-        }
+        };
 
         Rivets.formatters.pluralize = function (value, arg) {
             switch (value) {
             case 0 :
                 return value + ' ' + arg + 's';
-                break;
             case 1 :
                 return value + ' ' + arg;
-                break;
             default:
                 return value + ' ' + arg + 's';
-                break;
             }
-        }
+        };
 
         Rivets.formatters.includes = function () {
             var args = Array.prototype.slice.call(arguments),
@@ -258,19 +258,19 @@ define(['rivets', '../utilities/configureMethod', 'backbone', 'underscore'], fun
             } else {
                 return false;
             }
-        }
+        };
 
         Rivets.binders.addclass = function (el, value) {
             if (el.addedClass) {
-                $(el).removeClass(el.addedClass)
-                delete el.addedClass
+                $(el).removeClass(el.addedClass);
+                delete el.addedClass;
             }
 
             if (value) {
-                $(el).addClass(value)
-                el.addedClass = value
+                $(el).addClass(value);
+                el.addedClass = value;
             }
-        }
+        };
 
         // bind data to rivets values.
         return Rivets.bind($(config.rivetScope), {data : this.model});

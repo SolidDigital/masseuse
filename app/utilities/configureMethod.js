@@ -55,8 +55,8 @@ define(['underscore', 'jquery'], function (_, $) {
 
                         return config.async ? $deferred.promise() : returned;
                     }
-                }
+                };
             }
-        }
-    }
+        };
+    };
 });

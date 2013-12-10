@@ -1,8 +1,8 @@
 /*global define:false*/
 define([
     'backbone', 'underscore', '../utilities/channels', '../utilities/configureMethod', './rivetView',
-    './viewContext', '../utilities/enclose', './lifeCycle'
-], function (Backbone, _, channels, configureMethod, rivetView, ViewContext, enclose, lifeCycle) {
+    './viewContext', '../utilities/enclose', './lifeCycle', '../utilities/getProperty'
+], function (Backbone, _, channels, configureMethod, rivetView, ViewContext, enclose, lifeCycle, getProperty) {
     'use strict';
 
     var BEFORE_RENDER_DONE = 'beforeRenderDone',
@@ -138,7 +138,7 @@ define([
             // Since the view config object doesn't have access to the view's context, we must provide it
             _.each([argsArray[0], argsArray[1] , argsArray[2]], function (arg, index) {
                 if (_.isString(arg) && index != 1) {
-                    argsArray[index] = _getProperty(self, arg);
+                    argsArray[index] = getProperty(self, arg);
                 } else if (index == 1) {
                     argsArray[index] = arg;
                 }
@@ -148,7 +148,7 @@ define([
         });
 
         // TODO: test that duplicate items will pick the bindings from options, throwing out defaults
-        listenerArray = _.uniq(listenerArgs, function (a, b) {
+        listenerArray = _.uniq(listenerArgs, function (a) {
             return _.identity(a);
         });
 
@@ -231,22 +231,5 @@ define([
                 instaUpdateRivets : (this.options.rivetConfig.instaUpdateRivets ? true : false)
             }).methodWithActualOptions;
         }
-    }
-
-    function _getProperty (obj, parts, create) {
-        if (typeof parts === 'string') {
-            parts = parts.split('.');
-        }
-
-        var part;
-        while (typeof obj === 'object' && obj && parts.length) {
-            part = parts.shift();
-            if (!(part in obj) && create) {
-                obj[part] = {};
-            }
-            obj = obj[part];
-        }
-
-        return obj;
     }
 });

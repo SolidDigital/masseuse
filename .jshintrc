@@ -1,0 +1,14 @@
+{
+    "globals": {
+        "define": false,
+        "require": false,
+        "console": false,
+        "beforeEach": false,
+        "describe": false,
+        "it": false
+    },
+    "curly": true,
+    "quotmark": "single",
+    "debug" : true,
+    "validthis" : true
+}

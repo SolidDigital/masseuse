@@ -10,7 +10,7 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
 
     return {
         runAllMethods : runAllMethods
-    }
+    };
 
     function runAllMethods ($deferred, $parentRenderPromise) {
         var notifyBeforeRenderDone = enclose($deferred.notify).prependArgs(BEFORE_RENDER_DONE).bindContext($deferred).closure,

@@ -35,7 +35,9 @@ define([
                                     oldMethod.apply(self, args);
                                 })
                                 .fail(function () {
-                                    self.onRouteFail && self.onRouteFail.apply(self, args);
+                                     if (self.onRouteFail) {
+                                         self.onRouteFail.apply(self, args);
+                                     }
                                 });
                         };
                     });

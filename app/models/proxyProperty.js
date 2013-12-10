@@ -3,7 +3,6 @@ define(function () {
     'use strict';
 
     /**
-     * @param propertyName
      * @param propertyNameOnModel
      * @param model
      * @returns {ProxyProperty}

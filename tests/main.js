@@ -40,6 +40,7 @@ require([
     'mocha',
     './views/baseViewTests',
     './models/masseuseModelTests',
+    './models/computedPropertyTests',
     './utilities/viewContextTests'
 ], function (mocha) {
     mocha.run();
