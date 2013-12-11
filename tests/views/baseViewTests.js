@@ -1,9 +1,8 @@
-/*global describe:false, it:false, beforeEach:false*/
 define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function (_, chai, Squire, mocha, sinon, sinonChai) {
 
     'use strict';
-    var VIEW1_NAME = "testView1",
-        CHILD_VIEW_NAME = "childView",
+    var VIEW1_NAME = 'testView1',
+        CHILD_VIEW_NAME = 'childView',
         injector = new Squire(),
         should = chai.should();
 
@@ -14,7 +13,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
     mocha.setup('bdd');
 
 
-    describe("An instance of the BaseView", function () {
+    describe('An instance of the BaseView', function () {
 
 
         //-----------Setup-----------
@@ -36,12 +35,12 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
         });
 
         //-----------Tests-----------
-        it("should exist", function () {
+        it('should exist', function () {
             should.exist(BaseView);
         });
 
-        describe("start method", function () {
-            it("should exist", function () {
+        describe('start method', function () {
+            it('should exist', function () {
                 should.exist(viewInstance.start);
             });
             it('should be a function', function () {
@@ -52,7 +51,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 promise.should.have.property('done');
                 promise.should.not.have.property('resolve');
             });
-            describe("promise", function () {
+            describe('promise', function () {
                 // Using done as a spy. If it is not called, the test will fail.
                 it('should be resolved after start promise is resolved', function (done) {
                     viewInstance.start().done(done);
@@ -76,8 +75,8 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 });
 
             });
-            describe("render method", function () {
-                it("should exist", function () {
+            describe('render method', function () {
+                it('should exist', function () {
                     should.exist(viewInstance.render);
                 });
                 it('should be a function', function () {
@@ -88,8 +87,9 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
             it('should call start on any children', function () {
                 var childView = new (BaseView.extend({
                         name: CHILD_VIEW_NAME
-                    })),
-                    childViewStart = sinon.spy(childView, "start");
+                    }))();
+
+                childView.start = sinon.spy(childView, 'start');
 
                 viewInstance.addChild(childView);
 
@@ -100,12 +100,12 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                 });
             });
 
-            it("should not render until it's parent has rendered", function () {
+            it('should not render until it\'s parent has rendered', function () {
                 var childView = new (BaseView.extend({
                         name: CHILD_VIEW_NAME,
                         render: function () { }
-                    })),
-                    childRender = sinon.spy(childView, "render");
+                    }))(),
+                    childRender = sinon.spy(childView, 'render');
 
                 viewInstance.addChild(childView);
 
@@ -120,17 +120,17 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                                 //childRender.should.have.been.calledOnce;
                             });
                         }
-                    })
+                    });
             });
         });
 
-        describe("remove method", function () {
+        describe('remove method', function () {
             // method should wrap View.remove
             it('should call stop on all children', function () {
                 var childView = new (BaseView.extend({
                         name: CHILD_VIEW_NAME
-                    })),
-                    childRemove = sinon.spy(childView, "remove");
+                    }))(),
+                    childRemove = sinon.spy(childView, 'remove');
 
                 viewInstance.addChild(childView);
 
@@ -142,7 +142,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
             });
         });
 
-        describe("addChild method", function () {
+        describe('addChild method', function () {
             it ('should be a method', function () {
                 viewInstance.addChild.should.be.a('function');
             });
@@ -176,7 +176,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
             });
         });
 
-        describe("removeChild method", function () {
+        describe('removeChild method', function () {
             it ('should remove a child view, if it exists', function () {
                 var childView = new BaseView({
                     name: CHILD_VIEW_NAME
@@ -196,7 +196,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                         name: CHILD_VIEW_NAME
                     }),
                     anotherChildView = new BaseView({
-                        name: "Another Child"
+                        name: 'Another Child'
                     });
 
                 viewInstance.addChild(childView);
@@ -210,7 +210,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
         });
     });
 
-    describe("An instance of extending the BaseView", function () {
+    describe('An instance of extending the BaseView', function () {
 
         //-----------Setup-----------
         var BaseView,
@@ -251,17 +251,17 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                     done();
                 },
                 function () {
-                    console.log('BaseView error.')
+                    console.log('BaseView error.');
                 });
         });
 
-        describe("beforeRender method, if implemented", function () {
-            describe("with zero arguments", function () {
-                it("will trigger the beforeRender event, then the render event, then afterRender event in that order", function () {
+        describe('beforeRender method, if implemented', function () {
+            describe('with zero arguments', function () {
+                it('will trigger the beforeRender event, then the render event, then afterRender event in that order', function () {
 
-                    var BeforeRender = sinon.spy(syncInstance, "beforeRender"),
-                        Render = sinon.spy(syncInstance, "render"),
-                        AfterRender = sinon.spy(syncInstance, "afterRender");
+                    var BeforeRender = sinon.spy(syncInstance, 'beforeRender'),
+                        Render = sinon.spy(syncInstance, 'render'),
+                        AfterRender = sinon.spy(syncInstance, 'afterRender');
 
                     syncInstance.start().done(function() {
                         BeforeRender.should.have.been.calledOnce;
@@ -277,18 +277,18 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                     });
                 });
             });
-            describe("with one argument", function () {
-                it("will fail the start method if its deferred is rejected", function (done) {
+            describe('with one argument', function () {
+                it('will fail the start method if its deferred is rejected', function (done) {
                     var startDeferred;
                     console.log($beforeRenderDeferred);
                     startDeferred = asyncInstance.start();
                     _.defer(function() {
                         startDeferred.fail(done);
                         $beforeRenderDeferred.reject();
-                    })
+                    });
                 });
-                it("will not call the afterRender method if its deferred is rejected", function (done) {
-                    var AfterRender = sinon.spy(asyncInstance, "afterRender"),
+                it('will not call the afterRender method if its deferred is rejected', function (done) {
+                    var AfterRender = sinon.spy(asyncInstance, 'afterRender'),
                         startDeferred = asyncInstance.start();
                     _.defer(function() {
                         startDeferred.fail(done);
@@ -299,12 +299,12 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
             });
         });
 
-        describe("afterRender method, if implemented", function () {
-            describe("with zero arguments", function () {
-                it("will trigger the beforeRender event, then the render event, then afterRender event in that order", function () {
-                    var BeforeRender = sinon.spy(syncInstance, "beforeRender"),
-                        Render = sinon.spy(syncInstance, "render"),
-                        AfterRender = sinon.spy(syncInstance, "afterRender");
+        describe('afterRender method, if implemented', function () {
+            describe('with zero arguments', function () {
+                it('will trigger the beforeRender event, then the render event, then afterRender event in that order', function () {
+                    var BeforeRender = sinon.spy(syncInstance, 'beforeRender'),
+                        Render = sinon.spy(syncInstance, 'render'),
+                        AfterRender = sinon.spy(syncInstance, 'afterRender');
 
                     syncInstance.start().done(function() {
                         BeforeRender.should.have.been.calledOnce;
@@ -320,16 +320,16 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                     });
                 });
             });
-            describe("with one argument", function () {
-                it("will fail the start method if its deferred is rejected", function (done) {
+            describe('with one argument', function () {
+                it('will fail the start method if its deferred is rejected', function (done) {
                     asyncInstance.start().fail(done);
                     _.defer(function() {
                         $beforeRenderDeferred.resolve();
                         $afterRenderDeferred.reject();
                     });
                 });
-                it("will not call the afterRender method if the beforeRender deferred is rejected", function (done) {
-                    var AfterRender = sinon.spy(asyncInstance, "afterRender");
+                it('will not call the afterRender method if the beforeRender deferred is rejected', function (done) {
+                    var AfterRender = sinon.spy(asyncInstance, 'afterRender');
                     asyncInstance.start().fail(function() {
                         AfterRender.should.not.have.been.called;
                         done();

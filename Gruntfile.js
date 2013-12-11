@@ -71,6 +71,7 @@ module.exports = function (grunt) {
         jshint : {
             files : [
                 'app/**/*.js',
+                'tests/**/*.js',
                 '!app/vendor/**/*.js'
             ],
             options : {

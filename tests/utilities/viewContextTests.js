@@ -1,4 +1,3 @@
-/*global describe:false, it:false, beforeEach:false*/
 define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function (_, chai, Squire, mocha, sinon, sinonChai) {
 
     'use strict';
@@ -20,14 +19,14 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
                     done();
                 },
                 function () {
-                    console.log('BaseView error.')
+                    console.log('BaseView error.');
                     done();
                 });
         });
 
-        it("binds correctly in simple case", function() {
+        it('binds correctly in simple case', function() {
             var config = {
-                    name : ViewContext('name')
+                    name : new ViewContext('name')
                 },
                 person = {
                     name: 'bob'
@@ -36,9 +35,9 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
             config.name.getBoundFunction(person).should.equal('bob');
         });
 
-        it("binds correctly with nested fields", function() {
+        it('binds correctly with nested fields', function() {
             var config = {
-                    last : ViewContext('name.last')
+                    last : new ViewContext('name.last')
                 },
                 person = {
                     name: {
