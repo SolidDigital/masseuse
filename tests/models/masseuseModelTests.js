@@ -12,7 +12,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
     mocha.setup('bdd');
 
 
-    describe('An instance MasseuseModel', function () {
+    describe('An instance of MasseuseModel', function () {
 
 
         //-----------Setup-----------
