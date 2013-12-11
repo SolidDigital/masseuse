@@ -11,148 +11,141 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
     mocha.setup('bdd');
 
 
-    describe('An instance MasseuseModel', function () {
+    describe('ComputedProperty', function() {
 
+        //-----------Setup-----------
+        var Model,
+            modelInstance,
+            ComputedProperty,
+            ProxyProperty;
 
+        beforeEach(function (done) {
+            injector.require(['masseuse'], function (masseuse) {
+                    ComputedProperty = masseuse.ComputedProperty;
+                    ProxyProperty = masseuse.ProxyProperty;
+                    Model = masseuse.MasseuseModel;
+                    modelInstance = new Model();
+                    done();
+                },
+                function () {
+                    console.log('Model error.');
+                    done();
+                });
+        });
 
+        it('should allow the user to use a computed property when setting a single model property', function () {
+            modelInstance.set('propA', 5);
+            modelInstance.set('propB', new ComputedProperty(['propA'], function (propA) {
+                return propA * 2;
+            }));
 
-        describe('ComputedProperty', function() {
+            should.exist(modelInstance.get('propB'));
+            modelInstance.get('propB').should.equal(10);
+        });
 
-            //-----------Setup-----------
-            var Model,
-                modelInstance,
-                ComputedProperty,
-                ProxyProperty;
-
-            beforeEach(function (done) {
-                injector.require(['masseuse'], function (masseuse) {
-                        ComputedProperty = masseuse.ComputedProperty;
-                        ProxyProperty = masseuse.ProxyProperty;
-                        Model = masseuse.MasseuseModel;
-                        modelInstance = new Model();
-                        done();
-                    },
-                    function () {
-                        console.log('Model error.');
-                        done();
-                    });
-            });
-
-            it('should allow the user to use a computed property when setting a single model property', function () {
-                modelInstance.set('propA', 5);
-                modelInstance.set('propB', new ComputedProperty(['propA'], function (propA) {
+        it('should allow the user to use a computed property when setting a single model property', function () {
+            modelInstance.set({
+                'propB': new ComputedProperty(['propA'], function (propA) {
                     return propA * 2;
-                }));
-
-                should.exist(modelInstance.get('propB'));
-                modelInstance.get('propB').should.equal(10);
+                }),
+                'propA': 5
             });
 
-            it('should allow the user to use a computed property when setting a single model property', function () {
-                modelInstance.set({
-                    'propB': new ComputedProperty(['propA'], function (propA) {
-                        return propA * 2;
-                    }),
-                    'propA': 5
-                });
+            should.exist(modelInstance.get('propB'));
+            modelInstance.get('propB').should.equal(10);
+        });
 
-                should.exist(modelInstance.get('propB'));
-                modelInstance.get('propB').should.equal(10);
+        it('should change the value of a computed property when a dependecy changes', function () {
+            modelInstance.set({
+                'propB': new ComputedProperty(['propA'], function (propA) {
+                    return propA * 2;
+                }),
+                'propA': 5
             });
 
-            it('should change the value of a computed property when a dependecy changes', function () {
-                modelInstance.set({
-                    'propB': new ComputedProperty(['propA'], function (propA) {
-                        return propA * 2;
-                    }),
-                    'propA': 5
-                });
+            should.exist(modelInstance.get('propB'));
+            modelInstance.get('propB').should.equal(10);
 
-                should.exist(modelInstance.get('propB'));
-                modelInstance.get('propB').should.equal(10);
+            modelInstance.set('propA', 6);
+            modelInstance.get('propB').should.equal(12);
+        });
 
-                modelInstance.set('propA', 6);
-                modelInstance.get('propB').should.equal(12);
+        it('should update computed properties when they are computed off of more than one property', function () {
+            modelInstance.set({
+                'propA': 5,
+                'propB': 5,
+                'propC': new ComputedProperty(['propA', 'propB'], function (propA, propB) {
+                    return propA + propB;
+                })
             });
 
-            it('should update computed properties when they are computed off of more than one property', function () {
-                modelInstance.set({
-                    'propA': 5,
-                    'propB': 5,
-                    'propC': new ComputedProperty(['propA', 'propB'], function (propA, propB) {
-                        return propA + propB;
-                    })
-                });
+            modelInstance.get('propC').should.equal(10);
 
-                modelInstance.get('propC').should.equal(10);
+            modelInstance.set('propA', 6);
 
-                modelInstance.set('propA', 6);
+            modelInstance.get('propC').should.equal(11);
 
-                modelInstance.get('propC').should.equal(11);
+            modelInstance.set('propB', 6);
 
-                modelInstance.set('propB', 6);
+            modelInstance.get('propC').should.equal(12);
 
-                modelInstance.get('propC').should.equal(12);
-
-                modelInstance.set({
-                    'propA': 7,
-                    'propB': 7
-                });
-
-                modelInstance.get('propC').should.equal(14);
+            modelInstance.set({
+                'propA': 7,
+                'propB': 7
             });
 
-            it('should update multiple computed properties off of the same property', function () {
-                modelInstance.set({
-                    'propA': 5,
-                    'propB': new ComputedProperty(['propA'], function (propA) {
-                        return propA;
-                    }),
-                    'propC': new ComputedProperty(['propA'], function (propA) {
-                        return propA;
-                    })
-                });
+            modelInstance.get('propC').should.equal(14);
+        });
 
-                modelInstance.get('propB').should.equal(5);
-                modelInstance.get('propC').should.equal(5);
-
-                modelInstance.set('propA', 10);
-
-                modelInstance.get('propB').should.equal(10);
-                modelInstance.get('propC').should.equal(10);
+        it('should update multiple computed properties off of the same property', function () {
+            modelInstance.set({
+                'propA': 5,
+                'propB': new ComputedProperty(['propA'], function (propA) {
+                    return propA;
+                }),
+                'propC': new ComputedProperty(['propA'], function (propA) {
+                    return propA;
+                })
             });
 
-            it('should not set the initial computed value if 3rd paremeter is true', function() {
-                modelInstance.set({
-                    'propA': 5,
-                    'propB': 5,
-                    'propC': new ComputedProperty(['propA', 'propB'], function (propA, propB) {
-                        return propA + propB;
-                    }, true)
-                });
+            modelInstance.get('propB').should.equal(5);
+            modelInstance.get('propC').should.equal(5);
 
-                modelInstance.get('propA').should.equal(5);
-                modelInstance.get('propB').should.equal(5);
-                should.not.exist(modelInstance.get('propC'));
-                modelInstance.set('propA', 6);
-                modelInstance.get('propC').should.equal(11);
-                modelInstance.set('propB', 7);
-                modelInstance.get('propC').should.equal(13);
+            modelInstance.set('propA', 10);
+
+            modelInstance.get('propB').should.equal(10);
+            modelInstance.get('propC').should.equal(10);
+        });
+
+        it('should not set the initial computed value if 3rd paremeter is true', function() {
+            modelInstance.set({
+                'propA': 5,
+                'propB': 5,
+                'propC': new ComputedProperty(['propA', 'propB'], function (propA, propB) {
+                    return propA + propB;
+                }, true)
             });
 
-            it('should be able to set computed values on instantiation', function() {
-                modelInstance = new Model({
-                    'propA': 5,
-                    'propB': 5,
-                    'propC': new ComputedProperty(['propA', 'propB'], function (propA, propB) {
-                        return propA + propB;
-                    })});
+            modelInstance.get('propA').should.equal(5);
+            modelInstance.get('propB').should.equal(5);
+            should.not.exist(modelInstance.get('propC'));
+            modelInstance.set('propA', 6);
+            modelInstance.get('propC').should.equal(11);
+            modelInstance.set('propB', 7);
+            modelInstance.get('propC').should.equal(13);
+        });
 
-                modelInstance.get('propA').should.equal(5);
-                modelInstance.get('propB').should.equal(5);
-                modelInstance.get('propC').should.equal(10);
-            });
+        it('should be able to set computed values on instantiation', function() {
+            modelInstance = new Model({
+                'propA': 5,
+                'propB': 5,
+                'propC': new ComputedProperty(['propA', 'propB'], function (propA, propB) {
+                    return propA + propB;
+                })});
+
+            modelInstance.get('propA').should.equal(5);
+            modelInstance.get('propB').should.equal(5);
+            modelInstance.get('propC').should.equal(10);
         });
     });
-
 });
