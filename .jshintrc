@@ -11,5 +11,8 @@
     "quotmark": "single",
     "debug" : true,
     "validthis" : true,
-    "expr" : true
+    "expr" : true,
+    "loopfunc" : false,
+    "onevar" : true,
+    "strict" : true
 }

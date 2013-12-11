@@ -11,11 +11,6 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
     chai.use(sinonChai);
     mocha.setup('bdd');
 
-
-
-
-
-
     describe('ProxyProperty', function() {
         //-----------Setup-----------
         var Model,

@@ -1,5 +1,6 @@
 define(function() {
 
+    'use strict';
     return getProperty;
 
     function getProperty (obj, parts, create) {

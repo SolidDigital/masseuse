@@ -47,8 +47,8 @@ define(['backbone', 'underscore'], function (Backbone, _) {
     });
 
     function fetch (options) {
-        var args = Array.prototype.slice.call(arguments, 0);
-        var fetchOptions = {
+        var args = Array.prototype.slice.call(arguments, 0),
+            fetchOptions = {
             data : {},
             headers : {}
         };

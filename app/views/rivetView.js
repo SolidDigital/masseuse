@@ -14,8 +14,8 @@ define(['rivets', '../utilities/configureMethod', 'backbone', 'underscore'], fun
         Rivets.configure({
             adapter : {
                 subscribe : function (obj, keypath, callback) {
-                    var parts = [keypath];
-                    var index = keypath.indexOf('.');
+                    var parts = [keypath],
+                        index = keypath.indexOf('.');
                     if (index > -1) {
                         parts = keypath.split('.');
                     }
@@ -23,11 +23,12 @@ define(['rivets', '../utilities/configureMethod', 'backbone', 'underscore'], fun
                 },
 
                 subscribe_nested : function rivets_backbone_adapter_subscribe_nested (parts, obj, callback) {
+                    var keypath;
                     if (!obj) {
                         return;
                     }
                     while (parts.length > 0) {
-                        var keypath = parts.shift();
+                        keypath = parts.shift();
 
                         if (obj instanceof Backbone.Collection) {
                             obj.on('add remove reset refresh', function (obj, keypath) {
@@ -96,19 +97,23 @@ define(['rivets', '../utilities/configureMethod', 'backbone', 'underscore'], fun
                     }
                 },
                 read : function (obj, keypath) {
-                    var args = keypath.split(' ');
+                    var args = keypath.split(' '),
+                        parts,
+                        index,
+                        result;
+
                     if (args.length > 1) {
                         return _.map(args, function (x) {
                             return this.read(obj, x);
                         }, this);
                     }
 
-                    var parts = [keypath];
-                    var index = keypath.indexOf('.');
+                    parts = [keypath];
+                    index = keypath.indexOf('.');
                     if (index > -1) {
                         parts = keypath.split('.');
                     }
-                    var result = obj;
+                    result = obj;
                     while (parts.length > 0) {
                         keypath = parts.shift();
                         result = this.getValue(result, keypath);
@@ -119,12 +124,14 @@ define(['rivets', '../utilities/configureMethod', 'backbone', 'underscore'], fun
                     return result;
                 },
                 publish : function (obj, keypath, value) {
-                    var parts = [keypath];
-                    var index = keypath.indexOf('.');
+                    var parts = [keypath],
+                        index = keypath.indexOf('.'),
+                        result;
+
                     if (index > -1) {
                         parts = keypath.split('.');
                     }
-                    var result = obj;
+                    result = obj;
                     while (parts.length > 1) {
                         keypath = parts.shift();
                         result = this.getValue(result, keypath);
