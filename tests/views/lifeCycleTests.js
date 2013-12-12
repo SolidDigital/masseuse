@@ -104,6 +104,44 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     it('should be a function', function () {
                         viewInstance.render.should.be.a('function');
                     });
+
+                    it('should call checkForEl', function(){
+                       var checkElSpy = sinon.spy(viewInstance, 'checkForEl');
+                       viewInstance.render();
+                       checkElSpy.should.have.been.calledOnce;
+                    });
+
+                    it('should call appendOrInsertView', function(){
+                        var checkAppendOrInsertSpy = sinon.spy(viewInstance, 'appendOrInsertView');
+                        viewInstance.render();
+                        checkAppendOrInsertSpy.should.have.been.calledOnce;
+                    });
+                });
+
+                describe('checkForEl method', function(){
+                    it('should call set element if it doesn\'t have an el and its options do', function(){
+                        var setElementSpy = sinon.spy(viewInstance, 'setElement');
+                        viewInstance.el = undefined;
+                        viewInstance.options.el = true;
+                        viewInstance.render();
+                        setElementSpy.should.have.been.calledOnce;
+                    });
+
+                    it('should not call set element if it doesn\'t have an el and options dont either', function(){
+                        var setElementSpy = sinon.spy(viewInstance, 'setElement');
+                        viewInstance.el = undefined;
+                        viewInstance.options.el = undefined;
+                        viewInstance.render();
+                        setElementSpy.should.not.have.been.called;
+                    });
+
+                    it('should call set element if it has a parent and option el', function(){
+                        var setElementSpy = sinon.spy(viewInstance, 'setElement');
+                        viewInstance.parent = true;
+                        viewInstance.options.el = true;
+                        viewInstance.render();
+                        setElementSpy.should.have.been.calledOnce;
+                    });
                 });
 
                 it('should call start on any children', function () {

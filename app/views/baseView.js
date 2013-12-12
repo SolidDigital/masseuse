@@ -34,7 +34,9 @@ define([
         addChild : addChild,
         removeChild : removeChild,
         refreshChildren : refreshChildren,
-        removeAllChildren : removeAllChildren
+        removeAllChildren : removeAllChildren,
+        appendOrInsertView : appendOrInsertView,
+        checkForEl : checkForEl
 
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
@@ -91,17 +93,17 @@ define([
     }
 
     function render () {
-        _checkForEl.call(this);
-        _appendOrInsertView.call(this);
+        this.checkForEl();
+        this.appendOrInsertView();
     }
 
-    function _checkForEl() {
+    function checkForEl() {
         if (undefined === this.el && undefined !== this.options.el || this.parent && undefined !== this.options.el) {
             this.setElement($(this.options.el));
         }
     }
 
-    function _appendOrInsertView() {
+    function appendOrInsertView() {
         if (this.$el && this.template) {
             if (this.options.appendView) {
                 _appendView.call(this);
