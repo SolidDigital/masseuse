@@ -1,5 +1,5 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
-    function (_, chai, Squire, mocha, sinon, sinonChai) {
+define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse'],
+    function (_, chai, Squire, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
         var VIEW1_NAME = 'testView1',
@@ -21,26 +21,13 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
             var BaseView,
                 viewInstance;
 
-            beforeEach(function (done) {
-                injector.require(['masseuse'], function (masseuse) {
-                        BaseView = masseuse.BaseView;
-                        viewInstance = new BaseView({
-                            name : VIEW1_NAME
-                        });
-                        done();
-                    },
-                    function () {
-                        console.log('BaseView error.');
-                        done();
-                    });
-                    done();
-                },
-                function (error) {
-                    console.log(error);
-                    console.log(error.message);
-                    done();
+            beforeEach(function () {
+                BaseView = masseuse.BaseView;
+                viewInstance = new BaseView({
+                    name : VIEW1_NAME
                 });
-        });
+            });
+
 
             //-----------Tests-----------
             it('should exist', function () {

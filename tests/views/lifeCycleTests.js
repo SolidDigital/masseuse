@@ -106,7 +106,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     });
 
                     it('should call checkForEl', function(){
-                       var checkElSpy = sinon.spy(viewInstance, 'checkForEl');
+                       var checkElSpy = sinon.spy(viewInstance, 'setEl');
                        viewInstance.render();
                        checkElSpy.should.have.been.calledOnce;
                     });
@@ -118,7 +118,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     });
                 });
 
-                describe('checkForEl method', function(){
+                describe('setEl method', function(){
                     it('should call set element if it doesn\'t have an el and its options do', function(){
                         var setElementSpy = sinon.spy(viewInstance, 'setElement');
                         viewInstance.el = undefined;
