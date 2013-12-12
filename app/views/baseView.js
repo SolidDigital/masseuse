@@ -33,7 +33,8 @@ define([
         children : null,
         addChild : addChild,
         removeChild : removeChild,
-        refreshChildren : refreshChildren
+        refreshChildren : refreshChildren,
+        removeAllChildren : removeAllChildren
 
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
@@ -90,18 +91,33 @@ define([
     }
 
     function render () {
-        if (undefined === this.el && undefined !== this.options.el) {
+        _checkForEl.call(this);
+        _appendOrInsertView.call(this);
+    }
+
+    function _checkForEl() {
+        if (undefined === this.el && undefined !== this.options.el || this.parent && undefined !== this.options.el) {
             this.setElement($(this.options.el));
         }
+    }
 
+    function _appendOrInsertView() {
         if (this.$el && this.template) {
             if (this.options.appendView) {
-                this.$el.append(this.template(this.dataToJSON()));
-                this.setElement(this.$el.children().last());
+                _appendView.call(this);
             } else {
-                this.$el.html(this.template(this.dataToJSON()));
+                _insertView.call(this);
             }
         }
+    }
+
+    function _appendView(){
+        this.$el.append(this.template(this.dataToJSON()));
+        this.setElement(this.$el.children().last());
+    }
+
+    function _insertView(){
+        this.$el.html(this.template(this.dataToJSON()));
     }
 
     // This function is memoized in initialize
@@ -158,9 +174,12 @@ define([
     }
 
     function remove () {
-        _(this.children).each(function (child) {
-            child.remove();
-        });
+        this.removeAllChildren();
+
+        if (this.parent) {
+            this.parent.removeChild(this);
+        }
+
         Backbone.View.prototype.remove.apply(this, arguments);
     }
 
@@ -175,9 +194,19 @@ define([
         this.children = _(this.children).without(childView);
     }
 
-    function refreshChildren () {
+    function removeAllChildren() {
+        var self = this;
         _(this.children).each(function (child) {
             child.remove();
+            self.removeChild(child);
+        });
+    }
+
+    function refreshChildren () {
+        _(this.children).each(function (child) {
+            if (child.hasStarted) {
+                child.remove();
+            }
             child.start();
         });
     }

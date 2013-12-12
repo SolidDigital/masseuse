@@ -90,6 +90,7 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
             });
 
             child.start($afterRenderDeferred.promise());
+            child.hasStarted = true;
         });
     }
 });
