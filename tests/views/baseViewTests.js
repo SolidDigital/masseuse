@@ -1,11 +1,11 @@
 define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
     function (_, chai, Squire, mocha, sinon, sinonChai) {
 
-    'use strict';
-    var VIEW1_NAME = 'testView1',
-        CHILD_VIEW_NAME = 'childView',
-        injector = new Squire(),
-        should = chai.should();
+        'use strict';
+        var VIEW1_NAME = 'testView1',
+            CHILD_VIEW_NAME = 'childView',
+            injector = new Squire(),
+            should = chai.should();
 
 
     require(['sinonCall', 'sinonSpy']);
@@ -14,18 +14,24 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
     mocha.setup('bdd');
 
 
-    describe('An instance of the BaseView', function () {
+        describe('An instance of the BaseView', function () {
 
 
-        //-----------Setup-----------
-        var BaseView,
-            viewInstance;
+            //-----------Setup-----------
+            var BaseView,
+                viewInstance;
 
-        beforeEach(function (done) {
-            injector.require(['masseuse'], function (masseuse) {
-                    BaseView = masseuse.BaseView;
-                    viewInstance = new BaseView({
-                        name : VIEW1_NAME
+            beforeEach(function (done) {
+                injector.require(['masseuse'], function (masseuse) {
+                        BaseView = masseuse.BaseView;
+                        viewInstance = new BaseView({
+                            name : VIEW1_NAME
+                        });
+                        done();
+                    },
+                    function () {
+                        console.log('BaseView error.');
+                        done();
                     });
                     done();
                 },
@@ -36,143 +42,187 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                 });
         });
 
-        //-----------Tests-----------
-        it('should exist', function () {
-            should.exist(BaseView);
-        });
-
-        describe('remove method', function () {
-            // method should wrap View.remove
-            it('should call stop on all children', function () {
-                var childView = new (BaseView.extend({
-                        name: CHILD_VIEW_NAME
-                    }))(),
-                    childRemove = sinon.spy(childView, 'remove');
-
-                viewInstance.addChild(childView);
-
-                childRemove.should.not.have.been.called;
-
-                viewInstance.remove();
-
-                childRemove.should.have.been.calledOnce;
+            //-----------Tests-----------
+            it('should exist', function () {
+                should.exist(BaseView);
             });
-        });
 
-        describe('children', function() {
-            describe('addChild method', function () {
-                it ('should be a method', function () {
-                    viewInstance.addChild.should.be.a('function');
-                });
-
-                it ('should add a child view', function () {
-                    var childView = new BaseView({
-                        name: CHILD_VIEW_NAME
-                    });
-
-                    viewInstance.children.length.should.equal(0);
+            describe('remove method', function () {
+                // method should wrap View.remove
+                it('should call stop on all children', function () {
+                    var childView = new (BaseView.extend({
+                            name : CHILD_VIEW_NAME
+                        }))(),
+                        childRemove = sinon.spy(childView, 'remove');
 
                     viewInstance.addChild(childView);
 
-                    viewInstance.children.length.should.equal(1);
-                });
+                    childRemove.should.not.have.been.called;
 
-                it ('should not add the same child view twice', function () {
-                    var childView = new BaseView({
-                        name: CHILD_VIEW_NAME
-                    });
+                    viewInstance.remove();
 
-                    viewInstance.children.length.should.equal(0);
-
-                    viewInstance.addChild(childView);
-
-                    viewInstance.children.length.should.equal(1);
-
-                    viewInstance.addChild(childView);
-
-                    viewInstance.children.length.should.equal(1);
+                    childRemove.should.have.been.calledOnce;
                 });
             });
 
-            describe('removeChild method', function () {
-                it ('should remove a child view, if it exists', function () {
-                    var childView = new BaseView({
-                        name: CHILD_VIEW_NAME
+            describe('children', function () {
+                describe('addChild method', function () {
+                    it('should be a method', function () {
+                        viewInstance.addChild.should.be.a('function');
                     });
 
-                    viewInstance.addChild(childView);
-
-                    viewInstance.children.length.should.equal(1);
-
-                    viewInstance.removeChild(childView);
-
-                    viewInstance.children.length.should.equal(0);
-                });
-
-                it ('should not remove any child views if a matching view is not found', function () {
-                    var childView = new BaseView({
-                            name: CHILD_VIEW_NAME
-                        }),
-                        anotherChildView = new BaseView({
-                            name: 'Another Child'
+                    it('should add a child view', function () {
+                        var childView = new BaseView({
+                            name : CHILD_VIEW_NAME
                         });
 
-                    viewInstance.addChild(childView);
+                        viewInstance.children.length.should.equal(0);
 
-                    viewInstance.children.length.should.equal(1);
+                        viewInstance.addChild(childView);
 
-                    viewInstance.removeChild(anotherChildView);
+                        viewInstance.children.length.should.equal(1);
+                    });
 
-                    viewInstance.children.length.should.equal(1);
+                    it('should not add the same child view twice', function () {
+                        var childView = new BaseView({
+                            name : CHILD_VIEW_NAME
+                        });
+
+                        viewInstance.children.length.should.equal(0);
+
+                        viewInstance.addChild(childView);
+
+                        viewInstance.children.length.should.equal(1);
+
+                        viewInstance.addChild(childView);
+
+                        viewInstance.children.length.should.equal(1);
+                    });
+                });
+
+                describe('removeChild method', function () {
+                    it('should remove a child view, if it exists', function () {
+                        var childView = new BaseView({
+                            name : CHILD_VIEW_NAME
+                        });
+
+                        viewInstance.addChild(childView);
+
+                        viewInstance.children.length.should.equal(1);
+
+                        viewInstance.removeChild(childView);
+
+                        viewInstance.children.length.should.equal(0);
+                    });
+
+                    it('should not remove any child views if a matching view is not found', function () {
+                        var childView = new BaseView({
+                                name : CHILD_VIEW_NAME
+                            }),
+                            anotherChildView = new BaseView({
+                                name : 'Another Child'
+                            });
+
+                        viewInstance.addChild(childView);
+
+                        viewInstance.children.length.should.equal(1);
+
+                        viewInstance.removeChild(anotherChildView);
+
+                        viewInstance.children.length.should.equal(1);
+                    });
+                });
+
+                describe('removeAllChildren method', function () {
+                    it('should remove all views from children', function () {
+                        var childView1 = new BaseView({
+                                name : CHILD_VIEW_NAME
+                            }),
+                            childView2 = new BaseView({
+                                name : 'Another Child'
+                            });
+
+                        viewInstance.addChild(childView1);
+                        viewInstance.addChild(childView2);
+
+                        viewInstance.children.length.should.equal(2);
+
+                        viewInstance.removeAllChildren();
+
+                        viewInstance.children.length.should.equal(0);
+                    });
+                });
+
+                describe('refreshChildren method', function () {
+                    it('should only remove children that have been started', function () {
+                        var childView1 = new BaseView({
+                                name : CHILD_VIEW_NAME
+                            }),
+                            childView2 = new BaseView({
+                                name : 'Another Child'
+                            }),
+                            childRemoveView1 = sinon.spy(childView1, 'remove'),
+                            childRemoveView2 = sinon.spy(childView2, 'remove');
+
+                        viewInstance.addChild(childView1);
+                        viewInstance.start()
+                            .done(function () {
+                                viewInstance.addChild(childView2);
+                                viewInstance.refreshChildren();
+                                childRemoveView1.should.have.been.calledOnce;
+                                childRemoveView2.should.not.have.been.called;
+                            });
+
+
+                    });
                 });
             });
         });
-    });
 
-    describe('An instance of extending the BaseView', function () {
+        describe('An instance of extending the BaseView', function () {
 
-        //-----------Setup-----------
-        var BaseView,
-            AsyncExtendedBaseView,
-            SyncExtendedBaseView,
-            asyncInstance,
-            syncInstance,
-            $beforeRenderDeferred,
-            $afterRenderDeferred;
+            //-----------Setup-----------
+            var BaseView,
+                AsyncExtendedBaseView,
+                SyncExtendedBaseView,
+                asyncInstance,
+                syncInstance,
+                $beforeRenderDeferred,
+                $afterRenderDeferred;
 
 
-        beforeEach(function (done) {
-            injector.require(['masseuse'], function (masseuse) {
+            beforeEach(function (done) {
+                injector.require(['masseuse'], function (masseuse) {
 
-                    BaseView = masseuse.BaseView;
-                    AsyncExtendedBaseView = BaseView.extend({
-                        beforeRender : function (deferred) {
-                            $beforeRenderDeferred = deferred;
-                        },
-                        afterRender : function (deferred) {
-                            $afterRenderDeferred = deferred;
-                        }
+                        BaseView = masseuse.BaseView;
+                        AsyncExtendedBaseView = BaseView.extend({
+                            beforeRender : function (deferred) {
+                                $beforeRenderDeferred = deferred;
+                            },
+                            afterRender : function (deferred) {
+                                $afterRenderDeferred = deferred;
+                            }
+                        });
+                        SyncExtendedBaseView = BaseView.extend({
+                            beforeRender : function () {
+                            },
+                            afterRender : function () {
+                            }
+                        });
+
+                        asyncInstance = new AsyncExtendedBaseView({
+                            name : VIEW1_NAME
+                        });
+                        syncInstance = new SyncExtendedBaseView({
+                            name : VIEW1_NAME
+                        });
+
+                        done();
+                    },
+                    function () {
+                        console.log('BaseView error.');
                     });
-                    SyncExtendedBaseView = BaseView.extend({
-                        beforeRender : function () {
-                        },
-                        afterRender : function () {
-                        }
-                    });
-
-                    asyncInstance = new AsyncExtendedBaseView({
-                        name : VIEW1_NAME
-                    });
-                    syncInstance = new SyncExtendedBaseView({
-                        name : VIEW1_NAME
-                    });
-
-                    done();
-                },
-                function () {
-                    console.log('BaseView error.');
-                });
+            });
         });
-    });
 
-});
+    });
