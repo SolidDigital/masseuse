@@ -91,11 +91,11 @@ define([
     }
 
     function render () {
-        _checkForEl.call(this);
+        _setEl.call(this);
         _appendOrInsertView.call(this);
     }
 
-    function _checkForEl() {
+    function _setEl() {
         if (undefined === this.el && undefined !== this.options.el || this.parent && undefined !== this.options.el) {
             this.setElement($(this.options.el));
         }

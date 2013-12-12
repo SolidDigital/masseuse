@@ -15,7 +15,6 @@
             }
         },
         paths : {
-            underscore : '../app/vendor/lodash/dist/lodash.underscore',
             jquery : '../app/vendor/jquery/jquery',
             rivets : '../app/vendor/rivets/dist/rivets',
             backbone : '../app/vendor/backbone-amd/backbone',
@@ -26,9 +25,14 @@
             sinon : '../app/vendor/sinon/lib/sinon',
             sinonSpy : '../app/vendor/sinon/lib/sinon/spy',
             sinonChai  : '../app/vendor/sinon-chai/lib/sinon-chai',
-            sinonCall : '../app/vendor/sinon/lib/sinon/call'
+            sinonCall : '../app/vendor/sinon/lib/sinon/call',
+            check : './check'
         },
         packages : [
+            {
+                name : 'underscore',
+                location : '../app/vendor/lodash-amd/underscore'
+            },
             {
                 name : 'masseuse',
                 location : '../app'
@@ -43,7 +47,9 @@
         './views/viewContextTests',
         './models/masseuseModelTests',
         './models/computedPropertyTests',
-        './models/proxyPropertyTests'
+        './models/proxyPropertyTests',
+        './utilities/formattersTests',
+        './utilities/validationTests'
     ], function (mocha) {
         mocha.run();
     });

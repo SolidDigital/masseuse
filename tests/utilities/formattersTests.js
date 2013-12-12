@@ -1,0 +1,33 @@
+define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'check'],
+    function (_, chai, mocha, sinon, sinonChai, masseuse, check) {
+
+    'use strict';
+    var formatters = masseuse.formatters,
+        should = chai.should();
+
+
+    require(['sinonCall', 'sinonSpy']);
+    // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
+    chai.use(sinonChai);
+    mocha.setup('bdd');
+
+    describe('Formatters', function() {
+
+        it('prettyFileSize', function() {
+            check(formatters.prettyFileSize, [
+                ['0', '0 Bytes'],
+                [2024, '2 KB'],
+                ['2024', '2 KB'],
+                [20245, '20 KB']
+            ]);
+        });
+
+        it('secondsToTime', function() {
+            check(formatters.secondsToTime, [
+                [120, '2 mins'],
+                [60 * 60 * 155 + 60 * 1 + 34, '155 hrs 1 min 34 secs'],
+                ['371', '6 mins 11 secs']
+            ]);
+        });
+    });
+});

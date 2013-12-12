@@ -8,7 +8,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
         should = chai.should();
 
 
-    require(['underscore', 'sinonCall', 'sinonSpy']);
+    require(['sinonCall', 'sinonSpy']);
     // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
     chai.use(sinonChai);
     mocha.setup('bdd');
@@ -29,8 +29,9 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     });
                     done();
                 },
-                function () {
-                    console.log('BaseView error.');
+                function (error) {
+                    console.log(error);
+                    console.log(error.message);
                     done();
                 });
         });

@@ -8,7 +8,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
             should = chai.should();
 
 
-        require(['underscore', 'sinonCall', 'sinonSpy']);
+        require(['sinonCall', 'sinonSpy']);
         // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
         chai.use(sinonChai);
         mocha.setup('bdd');
@@ -174,7 +174,6 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                 describe('with one argument', function () {
                     it('will fail the start method if its deferred is rejected', function (done) {
                         var startDeferred;
-                        console.log($beforeRenderDeferred);
                         startDeferred = asyncInstance.start();
                         _.defer(function() {
                             startDeferred.fail(done);
