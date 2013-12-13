@@ -55,7 +55,7 @@ define(function () {
             return time.join(' ');
         },
         dollars: function (amount) {
-            return '$' + (amount / 100);
+            return '$' + ((amount / 100).toFixed(2));
         },
         equals: function (value, args) {
             return (value === args);

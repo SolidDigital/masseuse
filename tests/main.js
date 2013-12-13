@@ -48,12 +48,8 @@
         './models/masseuseModelTests',
         './models/computedPropertyTests',
         './models/proxyPropertyTests',
-<<<<<<< HEAD
-        './utilities/formattersTests'
-=======
         './utilities/formattersTests',
         './utilities/validationTests'
->>>>>>> 9b870a27e977babc14162baf9b7b65e0138f5670
     ], function (mocha) {
         mocha.run();
     });
