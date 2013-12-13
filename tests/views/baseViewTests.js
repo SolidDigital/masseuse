@@ -1,5 +1,5 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
-    function (_, chai, Squire, mocha, sinon, sinonChai) {
+define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse'],
+    function (_, chai, Squire, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
         var VIEW1_NAME = 'testView1',
@@ -8,10 +8,10 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
             should = chai.should();
 
 
-        require(['underscore', 'sinonCall', 'sinonSpy']);
-        // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
-        chai.use(sinonChai);
-        mocha.setup('bdd');
+    require(['sinonCall', 'sinonSpy']);
+    // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
+    chai.use(sinonChai);
+    mocha.setup('bdd');
 
 
         describe('An instance of the BaseView', function () {
@@ -21,19 +21,13 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
             var BaseView,
                 viewInstance;
 
-            beforeEach(function (done) {
-                injector.require(['masseuse'], function (masseuse) {
-                        BaseView = masseuse.BaseView;
-                        viewInstance = new BaseView({
-                            name : VIEW1_NAME
-                        });
-                        done();
-                    },
-                    function () {
-                        console.log('BaseView error.');
-                        done();
-                    });
+            beforeEach(function () {
+                BaseView = masseuse.BaseView;
+                viewInstance = new BaseView({
+                    name : VIEW1_NAME
+                });
             });
+
 
             //-----------Tests-----------
             it('should exist', function () {

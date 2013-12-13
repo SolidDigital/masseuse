@@ -36,7 +36,7 @@ define([
         refreshChildren : refreshChildren,
         removeAllChildren : removeAllChildren,
         appendOrInsertView : appendOrInsertView,
-        checkForEl : checkForEl
+        setEl : setEl
 
         // Dynamically created, so the cache is not shared on the prototype:
         // elementCache: elementCache
@@ -93,11 +93,11 @@ define([
     }
 
     function render () {
-        this.checkForEl();
+        this.setEl();
         this.appendOrInsertView();
     }
 
-    function checkForEl() {
+    function setEl() {
         if (undefined === this.el && undefined !== this.options.el || this.parent && undefined !== this.options.el) {
             this.setElement($(this.options.el));
         }

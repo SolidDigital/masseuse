@@ -6,7 +6,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function
         expect = chai.expect;
 
 
-    require(['underscore', 'sinonCall', 'sinonSpy']);
+    require(['sinonCall', 'sinonSpy']);
     // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
     chai.use(sinonChai);
     mocha.setup('bdd');

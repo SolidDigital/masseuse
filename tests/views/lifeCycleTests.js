@@ -8,7 +8,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
             should = chai.should();
 
 
-        require(['underscore', 'sinonCall', 'sinonSpy']);
+        require(['sinonCall', 'sinonSpy']);
         // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
         chai.use(sinonChai);
         mocha.setup('bdd');
@@ -106,7 +106,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     });
 
                     it('should call checkForEl', function(){
-                       var checkElSpy = sinon.spy(viewInstance, 'checkForEl');
+                       var checkElSpy = sinon.spy(viewInstance, 'setEl');
                        viewInstance.render();
                        checkElSpy.should.have.been.calledOnce;
                     });
@@ -118,7 +118,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     });
                 });
 
-                describe('checkForEl method', function(){
+                describe('setEl method', function(){
                     it('should call set element if it doesn\'t have an el and its options do', function(){
                         var setElementSpy = sinon.spy(viewInstance, 'setElement');
                         viewInstance.el = undefined;
@@ -212,7 +212,6 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                 describe('with one argument', function () {
                     it('will fail the start method if its deferred is rejected', function (done) {
                         var startDeferred;
-                        console.log($beforeRenderDeferred);
                         startDeferred = asyncInstance.start();
                         _.defer(function() {
                             startDeferred.fail(done);
