@@ -1,6 +1,7 @@
 /* jshint loopfunc:true */
-define(['rivets', '../utilities/configureMethod', 'backbone', 'underscore', '../utilities/formatters', '../utilities/rivetsBinders'],
-    function (Rivets, configureMethod, Backbone, _, rivetsFormatters, rivetsBinders) {
+define(['jquery', 'rivets', '../utilities/configureMethod', 'backbone', 'underscore', '../utilities/formatters',
+    '../utilities/rivetsBinders'],
+    function ($, Rivets, configureMethod, Backbone, _, rivetsFormatters, rivetsBinders) {
     'use strict';
 
     /**
@@ -87,7 +88,7 @@ define(['rivets', '../utilities/configureMethod', 'backbone', 'underscore', '../
 
                 },
 
-                unsubscribe : function (obj, keypath, callback) {
+                unsubscribe : function (obj, keypath) {
                     if (typeof (obj) == 'undefined') {
                         return;
                     }

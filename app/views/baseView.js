@@ -1,8 +1,8 @@
 /*global define:false*/
 define([
-    'backbone', 'underscore', '../utilities/channels', '../utilities/configureMethod', './rivetView',
+    'jquery', 'backbone', 'underscore', '../utilities/channels', '../utilities/configureMethod', './rivetView',
     './viewContext', '../utilities/enclose', './lifeCycle', '../utilities/getProperty'
-], function (Backbone, _, channels, configureMethod, rivetView, ViewContext, enclose, lifeCycle, getProperty) {
+], function ($, Backbone, _, channels, configureMethod, rivetView, ViewContext, enclose, lifeCycle, getProperty) {
     'use strict';
 
     var BEFORE_RENDER_DONE = 'beforeRenderDone',

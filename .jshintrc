@@ -1,8 +1,8 @@
 {
+    "browser" : true,
     "globals": {
         "define": false,
         "require": false,
-        "console": false,
         "beforeEach": false,
         "describe": false,
         "it": false
@@ -14,5 +14,9 @@
     "expr" : true,
     "loopfunc" : false,
     "onevar" : true,
-    "strict" : true
+    "strict" : true,
+    "undef" : true,
+    "unused" : true,
+    "maxlen" : 121,
+    "curly" : true
 }

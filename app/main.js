@@ -1,5 +1,6 @@
 define([
-    './views/baseView', './utilities/channels', './utilities/configureMethod', './views/rivetView', './views/viewContext',
+    './views/baseView', './utilities/channels', './utilities/configureMethod', './views/rivetView',
+    './views/viewContext',
     './utilities/localStorage', './routers/masseuseRouter', './models/proxyProperty',
     './models/masseuseModel', './models/computedProperty', './collections/paginatedCollection', './utilities/enclose',
     './utilities/getProperty', './utilities/formatters', './utilities/validation'
