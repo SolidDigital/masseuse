@@ -44,8 +44,8 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'check'
             ]);
         });
 
-        it('withBackslash adds a space then a backslash then a space', function() {
-            check(formatters.withBackslash, [
+        it('withForwardSlash adds a space then a backslash then a space', function() {
+            check(formatters.withForwardSlash, [
                 [120, '120 / '],
                 ['string', 'string / ']
             ]);

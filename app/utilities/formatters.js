@@ -9,7 +9,7 @@ define(function () {
         joinWithComma: function (value) {
             return value.join(', ');
         },
-        withBackslash: function (value) {
+        withForwardSlash: function (value) {
             return value + ' / ';
         },
         withColon: function (value) {
