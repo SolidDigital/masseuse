@@ -62,9 +62,9 @@ define(function () {
             return '$' + ((amount / 100).toFixed(2));
         },
         equals: function (value, args) {
-            return (value === args);
+            return (value == args);
         },
-        exists: function (value, args) {
+        existsOr: function (value, args) {
             return value ? value : args;
         },
         limit: function (value, args) {

@@ -86,17 +86,19 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'check'
             ]);
         });
 
-        it('equals checks two values to see if they are equal, returns a boolean', function() {
+        it('equals checks two values to see if they are double equal, returns a boolean', function() {
             check(formatters.equals, [
                 [120, 120, true],
                 ['admin', 'admin', true],
                 [540, 230, false],
-                ['george', 'larry', false]
+                ['george', 'larry', false],
+                ['120', 120, true],
+                [{key: 'value', dude: [1,2,3]}, {key: 'value', dude: [1,2,3]}, false]
             ]);
         });
 
-        it('exists checks if the first arg exists, if it does it returns it, if not, it returns the second arg', function() {
-            check(formatters.exists, [
+        it('existsOr checks if the first arg exists, if it does it returns it, if not, it returns the second arg', function() {
+            check(formatters.existsOr, [
                 [120, 230, 120],
                 ['', 'Yeah', 'Yeah'],
                 ['Juju', 'balling', 'Juju']
