@@ -72,6 +72,9 @@ define(function () {
         jsonAsString: function (value) {
             return JSON.stringify(value);
         },
+        booleantoenabled : function(value) {
+            return value ? 'enabled' : 'disabled';
+        },
         pluralize: pluralize,
         includes: function () {
             var args = Array.prototype.slice.call(arguments),
