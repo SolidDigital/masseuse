@@ -35,6 +35,10 @@ define(function () {
             var date = new Date(dateStr);
             return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
         },
+        prettyDateNoTime : function(dateStr) {
+            var dateString = new Date(dateStr);
+            return (dateString.getMonth() + 1) + '/' + dateString.getDate() + '/' + dateString.getFullYear();
+        },
         secondsToTime: function (secs) {
             var SECONDS_IN_MINUTE = 60,
                 SECONDS_IN_HOUR = SECONDS_IN_MINUTE * 60,
@@ -71,6 +75,9 @@ define(function () {
         },
         jsonAsString: function (value) {
             return JSON.stringify(value);
+        },
+        booleantoenabled : function(value) {
+            return value ? 'enabled' : 'disabled';
         },
         pluralize: pluralize,
         includes: function () {

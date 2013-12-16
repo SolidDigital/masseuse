@@ -13,10 +13,13 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
     };
 
     function runAllMethods ($deferred, $parentRenderPromise) {
-        var notifyBeforeRenderDone = enclose($deferred.notify).appendArgs(BEFORE_RENDER_DONE).bindContext($deferred).closure,
-            waitForParentPromiseToBeResolved = enclose(_waitForParentPromiseToBeResolved).appendArgs($parentRenderPromise).closure,
+        var notifyBeforeRenderDone = enclose($deferred.notify)
+                .appendArgs(BEFORE_RENDER_DONE).bindContext($deferred).closure,
+            waitForParentPromiseToBeResolved = enclose(_waitForParentPromiseToBeResolved)
+                .appendArgs($parentRenderPromise).closure,
             afterRender = enclose(_afterRender).appendArgs($deferred).bindContext(this).closure,
-            renderAndAfterRender = enclose(_renderAndAfterRender).appendArgs($deferred, afterRender).bindContext(this).closure,
+            renderAndAfterRender = enclose(_renderAndAfterRender)
+                .appendArgs($deferred, afterRender).bindContext(this).closure,
             rejectStart = enclose($deferred.reject).bindContext(this).closure;
 
         $
