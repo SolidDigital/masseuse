@@ -1,12 +1,7 @@
 define([
-    './views/baseView', './utilities/channels', './utilities/configureMethod', './views/rivetView',
-    './views/viewContext',
-    './utilities/localStorage', './routers/masseuseRouter', './models/proxyProperty',
-    './models/masseuseModel', './models/computedProperty', './collections/paginatedCollection', './utilities/enclose',
-    './utilities/getProperty', './utilities/formatters', './utilities/validation'
-], function (BaseView, channels, configureMethod, rivetView, ViewContext, localStorage, MasseuseRouter,
-             ProxyProperty, MasseuseModel, ComputedProperty, PaginatedCollection, enclose, getProperty, formatters,
-             validation) {
+    './views/baseView', './utilities/channels', './views/viewContext', './routers/masseuseRouter',
+    './models/masseuseModel', './models/computedProperty'
+], function (BaseView, channels, ViewContext, MasseuseRouter, MasseuseModel, ComputedProperty) {
     'use strict';
 
     /**
@@ -32,20 +27,15 @@ define([
      */
     return {
         BaseView : BaseView, // yes
-        channels : channels, // yes
-        ComputedProperty : ComputedProperty, // yes - thin out MM by using native set instead of hard coded overrides
-        MasseuseModel : MasseuseModel, // yes
-        MasseuseRouter : MasseuseRouter, // yes - add in loadMainContent
         ViewContext : ViewContext, // yes
-        getProperty : getProperty, // internal
-        enclose : enclose, // internal
-        localStorage : localStorage, // no
-        configureMethod : configureMethod, // no - potentially deferMethod
-        formatters : formatters, // no
-        PaginatedCollection : PaginatedCollection, // no
-        ProxyProperty : ProxyProperty, // no
-        rivetView : rivetView, // no - maybe as plugin later
-        validation : validation // no
+        channels : channels, // yes
+        MasseuseModel : MasseuseModel, // yes
+        ComputedProperty : ComputedProperty, // yes - thin out MM by using native set instead of hard coded overrides
+        MasseuseRouter : MasseuseRouter, // yes - add in loadMainContent
     };
+
+//            getProperty : getProperty, // internal
+//            enclose : enclose, // internal
+//            deferMethod : deferMethod // internal
 
 });

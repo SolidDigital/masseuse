@@ -1,8 +1,8 @@
 /*global define:false*/
 define([
-    'jquery', 'backbone', 'underscore', '../utilities/channels', '../utilities/configureMethod', './rivetView',
-    './viewContext', '../utilities/enclose', './lifeCycle', '../utilities/getProperty'
-], function ($, Backbone, _, channels, configureMethod, rivetView, ViewContext, enclose, lifeCycle, getProperty) {
+    'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', '../utilities/enclose', './lifeCycle',
+    '../utilities/getProperty'
+], function ($, Backbone, _, channels, ViewContext, enclose, lifeCycle, getProperty) {
     'use strict';
 
     var BEFORE_RENDER_DONE = 'beforeRenderDone',
@@ -52,13 +52,17 @@ define([
     return BaseView;
 
     function initialize (options) {
+        var self = this;
+        // TODO: remove?
         this.options = _.extend({}, this.options, options);
         this.elementCache = _.memoize(elementCache);
 
         _setTemplate.call(this);
         _setModel.call(this, options);
         _setBoundEventListeners.call(this);
-        _setViewRiveting.call(this);
+        _.each(options.plugins, function(plugin) {
+             plugin.call(self);
+        });
 
         this.children = [];
     }
@@ -244,23 +248,6 @@ define([
     function _setBoundEventListeners () {
         if (this.options.bindings) {
             this.bindEventListeners(this.options.bindings);
-        }
-    }
-
-    function _setViewRiveting () {
-        if ('auto' === this.options.rivetConfig) {
-            this.model.set('viewId', this.cid);
-            this.domEl = this.cid;
-            this.rivetView = rivetView({
-                rivetScope : '#' + this.cid,
-                rivetPrefix : 'rv'
-            }).methodWithActualOptions;
-        } else if (this.options.rivetConfig) {
-            this.rivetView = rivetView({
-                rivetScope : this.options.rivetConfig.scope,
-                rivetPrefix : this.options.rivetConfig.prefix,
-                instaUpdateRivets : (this.options.rivetConfig.instaUpdateRivets ? true : false)
-            }).methodWithActualOptions;
         }
     }
 });

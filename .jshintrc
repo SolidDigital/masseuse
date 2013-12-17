@@ -17,6 +17,5 @@
     "strict" : true,
     "undef" : true,
     "unused" : true,
-    "maxlen" : 121,
-    "curly" : true
+    "maxlen" : 121
 }
