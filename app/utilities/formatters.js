@@ -70,8 +70,13 @@ define(function () {
         limit: function (value, args) {
             return value.slice(0, args);
         },
-        humanize: function (value) {
-            return value.charAt(0).toUpperCase() + value.slice(1);
+        humanize: {
+            read : function(value) {
+                return (value) ? value.charAt(0).toUpperCase() + value.slice(1) : '';
+            },
+            publish : function(value) {
+                return (value) ? value.charAt(0).toLowerCase() + value.slice(1) : '';
+            }
         },
         jsonAsString: function (value) {
             return JSON.stringify(value);

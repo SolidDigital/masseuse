@@ -112,10 +112,15 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'check'
         });
 
         it('humanize capitalizes the first letter in a word', function() {
-            check(formatters.humanize, [
+            check(formatters.humanize.read, [
                 ['world', 'World'],
                 ['ending', 'Ending'],
                 ['bomb', 'Bomb']
+            ]);
+            check(formatters.humanize.publish, [
+                ['World', 'world'],
+                ['Ending', 'ending'],
+                ['Bomb', 'bomb']
             ]);
         });
 
