@@ -5,7 +5,7 @@ define(['underscore'], function(_) {
     function check(method, tests) {
         _.each(tests, function(theTest) {
             var assertion = theTest.pop();
-            method.apply(method, theTest).should.equal(assertion);
+            method.apply(method, theTest).should.deep.equal(assertion);
         });
     }
 });

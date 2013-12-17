@@ -41,12 +41,12 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
         describe('isEmail method', function () {
             it('formats properly', function() {
                 check(validation.isEmail, [
-                    ['test@somewhere.com', true, 'should return false if @ symbol is missing'],
-                    ['test@somewhere.com', true, 'should return true if format is string@string.com'],
-                    ['test@test.net', true, 'should also allow alternative . endings'],
+                    ['test@somewhere.com', true],//, 'should return false if @ symbol is missing'],
+                    ['test@somewhere.com', true],//, 'should return true if format is string@string.com'],
+                    ['test@test.net', true],//, 'should also allow alternative . endings'],
                     ['test@test.test.test', true],
-                    ['@test.com', false, 'should return false if you are missing anything before @'],
-                    ['this is not an email', false, 'should be false for plain string']
+                    ['@test.com', false],//, 'should return false if you are missing anything before @'],
+                    ['this is not an email', false]//, 'should be false for plain string']
                 ]);
             });
         });
@@ -87,11 +87,11 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
         describe('isCurrency method', function () {
             it('formats properly', function() {
                 check(validation.isCurrency, [
-                    ['$2.78', true, 'in a proper currency format'],
-                    ['$2.78123312312', true, 'in a proper currency format with high sig figs'],
-                    ['$2.78.98.9',false, 'with multiple decimals'],
-                    [4.67, false, 'other than a string'],
-                    ['2.78',false, 'without $ symbol']
+                    ['$2.78', true],//, 'in a proper currency format'],
+                    ['$2.78123312312', true],//, 'in a proper currency format with high sig figs'],
+                    ['$2.78.98.9',false],//, 'with multiple decimals'],
+                    [4.67, false],//, 'other than a string'],
+                    ['2.78',false]//, 'without $ symbol']
                 ]);
             });
         });
