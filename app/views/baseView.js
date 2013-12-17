@@ -53,6 +53,7 @@ define([
 
     function initialize (options) {
         var self = this;
+        options = _.clone(options, true);
         // TODO: remove?
         this.options = _.extend({}, this.options, options);
         this.elementCache = _.memoize(elementCache);
