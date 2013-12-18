@@ -165,7 +165,6 @@ define(['jquery', 'rivets', '../utilities/configureMethod', 'backbone', 'undersc
 
         Rivets.config.templateDelimiters = ['{{', '}}'];
 
-        // TODO: move formatters into their own module
         _.each(rivetsFormatters, function(value, key) {
            Rivets.formatters[key] = value;
         });
