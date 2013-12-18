@@ -20,6 +20,9 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
         var BaseView,
             viewInstance,
             AsyncExtendedBaseView,
+            AsyncBaseViewRejectedInBeforeRender,
+            AsyncBaseViewRejectedInRender,
+            AsyncBaseViewRejectedInAfterRender,
             SyncExtendedBaseView,
             asyncInstance,
             syncInstance,
@@ -37,6 +40,21 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                         },
                         afterRender : function (deferred) {
                             $afterRenderDeferred = deferred;
+                        }
+                    });
+                    AsyncBaseViewRejectedInBeforeRender = BaseView.extend({
+                        beforeRender : function (deferred) {
+                            deferred.reject();
+                        }
+                    });
+                    AsyncBaseViewRejectedInRender = BaseView.extend({
+                        render : function (deferred) {
+                            deferred.reject();
+                        }
+                    });
+                    AsyncBaseViewRejectedInAfterRender = BaseView.extend({
+                        afterRender : function (deferred) {
+                            deferred.reject();
                         }
                     });
                     SyncExtendedBaseView = BaseView.extend({
@@ -93,6 +111,50 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                                 eventSpy.thirdCall.args[0].should.equal('afterRenderDone');
                                 done();
                             }
+                        });
+                    });
+
+                    describe('when rejected', function() {
+
+                        describe('in beforeRender', function() {
+                            it('should not call render', function () {
+                                var viewInstance = new AsyncBaseViewRejectedInBeforeRender({name: VIEW1_NAME}),
+                                    renderSpy = sinon.spy(viewInstance, 'render');
+
+                                viewInstance.start();
+                                renderSpy.should.not.have.been.calledOnce;
+                            });
+                        });
+
+                        describe('in render', function() {
+                            it('should notify beforeRenderDone then not notify renderDone', function () {
+                                var eventSpy = sinon.spy(),
+                                    viewInstance = new AsyncBaseViewRejectedInRender({name: VIEW1_NAME});
+
+                                viewInstance.start().progress(function(event){
+                                    eventSpy(event);
+                                    if(2 <= eventSpy.callCount) {
+                                        eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
+                                        eventSpy.secondCall.args[0].should.not.equal('renderDone');
+                                    }
+                                });
+                            });
+                        });
+
+                        describe('in afterRender', function() {
+                            it('should notify beforeRenderDone then notify renderDone then NOT notify afterRenderDone', function () {
+                                var eventSpy = sinon.spy(),
+                                    viewInstance = new AsyncBaseViewRejectedInAfterRender({name: VIEW1_NAME});
+
+                                viewInstance.start().progress(function(event){
+                                    eventSpy(event);
+                                    if(3 <= eventSpy.callCount) {
+                                        eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
+                                        eventSpy.secondCall.args[0].should.equal('renderDone');
+                                        eventSpy.thirdCall.args[0].should.not.equal('afterRenderDone');
+                                    }
+                                });
+                            });
                         });
                     });
 

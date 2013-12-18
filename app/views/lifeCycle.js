@@ -24,7 +24,7 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
 
         $
             .when(_runLifeCycleMethod.call(this, this.beforeRender))
-            .always(notifyBeforeRenderDone)
+            .then(notifyBeforeRenderDone)
             .then(waitForParentPromiseToBeResolved)
             .then(
                 renderAndAfterRender,
@@ -62,7 +62,7 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
         var rejectStart = enclose($deferred.reject).bindContext(this).closure;
         $
             .when(_runLifeCycleMethod.call(this, this.render))
-            .always(enclose($deferred.notify).appendArgs(RENDER_DONE).bindContext($deferred).closure)
+            .then(enclose($deferred.notify).appendArgs(RENDER_DONE).bindContext($deferred).closure)
             .then(
                 afterRender,
                 rejectStart);
@@ -77,7 +77,7 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
                 $afterRenderDeferred,
                 _startChildren.call(this, $deferred)
             )
-            .always(enclose($deferred.notify).appendArgs(AFTER_RENDER_DONE).bindContext($deferred).closure)
+            .then(enclose($deferred.notify).appendArgs(AFTER_RENDER_DONE).bindContext($deferred).closure)
             .then(
                 resolveStart,
                 rejectStart);
