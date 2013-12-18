@@ -148,7 +148,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
 
                                 viewInstance.start().progress(function(event){
                                     eventSpy(event);
-                                    if(3 <= eventSpy.callCount) {
+                                    if(3 === eventSpy.callCount) {
                                         eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
                                         eventSpy.secondCall.args[0].should.equal('renderDone');
                                         eventSpy.thirdCall.args[0].should.not.equal('afterRenderDone');

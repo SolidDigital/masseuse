@@ -43,7 +43,8 @@ define(['jquery', 'underscore', '../utilities/enclose'],
      */
     function _runLifeCycleMethod (lifeCycleMethod) {
         var $deferred,
-            args;
+            args = Array.prototype.slice.call(arguments),
+            returned;
 
         if (!lifeCycleMethod) {
             return undefined;
@@ -51,11 +52,12 @@ define(['jquery', 'underscore', '../utilities/enclose'],
 
         if (lifeCycleMethod.length) {
             $deferred = new $.Deferred();
-            args = Array.prototype.slice.call(arguments);
             args.unshift($deferred);
         }
 
-        return lifeCycleMethod.apply(this, args || arguments);
+        returned = lifeCycleMethod.apply(this, args);
+
+        return lifeCycleMethod.length ? $deferred.promise() : returned;
     }
 
     function _waitForParentPromiseToBeResolved ($parentRenderPromise) {
