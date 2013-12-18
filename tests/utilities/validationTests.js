@@ -1,13 +1,10 @@
-/*global describe:false, it:false, beforeEach:false*/
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'check'],
-    function (_, chai, Squire, mocha, sinon, sinonChai, masseuse, check) {
+define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'helpers', 'check'],
+    function (_, chai, mocha, sinon, sinonChai, helpers, check) {
 
     'use strict';
 
-    var validation = masseuse.validation,
-        injector = new Squire(),
-        should = chai.should(),
-        expect = chai.expect;
+    var validation = helpers.validation,
+        should = chai.should();
 
     require(['sinonCall', 'sinonSpy']);
     // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai

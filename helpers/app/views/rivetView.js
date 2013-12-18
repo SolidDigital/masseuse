@@ -1,5 +1,5 @@
 /* jshint loopfunc:true */
-define(['./../', '../../.', '../utilities/configureMethod', 'backbone', 'underscore', '../utilities/formatters',
+define(['jquery', 'rivets', '../utilities/configureMethod', 'backbone', 'underscore', '../utilities/formatters',
     '../utilities/rivetsBinders'],
     function ($, Rivets, configureMethod, Backbone, _, rivetsFormatters, rivetsBinders) {
     'use strict';

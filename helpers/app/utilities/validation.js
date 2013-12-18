@@ -1,4 +1,4 @@
-define(['../../../../'], function (_) {
+define(['underscore'], function (_) {
     'use strict';
     return {
         stringHasLength : function (string) {

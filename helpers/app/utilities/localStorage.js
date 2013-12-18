@@ -1,5 +1,5 @@
 /*global define:false*/
-define(['../'], function ($) {
+define(['jquery'], function ($) {
     'use strict';
 
     var _localStorage = window.localStorage,

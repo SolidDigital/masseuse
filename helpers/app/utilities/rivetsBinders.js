@@ -1,5 +1,5 @@
 /* jshint loopfunc:true */
-define(['../../.'], function ($) {
+define(['jquery'], function ($) {
     'use strict';
 
     return {

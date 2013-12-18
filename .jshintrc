@@ -17,5 +17,6 @@
     "strict" : true,
     "undef" : true,
     "unused" : true,
-    "maxlen" : 121
+    "maxlen" : 121,
+    "newcap" : false
 }
