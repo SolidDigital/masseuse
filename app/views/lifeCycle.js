@@ -1,6 +1,6 @@
 /*global define:false */
-define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/enclose'],
-    function ($, _, configureMethod, enclose) {
+define(['jquery', 'underscore', '../utilities/enclose'],
+    function ($, _, enclose) {
     'use strict';
 
         // TODO: create constants module
@@ -42,13 +42,20 @@ define(['jquery', 'underscore', '../utilities/configureMethod', '../utilities/en
      * @private
      */
     function _runLifeCycleMethod (lifeCycleMethod) {
+        var $deferred,
+            args;
+
         if (!lifeCycleMethod) {
             return undefined;
         }
 
-        return configureMethod({}, lifeCycleMethod).methodWithDefaultOptions({
-            async : lifeCycleMethod.length
-        }).methodWithActualOptions.call(this);
+        if (lifeCycleMethod.length) {
+            $deferred = new $.Deferred();
+            args = Array.prototype.slice.call(arguments);
+            args.unshift($deferred);
+        }
+
+        return lifeCycleMethod.apply(this, args || arguments);
     }
 
     function _waitForParentPromiseToBeResolved ($parentRenderPromise) {

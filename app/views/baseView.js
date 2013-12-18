@@ -54,16 +54,17 @@ define([
     function initialize (options) {
         var self = this;
         options = _.clone(options, true);
-        // TODO: remove?
-        this.options = _.extend({}, this.options, options);
         this.elementCache = _.memoize(elementCache);
 
         _setTemplate.call(this);
         _setModel.call(this, options);
         _setBoundEventListeners.call(this);
-        _.each(options.plugins, function(plugin) {
-             plugin.call(self);
-        });
+        if (options && options.plugins && options.plugins.length) {
+            _.each(options.plugins, function(plugin) {
+                plugin.call(self);
+            });
+
+        }
 
         this.children = [];
     }
