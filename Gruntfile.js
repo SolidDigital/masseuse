@@ -58,10 +58,10 @@ module.exports = function (grunt) {
             reload : {
                 path : 'http://localhost:9001/'
             },
-            tests : {
+            masseuse : {
                 path : 'http://localhost:9001/tests/'
             },
-            helperTests : {
+            helpers : {
                 path : 'http://localhost:9001/helpers/tests'
             }
         },
@@ -90,11 +90,11 @@ module.exports = function (grunt) {
     });
 
     // To start editing your slideshow using livereload, run 'grunt server'
-    grunt.registerTask('testApp', 'Build and watch task', [
-        'jshint', 'connect:tests',  'open:tests', 'watch'
+    grunt.registerTask('testMasseuse', 'Build and watch task', [
+        'jshint', 'connect:tests',  'open:masseuse', 'watch'
     ]);
     grunt.registerTask('testHelpers', 'Build and watch task', [
-        'jshint', 'connect:tests',  'open:helperTests', 'watch'
+        'jshint', 'connect:tests',  'open:helpers', 'watch'
     ]);
     grunt.registerTask('deploy', 'Deploy to gh-pages', [
         'jshint', 'copy', 'build_gh_pages'
