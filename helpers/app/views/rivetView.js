@@ -38,10 +38,10 @@ define(['jquery', 'rivets', '../utilities/configureMethod', 'backbone', 'undersc
                             }.bind(this, obj, keypath), this);
                         } else {
                             if (this.getValue(obj, keypath, true) instanceof Backbone.Collection) {
-                                this.getValue(obj, keypath, true).on('add remove reset refresh',
-                                    function (obj, keypath) {
+                                this.getValue(obj, keypath, true)
+                                    .on('add remove reset refresh', function (obj, keypath) {
                                         callback(this.getValue(obj, keypath));
-                                }.bind(this, obj, keypath), this);
+                                    }.bind(this, obj, keypath), this);
                             }
                             if (obj.on) {
                                 obj.on('change:' + keypath, function (tail_parts, key, m, v) {
@@ -166,11 +166,11 @@ define(['jquery', 'rivets', '../utilities/configureMethod', 'backbone', 'undersc
         Rivets.config.templateDelimiters = ['{{', '}}'];
 
         _.each(rivetsFormatters, function(value, key) {
-           Rivets.formatters[key] = value;
+            Rivets.formatters[key] = value;
         });
 
         _.each(rivetsBinders, function(value, key) {
-           Rivets.binders[key] = value;
+            Rivets.binders[key] = value;
         });
 
         // bind data to rivets values.

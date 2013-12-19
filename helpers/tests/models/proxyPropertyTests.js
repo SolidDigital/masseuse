@@ -1,4 +1,5 @@
-define(['../../../../../.', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function (_, chai, Squire, mocha, sinon, sinonChai) {
+define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
+    function (_, chai, Squire, mocha, sinon, sinonChai) {
 
     'use strict';
     var injector = new Squire(),
@@ -11,26 +12,28 @@ define(['../../../../../.', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], fu
     chai.use(sinonChai);
     mocha.setup('bdd');
 
+    //-----------To make JSHINT Pass-----------
+    should;
+    expect;
+
     describe('ProxyProperty', function() {
         //-----------Setup-----------
         var Model,
             modelInstance,
-            ComputedProperty,
             ProxyProperty,
             otherModel;
 
         beforeEach(function (done) {
-            injector.require(['masseuse'], function (masseuse) {
-                    ComputedProperty = masseuse.ComputedProperty;
-                    ProxyProperty = masseuse.ProxyProperty;
+            injector.require(['masseuse', 'helpers'], function (masseuse, helpers) {
+                    ProxyProperty = helpers.ProxyProperty;
                     Model = masseuse.MasseuseModel;
                     modelInstance = new Model();
                     done();
                 },
                 function () {
-                    console.log('Model error.');
                     done();
                 });
+
         });
 
         beforeEach(function() {
@@ -40,7 +43,8 @@ define(['../../../../../.', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], fu
         });
 
         it('should allow the user to see changes of a property on another model', function() {
-
+            console.log(modelInstance);
+            console.log(otherModel);
             modelInstance.set('nameProxy', new ProxyProperty('name', otherModel));
             modelInstance.get('nameProxy').should.equal('Jack');
 

@@ -35,6 +35,10 @@
             },
             {
                 name : 'masseuse',
+                location : '../../app'
+            },
+            {
+                name : 'helpers',
                 location : '../app'
             }
         ]
@@ -42,11 +46,10 @@
 
     require([
         'mocha',
-        './views/baseViewTests',
-        './views/lifeCycleTests',
-        './views/viewContextTests',
-        './models/masseuseModelTests',
-        './models/computedPropertyTests'
+        './models/proxyPropertyTests.js',
+        './utilities/formattersTests',
+        './utilities/validationTests',
+        './views/rivetViewTests'
     ], function (mocha) {
         mocha.run();
     });

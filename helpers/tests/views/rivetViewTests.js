@@ -1,4 +1,5 @@
-define(['../../../../../.', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function (_, chai, Squire, mocha, sinon, sinonChai) {
+define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
+    function (_, chai, Squire, mocha, sinon, sinonChai) {
     'use strict';
     var injector = new Squire(),
         should = chai.should();
@@ -7,5 +8,10 @@ define(['../../../../../.', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], fu
     // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
     chai.use(sinonChai);
     mocha.setup('bdd');
+
+
+    //-----------------To Make JSHINT pass-----------------
+    should;
+    injector;
 
 });

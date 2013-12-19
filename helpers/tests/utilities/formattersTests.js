@@ -1,10 +1,13 @@
-define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'check'],
-    function (_, chai, mocha, sinon, sinonChai, masseuse, check) {
+define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'helpers', 'check'],
+    function (_, chai, mocha, sinon, sinonChai, helpers, check) {
 
     'use strict';
-    var formatters = masseuse.formatters,
+    var formatters = helpers.formatters,
         should = chai.should();
 
+
+    //-------------To make JSHINT pass-------------
+    should;
 
     require(['sinonCall', 'sinonSpy']);
     // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
@@ -97,7 +100,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'check'
             ]);
         });
 
-        it('existsOr checks if the first arg exists, if it does it returns it, if not, it returns the second arg', function() {
+        it('existsOr checks if the first arg exists, if true returns it, if false returns the second arg', function() {
             check(formatters.existsOr, [
                 [120, 230, 120],
                 ['', 'Yeah', 'Yeah'],
@@ -127,6 +130,13 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'check'
         it('jsonAsString turns a JSON object into a string', function() {
             check(formatters.jsonAsString, [
                 [{ key: 'value', dude: [1,2,3]}, '{"key":"value","dude":[1,2,3]}']
+            ]);
+        });
+
+        it('booleantoenabled turns a boolean into the strings enabled or disabled', function() {
+            check(formatters.booleantoenabled, [
+                [true, 'enabled'],
+                [false, 'disabled']
             ]);
         });
 

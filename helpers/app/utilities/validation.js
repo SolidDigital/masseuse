@@ -42,7 +42,6 @@ define(['underscore'], function (_) {
         validateLoginAttribute : function (string) {
             return (/^[\w.\-]+$/).test(string);
         },
-
         validateLuhn : function (number) {
             var digit, n, sum, _len, _ref;
             sum = 0;

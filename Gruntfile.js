@@ -22,7 +22,8 @@ module.exports = function (grunt) {
                 },
                 files : [
                     'tests/**/*.js',
-                    'app/*.js'
+                    'app/*.js',
+                    'helpers/**/*.js'
                 ],
                 tasks : [
                     'jshint'
@@ -59,6 +60,9 @@ module.exports = function (grunt) {
             },
             tests : {
                 path : 'http://localhost:9001/tests/'
+            },
+            helperTests : {
+                path : 'http://localhost:9001/helpers/tests'
             }
         },
 
@@ -74,8 +78,10 @@ module.exports = function (grunt) {
         jshint : {
             files : [
                 'app/**/*.js',
+                'helpers/**/*.js',
                 'tests/**/*.js',
-                '!app/vendor/**/*.js'
+                '!app/vendor/**/*.js',
+                '!helpers/app/vendor/**/*.js'
             ],
             options : {
                 jshintrc : '.jshintrc'
@@ -84,8 +90,11 @@ module.exports = function (grunt) {
     });
 
     // To start editing your slideshow using livereload, run 'grunt server'
-    grunt.registerTask('testServer', 'Build and watch task', [
+    grunt.registerTask('testApp', 'Build and watch task', [
         'jshint', 'connect:tests',  'open:tests', 'watch'
+    ]);
+    grunt.registerTask('testHelpers', 'Build and watch task', [
+        'jshint', 'connect:tests',  'open:helperTests', 'watch'
     ]);
     grunt.registerTask('deploy', 'Deploy to gh-pages', [
         'jshint', 'copy', 'build_gh_pages'
