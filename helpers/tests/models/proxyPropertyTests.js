@@ -28,25 +28,20 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     ProxyProperty = helpers.ProxyProperty;
                     Model = masseuse.MasseuseModel;
                     modelInstance = new Model();
+                    otherModel = new Model();
+                    otherModel.set('name', 'Jack');
                     done();
                 },
                 function () {
                     done();
                 });
-
-        });
-
-        beforeEach(function() {
-            otherModel = new Model({
-                name : 'Jack'
-            });
         });
 
         it('should allow the user to see changes of a property on another model', function() {
-            console.log(modelInstance);
-            console.log(otherModel);
             modelInstance.set('nameProxy', new ProxyProperty('name', otherModel));
+            console.log(modelInstance.get('nameProxy'));
             modelInstance.get('nameProxy').should.equal('Jack');
+
 
             otherModel.set('name', 'Jill');
             modelInstance.get('nameProxy').should.equal('Jill');
@@ -60,7 +55,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
 
         });
 
-        it('should allow the user to set multiple ProxyProperteis at once', function() {
+        it('should allow the user to set multiple ProxyProperties at once', function() {
             modelInstance.set({
                 'nameProxy': new ProxyProperty('name', otherModel),
                 'nameProxy2': new ProxyProperty('name', otherModel)
