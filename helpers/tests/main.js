@@ -46,6 +46,7 @@
 
     require([
         'mocha',
+        './collections/paginatedCollectionTests.js',
         './models/proxyPropertyTests.js',
         './utilities/formattersTests',
         './utilities/rivetsBindersTests.js',
