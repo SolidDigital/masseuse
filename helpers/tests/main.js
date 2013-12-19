@@ -48,6 +48,7 @@
         'mocha',
         './models/proxyPropertyTests.js',
         './utilities/formattersTests',
+        './utilities/rivetsBindersTests.js',
         './utilities/localStorageTests.js',
         './utilities/configureMethodTests',
         './utilities/validationTests',
