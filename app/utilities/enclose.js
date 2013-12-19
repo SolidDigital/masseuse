@@ -18,18 +18,18 @@ define(function () {
         _createClosure.call(this);
     }
 
-    function bindContext(context) {
+    function bindContext (context) {
         this.context = context;
         return this;
     }
 
-    function appendArgs() {
+    function appendArgs () {
         this.args = _concatArguments.apply(this, arguments);
         return this;
     }
 
     /**
-     * 
+     *
      * @private
      */
 

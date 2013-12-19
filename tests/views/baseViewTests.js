@@ -8,10 +8,10 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
             should = chai.should();
 
 
-    require(['sinonCall', 'sinonSpy']);
-    // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
-    chai.use(sinonChai);
-    mocha.setup('bdd');
+        require(['sinonCall', 'sinonSpy']);
+        // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
+        chai.use(sinonChai);
+        mocha.setup('bdd');
 
 
         describe('An instance of the BaseView', function () {
@@ -207,8 +207,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         done();
                     },
                     function () {
-                        console.log('BaseView error.');
-                    });
+                });
             });
         });
 

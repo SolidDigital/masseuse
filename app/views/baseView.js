@@ -9,38 +9,38 @@ define([
         RENDER_DONE = 'renderDone',
         AFTER_RENDER_DONE = 'afterRenderDone',
         BaseView = Backbone.View.extend({
-        options : {
-            name : 'BaseView',
-            appendView : true,
-            ModelType : undefined,
-            bindings : [
-                // Example: [stringObjectToListenTo, stringEventName, stringCallbackFunction]
-                //          ['model', 'change:something', 'callbackFunction']
-                // Bindings have to be all strings, since config does not have access to the view's context
-                // if strings are provided it is assumed that the context is the view
-            ],
-            templateHtml : undefined,
-            modelData : undefined,
-            rivetConfig : undefined
-        },
-        defaultBindings : [],
-        initialize : initialize,
-        start : start,
-        render : render,
-        dataToJSON : dataToJSON,
-        bindEventListeners : bindEventListeners,
-        remove : remove,
-        children : null,
-        addChild : addChild,
-        removeChild : removeChild,
-        refreshChildren : refreshChildren,
-        removeAllChildren : removeAllChildren,
-        appendOrInsertView : appendOrInsertView,
-        setEl : setEl
+            options : {
+                name : 'BaseView',
+                appendView : true,
+                ModelType : undefined,
+                bindings : [
+                    // Example: [stringObjectToListenTo, stringEventName, stringCallbackFunction]
+                    //          ['model', 'change:something', 'callbackFunction']
+                    // Bindings have to be all strings, since config does not have access to the view's context
+                    // if strings are provided it is assumed that the context is the view
+                ],
+                templateHtml : undefined,
+                modelData : undefined,
+                rivetConfig : undefined
+            },
+            defaultBindings : [],
+            initialize : initialize,
+            start : start,
+            render : render,
+            dataToJSON : dataToJSON,
+            bindEventListeners : bindEventListeners,
+            remove : remove,
+            children : null,
+            addChild : addChild,
+            removeChild : removeChild,
+            refreshChildren : refreshChildren,
+            removeAllChildren : removeAllChildren,
+            appendOrInsertView : appendOrInsertView,
+            setEl : setEl
 
-        // Dynamically created, so the cache is not shared on the prototype:
-        // elementCache: elementCache
-    });
+            // Dynamically created, so the cache is not shared on the prototype:
+            // elementCache: elementCache
+        });
 
     BaseView.beforeRenderDone = BEFORE_RENDER_DONE;
     BaseView.renderDone = RENDER_DONE;
@@ -60,7 +60,7 @@ define([
         _setModel.call(this, options);
         _setBoundEventListeners.call(this);
         if (options && options.plugins && options.plugins.length) {
-            _.each(options.plugins, function(plugin) {
+            _.each(options.plugins, function (plugin) {
                 plugin.call(self);
             });
 
@@ -103,13 +103,13 @@ define([
         this.appendOrInsertView();
     }
 
-    function setEl() {
+    function setEl () {
         if (undefined === this.el && undefined !== this.options.el || this.parent && undefined !== this.options.el) {
             this.setElement($(this.options.el));
         }
     }
 
-    function appendOrInsertView() {
+    function appendOrInsertView () {
         if (this.$el && this.template) {
             if (this.options.appendView) {
                 _appendView.call(this);
@@ -119,12 +119,12 @@ define([
         }
     }
 
-    function _appendView(){
+    function _appendView () {
         this.$el.append(this.template(this.dataToJSON()));
         this.setElement(this.$el.children().last());
     }
 
-    function _insertView(){
+    function _insertView () {
         this.$el.html(this.template(this.dataToJSON()));
     }
 
@@ -202,7 +202,7 @@ define([
         this.children = _(this.children).without(childView);
     }
 
-    function removeAllChildren() {
+    function removeAllChildren () {
         var self = this;
         _(this.children).each(function (child) {
             child.remove();

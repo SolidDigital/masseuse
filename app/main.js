@@ -26,16 +26,11 @@ define([
      *
      */
     return {
-        BaseView : BaseView, // yes
-        ViewContext : ViewContext, // yes
-        channels : channels, // yes
-        MasseuseModel : MasseuseModel, // yes
-        ComputedProperty : ComputedProperty, // yes - thin out MM by using native set instead of hard coded overrides
-        MasseuseRouter : MasseuseRouter, // yes - add in loadMainContent
+        BaseView : BaseView,
+        ViewContext : ViewContext,
+        channels : channels,
+        MasseuseModel : MasseuseModel,
+        ComputedProperty : ComputedProperty,
+        MasseuseRouter : MasseuseRouter,
     };
-
-//            getProperty : getProperty, // internal
-//            enclose : enclose, // internal
-//            deferMethod : deferMethod // internal
-
 });

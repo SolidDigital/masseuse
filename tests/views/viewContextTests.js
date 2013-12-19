@@ -1,50 +1,51 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function (_, chai, Squire, mocha, sinon, sinonChai) {
-    'use strict';
-    var injector = new Squire(),
-        should = chai.should();
+define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
+    function (_, chai, Squire, mocha, sinon, sinonChai) {
+        'use strict';
+        var injector = new Squire();
 
-    require(['sinonCall', 'sinonSpy']);
-    // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
-    chai.use(sinonChai);
-    mocha.setup('bdd');
+        chai.should();
 
-    describe('ViewContext', function() {
+        require(['sinonCall', 'sinonSpy']);
+        // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
+        chai.use(sinonChai);
+        mocha.setup('bdd');
 
-        var ViewContext;
-        beforeEach(function(done) {
-            injector.require(['masseuse'], function (masseuse) {
-                    ViewContext = masseuse.ViewContext;
-                    done();
-                },
-                function () {
-                    console.log('BaseView error.');
-                    done();
-                });
-        });
+        describe('ViewContext', function () {
 
-        it('binds correctly in simple case', function() {
-            var config = {
-                    name : new ViewContext('name')
-                },
-                person = {
-                    name: 'bob'
-                };
+            var ViewContext;
+            beforeEach(function (done) {
+                injector.require(['masseuse'], function (masseuse) {
+                        ViewContext = masseuse.ViewContext;
+                        done();
+                    },
+                    function () {
+                        done();
+                    });
+            });
 
-            config.name.getBoundFunction(person).should.equal('bob');
-        });
+            it('binds correctly in simple case', function () {
+                var config = {
+                        name : new ViewContext('name')
+                    },
+                    person = {
+                        name : 'bob'
+                    };
 
-        it('binds correctly with nested fields', function() {
-            var config = {
-                    last : new ViewContext('name.last')
-                },
-                person = {
-                    name: {
-                        first: 'bob',
-                        last: 'bobertson'
-                    }
-                };
+                config.name.getBoundFunction(person).should.equal('bob');
+            });
 
-            config.last.getBoundFunction(person).should.equal('bobertson');
+            it('binds correctly with nested fields', function () {
+                var config = {
+                        last : new ViewContext('name.last')
+                    },
+                    person = {
+                        name : {
+                            first : 'bob',
+                            last : 'bobertson'
+                        }
+                    };
+
+                config.last.getBoundFunction(person).should.equal('bobertson');
+            });
         });
     });
-});

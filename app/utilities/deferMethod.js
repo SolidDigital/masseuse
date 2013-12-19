@@ -2,9 +2,9 @@ define(['jquery'], function ($) {
     'use strict';
     return deferMethod;
 
-    function deferMethod(method) {
+    function deferMethod (method) {
         return {
-            closure : function() {
+            closure : function () {
                 var $deferred = new $.Deferred(),
                     args = Array.prototype.slice.call(arguments);
                 args.unshift($deferred);

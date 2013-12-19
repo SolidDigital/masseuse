@@ -43,10 +43,8 @@ define(['backbone', './computedProperty', 'underscore'],
                     if (val instanceof ComputedProperty) {
                         this.bindComputed(key, val);
                         return;
-                    } else {
-                        if (this.computedCallbacks[key]) {
-                            stack.push(this.computedCallbacks[key]);
-                        }
+                    } else if (this.computedCallbacks[key]) {
+                        stack.push(this.computedCallbacks[key]);
                     }
                 }
 

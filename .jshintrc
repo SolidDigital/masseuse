@@ -18,5 +18,9 @@
     "undef" : true,
     "unused" : true,
     "maxlen" : 121,
-    "newcap" : false
+    "newcap" : false,
+    "trailing" : true,
+    "indent" : 4,
+    "noarg" : true,
+    "maxdepth" : 2
 }

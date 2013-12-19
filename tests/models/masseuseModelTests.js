@@ -1,94 +1,93 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'], function (_, chai, Squire, mocha, sinon, sinonChai) {
+define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
+    function (_, chai, Squire, mocha, sinon, sinonChai) {
 
-    'use strict';
-    var injector = new Squire(),
-        should = chai.should(),
-        expect = chai.expect;
-
-
-    require(['sinonCall', 'sinonSpy']);
-    // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
-    chai.use(sinonChai);
-    mocha.setup('bdd');
+        'use strict';
+        var injector = new Squire(),
+            should = chai.should();
 
 
-    describe('An instance of MasseuseModel', function () {
+        require(['sinonCall', 'sinonSpy']);
+        // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
+        chai.use(sinonChai);
+        mocha.setup('bdd');
 
 
-        //-----------Setup-----------
-        var Model,
-            modelInstance,
-            ComputedProperty,
-            ProxyProperty;
-
-        beforeEach(function (done) {
-            injector.require(['masseuse'], function (masseuse) {
-                    ComputedProperty = masseuse.ComputedProperty;
-                    ProxyProperty = masseuse.ProxyProperty;
-                    Model = masseuse.MasseuseModel;
-                    modelInstance = new Model();
-                    done();
-                },
-                function () {
-                    console.log('Model error.');
-                    done();
-                });
-        });
-
-        //-----------Tests-----------
-        it('should exist', function () {
-            should.exist(Model);
-        });
-
-        describe('set method (preserved original functionality) ', function () {
+        describe('An instance of MasseuseModel', function () {
 
 
+            //-----------Setup-----------
+            var Model,
+                modelInstance,
+                ComputedProperty,
+                ProxyProperty;
+
+            beforeEach(function (done) {
+                injector.require(['masseuse'], function (masseuse) {
+                        ComputedProperty = masseuse.ComputedProperty;
+                        ProxyProperty = masseuse.ProxyProperty;
+                        Model = masseuse.MasseuseModel;
+                        modelInstance = new Model();
+                        done();
+                    },
+                    function () {
+                        done();
+                    });
+            });
+
+            //-----------Tests-----------
             it('should exist', function () {
-                should.exist(Model.prototype.set);
+                should.exist(Model);
             });
 
-            it('should allow the user to set a single property', function () {
-                modelInstance.set('propA', 'something');
-                should.exist(modelInstance.get('propA'));
-                modelInstance.get('propA').should.equal('something');
-            });
+            describe('set method (preserved original functionality) ', function () {
 
-            it('should allow the user to set multiple properties at once', function () {
-                modelInstance.set({
-                    'propA': 'something',
-                    'propB': 'somethingElse'
+
+                it('should exist', function () {
+                    should.exist(Model.prototype.set);
                 });
 
-                modelInstance.get('propA').should.equal('something');
-                modelInstance.get('propB').should.equal('somethingElse');
-            });
-
-            it('should allow the user to pass in an options object when setting a single property', function () {
-                var listenerFired = false;
-
-                modelInstance.on('change', function () {
-                    listenerFired = true;
+                it('should allow the user to set a single property', function () {
+                    modelInstance.set('propA', 'something');
+                    should.exist(modelInstance.get('propA'));
+                    modelInstance.get('propA').should.equal('something');
                 });
 
-                modelInstance.set('propA', 'something', { silent:true });
+                it('should allow the user to set multiple properties at once', function () {
+                    modelInstance.set({
+                        'propA' : 'something',
+                        'propB' : 'somethingElse'
+                    });
 
-                listenerFired.should.be.false;
-            });
-
-            it('should allow the user to pass in an options object when setting multiple properties', function () {
-                var listenerFired = false;
-
-                modelInstance.on('change', function () {
-                    listenerFired = true;
+                    modelInstance.get('propA').should.equal('something');
+                    modelInstance.get('propB').should.equal('somethingElse');
                 });
 
-                modelInstance.set({
-                    'propA': 'something',
-                    'propB': 'somethingElse'
-                }, {silent:true});
+                it('should allow the user to pass in an options object when setting a single property', function () {
+                    var listenerFired = false;
 
-                listenerFired.should.be.false;
+                    modelInstance.on('change', function () {
+                        listenerFired = true;
+                    });
+
+                    modelInstance.set('propA', 'something', { silent : true });
+
+                    listenerFired.should.be.false;
+                });
+
+                it('should allow the user to pass in an options object when setting multiple properties', function () {
+                    var listenerFired = false;
+
+                    modelInstance.on('change', function () {
+                        listenerFired = true;
+                    });
+
+                    modelInstance.set({
+                        'propA' : 'something',
+                        'propB' : 'somethingElse'
+                    }, {silent : true});
+
+                    listenerFired.should.be.false;
+                });
             });
         });
     });
-});

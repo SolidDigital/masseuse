@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
 // Require.js allows us to configure shortcut alias
@@ -24,7 +24,7 @@
             squire : '../app/vendor/squire/src/Squire',
             sinon : '../app/vendor/sinon/lib/sinon',
             sinonSpy : '../app/vendor/sinon/lib/sinon/spy',
-            sinonChai  : '../app/vendor/sinon-chai/lib/sinon-chai',
+            sinonChai : '../app/vendor/sinon-chai/lib/sinon-chai',
             sinonCall : '../app/vendor/sinon/lib/sinon/call',
             check : './check'
         },
