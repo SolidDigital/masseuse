@@ -52,6 +52,7 @@
         './utilities/localStorageTests.js',
         './utilities/configureMethodTests',
         './utilities/validationTests',
+        './views/rivetsPluginTests.js',
         './views/rivetViewTests'
     ], function (mocha) {
         mocha.run();
