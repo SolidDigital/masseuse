@@ -140,6 +140,12 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'helpers', 'check']
             ]);
         });
 
+        it('prettyDateNoTime returns a formatted date without the time', function() {
+            check(formatters.prettyDateNoTime, [
+                [120, '12/31/1969']
+            ]);
+        });
+
         it('pluralize adds an s to the second argument passed, if the first argument is greater than 1', function() {
             check(formatters.pluralize, [
                 [1, 'whale', '1 whale'],
