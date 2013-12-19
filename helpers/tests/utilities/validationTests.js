@@ -12,7 +12,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'helpers', 'check']
     mocha.setup('bdd');
 
 
-    describe('validation', function () {
+    describe('Validation', function () {
 
         describe('stringHasLength Method', function () {
 
