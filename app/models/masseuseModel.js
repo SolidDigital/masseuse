@@ -1,6 +1,6 @@
 /*global define:false*/
-define(['backbone', './computedProperty', 'underscore'],
-    function (Backbone, ComputedProperty, _) {
+define(['backbone', './computedProperty', './proxyProperty', 'underscore'],
+    function (Backbone, ComputedProperty, ProxyProperty, _) {
         'use strict';
 
         return Backbone.Model.extend({
@@ -32,6 +32,9 @@ define(['backbone', './computedProperty', 'underscore'],
                                 });
                             }
                             delete attrs[attrKey];
+                        } else if (attrValue instanceof ProxyProperty) {
+                            self.bindProxy(attrKey, attrValue);
+                            delete attrs[attrKey];
                         } else {
                             if (self.computedCallbacks[attrKey]) {
                                 stack.push(self.computedCallbacks[attrKey]);
@@ -43,8 +46,13 @@ define(['backbone', './computedProperty', 'underscore'],
                     if (val instanceof ComputedProperty) {
                         this.bindComputed(key, val);
                         return;
-                    } else if (this.computedCallbacks[key]) {
-                        stack.push(this.computedCallbacks[key]);
+                    } else if (val instanceof ProxyProperty) {
+                        this.bindProxy(key, val);
+                        return;
+                    } else {
+                        if (this.computedCallbacks[key]) {
+                            stack.push(this.computedCallbacks[key]);
+                        }
                     }
                 }
 
@@ -79,6 +87,22 @@ define(['backbone', './computedProperty', 'underscore'],
                         callback.call(self);
                     }
                 });
+            },
+            bindProxy : function (key, proxy) {
+                var self = this,
+                    model = proxy.model,
+                    modelAttribute = proxy.propertyNameOnModel;
+
+                this.set(key, model.get(modelAttribute));
+
+                model.on('change:' + modelAttribute, function () {
+                    self.set(key, model.get(modelAttribute));
+                });
+
+                this.on('change:' + key, function () {
+                    model.set(modelAttribute, self.get(key));
+                });
+
             },
             getListenableValues : function (listenables) {
                 var args = [],

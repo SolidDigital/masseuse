@@ -1,4 +1,4 @@
-define(['./collections/paginatedCollection', './models/ProxyProperty', './utilities/configureMethod',
+define(['./collections/paginatedCollection', './../../app/models/proxyProperty', './utilities/configureMethod',
     './utilities/formatters', './utilities/localStorage', './utilities/rivetsBinders', './utilities/validation',
     './views/rivetsPlugin', './views/rivetView'],
     function(PaginatedCollection, ProxyProperty, configureMethod, formatters, localStorage, rivetsBinders, validation,

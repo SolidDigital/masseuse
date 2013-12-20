@@ -46,7 +46,8 @@
         './views/lifeCycleTests',
         './views/viewContextTests',
         './models/masseuseModelTests',
-        './models/computedPropertyTests'
+        './models/computedPropertyTests',
+        './models/proxyPropertyTests'
     ], function (mocha) {
         mocha.run();
     });

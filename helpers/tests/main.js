@@ -46,14 +46,13 @@
 
     require([
         'mocha',
-        './collections/paginatedCollectionTests.js',
-        './models/proxyPropertyTests.js',
+        './collections/paginatedCollectionTests',
         './utilities/formattersTests',
-        './utilities/rivetsBindersTests.js',
-        './utilities/localStorageTests.js',
+        './utilities/rivetsBindersTests',
+        './utilities/localStorageTests',
         './utilities/configureMethodTests',
         './utilities/validationTests',
-        './views/rivetsPluginTests.js',
+        './views/rivetsPluginTests',
         './views/rivetViewTests'
     ], function (mocha) {
         mocha.run();

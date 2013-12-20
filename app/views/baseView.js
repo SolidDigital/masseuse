@@ -57,12 +57,18 @@ define([
 
     function initialize (options) {
         var self = this;
-        options = _.clone(options, true);
+
         this.elementCache = _.memoize(elementCache);
-        if (options.viewOptions) {
-            viewOptions = viewOptions.concat(options.viewOptions);
+
+        if(options) {
+            options = _.clone(options, true);
+            _.extend(this, _.pick(options, viewOptions));
+            if (options.viewOptions) {
+                viewOptions = viewOptions.concat(options.viewOptions);
+            }
         }
-        _.extend(this, _.pick(options, viewOptions));
+
+
         _setTemplate.call(this, options);
         _setModel.call(this, options);
         _setBoundEventListeners.call(this, options);
@@ -235,15 +241,19 @@ define([
      */
 
     function _setTemplate (options) {
-        if (options.templateHtml) {
+        if (options && options.templateHtml) {
             this.template = _.template(options.templateHtml);
         }
     }
 
     function _setModel (options) {
         var self = this,
-            ModelType = options.ModelType || Backbone.Model,
+            ModelType = Backbone.Model,
             modelData;
+
+        if (options && options.ModelType) {
+            ModelType = options.ModelType;
+        }
         if (!this.model) {
             modelData = _.result(options, MODEL_DATA);
             _.each(modelData, function (datum, key) {
@@ -258,7 +268,7 @@ define([
     }
 
     function _setBoundEventListeners (options) {
-        if (options.bindings) {
+        if (options && options.bindings) {
             this.bindEventListeners(options.bindings);
         }
     }

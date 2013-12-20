@@ -1,7 +1,7 @@
 define([
     './views/baseView', './utilities/channels', './views/viewContext', './routers/masseuseRouter',
-    './models/masseuseModel', './models/computedProperty'
-], function (BaseView, channels, ViewContext, MasseuseRouter, MasseuseModel, ComputedProperty) {
+    './models/masseuseModel', './models/computedProperty', './models/proxyProperty'
+], function (BaseView, channels, ViewContext, MasseuseRouter, MasseuseModel, ComputedProperty, ProxyProperty) {
     'use strict';
 
     /**
@@ -32,5 +32,6 @@ define([
         MasseuseModel : MasseuseModel,
         ComputedProperty : ComputedProperty,
         MasseuseRouter : MasseuseRouter,
+        ProxyProperty : ProxyProperty
     };
 });
