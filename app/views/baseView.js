@@ -63,10 +63,10 @@ define([
         if(options) {
             options = _.clone(options, true);
             this.initialEl = options.el;
-            _.extend(this, _.pick(options, viewOptions));
             if (options.viewOptions) {
                 viewOptions = viewOptions.concat(options.viewOptions);
             }
+            _.extend(this, _.pick(options, viewOptions));
         }
 
 

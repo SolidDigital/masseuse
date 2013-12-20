@@ -2,8 +2,8 @@ define(['./rivetView'], function(rivetView) {
     'use strict';
     return setViewRiveting;
     function setViewRiveting () {
+        this.model.set('viewId', this.cid);
         if ('auto' === this.rivetConfig) {
-            this.model.set('viewId', this.cid);
             this.domEl = this.cid;
             this.rivetView = rivetView({
                 rivetScope : '#' + this.cid,
