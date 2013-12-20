@@ -21,7 +21,8 @@ define([
      },
      */
 
-    var BEFORE_RENDER_DONE = 'beforeRenderDone',
+    var viewOptions = ['name', 'appendView'],
+        BEFORE_RENDER_DONE = 'beforeRenderDone',
         RENDER_DONE = 'renderDone',
         AFTER_RENDER_DONE = 'afterRenderDone',
         BaseView = Backbone.View.extend({
@@ -57,9 +58,10 @@ define([
         var self = this;
         options = _.clone(options, true);
         this.elementCache = _.memoize(elementCache);
-        if (options.appendView) {
-            this.appendView = _.result(options, 'appendView');
+        if (options.viewOptions) {
+            viewOptions = viewOptions.concat(options.viewOptions);
         }
+        _.extend(this, _.pick(options, viewOptions));
         _setTemplate.call(this, options);
         _setModel.call(this, options);
         _setBoundEventListeners.call(this, options);
