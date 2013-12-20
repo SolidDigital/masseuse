@@ -12,7 +12,10 @@ define([
          */
         return Backbone.Router.extend({
             initialize : initialize,
-            _bindRoutes : noop
+            // Override bindRoutes and call it later from the prototype, since _bindRoutes gets called in the constructor
+            // and we don't want it called until after beforeRouting methods are attached
+            _bindRoutes : noop,
+            onRouteFail : noop
         });
 
         function noop () {
@@ -21,27 +24,31 @@ define([
         function initialize () {
             var self = this;
 
-            if (this.beforeRouting) {
+            if (_.isFunction(this.beforeRouting)) {
                 _(this.routes).chain()
                     .omit(this.excludeFromBeforeRouting)
                     .each(function (methodName) {
-                        var oldMethod = self[methodName];
-
-                        self[methodName] = function () {
-                            var args = arguments;
-
-                            this.beforeRouting()
-                                .done(function () {
-                                    oldMethod.apply(self, args);
-                                })
-                                .fail(function () {
-                                    if (self.onRouteFail) {
-                                        self.onRouteFail.apply(self, args);
-                                    }
-                                });
-                        };
+                        wrapRoute.call(self, methodName);
                     });
             }
             Backbone.Router.prototype._bindRoutes.call(this);
         }
+
+        function wrapRoute (methodName) {
+            var self = this,
+                oldMethod = this[methodName];
+
+            self[methodName] = function () {
+                var args = arguments;
+
+                this.beforeRouting()
+                    .done(function () {
+                        oldMethod.apply(self, args);
+                    })
+                    .fail(function () {
+                        self.onRouteFail.apply(self, args);
+                    });
+            };
+        }
+
     });

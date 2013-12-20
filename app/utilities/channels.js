@@ -1,23 +1,14 @@
 /*global define:false*/
 define(['underscore', 'backbone'], function (_, Backbone) {
     'use strict';
-
-    var aChannel,
-        channels;
-
-    // setup channels
-    channels = {
-        views : {
-
-        }
-    };
-
-    // make channels use events
-    for (aChannel in channels) {
-        if (channels.hasOwnProperty(aChannel)) {
-            _.extend(channels[aChannel], Backbone.Events);
-        }
+    function Channels(channelsArray) {
+        this.channels = {};
+        _.each(channelsArray, this.addChannel);
     }
 
-    return channels;
+    Channels.prototype.addChannel = function(channel) {
+        this.channels[channel] = _.extend({}, Backbone.Events);
+    };
+
+    return Channels;
 });
