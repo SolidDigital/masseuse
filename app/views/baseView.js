@@ -5,24 +5,26 @@ define([
 ], function ($, Backbone, _, channels, ViewContext, enclose, lifeCycle, getProperty) {
     'use strict';
 
+    /*
+     options : {
+        name : 'BaseView',
+        appendView : true,
+        ModelType : undefined,
+        bindings : [
+            // Example: [stringObjectToListenTo, stringEventName, stringCallbackFunction]
+            //          ['model', 'change:something', 'callbackFunction']
+            // Bindings have to be all strings, since config does not have access to the view's context
+            // if strings are provided it is assumed that the context is the view
+        ],
+        templateHtml : undefined,
+        modelData : undefined,
+     },
+     */
+
     var BEFORE_RENDER_DONE = 'beforeRenderDone',
         RENDER_DONE = 'renderDone',
         AFTER_RENDER_DONE = 'afterRenderDone',
         BaseView = Backbone.View.extend({
-            options : {
-                name : 'BaseView',
-                appendView : true,
-                ModelType : undefined,
-                bindings : [
-                    // Example: [stringObjectToListenTo, stringEventName, stringCallbackFunction]
-                    //          ['model', 'change:something', 'callbackFunction']
-                    // Bindings have to be all strings, since config does not have access to the view's context
-                    // if strings are provided it is assumed that the context is the view
-                ],
-                templateHtml : undefined,
-                modelData : undefined,
-                rivetConfig : undefined
-            },
             defaultBindings : [],
             initialize : initialize,
             start : start,
@@ -55,10 +57,12 @@ define([
         var self = this;
         options = _.clone(options, true);
         this.elementCache = _.memoize(elementCache);
-
-        _setTemplate.call(this);
+        if (options.appendView) {
+            this.appendView = _.result(options, 'appendView');
+        }
+        _setTemplate.call(this, options);
         _setModel.call(this, options);
-        _setBoundEventListeners.call(this);
+        _setBoundEventListeners.call(this, options);
         if (options && options.plugins && options.plugins.length) {
             _.each(options.plugins, function (plugin) {
                 plugin.call(self);
@@ -93,7 +97,10 @@ define([
         // ParentView calls .start() on all children
         // ParentView doesn't render until all children have notified that they are done
         // After rendering, the ParentView notifies all children and they continue their lifecycle
-        _.defer(enclose(lifeCycle.runAllMethods).appendArgs($deferred, $parentRenderPromise).bindContext(this).closure);
+        _.defer(enclose(lifeCycle.runAllMethods)
+            .appendArgs($deferred, $parentRenderPromise)
+            .bindContext(this)
+            .closure);
 
         return $deferred.promise();
     }
@@ -104,14 +111,14 @@ define([
     }
 
     function setEl () {
-        if (undefined === this.el && undefined !== this.options.el || this.parent && undefined !== this.options.el) {
-            this.setElement($(this.options.el));
+        if (undefined === this.el && this.parent) {
+            this.setElement($(this.el));
         }
     }
 
     function appendOrInsertView () {
         if (this.$el && this.template) {
-            if (this.options.appendView) {
+            if (this.appendView) {
                 _appendView.call(this);
             } else {
                 _insertView.call(this);
@@ -224,32 +231,32 @@ define([
      * @private
      */
 
-    function _setTemplate () {
-        if (this.options.templateHtml) {
-            this.template = _.template(this.options.templateHtml);
+    function _setTemplate (options) {
+        if (options.templateHtml) {
+            this.template = _.template(_.result(options, 'templateHtml'));
         }
     }
 
     function _setModel (options) {
         var self = this,
-            ModelType = this.options.ModelType || Backbone.Model,
+            ModelType = options.ModelType || Backbone.Model,
             modelData;
         if (!this.model) {
-            modelData = this.options.modelData;
+            modelData = _.result(options, 'modelData');
             _.each(modelData, function (datum, key) {
                 if (datum instanceof ViewContext) {
                     modelData[key] = datum.getBoundFunction(self);
                 }
             });
-            this.model = new ModelType(this.options.modelData);
+            this.model = new ModelType(modelData);
         } else {
             this.model = options.model;
         }
     }
 
-    function _setBoundEventListeners () {
-        if (this.options.bindings) {
-            this.bindEventListeners(this.options.bindings);
+    function _setBoundEventListeners (options) {
+        if (options.bindings) {
+            this.bindEventListeners(options.bindings);
         }
     }
 });
