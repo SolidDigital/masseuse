@@ -184,7 +184,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     it('should call set element if it doesn\'t have an el and its options do', function () {
                         var setElementSpy = sinon.spy(viewInstance, 'setElement');
                         viewInstance.el = undefined;
-                        viewInstance.options.el = true;
+                        viewInstance.initialEl = true;
                         viewInstance.render();
                         setElementSpy.should.have.been.calledOnce;
                     });
@@ -192,7 +192,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     it('should not call set element if it doesn\'t have an el and options dont either', function () {
                         var setElementSpy = sinon.spy(viewInstance, 'setElement');
                         viewInstance.el = undefined;
-                        viewInstance.options.el = undefined;
+                        viewInstance.initialEl = undefined;
                         viewInstance.render();
                         setElementSpy.should.not.have.been.called;
                     });
@@ -200,7 +200,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     it('should call set element if it has a parent and option el', function () {
                         var setElementSpy = sinon.spy(viewInstance, 'setElement');
                         viewInstance.parent = true;
-                        viewInstance.options.el = true;
+                        viewInstance.initialEl = true;
                         viewInstance.render();
                         setElementSpy.should.have.been.calledOnce;
                     });

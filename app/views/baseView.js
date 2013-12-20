@@ -62,6 +62,7 @@ define([
 
         if(options) {
             options = _.clone(options, true);
+            this.initialEl = options.el;
             _.extend(this, _.pick(options, viewOptions));
             if (options.viewOptions) {
                 viewOptions = viewOptions.concat(options.viewOptions);
@@ -120,8 +121,8 @@ define([
     }
 
     function setEl () {
-        if (undefined === this.el && this.parent) {
-            this.setElement($(this.el));
+        if (undefined === this.el && undefined !== this.initialEl || this.parent && undefined !== this.initialEl) {
+            this.setElement($(this.initialEl));
         }
     }
 
