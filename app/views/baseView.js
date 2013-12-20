@@ -25,6 +25,7 @@ define([
         BEFORE_RENDER_DONE = 'beforeRenderDone',
         RENDER_DONE = 'renderDone',
         AFTER_RENDER_DONE = 'afterRenderDone',
+        MODEL_DATA = 'modelData',
         BaseView = Backbone.View.extend({
             defaultBindings : [],
             initialize : initialize,
@@ -235,7 +236,7 @@ define([
 
     function _setTemplate (options) {
         if (options.templateHtml) {
-            this.template = _.template(_.result(options, 'templateHtml'));
+            this.template = _.template(options.templateHtml);
         }
     }
 
@@ -244,7 +245,7 @@ define([
             ModelType = options.ModelType || Backbone.Model,
             modelData;
         if (!this.model) {
-            modelData = _.result(options, 'modelData');
+            modelData = _.result(options, MODEL_DATA);
             _.each(modelData, function (datum, key) {
                 if (datum instanceof ViewContext) {
                     modelData[key] = datum.getBoundFunction(self);
