@@ -9,6 +9,7 @@ define(['jquery'], function ($) {
                     args = Array.prototype.slice.call(arguments);
                 args.unshift($deferred);
                 method.apply(this, args);
+                return $deferred.promise();
             }
         };
     }

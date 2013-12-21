@@ -48,7 +48,8 @@
         './models/masseuseModelTests',
         './models/computedPropertyTests',
         './models/proxyPropertyTests',
-        './utilities/channelsTests'
+        './utilities/channelsTests',
+        './utilities/deferMethodTests'
     ], function (mocha) {
         mocha.run();
     });
