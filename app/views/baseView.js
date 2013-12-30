@@ -51,7 +51,7 @@ define([
     BaseView.afterRenderDone = AFTER_RENDER_DONE;
 
     // Share channels among all Views
-    BaseView.prototype.channels = BaseView.prototype.channels || channels;
+    BaseView.prototype.channels = BaseView.prototype.channels ||  new channels;
 
     return BaseView;
 
