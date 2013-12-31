@@ -13,6 +13,9 @@ define(['jquery'], function ($) {
                 $(el).addClass(value);
                 el.addedClass = value;
             }
+        },
+        width : function (el, value) {
+            el.style.width = value
         }
     };
 });
