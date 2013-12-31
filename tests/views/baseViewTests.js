@@ -162,6 +162,18 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
 
                     });
+
+                    it('should remove all the children and then call start on them', function () {
+
+                    });
+
+                    it('should not remove the children from the parents child array.', function () {
+
+                    });
+
+                    it('should call refreshAllChildren on each child.', function () {
+
+                    });
                 });
             });
         });
