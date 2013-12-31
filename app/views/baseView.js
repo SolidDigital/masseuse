@@ -229,8 +229,9 @@ define([
 
     function refreshChildren () {
         _(this.children).each(function (child) {
+            child.removeAllChildren();
             if (child.hasStarted) {
-                child.remove();
+                Backbone.View.prototype.remove.apply(child);
             }
             child.start();
         });
