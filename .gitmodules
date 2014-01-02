@@ -1,0 +1,3 @@
+[submodule "helpers"]
+	path = helpers
+	url = git@git.thinksolid.com:javascript/helpers.git
