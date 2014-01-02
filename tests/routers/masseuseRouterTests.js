@@ -41,7 +41,7 @@ define(['chai', 'mocha', 'sinonChai'],
             });
 
             it('does not run `beforeRouting` if the route is included in `excludeFromBeforeRouting`', function () {
-                
+
             });
         });
     });
