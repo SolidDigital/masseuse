@@ -15,7 +15,7 @@ define(['jquery'], function ($) {
             }
         },
         width : function (el, value) {
-            el.style.width = value
+            el.style.width = value;
         }
     };
 });

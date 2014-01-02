@@ -2,7 +2,7 @@
 define([
     'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', '../utilities/enclose', './lifeCycle',
     '../utilities/getProperty'
-], function ($, Backbone, _, channels, ViewContext, enclose, lifeCycle, getProperty) {
+], function ($, Backbone, _, Channels, ViewContext, enclose, lifeCycle, getProperty) {
     'use strict';
 
     /*
@@ -51,7 +51,7 @@ define([
     BaseView.afterRenderDone = AFTER_RENDER_DONE;
 
     // Share channels among all Views
-    BaseView.prototype.channels = BaseView.prototype.channels ||  new channels;
+    BaseView.prototype.channels = BaseView.prototype.channels ||  new Channels();
 
     return BaseView;
 

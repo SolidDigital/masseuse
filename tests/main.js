@@ -49,7 +49,8 @@
         './models/computedPropertyTests',
         './models/proxyPropertyTests',
         './utilities/channelsTests',
-        './utilities/deferMethodTests'
+        './utilities/deferMethodTests',
+        './routers/masseuseRouterTests.js'
     ], function (mocha) {
         mocha.run();
     });
