@@ -55,7 +55,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                 modelInstance.get('propB').should.equal(10);
             });
 
-            it('should change the value of a computed property when a dependecy changes', function () {
+            it('should change the value of a computed property when a dependency changes', function () {
                 modelInstance.set({
                     'propB' : new ComputedProperty(['propA'], function (propA) {
                         return propA * 2;
