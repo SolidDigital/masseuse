@@ -165,15 +165,15 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     });
 
                     it('should remove all the children and then call start on them', function () {
-
+                        ('this has no tests').should.equal('Write some tests');
                     });
 
                     it('should not remove the children from the parents child array.', function () {
-
+                        ('this has no tests').should.equal('Write some tests');
                     });
 
                     it('should call refreshAllChildren on each child.', function () {
-
+                        ('this has no tests').should.equal('Write some tests');
                     });
                 });
             });
