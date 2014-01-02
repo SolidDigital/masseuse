@@ -24,24 +24,24 @@ define(['chai', 'mocha', 'sinonChai'],
 
         describe('before routing', function () {
 
-            xit('runs the route method immediately, if `beforeRouting` is not defined', function () {
+            it('runs the route method immediately, if `beforeRouting` is not defined', function () {
 
             });
 
-            xit('runs the `beforeRouting` method before running the router method', function () {
+            it('runs the `beforeRouting` method before running the router method', function () {
 
             });
 
-            xit('does not run the router method if `beforeRouting` fails', function () {
+            it('does not run the router method if `beforeRouting` fails', function () {
 
             });
 
-            xit('calls the `onRouteFail` method if `beforeRouting` fails', function () {
+            it('calls the `onRouteFail` method if `beforeRouting` fails', function () {
 
             });
 
-            xit('does not run `beforeRouting` if the route is included in `excludeFromBeforeRouting`', function () {
-
+            it('does not run `beforeRouting` if the route is included in `excludeFromBeforeRouting`', function () {
+                
             });
         });
     });
