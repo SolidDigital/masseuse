@@ -32,7 +32,6 @@ define(['underscore','chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
 
         it('should allow the user to see changes of a property on another model', function() {
             modelInstance.set('nameProxy', new ProxyProperty('name', otherModel));
-            console.log(modelInstance.get('nameProxy'));
             modelInstance.get('nameProxy').should.equal('Jack');
 
 
