@@ -86,6 +86,15 @@ module.exports = function (grunt) {
             options : {
                 jshintrc : '.jshintrc'
             }
+        },
+
+        jsdoc : {
+            dist : {
+                src: ['app/**/*.js', '!app/vendor/**'],
+                options: {
+                    destination: 'docs'
+                }
+            }
         }
     });
 
