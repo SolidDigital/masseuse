@@ -141,7 +141,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 });
 
                 describe('refreshChildren method', function () {
-                    it('should only remove children that have been started', function () {
+                    it('should only remove children that have been started', function (done) {
                         var childView1 = new BaseView({
                                 name : CHILD_VIEW_NAME
                             }),
@@ -158,6 +158,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                 viewInstance.refreshChildren();
                                 childRemoveView1.should.have.been.calledOnce;
                                 childRemoveView2.should.not.have.been.called;
+                                done();
                             });
 
 
