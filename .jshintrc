@@ -5,7 +5,8 @@
         "require": false,
         "beforeEach": false,
         "describe": false,
-        "it": false
+        "it": false,
+        "xit": false
     },
     "curly": true,
     "quotmark": "single",
