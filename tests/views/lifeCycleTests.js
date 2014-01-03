@@ -92,7 +92,11 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                 describe('promise', function () {
                     // Using done as a spy. If it is not called, the test will fail.
                     it('should be resolved after start promise is resolved', function (done) {
-                        viewInstance.start().done(done);
+                        viewInstance
+                            .start()
+                            .done(function() {
+                                done();
+                            });
                     });
                     it('should not be resolved immediately after start is called', function () {
                         var $promise = viewInstance.start();
