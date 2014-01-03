@@ -56,9 +56,7 @@ define(['backbone', './computedProperty', './proxyProperty', 'underscore'],
                         this.bindProxy(key, val);
                         return;
                     } else {
-                        if (this.computedCallbacks[key]) {
-                            stack.push(this.computedCallbacks[key]);
-                        }
+                        _pushToComputedCallbacks.call(this, key, stack);
                     }
                 }
 
@@ -121,5 +119,11 @@ define(['backbone', './computedProperty', './proxyProperty', 'underscore'],
                 return args;
             }
         });
+
+        function _pushToComputedCallbacks (key, stack) {
+            if (this.computedCallbacks[key]) {
+                stack.push(this.computedCallbacks[key]);
+            }
+        }
     });
 

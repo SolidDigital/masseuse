@@ -23,6 +23,6 @@
     "trailing" : true,
     "indent" : 4,
     "noarg" : true,
-    "maxdepth" : 3,
+    "maxdepth" : 2,
     "devel" : true
 }
