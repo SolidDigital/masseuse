@@ -68,7 +68,7 @@ define(['jquery', 'underscore'],
             var rejectStart = $deferred.reject.bind(this);
             $
                 .when(_runLifeCycleMethod.call(this, this.render))
-                .then($deferred.notify.bind(RENDER_DONE))
+                .then($deferred.notify.bind(this,RENDER_DONE))
                 .then(
                     afterRender,
                     rejectStart);
