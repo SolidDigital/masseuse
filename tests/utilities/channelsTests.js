@@ -84,5 +84,22 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'squire'],
                 spy4.should.have.been.calledOnce;
             });
 
+            it('should be a singleton', function(done) {
+                var channels1, channels2, spy;
+                injector.require(['../app/utilities/channels'], function (ChannelsDep1) {
+                    channels1 = new ChannelsDep1('testor');
+                    injector.require(['../app/utilities/channels'], function (ChannelsDep2) {
+                        channels2 = new ChannelsDep2('testor');
+                        spy = sinon.spy();
+
+                        channels2.testor.on('ping', spy);
+                        spy.should.not.have.been.called;
+                        channels1.testor.trigger('ping');
+                        spy.should.have.been.calledOnce;
+                        done();
+                    });
+                });
+            });
+
         });
     });

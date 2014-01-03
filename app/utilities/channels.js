@@ -2,9 +2,22 @@
 define(['underscore', 'backbone', './namespace'], function (_, Backbone, namespace) {
     'use strict';
 
+    var channels;
+
+    /**
+     * Channels is a singleton.
+     * @param channel
+     * @returns {*}
+     * @constructor
+     */
     function Channels(channel) {
+        if (channels) {
+            channels.addChannel(channel);
+            return channels;
+        }
         _.extend(this, Backbone.Events);
         this.addChannel(channel);
+        channels = this;
     }
 
     /**
