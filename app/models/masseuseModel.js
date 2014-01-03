@@ -1,8 +1,14 @@
-/*global define:false*/
 define(['backbone', './computedProperty', './proxyProperty', 'underscore'],
     function (Backbone, ComputedProperty, ProxyProperty, _) {
         'use strict';
 
+        /**
+         * A Backbone Model with Proxy and Computed Properties.
+         * Proxy and Computed properties are tirggered directly and not via events for performance reasons.
+         * @constructor
+         * @alias module:MasseuseModel
+         * @extends Backbone.Model
+         */
         return Backbone.Model.extend({
             toggleAttribute : function (attribute) {
                 this.set(attribute, !this.get(attribute));
