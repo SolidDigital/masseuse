@@ -1,8 +1,8 @@
 /*global define:false*/
 define([
-    'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', '../utilities/enclose', './lifeCycle',
+    'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', './lifeCycle',
     '../utilities/getProperty'
-], function ($, Backbone, _, Channels, ViewContext, enclose, lifeCycle, getProperty) {
+], function ($, Backbone, _, Channels, ViewContext, lifeCycle, getProperty) {
     'use strict';
 
     /*
@@ -107,10 +107,7 @@ define([
         // ParentView calls .start() on all children
         // ParentView doesn't render until all children have notified that they are done
         // After rendering, the ParentView notifies all children and they continue their lifecycle
-        _.defer(enclose(lifeCycle.runAllMethods)
-            .appendArgs($deferred, $parentRenderPromise)
-            .bindContext(this)
-            .closure);
+        _.defer(lifeCycle.runAllMethods.bind(this, $deferred, $parentRenderPromise));
 
         return $deferred.promise();
     }
