@@ -40,6 +40,126 @@
 
 
 
+    <section>
+        <article><h1>masseuse</h1>
+<hr>
+<p>Version: <em>0.0.2-alpha</em></p>
+<h2>Installation</h2>
+<pre><code>bower install masseuse</code></pre>
+<h2>Description</h2>
+<p>Masseuse is a Backbone helper library.</p>
+<p>This is an alpha release. Masseuse is functional, and documentation and tests are being fleshed out.</p>
+<p>Masseuse does five main things:</p>
+<ol>
+<li>Adds lifecycle methods to Views that are optionally async using jQuery promises.</li>
+<li>Allows easier separation of Views into a config and functionality sections by providing several shortcut configs.</li>
+<li>Adds support for adding child Views.</li>
+<li>Provides Proxy and Computed Properties for Masseuse Models</li>
+<li>Provides a Masseuse Router extension of the Backbone Router with a before routing callback.</li>
+</ol>
+<p>Additionally there is support for append or replacing the <code>el</code> of views, optional plugin methods on view initialization,
+and a channels singleton for use as an event bus.</p>
+<h2>Usage</h2>
+<p>Look at the tests for example usage. More documentation coming soon.</p>
+<h2>Computed Properties</h2>
+<p>Computed Properties are properties on models that are computed from an array of other properties on the same model. Any
+time one of the dependent properties are chenged, the computed property is recalculated.</p>
+<p>Computed Properties are set, optionally, when the computed property is defined, and subsequently anytime one of the
+dependent properties are chnaged.</p>
+<p>For example if there is a <code>PurchasedItem</code> model with properties of <code>price</code>, <code>taxes</code>, <code>discounts</code> then a Computed
+Property could be created like this:</p>
+<pre><code class="lang-javascript">var item = new PurchasedItem({
+                                'price': 10,
+                                'taxes': 0.8,
+                                'discounts': 3,
+                                'total':
+                                    ComputedProperty(['price', 'taxes', 'discounts'],
+                                        function (price, taxes, discounts) {
+                                                         return price + taxes - discounts;
+                                        })
+                            });
+
+console.log(7.8 == item.get('total'));</code></pre>
+<p>Computed Properties can be set like other Backbone properties. This is they can be set on initialization or after, and
+they can be set using a key, value or as part of a larger attributes object.</p>
+<p>An optional thired parameter of a Computed Property can be set to truthy to skip the initial Computed Property
+calculation:</p>
+<pre><code class="lang-javascript">var item = new PurchasedItem({
+                                'total': ComputedProperty(['price'], function(price) { return ++price; }, true)
+                            });
+
+console.log(undefined === item.get('total'));
+
+item.set('price', 1);
+console.log(2 === item.get('total'));</code></pre>
+<p>Since Computed Properties depend on other properties, the should not be set directly.</p>
+<p>Computed Properties are tested in <code>masseuseModelTests.js</code>.</p>
+<h2>Proxy Properties</h2>
+<p>Proxy Properties are properties on a model that are equal to properties on another model. The link is two way, so
+if one property changes, the other changes with it.</p>
+<p>For example if you have a User and Permissions model, and you want the User model to stay
+up to date with the role in Permission.</p>
+<pre><code class="lang-javascript">var permissions = new Backbone.Model({
+                                role: 'admin'
+    }),
+    user = new Backbone.Model({
+                                name: 'Jane',
+                                role: ProxyProperty('role', permissions)
+    });
+
+console.log('admin' === user.get('role');
+
+permissions.set('role', 'superuser');
+console.log('superuser' === user.get('role');
+
+user.set('role', 'consultant');
+console.log('consultant' === permissions.get('role');</code></pre>
+<p>Proxy Properties are tested in <code>masseuseModelTests.js</code>.</p>
+<h2>BaseView</h2>
+<p>The BaseView is a custom extension of Backbone.View with some built in functionality and a defined life cycle. The life
+cycle methods can be run either synchronously or asynchronously.</p>
+<p>To initialize a BaseView, there are several choices of options to pass in:</p>
+<pre><code class="lang-javascript">var view = new BaseView({
+    name : 'MyName',
+        // A string that can later be used to identify the view
+    appendView : false,
+        // If truthy this view will be appended to this.$el
+        // If falsey this view will be the innerHtml of this.$el
+    ModelType : MyCustomModel,
+        // The model &quot;class&quot; to be used for this.model
+        // If left undefined or falsey Backbone.Model is used by default
+    bindings : [
+        ['model', 'change:price', 'showNewPrice'],
+        ['model', 'change:discount', 'animateAdvertisement']
+    ],
+        // Bindings are a shortcut for adding event listeners to a view.
+        // They are arrays of strings. The context is assumed to be the view.
+    templateHtml : '&lt;div&gt;&lt;%= price %&gt; : &lt;%= discount %&gt;&lt;/div&gt;',
+        // Underscore templating that will - if provided - be turned into this.template using _.template(templateHtml)
+    rivetConfig : 'auto'
+        // The configuration options for Rivets that this view uses. If left out the view doesn't use Rivets.
+        // Setting to auto will have the scope of Rivets be `# + this.cid`, the Rivets prefix `rv` and `this.model.viewId`
+        // will be ths cid. A templating solution would have to be used to populate the DOM with the cid
+        // Otherwise, the RivetConfigs can be set manually.
+
+});</code></pre>
+<h2>Release Notes</h2>
+<hr>
+<ul>
+<li>0.0.1-alpha - 2014-01-03</li>
+</ul>
+<h2>Contributors (<code>git shortlog -s -n</code>)</h2>
+<hr>
+<ul>
+<li>Peter Ajtai</li>
+<li>Greg Larrenaga</li>
+<li>Cooper Hilscher</li>
+<li>Jonathan Waltner</li>
+<li>Jesse McCabe</li>
+<li>Travis McHattie</li>
+</ul></article>
+    </section>
+
 
 
 
@@ -48,13 +168,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="MasseuseRouter.html">MasseuseRouter</a></li><li><a href="module-masseuse.html">module:masseuse</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-BaseView.html">BaseView</a></li><li><a href="module-Channels.html">Channels</a></li><li><a href="module-ComputedProperty.html">ComputedProperty</a></li><li><a href="module-Masseuse.html">Masseuse</a></li><li><a href="module-MasseuseModel.html">MasseuseModel</a></li><li><a href="module-MasseuseRouter.html">MasseuseRouter</a></li><li><a href="module-ProxyProperty.html">ProxyProperty</a></li><li><a href="module-ViewContext.html">ViewContext</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Jan 02 2014 11:05:55 GMT-0800 (PST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sat Jan 04 2014 15:16:58 GMT-0800 (PST)
 </footer>
 
 <script> prettyPrint(); </script>

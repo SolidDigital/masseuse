@@ -1,7 +1,7 @@
 # masseuse
-==========
+---
 
-Version: _0.0.1-alpha_
+Version: _0.0.2-alpha_
 
 ## Installation
 
@@ -18,7 +18,7 @@ This is an alpha release. Masseuse is functional, and documentation and tests ar
 Masseuse does five main things:
 
 1. Adds lifecycle methods to Views that are optionally async using jQuery promises.
-1. Allows the separations of Views into a config and functionality sections.
+1. Allows easier separation of Views into a config and functionality sections by providing several shortcut configs.
 1. Adds support for adding child Views.
 1. Provides Proxy and Computed Properties for Masseuse Models
 1. Provides a Masseuse Router extension of the Backbone Router with a before routing callback.
@@ -139,6 +139,16 @@ var view = new BaseView({
 });
 ```
 
-Release Notes:
+## Release Notes
+---
+* 0.0.2-alpha - 2014-01-04 - docs updates
+* 0.0.1-alpha - 2014-01-03 - initiali release
 
-* 0.0.1-alpha - 2014-01-03
+## Contributors (`git shortlog -s -n`)
+---
+* Peter Ajtai
+* Greg Larrenaga
+* Cooper Hilscher
+* Jonathan Waltner
+* Jesse McCabe
+* Travis McHattie

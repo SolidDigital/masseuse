@@ -3,6 +3,13 @@ define(function () {
     'use strict';
     return getProperty;
 
+    /**
+     * Get properties from a passed in object bassed on a string descriptor of the desired field.
+     * @param obj
+     * @param parts
+     * @param create
+     * @returns {*}
+     */
     function getProperty (obj, parts, create) {
         var part;
 

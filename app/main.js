@@ -27,8 +27,8 @@ define([
      *
      */
     /**
-     * @constructor
-     * @alias module:masseuse
+     * @class A convenience wrapper for the functionalities of Masseuse.
+     * @module Masseuse
      */
     return {
         BaseView : BaseView,

@@ -7,7 +7,8 @@ define([
         'use strict';
 
         /**
-         * @class MasseuseRouter
+         * @class A router with an optionally overridable `.beforeRouting()`
+         * @module MasseuseRouter
          * @extends Backbone.Router
          */
         return Backbone.Router.extend({
