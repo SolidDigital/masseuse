@@ -1,7 +1,7 @@
 # masseuse
 ==========
 
-Version: _0.0.0-alpha_
+Version: _0.0.1-alpha_
 
 ## Installation
 
