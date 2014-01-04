@@ -1,7 +1,7 @@
 {
   "name": "masseuse",
-  "version": "1.0.0",
-  "description": "...",
+  "version": "0.0.0-alpha",
+  "description": "A Backbone helper library with a View lifecycle, View configs, child Views, Proxy and Computed Properties, and a custom Router with beforeRouting support",
   "main": " ",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

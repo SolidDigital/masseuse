@@ -1,16 +1,34 @@
 # masseuse
 ==========
 
-Masseuse is a collection of helpers for Backbone. It includes the following:
+Version: _0.0.0-alpha_
 
-* Computed Properties for Models
-* Proxy Properties for Models
-* A BaseView with a defined life cycle
-* Model / Collection data binding to the DOM using Rivets
-* A simple Finite State Machine that uses `$.Deferred`
-* A Channels Backbone event bus for View to View communication
-* A custom router
-* A mixin pattern that allows functions to be customized with default and actual properties as well as jQuery deferred.
+## Installation
+
+```
+bower install masseuse
+```
+
+## Description
+
+Masseuse is a Backbone helper library.
+
+This is an alpha release. Masseuse is functional, and documentation and tests are being fleshed out.
+
+Masseuse does five main things:
+
+1. Adds lifecycle methods to Views that are optionally async using jQuery promises.
+1. Allows the separations of Views into a config and functionality sections.
+1. Adds support for adding child Views.
+1. Provides Proxy and Computed Properties for Masseuse Models
+1. Provides a Masseuse Router extension of the Backbone Router with a before routing callback.
+
+Additionally there is support for append or replacing the `el` of views, optional plugin methods on view initialization,
+and a channels singleton for use as an event bus.
+
+## Usage
+
+Look at the tests for example usage. More documentation coming soon.
 
 ## Computed Properties
 
@@ -121,29 +139,6 @@ var view = new BaseView({
 });
 ```
 
-## Rivet Views
+Release Notes:
 
-Masseuse depends on Rivets, and Masseuse comes with a custom Rivets adapter that works with Backbone Collections. This
-functionality is built into the BaseView.
-
-Rivets is a library that two way binds the DOM to Backbone data.
-
-For example, to Rivet a BaseView to the DOM include the `rivetConfig` options:
-
-```javascript
-var view new BaseView({
-                        rivetConfig : {
-                            scope : '#my-view',
-                            prefix : 'myprefix',
-                            instaUpdateRivets : true
-                        }
-                    });
-```
-
-`scope` is the sizzle selector within which the riveting works. `prefix` is needed by Rivets. It can be the same for all
-views. `instaUpdateRivets` is false by default. If it is set to truthy, then all input box changes will trigger Rivet
-updates. Specifically, `keypress paste textInput input` will all trigger change events in addition to change itself.
-
-## Channels
-
-Channels can be used as
+* 0.0.0-alpha - 2014-01-03
