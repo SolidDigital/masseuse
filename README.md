@@ -141,4 +141,4 @@ var view = new BaseView({
 
 Release Notes:
 
-* 0.0.0-alpha - 2014-01-03
+* 0.0.1-alpha - 2014-01-03
