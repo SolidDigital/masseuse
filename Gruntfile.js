@@ -64,9 +64,11 @@ module.exports = function (grunt) {
 
         build_gh_pages : {
             ghPages : {
+            },
+            bower : {
                 options : {
-                    build_branch : 'builds',
-                    dist : 'build'
+                    build_branch : 'bower',
+                    dist : 'bower'
                 }
             }
         },
