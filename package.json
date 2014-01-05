@@ -24,7 +24,7 @@
     "grunt": "~0.4.2",
     "grunt-build-gh-pages": "0.0.4",
     "grunt-contrib-connect": "~0.3.0",
-    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-jshint": "0.6.4",
     "grunt-contrib-livereload": "~0.1.2",
     "grunt-contrib-watch": "~0.4.4",
@@ -32,6 +32,7 @@
     "grunt-requirejs": "~0.4.0",
     "grunt-shell": "~0.2.2",
     "matchdep": "~0.1.2",
-    "grunt-jsdoc": "~0.4.3"
+    "grunt-jsdoc": "~0.4.3",
+    "grunt-contrib-clean": "~0.5.0"
   }
 }

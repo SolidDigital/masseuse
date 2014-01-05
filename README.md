@@ -40,11 +40,14 @@ Masseuse does five main things:
 Additionally there is support for append or replacing the `el` of views, optional plugin methods on view initialization,
 and a channels singleton for use as an event bus.
 
+## Docs
+
+* [JSDocs](http://masseuse.solid-interactive.io)
+* See the [README directory](https://github.com/Solid-Interactive/masseuse/tree/master/README) for more detailed explanations.
+
 ## Usage
 
 Look at the tests for example usage. More documentation coming soon.
-
-See the [README directory](https://github.com/Solid-Interactive/masseuse/tree/master/README) for more detailed explanations.
 
 ## Release Notes
 

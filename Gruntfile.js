@@ -91,6 +91,26 @@ module.exports = function (grunt) {
                     destination: 'docs'
                 }
             }
+        },
+
+        clean : {
+            build : ['build'],
+            jsdoc : ['jsdoc']
+        },
+
+        copy : {
+            jsdoc : {
+                files : [
+                    {
+                        expand : true,
+                        cwd : 'docs/',
+                        src: [
+                            '**'
+                        ],
+                        dest : 'build/'
+                    }
+                ]
+            }
         }
     });
 
@@ -99,7 +119,7 @@ module.exports = function (grunt) {
         'jshint', 'connect:tests',  'open:masseuse', 'watch'
     ]);
     grunt.registerTask('deploy', 'Deploy to gh-pages', [
-        'jshint', 'copy', 'build_gh_pages'
+        'clean:jsdoc', 'clean:build', 'jshint', 'jsdoc', 'copy:jsdoc', 'build_gh_pages'
     ]);
 
 };
