@@ -7,7 +7,7 @@ define(['underscore', 'backbone', './namespace'], function (_, Backbone, namespa
     /**
      * @class Channels is a singleton event bus.
      * @param channel
-     * @module Channels
+     * @module utilities/Channels
      */
     function Channels(channel) {
         if (channels) {

@@ -7,7 +7,7 @@ define(['backbone', './computedProperty', './proxyProperty', 'underscore'],
          * Proxy and Computed properties are tirggered directly and not via events for performance reasons.
          * @constructor
          * @class
-         * @module MasseuseModel
+         * @module models/MasseuseModel
          * @extends Backbone.Model
          */
         return Backbone.Model.extend({

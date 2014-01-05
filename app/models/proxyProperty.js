@@ -4,7 +4,7 @@ define(function () {
     /**
      * @class A ProxyProperty will allow a field on a model to depend on a field on another model.
      * See tests for use case.
-     * @module ProxyProperty
+     * @module models/ProxyProperty
      * @param propertyNameOnModel
      * @param model
      */

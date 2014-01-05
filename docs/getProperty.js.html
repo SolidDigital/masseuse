@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: utilities/Channels</title>
+    <title>JSDoc: Source: utilities/getProperty.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,89 +17,47 @@
 
 <div id="main">
     
-    <h1 class="page-title">Module: utilities/Channels</h1>
+    <h1 class="page-title">Source: utilities/getProperty.js</h1>
     
     
 
 
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>define(function () {
 
-<section>
-    
-<header>
-    <h2>
-    utilities/Channels
-    </h2>
-    
-        <div class="class-description">Channels is a singleton event bus.</div>
-    
-</header>  
+    'use strict';
+    return getProperty;
 
-<article>
-    <div class="container-overview">
-    
-    
-    
-        
-        
-        
-<dl class="details">
-    
-        
-    
-    
-    
+    /**
+     * Get properties from a passed in object bassed on a string descriptor of the desired field.
+     * @module utilities/getProperty
+     * @param obj
+     * @param parts
+     * @param create
+     * @returns {*}
+     */
+    function getProperty (obj, parts, create) {
+        var part;
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="channels.js.html">utilities/channels.js</a>, <a href="channels.js.html#line7">line 7</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
+        if (typeof parts === 'string') {
+            parts = parts.split('.');
+        }
 
-        
-        
-    
-    </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</article>
+        while (typeof obj === 'object' && obj && parts.length) {
+            part = parts.shift();
+            if (!(part in obj) && create) {
+                obj[part] = {};
+            }
+            obj = obj[part];
+        }
 
-</section>  
+        return obj;
+    }
+});</code></pre>
+        </article>
+    </section>
 
 
 

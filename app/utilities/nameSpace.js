@@ -5,6 +5,7 @@ define(function () {
 
     /**
      * From: http://addyosmani.com/blog/essential-js-namespacing/
+     * @modlue utilities/nameSpace
      * @param ns
      * @param ns_string
      * @returns {*}

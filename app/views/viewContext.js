@@ -3,7 +3,7 @@ define(['../utilities/getProperty'], function (getProperty) {
 
     /**
      * @class Allows the storage of a method for later retrieval and attachment to a context.
-     * @module ViewContext
+     * @module views/ViewContext
      * @param context
      * @returns {*}
      */
