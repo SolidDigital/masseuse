@@ -63,12 +63,15 @@ module.exports = function (grunt) {
         },
 
         build_gh_pages : {
-            ghPages : {
+            jsdoc : {
+                options : {
+                    dist : 'build'
+                }
             },
             bower : {
                 options : {
                     build_branch : 'bower',
-                    dist : 'bower'
+                    dist : 'build'
                 }
             }
         },
@@ -94,8 +97,7 @@ module.exports = function (grunt) {
         },
 
         clean : {
-            build : ['build'],
-            jsdoc : ['jsdoc']
+            build : ['build']
         },
 
         copy : {
@@ -118,8 +120,8 @@ module.exports = function (grunt) {
     grunt.registerTask('test', 'Build and watch task', [
         'jshint', 'connect:tests',  'open:masseuse', 'watch'
     ]);
-    grunt.registerTask('deploy', 'Deploy to gh-pages', [
-        'clean:jsdoc', 'clean:build', 'jshint', 'jsdoc', 'copy:jsdoc', 'build_gh_pages'
+    grunt.registerTask('deployDocs', 'Deploy to gh-pages', [
+        'clean:build', 'jshint', 'copy:jsdoc', 'build_gh_pages:jsdoc'
     ]);
 
 };

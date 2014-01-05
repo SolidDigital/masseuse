@@ -42,7 +42,7 @@ and a channels singleton for use as an event bus.
 
 ## Docs
 
-* [JSDocs](http://masseuse.solid-interactive.io)
+* [JSDocs](http://solid-interactive.github.io/masseuse)
 * See the [README directory](https://github.com/Solid-Interactive/masseuse/tree/master/README) for more detailed explanations.
 
 ## Usage
