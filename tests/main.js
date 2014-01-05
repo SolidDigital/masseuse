@@ -52,6 +52,10 @@
         './utilities/deferMethodTests',
         './routers/masseuseRouterTests.js'
     ], function (mocha) {
-        mocha.run();
+        if (typeof mochaPhantomJS !== "undefined") {
+            mochaPhantomJS.run();
+        } else {
+            mocha.run();
+        }
     });
 }());

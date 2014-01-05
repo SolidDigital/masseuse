@@ -4,7 +4,8 @@
   "description": "A Backbone helper library with a View lifecycle, View configs, child Views, Proxy and Computed Properties, and a custom Router with beforeRouting support",
   "main": " ",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "preinstall": "npm install -g mocha-phantomjs phantomjs"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "grunt-shell": "~0.2.2",
     "matchdep": "~0.1.2",
     "grunt-jsdoc": "~0.4.3",
-    "grunt-contrib-clean": "~0.5.0"
+    "grunt-contrib-clean": "~0.5.0",
+    "mocha-phantomjs": "~3.3.1"
   }
 }
