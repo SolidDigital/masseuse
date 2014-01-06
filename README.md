@@ -1,6 +1,7 @@
 # masseuse
 
-Version: _0.0.2-alpha_
+Version: _0.0.2-alpha-inProgress_
+
 
 ## Docs & Tests
 
