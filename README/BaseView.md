@@ -23,11 +23,6 @@ var view = new BaseView({
         // They are arrays of strings. The context is assumed to be the view.
     templateHtml : '<div><%= price %> : <%= discount %></div>',
         // Underscore templating that will - if provided - be turned into this.template using _.template(templateHtml)
-    rivetConfig : 'auto'
-        // The configuration options for Rivets that this view uses. If left out the view doesn't use Rivets.
-        // Setting to auto will have the scope of Rivets be `# + this.cid`, the Rivets prefix `rv` and `this.model.viewId`
-        // will be ths cid. A templating solution would have to be used to populate the DOM with the cid
-        // Otherwise, the RivetConfigs can be set manually.
 
 });
 ```
