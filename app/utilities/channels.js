@@ -1,5 +1,5 @@
 /*global define:false*/
-define(['underscore', 'backbone', './namespace'], function (_, Backbone, namespace) {
+define(['underscore', 'backbone', './nameSpace'], function (_, Backbone, namespace) {
     'use strict';
 
     var channels;
