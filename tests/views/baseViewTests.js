@@ -141,36 +141,106 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 });
 
                 describe('refreshChildren method', function () {
-                    it('should only remove children that have been started', function (done) {
+                    xit('should only call remove on children that have been previously started', function () {
+
+                    });
+
+                    it('should start children that have not been started', function(done) {
                         var childView1 = new BaseView({
                                 name : CHILD_VIEW_NAME
                             }),
                             childView2 = new BaseView({
                                 name : 'Another Child'
                             }),
-                            childRemoveView1 = sinon.spy(childView1, 'remove'),
-                            childRemoveView2 = sinon.spy(childView2, 'remove');
+                            childStartView1 = sinon.spy(childView1, 'start'),
+                            childStartView2 = sinon.spy(childView2, 'start');
 
                         viewInstance.addChild(childView1);
                         viewInstance.start()
                             .done(function () {
                                 viewInstance.addChild(childView2);
+                                childStartView1.should.have.been.calledOnce;
+                                childStartView2.should.not.have.been.called;
                                 viewInstance.refreshChildren();
-                                childRemoveView1.should.have.been.calledOnce;
-                                childRemoveView2.should.not.have.been.called;
+                                childStartView1.should.have.been.calledTwice;
+                                childStartView2.should.have.been.calledOnce;
                                 done();
                             });
-
-
                     });
 
-                    xit('should remove all the children and then call start on them', function () {
+                    it('should remove all the children and then call start on them', function (done) {
+                        var childView1 = new BaseView({
+                                name : CHILD_VIEW_NAME
+                            }),
+                            childView2 = new BaseView({
+                                name : 'Another Child'
+                            }),
+                            childStartView1 = sinon.spy(childView1, 'start'),
+                            childStartView2 = sinon.spy(childView2, 'start');
+
+                        viewInstance.addChild(childView1);
+                        viewInstance.addChild(childView2);
+
+                        viewInstance.start()
+                            .done(function () {
+                                viewInstance.refreshChildren();
+                                childStartView1.should.have.been.calledTwice;
+                                childStartView2.should.have.been.calledTwice;
+                                done();
+                            });
                     });
 
-                    xit('should not remove the children from the parents child array.', function () {
+                    it('should not remove the children from the parents children array.', function (done) {
+                        var childView1 = new BaseView({
+                                name : CHILD_VIEW_NAME
+                            }),
+                            childView2 = new BaseView({
+                                name : 'Another Child'
+                            }),
+                            viewInstanceRemoveChild = sinon.spy(viewInstance, 'removeChild'),
+                            viewInstanceRemoveAllChildren = sinon.spy(viewInstance, 'removeAllChildren');
+
+                        viewInstance.addChild(childView1);
+                        viewInstance.addChild(childView2);
+
+                        viewInstance.children.length.should.equal(2);
+                        viewInstanceRemoveChild.should.not.have.been.called;
+                        viewInstanceRemoveAllChildren.should.not.have.been.called;
+
+                        viewInstance.start()
+                            .done(function () {
+                                viewInstance.refreshChildren();
+                                viewInstance.children.length.should.equal(2);
+                                viewInstanceRemoveChild.should.not.have.been.called;
+                                viewInstanceRemoveAllChildren.should.not.have.been.called;
+                                done();
+                            });
                     });
 
-                    xit('should call refreshAllChildren on each child.', function () {
+                    xit('should refresh nested children.', function (done) {
+                        var childView1 = new BaseView({
+                                name : CHILD_VIEW_NAME
+                            }),
+                            childView2 = new BaseView({
+                                name : 'Another Child'
+                            }),
+                            childViewSub1 = new BaseView({
+                                name : 'a sub child'
+                            }),
+                            childViewSub1Start = sinon.spy(childViewSub1, 'start');
+
+                        childView1.addChild(childViewSub1);
+                        viewInstance.addChild(childView1);
+                        viewInstance.addChild(childView2);
+
+                        childViewSub1Start.should.not.have.been.called;
+
+                        viewInstance.start()
+                            .done(function () {
+                                childViewSub1Start.should.have.been.calledOnce;
+                                viewInstance.refreshChildren();
+                                done();
+                            });
                     });
                 });
             });
@@ -217,7 +287,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         done();
                     },
                     function () {
-                });
+                    });
             });
         });
 

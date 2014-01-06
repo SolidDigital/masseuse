@@ -73,7 +73,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                         done();
                     },
                     function () {
-                });
+                    });
             });
 
             //-----------Tests-----------
@@ -223,6 +223,29 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
 
                     viewInstance.start().done(function () {
                         childView.start.should.have.been.calledOnce;
+                    });
+                });
+
+                xit('should call start on any children of its children', function () {
+                    var childView = new (BaseView.extend({
+                            name : CHILD_VIEW_NAME
+                        }))(),
+                        childSubView = new (BaseView.extend({
+                            name : 'Some Sub View'
+                        }))();
+
+                    childView.start = sinon.spy(childView, 'start');
+                    childSubView.start = sinon.spy(childSubView, 'start');
+
+                    childView.addChild(childSubView);
+                    viewInstance.addChild(childView);
+
+                    childView.start.should.not.have.been.called;
+                    childSubView.start.should.not.have.been.called;
+
+                    viewInstance.start().done(function () {
+                        childView.start.should.have.been.calledOnce;
+                        childSubView.start.should.have.been.calledOnce;
                     });
                 });
 
