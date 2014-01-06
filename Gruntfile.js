@@ -113,12 +113,25 @@ module.exports = function (grunt) {
                     }
                 ]
             }
+        },
+
+        shell : {
+            'testPhantom' : {
+                options : {
+                    stdout : true,
+                    stderr : true
+                },
+                command : 'mocha-phantomjs tests/index.html'
+            }
         }
     });
 
     // To start editing your slideshow using livereload, run 'grunt server'
     grunt.registerTask('test', 'Build and watch task', [
         'jshint', 'connect:tests',  'open:masseuse', 'watch'
+    ]);
+    grunt.registerTask('test-cli', 'Run tests headless', [
+        'shell:testPhantom'
     ]);
     grunt.registerTask('deployDocs', 'Deploy to gh-pages', [
         'clean:build', 'jshint', 'copy:jsdoc', 'build_gh_pages:jsdoc'

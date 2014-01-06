@@ -2,9 +2,14 @@
 
 Version: _0.0.2-alpha_
 
+## Docs
+
+* [JSDocs](http://solid-interactive.github.io/masseuse)
+* See the [README directory](https://github.com/Solid-Interactive/masseuse/tree/master/README) for more detailed explanations.
+
 ## Installation
 
-```
+```shell
 bower install masseuse
 ```
 
@@ -40,14 +45,26 @@ Masseuse does five main things:
 Additionally there is support for append or replacing the `el` of views, optional plugin methods on view initialization,
 and a channels singleton for use as an event bus.
 
-## Docs
-
-* [JSDocs](http://solid-interactive.github.io/masseuse)
-* See the [README directory](https://github.com/Solid-Interactive/masseuse/tree/master/README) for more detailed explanations.
-
 ## Usage
 
 Look at the tests for example usage. More documentation coming soon.
+
+## Contributing
+
+For use in the browser:
+
+```shell
+npm install -g grunt-cli
+```
+
+To setup headless browse testing:
+
+``shell
+npm install -g mocha-phantomjs phantomjs
+```
+
+`grunt test` runs, opens, and watches the tests in the browser. Pull requests welcomed!
+`grunt test-cli` runs tests headless.
 
 ## Release Notes
 

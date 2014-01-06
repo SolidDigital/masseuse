@@ -1,11 +1,10 @@
 {
   "name": "masseuse",
-  "version": "0.0.2-alpha",
+  "version": "0.0.2-alpha-inProgress",
   "description": "A Backbone helper library with a View lifecycle, View configs, child Views, Proxy and Computed Properties, and a custom Router with beforeRouting support",
   "main": " ",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "npm install -g mocha-phantomjs phantomjs"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
