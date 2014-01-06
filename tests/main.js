@@ -1,3 +1,4 @@
+/*globals mochaPhantomJS:false*/
 (function () {
     'use strict';
 
@@ -52,7 +53,7 @@
         './utilities/deferMethodTests',
         './routers/masseuseRouterTests.js'
     ], function (mocha) {
-        if (typeof mochaPhantomJS !== "undefined") {
+        if (typeof mochaPhantomJS !== 'undefined') {
             mochaPhantomJS.run();
         } else {
             mocha.run();

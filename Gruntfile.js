@@ -109,7 +109,31 @@ module.exports = function (grunt) {
                         src: [
                             '**'
                         ],
-                        dest : 'build/'
+                        dest : 'build/docs/'
+                    }
+                ]
+            },
+            tests : {
+                files : [
+                    {
+                        expand : true,
+                        cwd : 'tests/',
+                        src: [
+                            '**'
+                        ],
+                        dest : 'build/tests/'
+                    }
+                ]
+            },
+            app : {
+                files : [
+                    {
+                        expand : true,
+                        cwd : 'app/',
+                        src: [
+                            '**'
+                        ],
+                        dest : 'build/app/'
                     }
                 ]
             }
@@ -131,10 +155,10 @@ module.exports = function (grunt) {
         'jshint', 'connect:tests',  'open:masseuse', 'watch'
     ]);
     grunt.registerTask('test-cli', 'Run tests headless', [
-        'shell:testPhantom'
+        'jshint', 'shell:testPhantom'
     ]);
     grunt.registerTask('deployDocs', 'Deploy to gh-pages', [
-        'clean:build', 'jshint', 'copy:jsdoc', 'build_gh_pages:jsdoc'
+        'clean:build', 'jshint', 'copy:jsdoc', 'copy:app', 'copy:tests', 'build_gh_pages:jsdoc'
     ]);
 
 };

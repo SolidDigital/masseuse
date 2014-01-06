@@ -2,9 +2,10 @@
 
 Version: _0.0.2-alpha_
 
-## Docs
+## Docs & Tests
 
-* [JSDocs](http://solid-interactive.github.io/masseuse)
+* [JSDocs](http://solid-interactive.github.io/masseuse/docs/)
+* [Tests - unoptimized for readability](http://solid-interactive.github.io/masseuse/tests/)
 * See the [README directory](https://github.com/Solid-Interactive/masseuse/tree/master/README) for more detailed explanations.
 
 ## Installation
@@ -50,6 +51,12 @@ and a channels singleton for use as an event bus.
 Look at the tests for example usage. More documentation coming soon.
 
 ## Contributing
+
+Fork git repo, then:
+
+```shell
+bower install
+```
 
 For use in the browser:
 
