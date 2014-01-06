@@ -2,6 +2,7 @@
 
 Version: _0.0.2-alpha-inProgress_
 
+https://github.com/Solid-Interactive/masseuse
 
 ## Docs & Tests
 
