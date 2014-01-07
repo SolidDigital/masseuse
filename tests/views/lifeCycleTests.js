@@ -72,8 +72,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
 
                         done();
                     },
-                    function () {
-                });
+                    function () {});
             });
 
             //-----------Tests-----------
@@ -210,10 +209,8 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     });
                 });
 
-                it('should call start on any children', function () {
-                    var childView = new (BaseView.extend({
-                        name : CHILD_VIEW_NAME
-                    }))();
+                it('should call start on any children', function (done) {
+                    var childView = new BaseView();
 
                     childView.start = sinon.spy(childView, 'start');
 
@@ -223,6 +220,27 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
 
                     viewInstance.start().done(function () {
                         childView.start.should.have.been.calledOnce;
+                        done();
+                    });
+                });
+
+                it('should call start on any children of its children', function (done) {
+                    var childView = new BaseView(),
+                        childSubView = new BaseView();
+
+                    childView.start = sinon.spy(childView, 'start');
+                    childSubView.start = sinon.spy(childSubView, 'start');
+
+                    childView.addChild(childSubView);
+                    viewInstance.addChild(childView);
+
+                    childView.start.should.not.have.been.called;
+                    childSubView.start.should.not.have.been.called;
+
+                    viewInstance.start().done(function () {
+                        childView.start.should.have.been.calledOnce;
+                        childSubView.start.should.have.been.calledOnce;
+                        done();
                     });
                 });
 
