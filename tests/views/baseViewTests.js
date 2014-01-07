@@ -122,12 +122,8 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
                 describe('removeAllChildren method', function () {
                     it('should remove all views from children', function () {
-                        var childView1 = new BaseView({
-                                name : CHILD_VIEW_NAME
-                            }),
-                            childView2 = new BaseView({
-                                name : 'Another Child'
-                            });
+                        var childView1 = new BaseView(),
+                            childView2 = new BaseView();
 
                         viewInstance.addChild(childView1);
                         viewInstance.addChild(childView2);
@@ -138,20 +134,39 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
                         viewInstance.children.length.should.equal(0);
                     });
+
+                    xit('should remove nested children', function () {
+
+                    });
                 });
 
                 describe('refreshChildren method', function () {
-                    xit('should only call remove on children that have been previously started', function () {
+                    xit('should only call remove on children that have been previously started', function (done) {
+                        var childView1 = new BaseView(),
+                            childView2 = new BaseView();
 
+//                        childView1.remove = sinon.spy(childView1, 'remove');
+//                        childView2.remove = sinon.spy(childView2, 'remove');
+
+//                        TODO: See notes, line 222 of base view.
+
+                        viewInstance.addChild(childView1);
+                        viewInstance.start()
+                            .done(function () {
+                                viewInstance.addChild(childView2);
+//                                childView1.remove.should.not.have.been.called;
+//                                childView2.remove.should.not.have.been.called;
+                                viewInstance.refreshChildren()
+                                    .done(function() {
+//                                        childView1.remove.should.have.been.calledOnce;
+                                        done();
+                                    });
+                            });
                     });
 
                     it('should start children that have not been started', function(done) {
-                        var childView1 = new BaseView({
-                                name : CHILD_VIEW_NAME
-                            }),
-                            childView2 = new BaseView({
-                                name : 'Another Child'
-                            }),
+                        var childView1 = new BaseView(),
+                            childView2 = new BaseView(),
                             childStartView1 = sinon.spy(childView1, 'start'),
                             childStartView2 = sinon.spy(childView2, 'start');
 
@@ -161,20 +176,18 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                 viewInstance.addChild(childView2);
                                 childStartView1.should.have.been.calledOnce;
                                 childStartView2.should.not.have.been.called;
-                                viewInstance.refreshChildren();
-                                childStartView1.should.have.been.calledTwice;
-                                childStartView2.should.have.been.calledOnce;
-                                done();
+                                viewInstance.refreshChildren()
+                                    .done(function() {
+                                        childStartView1.should.have.been.calledTwice;
+                                        childStartView2.should.have.been.calledOnce;
+                                        done();
+                                    });
                             });
                     });
 
                     it('should remove all the children and then call start on them', function (done) {
-                        var childView1 = new BaseView({
-                                name : CHILD_VIEW_NAME
-                            }),
-                            childView2 = new BaseView({
-                                name : 'Another Child'
-                            }),
+                        var childView1 = new BaseView(),
+                            childView2 = new BaseView(),
                             childStartView1 = sinon.spy(childView1, 'start'),
                             childStartView2 = sinon.spy(childView2, 'start');
 
@@ -183,20 +196,18 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
                         viewInstance.start()
                             .done(function () {
-                                viewInstance.refreshChildren();
-                                childStartView1.should.have.been.calledTwice;
-                                childStartView2.should.have.been.calledTwice;
-                                done();
+                                viewInstance.refreshChildren()
+                                    .done(function() {
+                                        childStartView1.should.have.been.calledTwice;
+                                        childStartView2.should.have.been.calledTwice;
+                                        done();
+                                    });
                             });
                     });
 
                     it('should not remove the children from the parents children array.', function (done) {
-                        var childView1 = new BaseView({
-                                name : CHILD_VIEW_NAME
-                            }),
-                            childView2 = new BaseView({
-                                name : 'Another Child'
-                            }),
+                        var childView1 = new BaseView(),
+                            childView2 = new BaseView(),
                             viewInstanceRemoveChild = sinon.spy(viewInstance, 'removeChild'),
                             viewInstanceRemoveAllChildren = sinon.spy(viewInstance, 'removeAllChildren');
 
@@ -209,37 +220,58 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
                         viewInstance.start()
                             .done(function () {
-                                viewInstance.refreshChildren();
-                                viewInstance.children.length.should.equal(2);
-                                viewInstanceRemoveChild.should.not.have.been.called;
-                                viewInstanceRemoveAllChildren.should.not.have.been.called;
-                                done();
+                                viewInstance.refreshChildren()
+                                    .done(function() {
+                                        viewInstance.children.length.should.equal(2);
+                                        viewInstanceRemoveChild.should.not.have.been.called;
+                                        viewInstanceRemoveAllChildren.should.not.have.been.called;
+                                        done();
+                                    });
                             });
                     });
 
-                    xit('should refresh nested children.', function (done) {
-                        var childView1 = new BaseView({
-                                name : CHILD_VIEW_NAME
-                            }),
-                            childView2 = new BaseView({
-                                name : 'Another Child'
-                            }),
-                            childViewSub1 = new BaseView({
-                                name : 'a sub child'
-                            }),
-                            childViewSub1Start = sinon.spy(childViewSub1, 'start');
+                    it('should not remove the children of nested children.', function (done) {
+                        var childView1 = new BaseView(),
+                            childSubView1 = new BaseView();
+
+                        childView1.addChild(childSubView1);
+                        viewInstance.addChild(childView1);
+
+                        viewInstance.children.length.should.equal(1);
+                        childView1.children.length.should.equal(1);
+
+                        viewInstance.start()
+                            .done(function () {
+                                viewInstance.refreshChildren()
+                                    .done(function() {
+                                        viewInstance.children.length.should.equal(1);
+                                        childView1.children.length.should.equal(1);
+                                        done();
+                                    });
+                            });
+                    });
+
+                    it('should refresh nested children.', function (done) {
+                        var childView1 = new BaseView(),
+                            childView2 = new BaseView(),
+                            childViewSub1 = new BaseView();
+
+                        childViewSub1.start = sinon.spy(childViewSub1, 'start');
 
                         childView1.addChild(childViewSub1);
                         viewInstance.addChild(childView1);
                         viewInstance.addChild(childView2);
 
-                        childViewSub1Start.should.not.have.been.called;
+                        childViewSub1.start.should.not.have.been.called;
 
                         viewInstance.start()
                             .done(function () {
-                                childViewSub1Start.should.have.been.calledOnce;
-                                viewInstance.refreshChildren();
-                                done();
+                                childViewSub1.start.should.have.been.calledOnce;
+                                viewInstance.refreshChildren()
+                                    .done(function() {
+                                        childViewSub1.start.should.have.been.calledTwice;
+                                        done();
+                                    });
                             });
                     });
                 });
@@ -286,8 +318,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
                         done();
                     },
-                    function () {
-                    });
+                    function () {});
             });
         });
 

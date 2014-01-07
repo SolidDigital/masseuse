@@ -72,8 +72,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
 
                         done();
                     },
-                    function () {
-                    });
+                    function () {});
             });
 
             //-----------Tests-----------
@@ -210,10 +209,8 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     });
                 });
 
-                it('should call start on any children', function () {
-                    var childView = new (BaseView.extend({
-                        name : CHILD_VIEW_NAME
-                    }))();
+                it('should call start on any children', function (done) {
+                    var childView = new BaseView();
 
                     childView.start = sinon.spy(childView, 'start');
 
@@ -223,16 +220,13 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
 
                     viewInstance.start().done(function () {
                         childView.start.should.have.been.calledOnce;
+                        done();
                     });
                 });
 
-                xit('should call start on any children of its children', function () {
-                    var childView = new (BaseView.extend({
-                            name : CHILD_VIEW_NAME
-                        }))(),
-                        childSubView = new (BaseView.extend({
-                            name : 'Some Sub View'
-                        }))();
+                it('should call start on any children of its children', function (done) {
+                    var childView = new BaseView(),
+                        childSubView = new BaseView();
 
                     childView.start = sinon.spy(childView, 'start');
                     childSubView.start = sinon.spy(childSubView, 'start');
@@ -246,6 +240,7 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai'],
                     viewInstance.start().done(function () {
                         childView.start.should.have.been.calledOnce;
                         childSubView.start.should.have.been.calledOnce;
+                        done();
                     });
                 });
 

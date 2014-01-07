@@ -93,6 +93,9 @@ define(['jquery', 'underscore'],
         }
 
         function _startChildren ($parentDeferred) {
+            var childPromiseArray = [],
+                $deferred = new $.Deferred();
+
             _(this.children).each(function (child) {
                 var $afterRenderDeferred = new $.Deferred();
                 $parentDeferred.progress(function (step) {
@@ -100,9 +103,12 @@ define(['jquery', 'underscore'],
                         $afterRenderDeferred.resolve();
                     }
                 });
-
-                child.start($afterRenderDeferred.promise());
                 child.hasStarted = true;
+                childPromiseArray.push(child.start($afterRenderDeferred.promise()));
             });
+
+            $.when.apply($, childPromiseArray).then($deferred.resolve);
+
+            return $deferred.promise();
         }
     });
