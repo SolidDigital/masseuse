@@ -218,8 +218,6 @@ define([
         var $deferred = new $.Deferred(),
             childPromiseArray = [];
 
-
-        // TODO: WHEN I WALKED AWAY: TALKING WITH JOHNATHAN....This should really just call model.fetch() on all the child views. It does not need to rip them out then start them again.
         _(this.children).each(function (child) {
             if (child.hasStarted) {
                 Backbone.View.prototype.remove.apply(child);
