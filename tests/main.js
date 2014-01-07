@@ -13,6 +13,9 @@
             },
             sinon : {
                 exports : 'sinon'
+            },
+            sinonSpy : {
+                deps : ['sinonCall']
             }
         },
         paths : {

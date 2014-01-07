@@ -1,4 +1,4 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse'],
+define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
     function (_, chai, Squire, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
@@ -8,8 +8,6 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
             should = chai.should();
 
 
-        require(['sinonCall', 'sinonSpy']);
-        // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
         chai.use(sinonChai);
         mocha.setup('bdd');
 
