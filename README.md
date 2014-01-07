@@ -1,6 +1,6 @@
-# masseuse
+# masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=master)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-Version: _0.0.2-alpha-inProgress_
+Version: _0.0.3_
 
 https://github.com/Solid-Interactive/masseuse
 
@@ -35,7 +35,7 @@ require.config({
 
 Masseuse is a Backbone helper library that uses RequireJS AMDs.
 
-This is an alpha release. Masseuse is functional, and documentation and tests are being fleshed out.
+Masseuse is functional, and documentation and tests are being fleshed out.
 
 Masseuse does five main things:
 
@@ -77,7 +77,8 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
-* 0.0.2-alpha - 2014-01-04 - docs updates
+* 0.0.3 - 2014-01-07 - docs updates
+* 0.0.2 - 2014-01-07 - lifecycle now waits for child views
 * 0.0.1-alpha - 2014-01-03 - initiali release
 
 ## Contributors (`git shortlog -s -n`)
