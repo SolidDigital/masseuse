@@ -1,4 +1,4 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse'],
+define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
     function (_, chai, Squire, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
@@ -8,8 +8,6 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
             should = chai.should();
 
 
-        require(['sinonCall', 'sinonSpy']);
-        // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
         chai.use(sinonChai);
         mocha.setup('bdd');
 
@@ -135,35 +133,28 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         viewInstance.children.length.should.equal(0);
                     });
 
-                    xit('should remove nested children', function () {
+                    it('should remove nested children', function () {
+                        var childView1 = new BaseView(),
+                            childSubView1 = new BaseView(),
+                            childSubView2 = new BaseView();
 
+                        childSubView1.addChild(childSubView2);
+                        childView1.addChild(childSubView1);
+                        viewInstance.addChild(childView1);
+
+                        viewInstance.children.length.should.equal(1);
+                        childView1.children.length.should.equal(1);
+                        childSubView1.children.length.should.equal(1);
+
+                        viewInstance.removeAllChildren();
+
+                        viewInstance.children.length.should.equal(0);
+                        childView1.children.length.should.equal(0);
+                        childSubView1.children.length.should.equal(0);
                     });
                 });
 
                 describe('refreshChildren method', function () {
-                    xit('should only call remove on children that have been previously started', function (done) {
-                        var childView1 = new BaseView(),
-                            childView2 = new BaseView();
-
-//                        childView1.remove = sinon.spy(childView1, 'remove');
-//                        childView2.remove = sinon.spy(childView2, 'remove');
-
-//                        TODO: See notes, line 222 of base view.
-
-                        viewInstance.addChild(childView1);
-                        viewInstance.start()
-                            .done(function () {
-                                viewInstance.addChild(childView2);
-//                                childView1.remove.should.not.have.been.called;
-//                                childView2.remove.should.not.have.been.called;
-                                viewInstance.refreshChildren()
-                                    .done(function() {
-//                                        childView1.remove.should.have.been.calledOnce;
-                                        done();
-                                    });
-                            });
-                    });
-
                     it('should start children that have not been started', function(done) {
                         var childView1 = new BaseView(),
                             childView2 = new BaseView(),
