@@ -15,6 +15,8 @@ var view = new BaseView({
     ModelType : MyCustomModel,
         // The model "class" to be used for this.model
         // If left undefined or falsey Backbone.Model is used by default
+    modelData : { ... },
+        // The data the ModelType will be initialized with 
     bindings : [
         ['model', 'change:price', 'showNewPrice'],
         ['model', 'change:discount', 'animateAdvertisement']
