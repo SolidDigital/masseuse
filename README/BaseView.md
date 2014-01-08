@@ -16,7 +16,7 @@ var view = new BaseView({
         // The model "class" to be used for this.model
         // If left undefined or falsey Backbone.Model is used by default
     modelData : { ... },
-        // The data the ModelType will be initialized with 
+        // The data the ModelType will be initialized with using a `model.set(modelData)`
     bindings : [
         ['model', 'change:price', 'showNewPrice'],
         ['model', 'change:discount', 'animateAdvertisement']
