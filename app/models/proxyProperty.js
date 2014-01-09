@@ -2,9 +2,10 @@ define(function () {
     'use strict';
 
     /**
-     * @class A ProxyProperty will allow a field on a model to depend on a field on another model.
+     * A ProxyProperty will allow a field on a model to depend on a field on another model.
      * See tests for use case.
-     * @module models/ProxyProperty
+     * @constructor
+     * @alias module:ProxyProperty
      * @param propertyNameOnModel
      * @param model
      */

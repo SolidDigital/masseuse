@@ -2,10 +2,11 @@ define(function () {
     'use strict';
 
     /**
-     * @class A ComputedProperty is a property that depends on one or more other model values. Each time one of the other
+     * A ComputedProperty is a property that depends on one or more other model values. Each time one of the other
      * values is changed, the ComputeProperty callback is called with the values of all the dependent fields.
      * See the tests for example usage.
-     * @module models/ComputedProperty
+     * @constructor
+     * @alias module:ComputedProperty
      * @param listenablePropertyNames
      * @param callback
      * @param skipInitialComputation
