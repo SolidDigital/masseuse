@@ -1,6 +1,6 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=master)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-Version: _0.1.0_
+Version: _0.1.1_
 
 https://github.com/Solid-Interactive/masseuse
 
@@ -77,6 +77,8 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
+* 0.1.1 - 2014-01-09 - bug fix:
+    * ensuring that masseuse view configs can pass view specific formatters and binders
 * 0.1.0 - 2014-01-08 - new feature:
     * added plugin that allows the use of rivets with models, collections, views
 * 0.0.3 - 2014-01-07 - bug fix:
