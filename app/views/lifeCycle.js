@@ -37,6 +37,7 @@ define(['jquery', 'underscore'],
          * The life cycle method will automatically return this deferred, otherwise it will pass through whatever
          * the method itself returns.
          *
+         * @function
          * @param lifeCycleMethod
          * @returns {*}
          * @private
