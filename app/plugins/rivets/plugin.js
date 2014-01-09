@@ -17,31 +17,22 @@ define(['underscore', './view', './binders', './formatters'],
             this.rivetFormatters = this.rivetFormatters || [];
             this.rivetBinders = this.rivetBinders || [];
 
-
-            defaultFormatters = _.reduce(this.rivetFormatters, function(defaultFormatters, formatterObj) {
-                return _.extend(defaultFormatters, formatterObj);
-            }, defaultFormatters);
-
-            defaultBinders = _.reduce(this.rivetBinders, function(defaultBinders, binderObj) {
-                return _.extend(defaultBinders, binderObj);
-            }, defaultBinders);
-
-            console.log(defaultFormatters);
-            console.log(defaultBinders);
+            this.rivetFormatters = [{}, defaultFormatters].concat(this.rivetFormatters);
+            this.rivetBinders = [{}, defaultBinders].concat(this.rivetBinders);
 
             if ('auto' === this.rivetConfig) {
                 this.rivetView = rivetView({
                     rivetScope : '#' + this.cid,
                     rivetPrefix : 'rv',
-                    rivetFormatters : defaultFormatters,
-                    rivetBinders : defaultBinders
+                    rivetFormatters : _.extend.apply(null, this.rivetFormatters),
+                    rivetBinders : _.extend.apply(null, this.rivetBinders),
                 }).methodWithActualOptions;
             } else if (this.rivetConfig) {
                 this.rivetView = rivetView({
                     rivetScope : this.rivetConfig.scope,
                     rivetPrefix : this.rivetConfig.prefix,
-                    rivetFormatters : defaultFormatters,
-                    rivetBinders : defaultBinders,
+                    rivetFormatters : _.extend.apply(null, this.rivetFormatters),
+                    rivetBinders : _.extend.apply(null, this.rivetBinders),
                     instaUpdateRivets : (this.rivetConfig.instaUpdateRivets ? true : false)
                 }).methodWithActualOptions;
             }
