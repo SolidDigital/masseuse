@@ -162,7 +162,7 @@ module.exports = function (grunt) {
         'jshint', 'connect:tests',  'open:masseuse', 'watch'
     ]);
     grunt.registerTask('test-cli', 'Run tests headless', [
-        'jshint', 'shell:testPhantom'
+        'jshint', 'shell:bower', 'shell:testPhantom'
     ]);
     grunt.registerTask('deployDocs', 'Deploy to gh-pages', [
         'clean:build', 'jshint', 'shell:bower', 'copy:jsdoc', 'copy:app', 'copy:tests', 'build_gh_pages:jsdoc', 'shell:bower'
