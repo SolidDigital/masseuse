@@ -146,6 +146,13 @@ module.exports = function (grunt) {
                     stderr : true
                 },
                 command : 'mocha-phantomjs tests/index.html'
+            },
+            'bower'  : {
+                options : {
+                    stdout : true,
+                    stderr : true
+                },
+                command : 'bower install'
             }
         }
     });
@@ -158,7 +165,7 @@ module.exports = function (grunt) {
         'jshint', 'shell:testPhantom'
     ]);
     grunt.registerTask('deployDocs', 'Deploy to gh-pages', [
-        'clean:build', 'jshint', 'copy:jsdoc', 'copy:app', 'copy:tests', 'build_gh_pages:jsdoc'
+        'clean:build', 'jshint', 'shell:bower', 'copy:jsdoc', 'copy:app', 'copy:tests', 'build_gh_pages:jsdoc', 'shell:bower'
     ]);
 
 };
