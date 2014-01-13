@@ -8,7 +8,7 @@ https://github.com/Solid-Interactive/masseuse
 
 * [JSDocs](http://solid-interactive.github.io/masseuse/docs/)
 * [Tests - unoptimized for readability](http://solid-interactive.github.io/masseuse/tests/)
-* See the [README directory](https://github.com/Solid-Interactive/masseuse/tree/master/README) for more detailed explanations.
+* See the [wiki](https://github.com/Solid-Interactive/masseuse/wiki) for more detailed explanations.
 
 ## Installation
 
