@@ -66,9 +66,9 @@ For use in the browser:
 npm install -g grunt-cli
 ```
 
-To setup headless browse testing:
+To setup headless browses testing:
 
-``shell
+```shell
 npm install -g mocha-phantomjs phantomjs
 ```
 
