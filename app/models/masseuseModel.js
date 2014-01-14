@@ -1,5 +1,5 @@
-define(['backbone', './computedProperty', './proxyProperty', '../utilities/getProperty', 'underscore'],
-    function (Backbone, ComputedProperty, ProxyProperty, getProperty, _) {
+define(['backbone', './computedProperty', './proxyProperty', '../utilities/accessors', 'underscore'],
+    function (Backbone, ComputedProperty, ProxyProperty, accessors, _) {
         'use strict';
 
         /**
@@ -31,7 +31,7 @@ define(['backbone', './computedProperty', './proxyProperty', '../utilities/getPr
                 propertyOn = key.slice(key.indexOf('.') + 1);
                 key = key.split('.')[0];
                 wholeObj = Backbone.Model.prototype.get.call(this, key);
-                result = getProperty.getProperty(wholeObj, propertyOn);
+                result = accessors.getProperty(wholeObj, propertyOn);
             } else {
                 result = Backbone.Model.prototype.get.apply(this, arguments);
             }
@@ -81,7 +81,7 @@ define(['backbone', './computedProperty', './proxyProperty', '../utilities/getPr
                     key = key.split('.')[0];
 
                     wholeObj = this.get(key) || {};
-                    getProperty.setProperty(wholeObj, propertyOn, val);
+                    accessors.setProperty(wholeObj, propertyOn, val);
                     val = wholeObj;
                 }
                 attrs[key] = val;

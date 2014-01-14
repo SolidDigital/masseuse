@@ -1,4 +1,4 @@
-define(['../utilities/getProperty'], function (getProperty) {
+define(['../utilities/accessors'], function (accessors) {
     'use strict';
 
     /**
@@ -8,7 +8,7 @@ define(['../utilities/getProperty'], function (getProperty) {
      * @returns {*}
      */
     ViewContext.prototype.getBoundFunction = function (context) {
-        return getProperty.getProperty(context, this.field);
+        return accessors.getProperty(context, this.field);
     };
 
     return ViewContext;
