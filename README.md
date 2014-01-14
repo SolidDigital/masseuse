@@ -77,8 +77,6 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
-_[detailed release notes](release_notes)_
-
 * 0.1.2 - - [patches](release_notes/0.1.2.md)
 * 0.1.1 - 2014-01-09 - [patches](release_notes/0.1.1.md)
 * 0.1.0 - 2014-01-08 - [features](release_notes/0.1.0.md)
