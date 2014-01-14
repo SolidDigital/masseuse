@@ -17,13 +17,16 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
         describe('view riveting', function () {
             beforeEach(function() {
                 var $div = $('<div id="' + testDom + '"/>');
-                $('#' + testDom).remove();
                 $body.append($div);
 
                 RivetView = BaseView.extend({
-                    intialize: initialize,
+                    initialize: initialize,
                     start: start
                 });
+            });
+
+            afterEach(function() {
+                $('#' + testDom).remove();
             });
 
             it('test dom is present', function() {
@@ -41,8 +44,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     }
                 };
 
-                window.options = options;
-                window.RV = RivetView;
                 new RivetView(options).start().done(function() {
                     $('#' + riveted).html().should.equal('There it is.');
                     done();
@@ -51,7 +52,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
         });
 
         function initialize (options) {
-            console.log("-----");
             options.plugins = [];
             options.plugins.push(rivetsPlugin.plugin);
             this.options = options;
@@ -61,7 +61,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
         function start () {
             var $promise = BaseView.prototype.start.apply(this, arguments),
                 self = this;
-
             $promise.progress(function (event) {
                 switch (event) {
                 case BaseView.afterRenderDone:
