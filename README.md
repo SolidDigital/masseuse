@@ -77,16 +77,14 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
-* 0.1.1 - 2014-01-09 - bug fix:
-    * ensuring that masseuse view configs can pass view specific formatters and binders
-* 0.1.0 - 2014-01-08 - new feature:
-    * added plugin that allows the use of rivets with models, collections, views
-* 0.0.3 - 2014-01-07 - bug fix:
-    * docs updates
-* 0.0.2 - 2014-01-07 - bug fix:
-    * lifecycle now waits for child views
-* 0.0.1-alpha - 2014-01-03:
-    * initial release
+_[detailed release notes](release_notes)_
+
+* 0.1.2 - - [patches](release_notes/0.1.2.md)
+* 0.1.1 - 2014-01-09 - [patches](release_notes/0.1.1.md)
+* 0.1.0 - 2014-01-08 - [features](release_notes/0.1.0.md)
+* 0.0.3 - 2014-01-07 - [patches](release_notes/0.0.3.md)
+* 0.0.2 - 2014-01-07 - [patches](release_notes/0.0.2.md)
+* 0.0.1-alpha - 2014-01-03 - [patches](release_notes/0.0.1.md)
 
 ## Contributors (`git shortlog -s -n`)
 

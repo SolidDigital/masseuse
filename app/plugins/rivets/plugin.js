@@ -25,7 +25,7 @@ define(['underscore', './view', './binders', './formatters'],
                     rivetScope : '#' + this.cid,
                     rivetPrefix : 'rv',
                     rivetFormatters : _.extend.apply(null, this.rivetFormatters),
-                    rivetBinders : _.extend.apply(null, this.rivetBinders),
+                    rivetBinders : _.extend.apply(null, this.rivetBinders)
                 }).methodWithActualOptions;
             } else if (this.rivetConfig) {
                 this.rivetView = rivetView({

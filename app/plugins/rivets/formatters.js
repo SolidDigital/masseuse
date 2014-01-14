@@ -15,12 +15,14 @@ define(function () {
         jsonAsString: jsonAsString,
         limit: limit,
         pluralize: pluralize,
+        prefix : prefix,
         prettyDate: prettyDate,
         prettyDateNoTime : prettyDateNoTime,
         prettyFileSize: prettyFileSize,
         secondsToTime: secondsToTime,
         spaceBefore: spaceBefore,
         spaceAfter: spaceAfter,
+        suffix: suffix,
         withColon: withColon,
         withComma : withComma,
         withForwardSlash: withForwardSlash
@@ -143,5 +145,13 @@ define(function () {
         } else {
             return false;
         }
+    }
+
+    function prefix(value, pref) {
+        return pref + value;
+    }
+
+    function suffix(value, suff) {
+        return suff + value;
     }
 });
