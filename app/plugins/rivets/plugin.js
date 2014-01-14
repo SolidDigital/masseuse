@@ -22,14 +22,12 @@ define(['underscore', './view', './binders', './formatters'],
 
             if ('auto' === this.rivetConfig) {
                 this.rivetView = rivetView({
-                    rivetScope : '#' + this.cid,
                     rivetPrefix : 'rv',
                     rivetFormatters : _.extend.apply(null, this.rivetFormatters),
                     rivetBinders : _.extend.apply(null, this.rivetBinders)
                 }).methodWithActualOptions;
             } else if (this.rivetConfig) {
                 this.rivetView = rivetView({
-                    rivetScope : this.rivetConfig.scope,
                     rivetPrefix : this.rivetConfig.prefix,
                     rivetFormatters : _.extend.apply(null, this.rivetFormatters),
                     rivetBinders : _.extend.apply(null, this.rivetBinders),

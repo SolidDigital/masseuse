@@ -4,6 +4,7 @@
         "define": false,
         "require": false,
         "beforeEach": false,
+        "afterEach": false,
         "describe": false,
         "it": false,
         "xit": false,
