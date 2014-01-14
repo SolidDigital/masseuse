@@ -88,5 +88,24 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy
                     listenerFired.should.be.false;
                 });
             });
+
+            describe('set method (setting nested fields)', function() {
+                it('should set a nested field on a model', function() {
+                    modelInstance.set('nestedProperty.subProperty', 'JohnyDeepNested');
+                    modelInstance.get('nestedProperty').subProperty.should.equal('JohnyDeepNested');
+                });
+            });
+
+            describe('get method (getting nested fields)', function() {
+                it('should get a nested field on a model', function() {
+                    modelInstance.set('nestedProperty', {subProperty: 'JohnnyDeepNested'});
+                    modelInstance.get('nestedProperty.subProperty').should.equal('JohnnyDeepNested');
+                });
+
+                it('should return undefined if that property does not exist', function() {
+                    modelInstance.set('nestedProperty', {});
+                    should.equal(modelInstance.get('nestedProperty.subProperty'), undefined);
+                });
+            });
         });
     });

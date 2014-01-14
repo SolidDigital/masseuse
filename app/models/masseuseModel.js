@@ -1,5 +1,5 @@
-define(['backbone', './computedProperty', './proxyProperty', 'underscore'],
-    function (Backbone, ComputedProperty, ProxyProperty, _) {
+define(['backbone', './computedProperty', './proxyProperty', '../utilities/getProperty', 'underscore'],
+    function (Backbone, ComputedProperty, ProxyProperty, getProperty, _) {
         'use strict';
 
         /**
@@ -13,12 +13,30 @@ define(['backbone', './computedProperty', './proxyProperty', 'underscore'],
             toggleAttribute : function (attribute) {
                 this.set(attribute, !this.get(attribute));
             },
+            get : function(key) {
+                var propertyOn,
+                    wholeObj,
+                    result;
+
+                if(key.indexOf('.') > 0 && _.isString(key)) {
+                    propertyOn = key.slice(key.indexOf('.') + 1);
+                    key = key.split('.')[0];
+                    wholeObj = Backbone.Model.prototype.get.call(this, key);
+                    result = getProperty.getProperty(wholeObj, propertyOn);
+                } else {
+                    result = Backbone.Model.prototype.get.apply(this, arguments);
+                }
+
+                return result;
+            },
             set : function (key, val, options) {
                 var self = this,
                     attrs = {},
                     stack = [],
                     delayInitial = [],
-                    callSelf = false;
+                    callSelf = false,
+                    propertyOn,
+                    wholeObj;
 
                 this.computedCallbacks = this.computedCallbacks || {};
                 if (key === null) {
@@ -48,6 +66,14 @@ define(['backbone', './computedProperty', './proxyProperty', 'underscore'],
                         }
                     });
                 } else {
+                    if (key.indexOf('.') > 0 && _.isString(key)) {
+                        propertyOn = key.slice(key.indexOf('.') + 1);
+                        key = key.split('.')[0];
+
+                        wholeObj = this.get(key) || {};
+                        getProperty.setProperty(wholeObj, propertyOn, val);
+                        val = wholeObj;
+                    }
                     attrs[key] = val;
                     if (val instanceof ComputedProperty) {
                         this.bindComputed(key, val);
