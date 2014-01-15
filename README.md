@@ -8,7 +8,13 @@ https://github.com/Solid-Interactive/masseuse
 
 * [JSDocs](http://solid-interactive.github.io/masseuse/docs/)
 * [Tests - unoptimized for readability](http://solid-interactive.github.io/masseuse/tests/)
-* See the [README directory](https://github.com/Solid-Interactive/masseuse/tree/master/README) for more detailed explanations.
+* See the [wiki](https://github.com/Solid-Interactive/masseuse/wiki) for more detailed explanations.
+    * [BaseView](https://github.com/Solid-Interactive/masseuse/wiki/BaseView)
+    * [ComputedProperty](https://github.com/Solid-Interactive/masseuse/wiki/ComputedProperty)
+    * [MasseuseModel](https://github.com/Solid-Interactive/masseuse/wiki/MasseuseModel)
+    * [Options](https://github.com/Solid-Interactive/masseuse/wiki/Options)
+    * [ProxyProperty](https://github.com/Solid-Interactive/masseuse/wiki/ProxyProperty)
+    * [RivetView](https://github.com/Solid-Interactive/masseuse/wiki/Rivetview)
 
 ## Installation
 
@@ -66,9 +72,9 @@ For use in the browser:
 npm install -g grunt-cli
 ```
 
-To setup headless browse testing:
+To setup headless browses testing:
 
-``shell
+```shell
 npm install -g mocha-phantomjs phantomjs
 ```
 
@@ -77,16 +83,12 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
-* 0.1.1 - 2014-01-09 - bug fix:
-    * ensuring that masseuse view configs can pass view specific formatters and binders
-* 0.1.0 - 2014-01-08 - new feature:
-    * added plugin that allows the use of rivets with models, collections, views
-* 0.0.3 - 2014-01-07 - bug fix:
-    * docs updates
-* 0.0.2 - 2014-01-07 - bug fix:
-    * lifecycle now waits for child views
-* 0.0.1-alpha - 2014-01-03:
-    * initial release
+* 0.2.0 - 2013-01-14 - [features](release_notes/0.2.0.md)
+* 0.1.1 - 2014-01-09 - [patches](release_notes/0.1.1.md)
+* 0.1.0 - 2014-01-08 - [features](release_notes/0.1.0.md)
+* 0.0.3 - 2014-01-07 - [patches](release_notes/0.0.3.md)
+* 0.0.2 - 2014-01-07 - [patches](release_notes/0.0.2.md)
+* 0.0.1-alpha - 2014-01-03 - [patches](release_notes/0.0.1.md)
 
 ## Contributors (`git shortlog -s -n`)
 

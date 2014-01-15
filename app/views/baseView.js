@@ -1,8 +1,8 @@
 /*global define:false*/
 define([
     'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', './lifeCycle',
-    '../utilities/getProperty'
-], function ($, Backbone, _, Channels, ViewContext, lifeCycle, getProperty) {
+    '../utilities/accessors'
+], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors) {
     'use strict';
 
     var viewOptions = ['name', 'appendView'],
@@ -166,7 +166,7 @@ define([
             // Since the view config object doesn't have access to the view's context, we must provide it
             _.each([argsArray[0], argsArray[1] , argsArray[2]], function (arg, index) {
                 if (_.isString(arg) && index != 1) {
-                    argsArray[index] = getProperty(self, arg);
+                    argsArray[index] = accessors.getProperty(self, arg);
                 } else if (index == 1) {
                     argsArray[index] = arg;
                 }

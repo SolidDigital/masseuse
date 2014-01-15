@@ -1,4 +1,4 @@
-define(['./plugin', './binders', './formatters'], function(plugin, binders, formatters) {
+define(['./plugin', './binders', './formatters', './view'], function(plugin, binders, formatters, view) {
     'use strict';
     /**
      * Require in as a package:
@@ -10,6 +10,7 @@ define(['./plugin', './binders', './formatters'], function(plugin, binders, form
     return {
         plugin : plugin,
         binders : binders,
-        formatters : formatters
+        formatters : formatters,
+        view : view
     };
 });
