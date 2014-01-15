@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Global</title>
+    <title>JSDoc: Namespace: binders</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Global</h1>
+    <h1 class="page-title">Namespace: binders</h1>
     
     
 
@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-    
+    binders
     </h2>
     
 </header>  
@@ -60,76 +60,9 @@
     
     
     
-    
-    
-    
-    
-    
-    
-</dl>
-
-        
-        
-    
-    </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        <h3 class="subsection-title">Members</h3>
-        
-        <dl>
-            
-<dt>
-    <h4 class="name" id="plugin"><span class="type-signature"></span>plugin<span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Require in as a package:
-{
-     name : 'rivetsPlugin',
-     location : 'components/masseuse/app/plugins/rivets'
- }
-    </div>
-    
-    
-    
-
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js_.html">plugins/rivets/main.js</a>, <a href="main.js_.html#line11">line 11</a>
+        <a href="binders.js.html">plugins/rivets/binders.js</a>, <a href="binders.js.html#line4">line 4</a>
     </li></ul></dd>
     
     
@@ -140,11 +73,21 @@
     
 </dl>
 
+        
+        
+    
+    </div>
     
     
-</dd>
-
-        </dl>
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -153,7 +96,7 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="configureMethod"><span class="type-signature"></span>configureMethod<span class="signature">(defaultOptions, configureItFunction)</span><span class="type-signature"> &rarr; {function}</span></h4>
+    <h4 class="name" id="addClass"><span class="type-signature"></span>addClass<span class="signature">(el, value)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -161,23 +104,7 @@
     
     
     <div class="description">
-        configureMethod allows the reuse of a function
-
-a configureMethod is curried twice. in other words, first configureMethod is called with the configureItFunction
-and the default options.
-this creates a "general" configureMethod function. this general function can then be called with the actual,
-specific
-options for the situation. this will return the final function that can be attached to your object.
-
-in addition to the availability of options, configureIts provide two other pieces of functionality that can be
-deployed
-through options.
-
-1) configureIts can implement $.Deferred. to do this set options.async to true. if async is true, then the first
-argument
-passed to the configureItFunction will be a deferred instance. this instance can be resolved or rejected as seen
-fit. its
-promise will be returned by the final function attached to the object.
+        Example usage in a rivets template is `data-rv-addClass="data.className"`
     </div>
     
 
@@ -211,7 +138,7 @@ promise will be returned by the final function attached to the object.
 	
         <tr>
             
-                <td class="name"><code>defaultOptions</code></td>
+                <td class="name"><code>el</code></td>
             
             
             <td class="type">
@@ -229,7 +156,7 @@ promise will be returned by the final function attached to the object.
 	
         <tr>
             
-                <td class="name"><code>configureItFunction</code></td>
+                <td class="name"><code>value</code></td>
             
             
             <td class="type">
@@ -271,7 +198,7 @@ promise will be returned by the final function attached to the object.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="configureMethod.js.html">plugins/rivets/configureMethod.js</a>, <a href="configureMethod.js.html#line5">line 5</a>
+        <a href="binders.js.html">plugins/rivets/binders.js</a>, <a href="binders.js.html#line20">line 20</a>
     </li></ul></dd>
     
     
@@ -292,24 +219,136 @@ promise will be returned by the final function attached to the object.
     
     
     
-    <h5>Returns:</h5>
     
-            
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">function</span>
-
-
-	</dd>
-</dl>
+    
+</dd>
 
         
+            
+<dt>
+    <h4 class="name" id="width"><span class="type-signature"></span>width<span class="signature">(el, value)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Usage in a rivets template is `data-rv-width="data.theWidth"`
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>el</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="binders.js.html">plugins/rivets/binders.js</a>, <a href="binders.js.html#line39">line 39</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
     
     
 </dd>
