@@ -9,6 +9,12 @@ https://github.com/Solid-Interactive/masseuse
 * [JSDocs](http://solid-interactive.github.io/masseuse/docs/)
 * [Tests - unoptimized for readability](http://solid-interactive.github.io/masseuse/tests/)
 * See the [wiki](https://github.com/Solid-Interactive/masseuse/wiki) for more detailed explanations.
+    * [BaseView](https://github.com/Solid-Interactive/masseuse/wiki/BaseView)
+    * [ComputedProperty](https://github.com/Solid-Interactive/masseuse/wiki/ComputedProperty)
+    * [MasseuseModel](https://github.com/Solid-Interactive/masseuse/wiki/MasseuseModel)
+    * [Options](https://github.com/Solid-Interactive/masseuse/wiki/Options)
+    * [ProxyProperty](https://github.com/Solid-Interactive/masseuse/wiki/ProxyProperty)
+    * [RivetView](https://github.com/Solid-Interactive/masseuse/wiki/Rivetview)
 
 ## Installation
 
@@ -77,7 +83,7 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
-* 0.1.2 - - [patches](release_notes/0.1.2.md)
+* 0.2.0 - 2013-01-14 - [features](release_notes/0.2.0.md)
 * 0.1.1 - 2014-01-09 - [patches](release_notes/0.1.1.md)
 * 0.1.0 - 2014-01-08 - [features](release_notes/0.1.0.md)
 * 0.0.3 - 2014-01-07 - [patches](release_notes/0.0.3.md)
