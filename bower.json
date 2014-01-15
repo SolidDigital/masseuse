@@ -5,7 +5,7 @@
     "jquery": "~2.0.3",
     "requirejs": "~2.1.8",
     "lodash-amd": "*",
-    "rivets": "~0.6.0"
+    "rivets": "~0.6.5"
   },
   "devDependencies": {
     "mocha": "~1.12.1",

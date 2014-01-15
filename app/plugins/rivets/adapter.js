@@ -18,6 +18,13 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
             instaUpdateRivets : false
         }, function (config) {
             Rivets.adapters['.'] =  {
+                /**
+                 * @memberof adapter
+                 * @instance
+                 * @param obj
+                 * @param keypath
+                 * @param callback
+                 */
                 subscribe : function (obj, keypath, callback) {
                     var parts = [keypath],
                         index = keypath.indexOf('.');
@@ -27,6 +34,13 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                     this.subscribe_nested(parts, obj, callback);
                 },
 
+                /**
+                 * @memberof adapter
+                 * @instance
+                 * @param parts
+                 * @param obj
+                 * @param callback
+                 */
                 subscribe_nested : function rivets_backbone_adapter_subscribe_nested (parts, obj, callback) {
                     var keypath;
                     if (!obj) {
@@ -66,6 +80,14 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                     }
                 },
 
+                /**
+                 * @memberof adapter
+                 * @instance
+                 * @param model
+                 * @param key
+                 * @param not_expand_collection_to_model
+                 * @returns {*}
+                 */
                 getValue : function rivets_backbone_adapter_getValue (model, key, not_expand_collection_to_model) {
 
                     if (model instanceof Backbone.Collection) {
@@ -91,6 +113,12 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
 
                 },
 
+                /**
+                 * @memberof adapter
+                 * @instance
+                 * @param obj
+                 * @param keypath
+                 */
                 unsubscribe : function (obj, keypath) {
                     if (typeof (obj) == 'undefined') {
                         return;
@@ -101,6 +129,14 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                         obj.off('change:' + keypath);
                     }
                 },
+
+                /**
+                 * @memberof adapter
+                 * @instance
+                 * @param obj
+                 * @param keypath
+                 * @returns {*}
+                 */
                 read : function (obj, keypath) {
                     var args = keypath.split(' '),
                         parts,
@@ -128,6 +164,13 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                     }
                     return result;
                 },
+                /**
+                 * @memberof adapter
+                 * @instance
+                 * @param obj
+                 * @param keypath
+                 * @param value
+                 */
                 publish : function (obj, keypath, value) {
                     var parts = [keypath],
                         index = keypath.indexOf('.'),

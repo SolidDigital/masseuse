@@ -13,7 +13,7 @@ define(['jquery'], function ($) {
     /**
      * Example usage in a rivets template is `data-rv-addClass="data.className"`
      * @memberof binders
-     * @function
+     * @instance
      * @param el
      * @param value
      */
@@ -32,7 +32,7 @@ define(['jquery'], function ($) {
     /**
      * Usage in a rivets template is `data-rv-width="data.theWidth"`
      * @memberof binders
-     * @function
+     * @instance
      * @param el
      * @param value
      */

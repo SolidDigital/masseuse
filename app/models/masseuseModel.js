@@ -32,6 +32,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
         /**
          * @function
          * @memberof MasseuseModel
+         * @instance
          * @param key
          * @returns {*}
          */
@@ -55,6 +56,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
         /**
          * @function
          * @memberof MasseuseModel
+         * @instance
          * @param key
          * @param val
          * @param options
@@ -138,7 +140,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
 
         /**
          * Attach a ComputedProperty to a model and setup listeners for it.
-         * @function
+         * @instance
          * @memberof MasseuseModel
          * @param key
          * @param computed
@@ -161,7 +163,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
         }
 
         /**
-         * @function
+         * @instance
          * @memberof MasseuseModel
          * @param key
          * @param proxy
@@ -187,7 +189,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
         }
 
         /**
-         * @function
+         * @instance
          * @memberof MasseuseModel
          * @param listenables
          * @returns {Array}
@@ -203,6 +205,14 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
             return args;
         }
 
+        /**
+         * @memberof MasseuseModel
+         * @instance
+         * @private
+         * @param key
+         * @param stack
+         * @private
+         */
         function _pushToComputedCallbacks (key, stack) {
             if (this.computedCallbacks[key]) {
                 stack.push(this.computedCallbacks[key]);
