@@ -1,6 +1,6 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=master)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-Version: _0.2.0_
+Version: _0.2.1_
 
 https://github.com/Solid-Interactive/masseuse
 
@@ -83,7 +83,8 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
-* 0.2.0 - 2013-01-14 - [features](release_notes/0.2.0.md)
+* 0.2.1 - 2014-01-15 - [patches](release_notes/0.2.1.md)
+* 0.2.0 - 2014-01-14 - [features](release_notes/0.2.0.md)
 * 0.1.1 - 2014-01-09 - [patches](release_notes/0.1.1.md)
 * 0.1.0 - 2014-01-08 - [features](release_notes/0.1.0.md)
 * 0.0.3 - 2014-01-07 - [patches](release_notes/0.0.3.md)

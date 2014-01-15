@@ -4,7 +4,7 @@
     "backbone-amd": "~1.0.0",
     "jquery": "~2.0.3",
     "requirejs": "~2.1.8",
-    "lodash-amd": "*",
+    "lodash-amd": "~2.4.1",
     "rivets": "~0.6.5"
   },
   "devDependencies": {
