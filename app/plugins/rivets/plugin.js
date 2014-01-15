@@ -1,4 +1,4 @@
-define(['underscore', './view', './binders', './formatters'],
+define(['underscore', './adapter', './binders', './formatters'],
     function(_, rivetView, defaultBinders, defaultFormatters) {
         'use strict';
         return setViewRiveting;

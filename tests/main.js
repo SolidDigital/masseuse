@@ -56,7 +56,7 @@
         './models/masseuseModelTests',
         './models/computedPropertyTests',
         './models/proxyPropertyTests',
-        './plugins/rivets/mainTest',
+        './plugins/rivets/viewTest',
         './utilities/channelsTests',
         './utilities/deferMethodTests',
         './routers/masseuseRouterTests.js'
