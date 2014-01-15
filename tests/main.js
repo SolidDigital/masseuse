@@ -40,6 +40,10 @@
             {
                 name : 'masseuse',
                 location : '../app'
+            },
+            {
+                name : 'rivetsPlugin',
+                location : '../app/plugins/rivets'
             }
         ]
     });
@@ -52,6 +56,7 @@
         './models/masseuseModelTests',
         './models/computedPropertyTests',
         './models/proxyPropertyTests',
+        './plugins/rivets/mainTest',
         './utilities/channelsTests',
         './utilities/deferMethodTests',
         './routers/masseuseRouterTests.js'
