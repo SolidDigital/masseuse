@@ -80,7 +80,8 @@ module.exports = function (grunt) {
             files : [
                 'app/**/*.js',
                 'tests/**/*.js',
-                '!app/vendor/**/*.js'
+                '!app/vendor/**/*.js',
+                '!app/vendor2/**/*.js'
             ],
             options : {
                 jshintrc : '.jshintrc'
@@ -91,7 +92,12 @@ module.exports = function (grunt) {
             dist : {
                 src: ['README.md', 'app/**/*.js', '!app/vendor/**'],
                 options: {
-                    destination: 'docs'
+                    "destination" : "docs",
+                    "plugins": [ "plugins/markdown" ],
+                    "markdown": {
+                        "parser": "gfm",
+                        "hardwrap": true
+                    }
                 }
             }
         },

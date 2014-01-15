@@ -13,7 +13,7 @@ define([
         /**
          * @class A View that adds lifecycle methods to Views that are optionally async using jQuery promises.
          * Adds support for adding child Views
-         * @module views/BaseView
+         * @namespace BaseView
          * @type {*|extend|extend|extend|void|Object}
          */
         BaseView = Backbone.View.extend({
@@ -45,6 +45,10 @@ define([
 
     return BaseView;
 
+    /**
+     * @method initialize
+     * @memberof BaseView
+     * */
     function initialize (options) {
         var self = this;
 

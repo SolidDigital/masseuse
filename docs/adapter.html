@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: MasseuseModel</title>
+    <title>JSDoc: Namespace: adapter</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Namespace: MasseuseModel</h1>
+    <h1 class="page-title">Namespace: adapter</h1>
     
     
 
@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-    MasseuseModel
+    adapter
     </h2>
     
 </header>  
@@ -37,8 +37,6 @@
     
     
     
-        
-            <div class="description">`test`</div>
         
         
         
@@ -64,7 +62,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="masseuseModel.js.html">models/masseuseModel.js</a>, <a href="masseuseModel.js.html#line5">line 5</a>
+        <a href="adapter.js.html">plugins/rivets/adapter.js</a>, <a href="adapter.js.html#line10">line 10</a>
     </li></ul></dd>
     
     
@@ -80,12 +78,6 @@
     
     </div>
     
-    
-        <h3 class="subsection-title">Extends</h3>
-        
-        <ul>
-            <li>Backbone.Model</li>
-        </ul>
     
     
     
@@ -104,7 +96,7 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="toggleAttribute"><span class="type-signature">&lt;static> </span>toggleAttribute<span class="signature">(attribute)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getValue"><span class="type-signature"></span>getValue<span class="signature">(model, key, not_expand_collection_to_model)</span><span class="type-signature"> &rarr; {*}</span></h4>
     
     
 </dt>
@@ -142,7 +134,7 @@
 	
         <tr>
             
-                <td class="name"><code>attribute</code></td>
+                <td class="name"><code>model</code></td>
             
             
             <td class="type">
@@ -156,96 +148,6 @@
             <td class="description last"></td>
         </tr>
 	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="masseuseModel.js.html">models/masseuseModel.js</a>, <a href="masseuseModel.js.html#line28">line 28</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="_pushToComputedCallbacks"><span class="type-signature">&lt;private> </span>_pushToComputedCallbacks<span class="signature">(key, stack)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
 	
 	
         <tr>
@@ -268,7 +170,7 @@
 	
         <tr>
             
-                <td class="name"><code>stack</code></td>
+                <td class="name"><code>not_expand_collection_to_model</code></td>
             
             
             <td class="type">
@@ -310,371 +212,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="masseuseModel.js.html">models/masseuseModel.js</a>, <a href="masseuseModel.js.html#line216">line 216</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="bindComputed"><span class="type-signature"></span>bindComputed<span class="signature">(key, computed)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Attach a ComputedProperty to a model and setup listeners for it.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>computed</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="masseuseModel.js.html">models/masseuseModel.js</a>, <a href="masseuseModel.js.html#line148">line 148</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="bindProxy"><span class="type-signature"></span>bindProxy<span class="signature">(key, proxy)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>proxy</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="masseuseModel.js.html">models/masseuseModel.js</a>, <a href="masseuseModel.js.html#line171">line 171</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="get"><span class="type-signature"></span>get<span class="signature">(key)</span><span class="type-signature"> &rarr; {*}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="masseuseModel.js.html">models/masseuseModel.js</a>, <a href="masseuseModel.js.html#line39">line 39</a>
+        <a href="adapter.js.html">plugins/rivets/adapter.js</a>, <a href="adapter.js.html#line91">line 91</a>
     </li></ul></dd>
     
     
@@ -720,7 +258,7 @@
         
             
 <dt>
-    <h4 class="name" id="getListenableValues"><span class="type-signature"></span>getListenableValues<span class="signature">(listenables)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+    <h4 class="name" id="publish"><span class="type-signature"></span>publish<span class="signature">(obj, keypath, value)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -758,7 +296,43 @@
 	
         <tr>
             
-                <td class="name"><code>listenables</code></td>
+                <td class="name"><code>obj</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>keypath</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>value</code></td>
             
             
             <td class="type">
@@ -800,7 +374,133 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="masseuseModel.js.html">models/masseuseModel.js</a>, <a href="masseuseModel.js.html#line197">line 197</a>
+        <a href="adapter.js.html">plugins/rivets/adapter.js</a>, <a href="adapter.js.html#line174">line 174</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="read"><span class="type-signature"></span>read<span class="signature">(obj, keypath)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>obj</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>keypath</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adapter.js.html">plugins/rivets/adapter.js</a>, <a href="adapter.js.html#line140">line 140</a>
     </li></ul></dd>
     
     
@@ -832,7 +532,7 @@
 	</dt>
 	<dd>
 		
-<span class="param-type">Array</span>
+<span class="param-type">*</span>
 
 
 	</dd>
@@ -846,7 +546,7 @@
         
             
 <dt>
-    <h4 class="name" id="set"><span class="type-signature"></span>set<span class="signature">(key, val, options)</span><span class="type-signature"> &rarr; {set}</span></h4>
+    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe<span class="signature">(obj, keypath, callback)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -884,7 +584,7 @@
 	
         <tr>
             
-                <td class="name"><code>key</code></td>
+                <td class="name"><code>obj</code></td>
             
             
             <td class="type">
@@ -902,7 +602,7 @@
 	
         <tr>
             
-                <td class="name"><code>val</code></td>
+                <td class="name"><code>keypath</code></td>
             
             
             <td class="type">
@@ -920,7 +620,7 @@
 	
         <tr>
             
-                <td class="name"><code>options</code></td>
+                <td class="name"><code>callback</code></td>
             
             
             <td class="type">
@@ -962,7 +662,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="masseuseModel.js.html">models/masseuseModel.js</a>, <a href="masseuseModel.js.html#line65">line 65</a>
+        <a href="adapter.js.html">plugins/rivets/adapter.js</a>, <a href="adapter.js.html#line28">line 28</a>
     </li></ul></dd>
     
     
@@ -983,24 +683,276 @@
     
     
     
-    <h5>Returns:</h5>
     
-            
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">set</span>
-
-
-	</dd>
-</dl>
+    
+</dd>
 
         
+            
+<dt>
+    <h4 class="name" id="subscribe_nested"><span class="type-signature"></span>subscribe_nested<span class="signature">(parts, obj, callback)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>parts</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>obj</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adapter.js.html">plugins/rivets/adapter.js</a>, <a href="adapter.js.html#line44">line 44</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="unsubscribe"><span class="type-signature"></span>unsubscribe<span class="signature">(obj, keypath)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>obj</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>keypath</code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="adapter.js.html">plugins/rivets/adapter.js</a>, <a href="adapter.js.html#line122">line 122</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
     
     
 </dd>
@@ -1027,7 +979,7 @@
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Wed Jan 15 2014 12:25:31 GMT-0800 (PST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Wed Jan 15 2014 12:25:30 GMT-0800 (PST)
 </footer>
 
 <script> prettyPrint(); </script>
