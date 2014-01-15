@@ -107,6 +107,23 @@ module.exports = function (grunt) {
         },
 
         copy : {
+            bowerApp : {
+                files : [
+                    {
+                        expand : true,
+                        src: [
+                            'app/**',
+                            '!app/vendor/**',
+                            'tests/**',
+                            'LICENSE-MIT',
+                            'README.md',
+                            'bower.json',
+                            '.travis.yml'
+                        ],
+                        dest : 'build/'
+                    }
+                ]
+            },
             jsdoc : {
                 files : [
                     {
