@@ -1,6 +1,6 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=master)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-Version: _0.1.1_
+Version: _0.2.0_
 
 https://github.com/Solid-Interactive/masseuse
 
