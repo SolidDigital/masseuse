@@ -21,6 +21,8 @@ define(['underscore', 'jquery'], function (_, $) {
      * fit. its
      * promise will be returned by the final function attached to the object.
      *
+     * @namespace configureMethod
+     * @function
      * @param defaultOptions
      * @param configureItFunction
      * @returns {Function}

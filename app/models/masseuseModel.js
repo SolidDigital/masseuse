@@ -5,8 +5,10 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
         /**
          * A Backbone Model with Proxy and Computed Properties.
          * Proxy and Computed properties are tirggered directly and not via events for performance reasons.
+         * @description
+         * `test`
          * @constructor
-         * @alias module:MasseuseModel
+         * @namespace MasseuseModel
          * @extends Backbone.Model
          */
         return Backbone.Model.extend({
@@ -18,10 +20,21 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
             getListenableValues : getListenableValues
         });
 
+        /**
+         * @function
+         * @param attribute
+         * @memberof MasseuseModel
+         */
         function toggleAttribute(attribute) {
             this.set(attribute, !this.get(attribute));
         }
 
+        /**
+         * @function
+         * @memberof MasseuseModel
+         * @param key
+         * @returns {*}
+         */
         function get(key) {
             var propertyOn,
                 wholeObj,
@@ -39,6 +52,14 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
             return result;
         }
 
+        /**
+         * @function
+         * @memberof MasseuseModel
+         * @param key
+         * @param val
+         * @param options
+         * @returns {set}
+         */
         function set(key, val, options) {
             var self = this,
                 attrs = {},
@@ -115,6 +136,13 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
             }
         }
 
+        /**
+         * Attach a ComputedProperty to a model and setup listeners for it.
+         * @function
+         * @memberof MasseuseModel
+         * @param key
+         * @param computed
+         */
         function bindComputed(key, computed) {
             var self = this,
                 callback;
@@ -132,6 +160,12 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
             });
         }
 
+        /**
+         * @function
+         * @memberof MasseuseModel
+         * @param key
+         * @param proxy
+         */
         function bindProxy(key, proxy) {
             var self = this,
                 proxyModel = proxy.model,
@@ -152,6 +186,12 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
             });
         }
 
+        /**
+         * @function
+         * @memberof MasseuseModel
+         * @param listenables
+         * @returns {Array}
+         */
         function getListenableValues(listenables) {
             var args = [],
                 self = this;

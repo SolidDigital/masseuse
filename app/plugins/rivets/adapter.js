@@ -8,6 +8,10 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
          */
 
         // TODO: remove configureMethod, it is not really being used here
+
+        /**
+         * @namespace adapter
+         */
         return configureMethod({
             rivetScope : undefined,
             rivetPrefix : undefined,
