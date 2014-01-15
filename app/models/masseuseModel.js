@@ -1,5 +1,5 @@
-define(['backbone', './computedProperty', './proxyProperty', '../utilities/accessors', 'underscore'],
-    function (Backbone, ComputedProperty, ProxyProperty, accessors, _) {
+define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utilities/accessors', 'underscore'],
+    function (Backbone, $, ComputedProperty, ProxyProperty, accessors, _) {
         'use strict';
 
         /**
@@ -80,7 +80,9 @@ define(['backbone', './computedProperty', './proxyProperty', '../utilities/acces
                     propertyOn = key.slice(key.indexOf('.') + 1);
                     key = key.split('.')[0];
 
-                    wholeObj = this.get(key) || {};
+                    // Will do a deep clone if available (e.g. lodash - compat / modern - not underscore)
+                    wholeObj = {};
+                    $.extend(true, wholeObj, this.get(key) || {});
                     accessors.setProperty(wholeObj, propertyOn, val);
                     val = wholeObj;
                 }
@@ -132,19 +134,22 @@ define(['backbone', './computedProperty', './proxyProperty', '../utilities/acces
 
         function bindProxy(key, proxy) {
             var self = this,
-                model = proxy.model,
+                proxyModel = proxy.model,
                 modelAttribute = proxy.propertyNameOnModel;
 
-            this.set(key, model.get(modelAttribute));
+            this.set(key, proxyModel.get(modelAttribute));
 
-            model.on('change:' + modelAttribute, function () {
-                self.set(key, model.get(modelAttribute));
+            if(modelAttribute.indexOf('.') > 0 && _.isString(modelAttribute)) {
+                modelAttribute = modelAttribute.split('.')[0];
+            }
+
+            proxyModel.on('change:' + modelAttribute, function () {
+                self.set(key, proxyModel.get(proxy.propertyNameOnModel));
             });
 
             this.on('change:' + key, function () {
-                model.set(modelAttribute, self.get(key));
+                proxyModel.set(proxy.propertyNameOnModel, self.get(key));
             });
-
         }
 
         function getListenableValues(listenables) {

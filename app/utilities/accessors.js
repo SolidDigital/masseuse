@@ -39,7 +39,7 @@ define(function () {
             parts = parts.split('.');
         }
 
-        part = parts.shift();
+        part = parts.pop();
         obj = this.getProperty(obj, parts, true);
         if (obj && typeof obj === 'object') {
             obj[part] = value;
