@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: plugins/rivets/adapter.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: plugins/rivets/adapter.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/* jshint loopfunc:true, maxdepth:3 */
+define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
+    function ($, Rivets, configureMethod, Backbone, _) {
+        'use strict';
+
+        /**
+         * Adapter originally from https://gist.github.com/mogadanez/5728747
+         */
+
+        // TODO: remove configureMethod, it is not really being used here
+
+        /**
+         * @namespace adapter
+         */
+        return configureMethod({
+            rivetScope : undefined,
+            rivetPrefix : undefined,
+            instaUpdateRivets : false
+        }, function (config) {
+            Rivets.configure({
+                adapter : {
+                    subscribe : function (obj, keypath, callback) {
+                        var parts = [keypath],
+                            index = keypath.indexOf('.');
+                        if (index > -1) {
+                            parts = keypath.split('.');
+                        }
+                        this.subscribe_nested(parts, obj, callback);
+                    },
+
+                    subscribe_nested : function rivets_backbone_adapter_subscribe_nested (parts, obj, callback) {
+                        var keypath;
+                        if (!obj) {
+                            return;
+                        }
+                        while (parts.length > 0) {
+                            keypath = parts.shift();
+
+                            if (obj instanceof Backbone.Collection) {
+                                obj.on('add remove reset refresh', function (obj, keypath) {
+                                    callback(this.getValue(obj, keypath));
+                                }.bind(this, obj, keypath), this);
+                            } else {
+                                if (this.getValue(obj, keypath, true) instanceof Backbone.Collection) {
+                                    this.getValue(obj, keypath, true)
+                                        .on('add remove reset refresh', function (obj, keypath) {
+                                            callback(this.getValue(obj, keypath));
+                                        }.bind(this, obj, keypath), this);
+                                }
+                                if (obj.on) {
+                                    obj.on('change:' + keypath, function (tail_parts, key, m, v) {
+                                        callback(v);
+                                        if (tail_parts.length > 0) {
+                                            this.subscribe_nested(_.clone(tail_parts), this.getValue(m, key), callback);
+                                        }
+                                    }.bind(this, _.clone(parts), keypath));
+                                }
+                            }
+                            obj = this.getValue(obj, keypath);
+
+                            if (!obj) {
+                                break;
+                            }
+                            else {
+                                this.subscribe_nested(_.clone(parts), obj, callback);
+                            }
+                        }
+                    },
+
+                    getValue : function rivets_backbone_adapter_getValue (model, key, not_expand_collection_to_model) {
+
+                        if (model instanceof Backbone.Collection) {
+                            return key ? model[key] : model.models;
+                        }
+                        if (!key) {
+                            return model;
+                        }
+                        if (model instanceof Backbone.Model) {
+                            var res = model.get(key);
+                            if (typeof (res) == 'undefined') {
+                                res = model[key];
+                            }
+                            if (res instanceof Backbone.Collection) {
+                                return not_expand_collection_to_model ? res : res.models;
+                            }
+                            else {
+                                return res;
+                            }
+                        } else {
+                            return model[key];
+                        }
+
+                    },
+
+                    unsubscribe : function (obj, keypath) {
+                        if (typeof (obj) == 'undefined') {
+                            return;
+                        }
+                        if (obj instanceof Backbone.Collection) {
+                            obj.off('add remove reset refresh');
+                        } else if (obj.off) {
+                            obj.off('change:' + keypath);
+                        }
+                    },
+                    read : function (obj, keypath) {
+                        var args = keypath.split(' '),
+                            parts,
+                            index,
+                            result;
+
+                        if (args.length > 1) {
+                            return _.map(args, function (x) {
+                                return this.read(obj, x);
+                            }, this);
+                        }
+
+                        parts = [keypath];
+                        index = keypath.indexOf('.');
+                        if (index > -1) {
+                            parts = keypath.split('.');
+                        }
+                        result = obj;
+                        while (parts.length > 0) {
+                            keypath = parts.shift();
+                            result = this.getValue(result, keypath);
+                            if (typeof (result) == 'undefined' || result === null) {
+                                return result;
+                            }
+                        }
+                        return result;
+                    },
+                    publish : function (obj, keypath, value) {
+                        var parts = [keypath],
+                            index = keypath.indexOf('.'),
+                            result;
+
+                        if (index > -1) {
+                            parts = keypath.split('.');
+                        }
+                        result = obj;
+                        while (parts.length > 1) {
+                            keypath = parts.shift();
+                            result = this.getValue(result, keypath);
+                            if (!result) {
+                                return;
+                            }
+                        }
+                        keypath = parts.shift();
+                        if (result instanceof Backbone.Collection) {
+                            result[keypath] = value;
+                        }
+                        else if (result instanceof Backbone.Model) {
+                            result.set(keypath, value);
+                        }
+                        result[keypath] = value;
+
+                    }
+                },
+                prefix : config.rivetPrefix,
+                // preloadData: false
+
+                // This fires when you use data-rv-on-click.
+                handler : function(context, ev, binding) {
+                    this.call(binding.model, ev, binding.view.models);
+                }
+            });
+            // Rivets works off of listening to the change event, which doesn't happen on inputs until loss of focus
+            // Work around that if desired
+            if (config.instaUpdateRivets) {
+                this.elementCache(config.rivetScope + ' input').on('keypress paste textInput input', function () {
+                    $(this).trigger('change');
+                });
+            }
+
+            Rivets.config.templateDelimiters = ['{{', '}}'];
+
+            _.extend(Rivets.formatters, config.rivetFormatters);
+            _.extend(Rivets.binders, config.rivetBinders);
+
+
+            // bind data to rivets values.
+            return Rivets.bind(this.$el, {data : this.model, view : this});
+
+        }).methodWithDefaultOptions;
+    });</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="MasseuseRouter.html">routers/MasseuseRouter</a></li><li><a href="Channels.html">utilities/Channels</a></li><li><a href="getProperty.html">utilities/getProperty</a></li><li><a href="lifeCycle.html">views/lifeCycle</a></li><li><a href="ViewContext.html">views/ViewContext</a></li></ul><h3>Classes</h3><ul><li><a href="ComputedProperty.html">ComputedProperty</a></li><li><a href="module-masseuse.html">module:masseuse</a></li></ul><h3>Namespaces</h3><ul><li><a href="adapter.html">adapter</a></li><li><a href="BaseView.html">BaseView</a></li><li><a href="binders.html">binders</a></li><li><a href="MasseuseModel.html">MasseuseModel</a></li><li><a href="ProxyProperty.html">ProxyProperty</a></li></ul><h3>Global</h3><ul><li><a href="global.html#configureMethod">configureMethod</a></li><li><a href="global.html#plugin">plugin</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Jan 14 2014 19:27:10 GMT-0800 (PST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
