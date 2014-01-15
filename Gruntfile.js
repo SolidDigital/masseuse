@@ -80,7 +80,8 @@ module.exports = function (grunt) {
             files : [
                 'app/**/*.js',
                 'tests/**/*.js',
-                '!app/vendor/**/*.js'
+                '!app/vendor/**/*.js',
+                '!app/vendor2/**/*.js'
             ],
             options : {
                 jshintrc : '.jshintrc'
