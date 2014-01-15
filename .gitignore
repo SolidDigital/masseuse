@@ -1,0 +1,7 @@
+.idea
+.DS_Store
+desktop.ini
+*node_modules*
+*npm-debug*
+build
+app/vendor
