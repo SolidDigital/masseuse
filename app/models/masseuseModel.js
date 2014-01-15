@@ -1,5 +1,5 @@
-define(['backbone', './computedProperty', './proxyProperty', 'underscore'],
-    function (Backbone, ComputedProperty, ProxyProperty, _) {
+define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utilities/accessors', 'underscore'],
+    function (Backbone, $, ComputedProperty, ProxyProperty, accessors, _) {
         'use strict';
 
         /**
@@ -10,115 +10,158 @@ define(['backbone', './computedProperty', './proxyProperty', 'underscore'],
          * @extends Backbone.Model
          */
         return Backbone.Model.extend({
-            toggleAttribute : function (attribute) {
-                this.set(attribute, !this.get(attribute));
-            },
-            set : function (key, val, options) {
-                var self = this,
-                    attrs = {},
-                    stack = [],
-                    delayInitial = [],
-                    callSelf = false;
-
-                this.computedCallbacks = this.computedCallbacks || {};
-                if (key === null) {
-                    return this;
-                } else if (typeof key == 'object') {
-                    attrs = key;
-                    options = val;
-
-                    _.each(key, function (attrValue, attrKey) {
-                        if (attrValue instanceof ComputedProperty) {
-                            if (!attrValue.skipInitialComputation) {
-                                self.bindComputed(attrKey, attrValue);
-                                callSelf = true;
-                            } else {
-                                delayInitial.push(function () {
-                                    self.bindComputed(attrKey, attrValue);
-                                });
-                            }
-                            delete attrs[attrKey];
-                        } else if (attrValue instanceof ProxyProperty) {
-                            self.bindProxy(attrKey, attrValue);
-                            delete attrs[attrKey];
-                        } else {
-                            if (self.computedCallbacks[attrKey]) {
-                                stack.push(self.computedCallbacks[attrKey]);
-                            }
-                        }
-                    });
-                } else {
-                    attrs[key] = val;
-                    if (val instanceof ComputedProperty) {
-                        this.bindComputed(key, val);
-                        return;
-                    } else if (val instanceof ProxyProperty) {
-                        this.bindProxy(key, val);
-                        return;
-                    } else {
-                        _pushToComputedCallbacks.call(this, key, stack);
-                    }
-                }
-
-                if (callSelf) {
-                    this.set.apply(this, [attrs, options]);
-                } else {
-                    Backbone.Model.prototype.set.apply(this, [attrs, options]);
-                    _.forEach(stack, function (callbackArray) {
-                        _.forEach(callbackArray, function (callback) {
-                            callback.call(self);
-                        });
-                    });
-                }
-                if (delayInitial) {
-                    _.forEach(delayInitial, function (cb) {
-                        cb();
-                    });
-                }
-            },
-            bindComputed : function (key, computed) {
-                var self = this,
-                    callback;
-
-                callback = function () {
-                    this.set(key, computed.callback.apply(this, this.getListenableValues(computed.listenables)));
-                };
-
-                _.forEach(computed.listenables, function (listenTo) {
-                    self.computedCallbacks[listenTo] = self.computedCallbacks[listenTo] || [];
-                    self.computedCallbacks[listenTo].push(callback);
-                    if (!computed.skipInitialComputation) {
-                        callback.call(self);
-                    }
-                });
-            },
-            bindProxy : function (key, proxy) {
-                var self = this,
-                    model = proxy.model,
-                    modelAttribute = proxy.propertyNameOnModel;
-
-                this.set(key, model.get(modelAttribute));
-
-                model.on('change:' + modelAttribute, function () {
-                    self.set(key, model.get(modelAttribute));
-                });
-
-                this.on('change:' + key, function () {
-                    model.set(modelAttribute, self.get(key));
-                });
-
-            },
-            getListenableValues : function (listenables) {
-                var args = [],
-                    self = this;
-
-                _.each(listenables, function (listenablePropertyKey) {
-                    args.push(self.get(listenablePropertyKey));
-                });
-
-                return args;
-            }
+            toggleAttribute : toggleAttribute,
+            get : get,
+            set : set,
+            bindComputed : bindComputed,
+            bindProxy : bindProxy,
+            getListenableValues : getListenableValues
         });
+
+        function toggleAttribute(attribute) {
+            this.set(attribute, !this.get(attribute));
+        }
+
+        function get(key) {
+            var propertyOn,
+                wholeObj,
+                result;
+
+            if(key.indexOf('.') > 0 && _.isString(key)) {
+                propertyOn = key.slice(key.indexOf('.') + 1);
+                key = key.split('.')[0];
+                wholeObj = Backbone.Model.prototype.get.call(this, key);
+                result = accessors.getProperty(wholeObj, propertyOn);
+            } else {
+                result = Backbone.Model.prototype.get.apply(this, arguments);
+            }
+
+            return result;
+        }
+
+        function set(key, val, options) {
+            var self = this,
+                attrs = {},
+                stack = [],
+                delayInitial = [],
+                callSelf = false,
+                propertyOn,
+                wholeObj;
+
+            this.computedCallbacks = this.computedCallbacks || {};
+            if (key === null) {
+                return this;
+            } else if (typeof key == 'object') {
+                attrs = key;
+                options = val;
+
+                _.each(key, function (attrValue, attrKey) {
+                    if (attrValue instanceof ComputedProperty) {
+                        if (!attrValue.skipInitialComputation) {
+                            self.bindComputed(attrKey, attrValue);
+                            callSelf = true;
+                        } else {
+                            delayInitial.push(function () {
+                                self.bindComputed(attrKey, attrValue);
+                            });
+                        }
+                        delete attrs[attrKey];
+                    } else if (attrValue instanceof ProxyProperty) {
+                        self.bindProxy(attrKey, attrValue);
+                        delete attrs[attrKey];
+                    } else {
+                        if (self.computedCallbacks[attrKey]) {
+                            stack.push(self.computedCallbacks[attrKey]);
+                        }
+                    }
+                });
+            } else {
+                if (key.indexOf('.') > 0 && _.isString(key)) {
+                    propertyOn = key.slice(key.indexOf('.') + 1);
+                    key = key.split('.')[0];
+
+                    // Will do a deep clone if available (e.g. lodash - compat / modern - not underscore)
+                    wholeObj = {};
+                    $.extend(true, wholeObj, this.get(key) || {});
+                    accessors.setProperty(wholeObj, propertyOn, val);
+                    val = wholeObj;
+                }
+                attrs[key] = val;
+                if (val instanceof ComputedProperty) {
+                    this.bindComputed(key, val);
+                    return;
+                } else if (val instanceof ProxyProperty) {
+                    this.bindProxy(key, val);
+                    return;
+                } else {
+                    _pushToComputedCallbacks.call(this, key, stack);
+                }
+            }
+
+            if (callSelf) {
+                this.set.apply(this, [attrs, options]);
+            } else {
+                Backbone.Model.prototype.set.apply(this, [attrs, options]);
+                _.forEach(stack, function (callbackArray) {
+                    _.forEach(callbackArray, function (callback) {
+                        callback.call(self);
+                    });
+                });
+            }
+            if (delayInitial) {
+                _.forEach(delayInitial, function (cb) {
+                    cb();
+                });
+            }
+        }
+
+        function bindComputed(key, computed) {
+            var self = this,
+                callback;
+
+            callback = function () {
+                this.set(key, computed.callback.apply(this, this.getListenableValues(computed.listenables)));
+            };
+
+            _.forEach(computed.listenables, function (listenTo) {
+                self.computedCallbacks[listenTo] = self.computedCallbacks[listenTo] || [];
+                self.computedCallbacks[listenTo].push(callback);
+                if (!computed.skipInitialComputation) {
+                    callback.call(self);
+                }
+            });
+        }
+
+        function bindProxy(key, proxy) {
+            var self = this,
+                proxyModel = proxy.model,
+                modelAttribute = proxy.propertyNameOnModel;
+
+            this.set(key, proxyModel.get(modelAttribute));
+
+            if(modelAttribute.indexOf('.') > 0 && _.isString(modelAttribute)) {
+                modelAttribute = modelAttribute.split('.')[0];
+            }
+
+            proxyModel.on('change:' + modelAttribute, function () {
+                self.set(key, proxyModel.get(proxy.propertyNameOnModel));
+            });
+
+            this.on('change:' + key, function () {
+                proxyModel.set(proxy.propertyNameOnModel, self.get(key));
+            });
+        }
+
+        function getListenableValues(listenables) {
+            var args = [],
+                self = this;
+
+            _.each(listenables, function (listenablePropertyKey) {
+                args.push(self.get(listenablePropertyKey));
+            });
+
+            return args;
+        }
 
         function _pushToComputedCallbacks (key, stack) {
             if (this.computedCallbacks[key]) {

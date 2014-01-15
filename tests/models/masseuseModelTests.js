@@ -1,5 +1,5 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy'],
-    function (_, chai, Squire, mocha, sinon, sinonChai) {
+define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'backbone', 'sinonSpy'],
+    function (_, chai, Squire, mocha, sinon, sinonChai, Backbone) {
 
         'use strict';
         var injector = new Squire(),
@@ -86,6 +86,38 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy
                     }, {silent : true});
 
                     listenerFired.should.be.false;
+                });
+            });
+
+            describe('set method (setting nested fields)', function() {
+                it('should set a nested field on a model', function() {
+                    modelInstance.set('nestedProperty.subProperty', 'JohnyDeepNested');
+                    modelInstance.get('nestedProperty').subProperty.should.equal('JohnyDeepNested');
+                });
+
+                it('should fire a change event on the top level property when setting a nested attribute', function() {
+                    var listener = _.extend({}, Backbone.Events),
+                        callback = sinon.spy();
+
+                    modelInstance.set('nestedName.name', 'PapaEmeritus');
+
+                    listener.listenTo(modelInstance, 'change:nestedName', callback);
+
+                    modelInstance.set('nestedName.name', 'PopeGandolfi');
+
+                    callback.should.have.been.calledOnce;
+                });
+            });
+
+            describe('get method (getting nested fields)', function() {
+                it('should get a nested field on a model', function() {
+                    modelInstance.set('nestedProperty', {subProperty: 'JohnnyDeepNested'});
+                    modelInstance.get('nestedProperty.subProperty').should.equal('JohnnyDeepNested');
+                });
+
+                it('should return undefined if that property does not exist', function() {
+                    modelInstance.set('nestedProperty', {});
+                    should.equal(modelInstance.get('nestedProperty.subProperty'), undefined);
                 });
             });
         });

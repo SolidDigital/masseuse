@@ -1,10 +1,13 @@
 define(function () {
 
     'use strict';
-    return getProperty;
+    return {
+        getProperty : getProperty,
+        setProperty : setProperty
+    };
 
     /**
-     * Get properties from a passed in object bassed on a string descriptor of the desired field.
+     * Get properties from a passed in object based on a string descriptor of the desired field.
      * @module utilities/getProperty
      * @param obj
      * @param parts
@@ -28,4 +31,20 @@ define(function () {
 
         return obj;
     }
+
+    function setProperty (obj, parts, value) {
+        var part;
+
+        if (typeof parts === 'string') {
+            parts = parts.split('.');
+        }
+
+        part = parts.pop();
+        obj = this.getProperty(obj, parts, true);
+        if (obj && typeof obj === 'object') {
+            obj[part] = value;
+            return obj;
+        }
+    }
+
 });
