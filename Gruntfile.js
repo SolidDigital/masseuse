@@ -107,7 +107,7 @@ module.exports = function (grunt) {
         },
 
         copy : {
-            bowerApp : {
+            bower : {
                 files : [
                     {
                         expand : true,
@@ -188,7 +188,10 @@ module.exports = function (grunt) {
         'jshint', 'shell:bower', 'shell:testPhantom'
     ]);
     grunt.registerTask('deployDocs', 'Deploy to gh-pages', [
-        'clean:build', 'jshint', 'shell:bower', 'copy:jsdoc', 'copy:app', 'copy:tests', 'build_gh_pages:jsdoc', 'shell:bower'
+        'clean:build', 'jshint', 'shell:bower', 'copy:jsdoc',
+        'copy:app', 'copy:tests', 'build_gh_pages:jsdoc', 'shell:bower'
     ]);
-
+    grunt.registerTask('deployBower', 'Deploy to bower', [
+        'clean:build', 'copy:bower', 'build_gh_pages:bower', 'shell:bower'
+    ]);
 };
