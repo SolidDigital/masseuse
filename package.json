@@ -1,6 +1,6 @@
 {
   "name": "masseuse",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A Backbone helper library with a View lifecycle, View configs, child Views, Proxy and Computed Properties, and a custom Router with beforeRouting support",
   "main": " ",
   "scripts": {
