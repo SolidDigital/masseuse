@@ -1,8 +1,8 @@
 /*global define:false*/
 define([
     'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', './lifeCycle',
-    '../utilities/accessors'
-], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors) {
+    '../utilities/accessors', '../utilities/configFactory'
+], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, ConfigFactory) {
     'use strict';
 
     var viewOptions = ['name', 'appendView'],
@@ -52,17 +52,18 @@ define([
     function initialize (options) {
         var self = this;
 
+        //don't use 'new' keyword here or it won't be able to return an undefined value
+        options = ConfigFactory(options, this.defaultConfig);
+
         this.elementCache = _.memoize(elementCache);
 
         if(options) {
-            options = _.clone(options, true);
             this.initialEl = options.el;
             if (options.viewOptions) {
                 viewOptions = viewOptions.concat(options.viewOptions);
             }
             _.extend(this, _.pick(options, viewOptions));
         }
-
 
         _setTemplate.call(this, options);
         _setModel.call(this, options);
