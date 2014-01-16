@@ -6,7 +6,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
         var testDom = 'testDom',
             riveted = 'riveted',
             $body = $('body'),
-            template = '<div id="' + riveted + '">{{data.title}}</div>',
             RivetView = rivetsPlugin.view;
 
         chai.use(sinonChai);
@@ -27,19 +26,157 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                 $('#' + testDom).length.should.equal(1);
             });
 
-            it('test dom is riveted', function(done) {
-                var options = {
-                    el : '#' + testDom,
-                    templateHtml : template,
-                    modelData : {
-                        title : 'There it is.'
-                    }
-                };
 
-                new RivetView(options).start().done(function() {
-                    $('#' + riveted).html().should.equal('There it is.');
-                    done();
+            describe('riveting', function() {
+                describe('templating', function() {
+                    var options,
+                        rivetView,
+                        template = '<div id="' + riveted + '">{{data.title}}</div>';
+
+                    beforeEach(function() {
+                        options = {
+                            el : '#' + testDom,
+                            templateHtml : template,
+                            modelData : {
+                                title : 'There it is.'
+                            }
+                        };
+                        rivetView = new RivetView(options);
+                    });
+                    it('test dom is riveted with initial data', function(done) {
+                        rivetView.start().done(function() {
+                            $('#' + riveted).html().should.equal('There it is.');
+                            done();
+                        });
+                    });
+
+                    it('test dom is riveted when data changes', function(done) {
+                        rivetView.start().done(function() {
+                            rivetView.model.set('title', 'New Title');
+                            $('#' + riveted).html().should.equal('New Title');
+                            done();
+                        });
+                    });
                 });
+
+                describe('iteration array', function() {
+                    var options,
+                        rivetView,
+                        iterationTemplate = '<ul id="' + riveted + '"><li data-rv-each-item="data.items"></li></ul>';
+
+
+                    beforeEach(function() {
+                        options = {
+                            el : '#' + testDom,
+                            templateHtml : iterationTemplate,
+                            modelData : {
+                                items : [
+                                    'Mike',
+                                    'Peter',
+                                    'Nate',
+                                    'John',
+                                    'Alex',
+                                    'Greg',
+                                    'Adam',
+                                    'Travis',
+                                    'Cooper'
+                                ]
+                            }
+                        };
+                        rivetView = new RivetView(options);
+                    });
+                    it('should iterate over a array when initialized', function(done) {
+                        rivetView.start().done(function() {
+                            $('#' + riveted).children().length.should.equal(9);
+                            done();
+                        });
+                    });
+
+                    it('should re-rivet the iterated items when changed', function(done) {
+                        rivetView.start().done(function() {
+                            rivetView.model.set('items', [
+                                'Mike'
+                            ]);
+
+                            $('#' + riveted).children().length.should.equal(1);
+                            done();
+                        });
+                    });
+                });
+
+                describe('iteration array of objects', function() {
+                    var options,
+                        rivetView,
+                        iterationTemplate = '<ul id="' + riveted + '">' +
+                                                '<li data-rv-each-item="data.items" ' +
+                                                'data-rv-id="item.id" ' +
+                                                'data-rv-text="item.text" ' +
+                                                'data-rv-href="item.href"></li>' +
+                                            '</ul>';
+
+
+                    beforeEach(function() {
+                        options = {
+                            el : '#' + testDom,
+                            templateHtml : iterationTemplate,
+                            modelData : {
+                                items : [
+                                    {
+                                        id: 'lozeng',
+                                        text: 'Jibba Jabba',
+                                        href: 'www.google.com'
+                                    },
+                                    {
+                                        id: 'DarkTimes',
+                                        text: 'Skippy Peanut Butter',
+                                        href: 'www.ghengisKahn.com'
+                                    }
+                                ]
+                            }
+                        };
+                        rivetView = new RivetView(options);
+                    });
+                    it('should iterate over a array of objects when initialized', function(done) {
+                        rivetView.start().done(function() {
+                            var $riveted = $('#' + riveted);
+                            $riveted.children().length.should.equal(2);
+
+                            $riveted.children().eq(0).attr('id').should.equal('lozeng');
+                            $riveted.children().eq(1).attr('id').should.equal('DarkTimes');
+
+                            $riveted.children().eq(0).attr('href').should.equal('www.google.com');
+                            $riveted.children().eq(1).attr('href').should.equal('www.ghengisKahn.com');
+
+                            done();
+                        });
+                    });
+
+                    it('should re-rivet the iterated array of objects when changed', function(done) {
+                        rivetView.start().done(function() {
+                            rivetView.model.set('items', [
+                                {
+                                    id: 'lozeng',
+                                    text: 'Jibba Jabba',
+                                    href: 'www.zipzapzoop.com'
+                                },
+                                {
+                                    id: 'DarkTimes',
+                                    text: 'Skippy Peanut Butter',
+                                    href: 'www.fellowsMonitorStands.com'
+                                }
+                            ]);
+
+                            var $riveted = $('#' + riveted);
+
+                            $riveted.children().eq(0).attr('href').should.equal('www.zipzapzoop.com');
+                            $riveted.children().eq(1).attr('href').should.equal('www.fellowsMonitorStands.com');
+
+                            done();
+                        });
+                    });
+                });
+
             });
+
         });
     });
