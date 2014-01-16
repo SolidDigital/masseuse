@@ -192,7 +192,6 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                         result[keypath] = value;
                     }
                     else if (result instanceof Backbone.Model) {
-                        debugger;
                         result.set(keypath, value);
                     }
                     result[keypath] = value;
