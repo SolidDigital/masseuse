@@ -119,7 +119,8 @@ module.exports = function (grunt) {
                             'README.md',
                             'bower.json',
                             '.travis.yml',
-                            'package.json'
+                            'package.json',
+                            'Gruntfile.js'
                         ],
                         dest : 'build/'
                     }
