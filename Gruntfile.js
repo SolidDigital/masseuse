@@ -118,7 +118,8 @@ module.exports = function (grunt) {
                             'LICENSE-MIT',
                             'README.md',
                             'bower.json',
-                            '.travis.yml'
+                            '.travis.yml',
+                            'package.json'
                         ],
                         dest : 'build/'
                     }
