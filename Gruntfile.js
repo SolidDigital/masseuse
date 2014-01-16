@@ -120,7 +120,9 @@ module.exports = function (grunt) {
                             'bower.json',
                             '.travis.yml',
                             'package.json',
-                            'Gruntfile.js'
+                            'Gruntfile.js',
+                            '.jshintrc',
+                            '.bowerrc'
                         ],
                         dest : 'build/'
                     }
