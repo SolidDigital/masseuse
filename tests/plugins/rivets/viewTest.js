@@ -28,9 +28,14 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
 
 
             describe('riveting', function() {
+                var rivetView;
+                afterEach(function() {
+                    if (rivetView) {
+                        rivetView.remove();
+                    }
+                });
                 describe('templating', function() {
                     var options,
-                        rivetView,
                         template = '<div id="' + riveted + '">{{data:title}}</div>';
 
                     beforeEach(function() {
@@ -42,11 +47,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                             }
                         };
                         rivetView = new RivetView(options);
-                    });
-                    afterEach(function() {
-                        if (rivetView) {
-                            rivetView.remove();
-                        }
                     });
                     it('test dom is riveted with initial data', function(done) {
                         rivetView.start().done(function() {
@@ -62,8 +62,33 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                             done();
                         });
                     });
+                    describe('nested fields', function() {
+                        beforeEach(function() {
+                            if (rivetView) {
+                                rivetView.remove();
+                            }
+                            options = {
+                                el : '#' + testDom,
+                                templateHtml : '<div id="' + riveted + '">{{data:movie_title}}</div>',
+                                modelData : {
+                                    movie : {
+                                        title : 'A the an.'
+                                    }
+                                }
+                            };
+                            rivetView = new RivetView(options);
+                        });
+                        it('test dom is riveted with nested data', function(done) {
+                            rivetView.start().done(function() {
+                                $('#' + riveted).html().should.equal('There it is.');
+                                done();
+                            });
+                        });
+                    });
+                });
 
-                    describe('attribute binding primitives', function() {
+                describe('attribute binding', function() {
+                    describe('primitives', function() {
                         var attributeOptions;
 
                         beforeEach(function() {
@@ -82,6 +107,14 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                 done();
                             });
                         });
+                        it('model is riveted to test dom', function(done) {
+                            rivetView.start().done(function() {
+                                var $riveted = $('#' + riveted);
+                                $riveted.attr('href', '#');
+                                $riveted.attr('href').should.equal('#');
+                                done();
+                            });
+                        });
                         it('test dom is riveted when attribute binder changes', function(done) {
                             rivetView.start().done(function() {
                                 rivetView.model.set('href', 'http://www.yada.org');
@@ -91,7 +124,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         });
                     });
 
-                    describe('attribute binding arrays', function() {
+                    describe('arrays', function() {
                         var attributeOptions;
 
                         beforeEach(function() {
@@ -121,124 +154,124 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                     });
                 });
 
-                describe('iteration array', function() {
-                    var options,
-                        rivetView,
-                        iterationTemplate = '<ul id="' + riveted + '"><li data-rv-each-item="data:items"></li></ul>';
+                describe('iteration', function() {
+                    describe('array', function() {
+                        var options,
+                            rivetView,
+                            iterationTemplate = '<ul id="' + riveted + '"><li data-rv-each-item="data:items"></li></ul>';
 
 
-                    beforeEach(function() {
-                        options = {
-                            el : '#' + testDom,
-                            templateHtml : iterationTemplate,
-                            modelData : {
-                                items : [
-                                    'Mike',
-                                    'Peter',
-                                    'Nate',
-                                    'John',
-                                    'Alex',
-                                    'Greg',
-                                    'Adam',
-                                    'Travis',
-                                    'Cooper'
-                                ]
-                            }
-                        };
-                        rivetView = new RivetView(options);
-                    });
-                    it('should iterate over a array when initialized', function(done) {
-                        rivetView.start().done(function() {
-                            $('#' + riveted).children().length.should.equal(9);
-                            done();
+                        beforeEach(function() {
+                            options = {
+                                el : '#' + testDom,
+                                templateHtml : iterationTemplate,
+                                modelData : {
+                                    items : [
+                                        'Mike',
+                                        'Peter',
+                                        'Nate',
+                                        'John',
+                                        'Alex',
+                                        'Greg',
+                                        'Adam',
+                                        'Travis',
+                                        'Cooper'
+                                    ]
+                                }
+                            };
+                            rivetView = new RivetView(options);
+                        });
+                        it('should iterate over a array when initialized', function(done) {
+                            rivetView.start().done(function() {
+                                $('#' + riveted).children().length.should.equal(9);
+                                done();
+                            });
+                        });
+
+                        it('should re-rivet the iterated items when changed', function(done) {
+                            rivetView.start().done(function() {
+                                rivetView.model.set('items', [
+                                    'Mike'
+                                ]);
+
+                                $('#' + riveted).children().length.should.equal(1);
+                                done();
+                            });
                         });
                     });
 
-                    it('should re-rivet the iterated items when changed', function(done) {
-                        rivetView.start().done(function() {
-                            rivetView.model.set('items', [
-                                'Mike'
-                            ]);
+                    describe('array of objects', function() {
+                        var options,
+                            rivetView,
+                            iterationTemplate = '<ul id="' + riveted + '">' +
+                                '<li data-rv-each-item="data:items" ' +
+                                'data-rv-id="item.id" ' +
+                                'data-rv-text="item.text" ' +
+                                'data-rv-href="item.href"></li>' +
+                                '</ul>';
 
-                            $('#' + riveted).children().length.should.equal(1);
-                            done();
+
+                        beforeEach(function() {
+                            options = {
+                                el : '#' + testDom,
+                                templateHtml : iterationTemplate,
+                                modelData : {
+                                    items : [
+                                        {
+                                            id: 'lozeng',
+                                            text: 'Jibba Jabba',
+                                            href: 'www.google.com'
+                                        },
+                                        {
+                                            id: 'DarkTimes',
+                                            text: 'Skippy Peanut Butter',
+                                            href: 'www.ghengisKahn.com'
+                                        }
+                                    ]
+                                }
+                            };
+                            rivetView = new RivetView(options);
                         });
-                    });
-                });
+                        it('should iterate over a array of objects when initialized', function(done) {
+                            rivetView.start().done(function() {
+                                var $riveted = $('#' + riveted);
+                                $riveted.children().length.should.equal(2);
 
-                describe('iteration array of objects', function() {
-                    var options,
-                        rivetView,
-                        iterationTemplate = '<ul id="' + riveted + '">' +
-                                                '<li data-rv-each-item="data:items" ' +
-                                                'data-rv-id="item.id" ' +
-                                                'data-rv-text="item.text" ' +
-                                                'data-rv-href="item.href"></li>' +
-                                            '</ul>';
+                                $riveted.children().eq(0).attr('id').should.equal('lozeng');
+                                $riveted.children().eq(1).attr('id').should.equal('DarkTimes');
 
+                                $riveted.children().eq(0).attr('href').should.equal('www.google.com');
+                                $riveted.children().eq(1).attr('href').should.equal('www.ghengisKahn.com');
 
-                    beforeEach(function() {
-                        options = {
-                            el : '#' + testDom,
-                            templateHtml : iterationTemplate,
-                            modelData : {
-                                items : [
+                                done();
+                            });
+                        });
+
+                        it('should re-rivet the iterated array of objects when changed', function(done) {
+                            rivetView.start().done(function() {
+                                rivetView.model.set('items', [
                                     {
                                         id: 'lozeng',
                                         text: 'Jibba Jabba',
-                                        href: 'www.google.com'
+                                        href: 'www.zipzapzoop.com'
                                     },
                                     {
                                         id: 'DarkTimes',
                                         text: 'Skippy Peanut Butter',
-                                        href: 'www.ghengisKahn.com'
+                                        href: 'www.fellowsMonitorStands.com'
                                     }
-                                ]
-                            }
-                        };
-                        rivetView = new RivetView(options);
-                    });
-                    it('should iterate over a array of objects when initialized', function(done) {
-                        rivetView.start().done(function() {
-                            var $riveted = $('#' + riveted);
-                            $riveted.children().length.should.equal(2);
+                                ]);
 
-                            $riveted.children().eq(0).attr('id').should.equal('lozeng');
-                            $riveted.children().eq(1).attr('id').should.equal('DarkTimes');
+                                var $riveted = $('#' + riveted);
 
-                            $riveted.children().eq(0).attr('href').should.equal('www.google.com');
-                            $riveted.children().eq(1).attr('href').should.equal('www.ghengisKahn.com');
+                                $riveted.children().eq(0).attr('href').should.equal('www.zipzapzoop.com');
+                                $riveted.children().eq(1).attr('href').should.equal('www.fellowsMonitorStands.com');
 
-                            done();
-                        });
-                    });
-
-                    it('should re-rivet the iterated array of objects when changed', function(done) {
-                        rivetView.start().done(function() {
-                            rivetView.model.set('items', [
-                                {
-                                    id: 'lozeng',
-                                    text: 'Jibba Jabba',
-                                    href: 'www.zipzapzoop.com'
-                                },
-                                {
-                                    id: 'DarkTimes',
-                                    text: 'Skippy Peanut Butter',
-                                    href: 'www.fellowsMonitorStands.com'
-                                }
-                            ]);
-
-                            var $riveted = $('#' + riveted);
-
-                            $riveted.children().eq(0).attr('href').should.equal('www.zipzapzoop.com');
-                            $riveted.children().eq(1).attr('href').should.equal('www.fellowsMonitorStands.com');
-
-                            done();
+                                done();
+                            });
                         });
                     });
                 });
-
             });
-
         });
     });

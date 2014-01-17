@@ -28,11 +28,11 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                 subscribe : function (model, keypath, callback) {
                     if (model instanceof Backbone.Collection) {
                         model.on('add remove reset refresh', function (obj, keypath) {
-                            callback(obj.get(keypath));
+                            callback(obj.get(keypath.replace(/_/g,'.')));
                         });
                     } else if (model instanceof Backbone.Model) {
                         console.log(keypath);
-                        model.on('change:' + keypath, function (key, m, v) {
+                        model.on('change:' + keypath.replace(/_/g,'.'), function (key, m, v) {
                             console.log(arguments);
                             callback(v);
                         });
@@ -52,7 +52,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                     if (model instanceof Backbone.Collection) {
                         model.off('add remove reset refresh');
                     } else if (model.off) {
-                        model.off('change:' + keypath);
+                        model.off('change:' + keypath.replace(/_/g,'.'));
                     }
                 },
 
@@ -64,7 +64,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                  * @returns {*}
                  */
                 read : function (model, keypath) {
-                    return model.get(keypath);
+                    return model.get(keypath.replace(/_/g,'.'));
                 },
                 /**
                  * @memberof adapter
@@ -75,9 +75,9 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                  */
                 publish : function (model, keypath, value) {
                     if (model instanceof Backbone.Collection) {
-                        model[keypath] = value;
+                        model[keypath.replace(/_/g,'.')] = value;
                     } else if (result instanceof Backbone.Model) {
-                        model.set(keypath, value);
+                        model.set(keypath.replace(/_/g,'.'), value);
                     }
                 }
             };
