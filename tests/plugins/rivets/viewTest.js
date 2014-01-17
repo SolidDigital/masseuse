@@ -124,7 +124,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                 describe('iteration array', function() {
                     var options,
                         rivetView,
-                        iterationTemplate = '<ul id="' + riveted + '"><li data-rv-each-item="data.items"></li></ul>';
+                        iterationTemplate = '<ul id="' + riveted + '"><li data-rv-each-item="data:items"></li></ul>';
 
 
                     beforeEach(function() {
@@ -170,7 +170,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                     var options,
                         rivetView,
                         iterationTemplate = '<ul id="' + riveted + '">' +
-                                                '<li data-rv-each-item="data.items" ' +
+                                                '<li data-rv-each-item="data:items" ' +
                                                 'data-rv-id="item.id" ' +
                                                 'data-rv-text="item.text" ' +
                                                 'data-rv-href="item.href"></li>' +
