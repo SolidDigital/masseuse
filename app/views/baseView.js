@@ -1,8 +1,8 @@
 /*global define:false*/
 define([
     'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', './lifeCycle',
-    '../utilities/accessors', '../utilities/configFactory'
-], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, ConfigFactory) {
+    '../utilities/accessors', '../utilities/optionsFactory'
+], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, OptionsFactory) {
     'use strict';
 
     var viewOptions = ['name', 'appendView'],
@@ -53,7 +53,7 @@ define([
         var self = this;
 
         //don't use 'new' keyword here or it won't be able to return an undefined value
-        options = ConfigFactory(options, this.defaultConfig);
+        options = OptionsFactory(options, this.defaultOptions);
 
         this.elementCache = _.memoize(elementCache);
 
