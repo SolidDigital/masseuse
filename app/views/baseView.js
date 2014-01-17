@@ -240,8 +240,8 @@ define([
      */
 
     function _setTemplate (options) {
-        if (options && options.templateHtml) {
-            this.template = _.template(options.templateHtml);
+        if (options && options.template) {
+            this.template = _.template(options.template);
         }
     }
 
