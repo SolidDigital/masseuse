@@ -1,10 +1,9 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
-    function (_, chai, Squire, mocha, sinon, sinonChai, masseuse) {
+define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
+    function (_, chai, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
         var VIEW1_NAME = 'testView1',
             CHILD_VIEW_NAME = 'childView',
-            injector = new Squire(),
             should = chai.should();
 
 
@@ -269,50 +268,6 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
             });
 
             describe('appendTo', function() {});
-        });
-
-        describe('An instance of extending the BaseView', function () {
-
-            //-----------Setup-----------
-            var BaseView,
-                AsyncExtendedBaseView,
-                SyncExtendedBaseView,
-                asyncInstance,
-                syncInstance,
-                $beforeRenderDeferred,
-                $afterRenderDeferred;
-
-
-            beforeEach(function (done) {
-                injector.require(['masseuse'], function (masseuse) {
-
-                        BaseView = masseuse.BaseView;
-                        AsyncExtendedBaseView = BaseView.extend({
-                            beforeRender : function (deferred) {
-                                $beforeRenderDeferred = deferred;
-                            },
-                            afterRender : function (deferred) {
-                                $afterRenderDeferred = deferred;
-                            }
-                        });
-                        SyncExtendedBaseView = BaseView.extend({
-                            beforeRender : function () {
-                            },
-                            afterRender : function () {
-                            }
-                        });
-
-                        asyncInstance = new AsyncExtendedBaseView({
-                            name : VIEW1_NAME
-                        });
-                        syncInstance = new SyncExtendedBaseView({
-                            name : VIEW1_NAME
-                        });
-
-                        done();
-                    },
-                    function () {});
-            });
         });
 
     });

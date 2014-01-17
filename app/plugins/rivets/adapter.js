@@ -3,7 +3,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
     function ($, Rivets, configureMethod, Backbone, _) {
         'use strict';
 
-        var keySeparator = /-/g;
+        var keySeparator = /->/g;
 
         /**
          * Adapter originally from https://gist.github.com/mogadanez/5728747
@@ -105,7 +105,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
             _.extend(Rivets.binders, config.rivetBinders);
 
             // bind data to rivets values.
-            return Rivets.bind(this.$el, {data : this.model, view : this});
+            return Rivets.bind(this.$el, {model : this.model, view : this});
 
         }).methodWithDefaultOptions;
     });

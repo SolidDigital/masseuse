@@ -36,7 +36,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                 });
                 describe('templating', function() {
                     var options,
-                        template = '<div id="' + riveted + '">{{data:title}}</div>';
+                        template = '<div id="' + riveted + '">{{model:title}}</div>';
 
                     beforeEach(function() {
                         options = {
@@ -66,7 +66,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         beforeEach(function() {
                             options = {
                                 el : '#' + testDom,
-                                templateHtml : '<div id="' + riveted + '">{{data:movie-title}}</div>',
+                                templateHtml : '<div id="' + riveted + '">{{model:movie->title}}</div>',
                                 modelData : {
                                     movie : {
                                         title : 'A the an.'
@@ -91,7 +91,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         beforeEach(function() {
                             attributeOptions = {
                                 el : '#' + testDom,
-                                templateHtml : '<div id="' + riveted + '" data-rv-href="data:href">test</div>',
+                                templateHtml : '<div id="' + riveted + '" data-rv-href="model:href">test</div>',
                                 modelData : {
                                     href : 'http://www.blah.com'
                                 }
@@ -127,7 +127,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         beforeEach(function() {
                             attributeOptions = {
                                 el : '#' + testDom,
-                                templateHtml : '<div data-rv-each-ref="data:href" id="' + riveted +
+                                templateHtml : '<div data-rv-each-ref="model:href" id="' + riveted +
                                     '" >{{ref}}</div>',
                                 modelData : {
                                     href : ['http://www.blah.com']
@@ -155,7 +155,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                     describe('array', function() {
                         var options,
                             rivetView,
-                            iterationTemplate = '<ul id="' + riveted + '"><li data-rv-each-item="data:items"></li></ul>';
+                            iterationTemplate = '<ul id="' + riveted + '">' +
+                                '<li data-rv-each-item="model:items"></li></ul>';
 
 
                         beforeEach(function() {
@@ -201,7 +202,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         var options,
                             rivetView,
                             iterationTemplate = '<ul id="' + riveted + '">' +
-                                '<li data-rv-each-item="data:items" ' +
+                                '<li data-rv-each-item="model:items" ' +
                                 'data-rv-id="item.id" ' +
                                 'data-rv-text="item.text" ' +
                                 'data-rv-href="item.href"></li>' +
