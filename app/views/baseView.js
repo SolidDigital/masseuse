@@ -1,8 +1,8 @@
 /*global define:false*/
 define([
     'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', './lifeCycle',
-    '../utilities/accessors'
-], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors) {
+    '../utilities/accessors', '../models/masseuseModel'
+], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, MasseuseModel) {
     'use strict';
 
     var viewOptions = ['name', 'appendView'],
@@ -247,7 +247,7 @@ define([
 
     function _setModel (options) {
         var self = this,
-            ModelType = Backbone.Model,
+            ModelType = MasseuseModel,
             modelData;
 
         if (options && options.ModelType) {

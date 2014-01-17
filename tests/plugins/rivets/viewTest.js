@@ -64,9 +64,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                     });
                     describe('nested fields', function() {
                         beforeEach(function() {
-                            if (rivetView) {
-                                rivetView.remove();
-                            }
                             options = {
                                 el : '#' + testDom,
                                 templateHtml : '<div id="' + riveted + '">{{data:movie_title}}</div>',
@@ -80,7 +77,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         });
                         it('test dom is riveted with nested data', function(done) {
                             rivetView.start().done(function() {
-                                $('#' + riveted).html().should.equal('There it is.');
+                                $('#' + riveted).html().should.equal('A the an.');
                                 done();
                             });
                         });

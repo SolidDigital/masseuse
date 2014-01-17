@@ -31,9 +31,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                             callback(obj.get(keypath.replace(/_/g,'.')));
                         });
                     } else if (model instanceof Backbone.Model) {
-                        console.log(keypath);
                         model.on('change:' + keypath.replace(/_/g,'.'), function (key, m, v) {
-                            console.log(arguments);
                             callback(v);
                         });
                     }
@@ -76,7 +74,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                 publish : function (model, keypath, value) {
                     if (model instanceof Backbone.Collection) {
                         model[keypath.replace(/_/g,'.')] = value;
-                    } else if (result instanceof Backbone.Model) {
+                    } else if (model instanceof Backbone.Model) {
                         model.set(keypath.replace(/_/g,'.'), value);
                     }
                 }
