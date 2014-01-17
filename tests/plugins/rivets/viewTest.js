@@ -31,7 +31,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                 describe('templating', function() {
                     var options,
                         rivetView,
-                        template = '<div id="' + riveted + '">{{data.title}}</div>';
+                        template = '<div id="' + riveted + '">{{data:title}}</div>';
 
                     beforeEach(function() {
                         options = {
@@ -63,13 +63,13 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         });
                     });
 
-                    describe('attribute binding', function() {
+                    describe('attribute binding primitives', function() {
                         var attributeOptions;
 
                         beforeEach(function() {
                             attributeOptions = {
                                 el : '#' + testDom,
-                                templateHtml : '<div id="' + riveted + '" data-rv-href="data.href">test</div>',
+                                templateHtml : '<div id="' + riveted + '" data-rv-href="data:href">test</div>',
                                 modelData : {
                                     href : 'http://www.blah.com'
                                 }
@@ -91,13 +91,13 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         });
                     });
 
-                    describe('attribute binding', function() {
+                    describe('attribute binding arrays', function() {
                         var attributeOptions;
 
                         beforeEach(function() {
                             attributeOptions = {
                                 el : '#' + testDom,
-                                templateHtml : '<div data-rv-each-ref="data.href" id="' + riveted +
+                                templateHtml : '<div data-rv-each-ref="data:href" id="' + riveted +
                                     '" >{{ref}}</div>',
                                 modelData : {
                                     href : ['http://www.blah.com']
@@ -113,10 +113,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         });
                         it('test dom is riveted when attribute binder changes', function(done) {
                             rivetView.start().done(function() {
-                                rivetView.model.on('change:href', function() {
-                                    console.log(arguments);
-                                });
-                                //rivetView.model.set('href', []);
                                 rivetView.model.set('href', ['http://www.yada.org']);
                                 $('#' + riveted).html().should.equal('http://www.yada.org');
                                 done();

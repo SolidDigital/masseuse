@@ -17,21 +17,26 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
             rivetPrefix : undefined,
             instaUpdateRivets : false
         }, function (config) {
-            Rivets.adapters['.'] =  {
+            Rivets.adapters[':'] =  {
                 /**
                  * @memberof adapter
                  * @instance
-                 * @param obj
+                 * @param model
                  * @param keypath
                  * @param callback
                  */
-                subscribe : function (obj, keypath, callback) {
-                    var parts = [keypath],
-                        index = keypath.indexOf('.');
-                    if (index > -1) {
-                        parts = keypath.split('.');
+                subscribe : function (model, keypath, callback) {
+                    if (model instanceof Backbone.Collection) {
+                        model.on('add remove reset refresh', function (obj, keypath) {
+                            callback(obj.get(keypath));
+                        });
+                    } else if (model instanceof Backbone.Model) {
+                        console.log(keypath);
+                        model.on('change:' + keypath, function (key, m, v) {
+                            console.log(arguments);
+                            callback(v);
+                        });
                     }
-                    this.subscribe_nested(parts, obj, callback);
                 },
 
                 /**
