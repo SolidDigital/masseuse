@@ -43,6 +43,11 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         };
                         rivetView = new RivetView(options);
                     });
+                    afterEach(function() {
+                        if (rivetView) {
+                            rivetView.remove();
+                        }
+                    });
                     it('test dom is riveted with initial data', function(done) {
                         rivetView.start().done(function() {
                             $('#' + riveted).html().should.equal('There it is.');
@@ -55,6 +60,67 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                             rivetView.model.set('title', 'New Title');
                             $('#' + riveted).html().should.equal('New Title');
                             done();
+                        });
+                    });
+
+                    describe('attribute binding', function() {
+                        var attributeOptions;
+
+                        beforeEach(function() {
+                            attributeOptions = {
+                                el : '#' + testDom,
+                                templateHtml : '<div id="' + riveted + '" data-rv-href="data.href">test</div>',
+                                modelData : {
+                                    href : 'http://www.blah.com'
+                                }
+                            };
+                            rivetView = new RivetView(attributeOptions);
+                        });
+                        it('test dom is riveted with initial data', function(done) {
+                            rivetView.start().done(function() {
+                                $('#' + riveted).attr('href').should.equal('http://www.blah.com');
+                                done();
+                            });
+                        });
+                        it('test dom is riveted when attribute binder changes', function(done) {
+                            rivetView.start().done(function() {
+                                rivetView.model.set('href', 'http://www.yada.org');
+                                $('#' + riveted).attr('href').should.equal('http://www.yada.org');
+                                done();
+                            });
+                        });
+                    });
+
+                    describe('attribute binding', function() {
+                        var attributeOptions;
+
+                        beforeEach(function() {
+                            attributeOptions = {
+                                el : '#' + testDom,
+                                templateHtml : '<div data-rv-each-ref="data.href" id="' + riveted +
+                                    '" >{{ref}}</div>',
+                                modelData : {
+                                    href : ['http://www.blah.com']
+                                }
+                            };
+                            rivetView = new RivetView(attributeOptions);
+                        });
+                        it('test dom is riveted with initial data', function(done) {
+                            rivetView.start().done(function() {
+                                $('#' + riveted).html().should.equal('http://www.blah.com');
+                                done();
+                            });
+                        });
+                        it('test dom is riveted when attribute binder changes', function(done) {
+                            rivetView.start().done(function() {
+                                rivetView.model.on('change:href', function() {
+                                    console.log(arguments);
+                                });
+                                //rivetView.model.set('href', []);
+                                rivetView.model.set('href', ['http://www.yada.org']);
+                                $('#' + riveted).html().should.equal('http://www.yada.org');
+                                done();
+                            });
                         });
                     });
                 });
