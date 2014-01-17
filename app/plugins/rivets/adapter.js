@@ -3,6 +3,8 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
     function ($, Rivets, configureMethod, Backbone, _) {
         'use strict';
 
+        var keySeparator = /-/g;
+
         /**
          * Adapter originally from https://gist.github.com/mogadanez/5728747
          */
@@ -28,10 +30,10 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                 subscribe : function (model, keypath, callback) {
                     if (model instanceof Backbone.Collection) {
                         model.on('add remove reset refresh', function (obj, keypath) {
-                            callback(obj.get(keypath.replace(/_/g,'.')));
+                            callback(obj.get(keypath.replace(keySeparator,'.')));
                         });
                     } else if (model instanceof Backbone.Model) {
-                        model.on('change:' + keypath.replace(/_/g,'.'), function (key, m, v) {
+                        model.on('change:' + keypath.replace(keySeparator,'.'), function (key, m, v) {
                             callback(v);
                         });
                     }
@@ -50,7 +52,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                     if (model instanceof Backbone.Collection) {
                         model.off('add remove reset refresh');
                     } else if (model.off) {
-                        model.off('change:' + keypath.replace(/_/g,'.'));
+                        model.off('change:' + keypath.replace(keySeparator,'.'));
                     }
                 },
 
@@ -62,7 +64,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                  * @returns {*}
                  */
                 read : function (model, keypath) {
-                    return model.get(keypath.replace(/_/g,'.'));
+                    return model.get(keypath.replace(keySeparator,'.'));
                 },
                 /**
                  * @memberof adapter
@@ -73,9 +75,9 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                  */
                 publish : function (model, keypath, value) {
                     if (model instanceof Backbone.Collection) {
-                        model[keypath.replace(/_/g,'.')] = value;
+                        model[keypath.replace(keySeparator,'.')] = value;
                     } else if (model instanceof Backbone.Model) {
-                        model.set(keypath.replace(/_/g,'.'), value);
+                        model.set(keypath.replace(keySeparator,'.'), value);
                     }
                 }
             };

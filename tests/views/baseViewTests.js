@@ -267,6 +267,8 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     });
                 });
             });
+
+            describe('appendTo', function() {});
         });
 
         describe('An instance of extending the BaseView', function () {

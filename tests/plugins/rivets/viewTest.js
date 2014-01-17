@@ -66,7 +66,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         beforeEach(function() {
                             options = {
                                 el : '#' + testDom,
-                                templateHtml : '<div id="' + riveted + '">{{data:movie_title}}</div>',
+                                templateHtml : '<div id="' + riveted + '">{{data:movie-title}}</div>',
                                 modelData : {
                                     movie : {
                                         title : 'A the an.'
