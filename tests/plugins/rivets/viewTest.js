@@ -108,6 +108,13 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     done();
                                 });
                             });
+                            it('model changes when test dom changes', function(done) {
+                                rivetView.start().done(function() {
+                                    $('#' + riveted).html('new');
+                                    nested.get('title').should.equal('new');
+                                    done();
+                                });
+                            });
                         });
                     });
                 });

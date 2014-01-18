@@ -28,13 +28,15 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                  * @param callback
                  */
                 subscribe : function (model, keypath, callback) {
+                    keypath = keypath.replace(keySeparator,'.');
                     if (model instanceof Backbone.Collection) {
                         model.on('add remove reset refresh', function (obj, keypath) {
-                            callback(obj.get(keypath.replace(keySeparator,'.')));
+                            callback(obj.get(keypath));
                         });
                     } else if (model instanceof Backbone.Model) {
-                        model.on('change:' + keypath.replace(keySeparator,'.'), function (key, m, v) {
-                            callback(v);
+                        model.on('change', function () {
+                            // TODO: make this more efficient / specific
+                            callback(model.get(keypath));
                         });
                     }
                 },
