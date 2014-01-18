@@ -1,5 +1,5 @@
-define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
-    function (_, chai, mocha, sinon, sinonChai, masseuse) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
         var VIEW1_NAME = 'testView1',
@@ -267,10 +267,103 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                 });
             });
 
-            describe('appendTo', function() {
+            describe('render', function() {
+                var testDom = 'testDom',
+                //riveted = 'riveted',
+                    $body = $('body'),
+                    view;
 
-                describe('previous ', function() {});
+                beforeEach(function() {
+                    var $div = $('<div id="' + testDom + '"/>');
+                    $body.append($div);
+                });
+
+                afterEach(function() {
+                    view.remove();
+                    $('#' + testDom).html('');
+                });
+
+                describe('not including an options.el', function() {
+
+
+                    describe('or id, tag, class, or attrs', function() {
+                        beforeEach(function() {
+                            view = new BaseView({
+                                template : '<div id="me"></div>'
+                            });
+                        });
+                        it('will create an empty wrapping div for view.el', function() {
+                            outerHtml($(view.el)).should.equal('<div></div>');
+                        });
+                        it('will render the template into that div', function(done) {
+                            view.start().done(function() {
+                                view.$el.html().should.equal('<div id="me"></div>');
+                                done();
+                            });
+                        });
+                        describe('and adding an option.appendTo sizzle', function() {
+                            beforeEach(function() {
+                                view = new BaseView({
+                                    appendTo : '#' + testDom,
+                                    template : '<div id="me"></div>'
+                                });
+                            });
+                            it('will append view.el to $(appendTo)', function(done) {
+                                view.start().done(function() {
+                                    $('#' + testDom).html().should.equal('<div><div id="me"></div></div>');
+                                    done();
+                                });
+                            });
+                        });
+                    });
+
+                    describe('supplying a classname', function() {
+                        beforeEach(function() {
+                            view = new BaseView({
+                                className : 'test'
+                            });
+                        });
+                        it('will create a div with the right classname', function() {
+                            outerHtml($(view.el)).should.equal('<div class="test"></div>');
+                        });
+                    });
+                    describe('supplying a tagname', function() {
+                        beforeEach(function() {
+                            view = new BaseView({
+                                tagName : 'ul'
+                            });
+                        });
+                        it('will create a div with the right tagname', function() {
+                            outerHtml($(view.el)).should.equal('<ul></ul>');
+                        });
+                    });
+                    describe('supplying a id', function() {
+                        beforeEach(function() {
+                            view = new BaseView({
+                                id : 'test'
+                            });
+                        });
+                        it('will create a div with the right id', function() {
+                            outerHtml($(view.el)).should.equal('<div id="test"></div>');
+                        });
+                    });
+                    describe('supplying a attributes', function() {
+                        beforeEach(function() {
+                            view = new BaseView({
+                                attributes : { href : 'http://blah.ha' }
+                            });
+                        });
+                        it('will create a div with the right attribute', function() {
+                            outerHtml($(view.el)).should.equal('<div href="http://blah.ha"></div>');
+                        });
+                    });
+
+                });
+
             });
         });
 
+        function outerHtml(ellie) {
+            return $('<div>').append($(ellie).clone()).html();
+        }
     });

@@ -103,7 +103,6 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
                     propertyOn = key.slice(key.indexOf('.') + 1);
                     key = key.split('.')[0];
 
-                    // Will do a deep clone if available (e.g. lodash - compat / modern - not underscore)
                     wholeObj = {};
                     $.extend(true, wholeObj, this.get(key) || {});
                     accessors.setProperty(wholeObj, propertyOn, val);
