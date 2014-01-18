@@ -108,13 +108,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     done();
                                 });
                             });
-                            it('model changes when test dom changes', function(done) {
-                                rivetView.start().done(function() {
-                                    $('#' + riveted).html('new');
-                                    nested.get('title').should.equal('new');
-                                    done();
-                                });
-                            });
                         });
                     });
                 });
@@ -136,14 +129,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         it('test dom is riveted with initial data', function(done) {
                             rivetView.start().done(function() {
                                 $('#' + riveted).attr('href').should.equal('http://www.blah.com');
-                                done();
-                            });
-                        });
-                        it('model is riveted to test dom', function(done) {
-                            rivetView.start().done(function() {
-                                var $riveted = $('#' + riveted);
-                                $riveted.attr('href', '#');
-                                $riveted.attr('href').should.equal('#');
                                 done();
                             });
                         });
