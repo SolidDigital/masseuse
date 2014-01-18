@@ -5,7 +5,7 @@ define([
 ], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, MasseuseModel) {
     'use strict';
 
-    var viewOptions = ['name', 'appendTo'],
+    var viewOptions = ['name', 'appendTo', 'wrapper'],
         BEFORE_RENDER_DONE = 'beforeRenderDone',
         RENDER_DONE = 'renderDone',
         AFTER_RENDER_DONE = 'afterRenderDone',
@@ -114,7 +114,11 @@ define([
 
     function _appendTo () {
         var template = this.template;
-        this.$el.html(template ? template(this.dataToJSON()) : '');
+        if (false === this.wrapper) {
+            this.setElement($(template(this.dataToJSON())));
+        } else {
+            this.$el.html(template ? template(this.dataToJSON()) : '');
+        }
         $(this.appendTo).append(this.el);
     }
 

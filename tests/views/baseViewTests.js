@@ -314,6 +314,18 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                     done();
                                 });
                             });
+                            it('will append the template without view.el to $(appendTo) if options.wrapper === false',
+                                function(done) {
+                                    view = new BaseView({
+                                        appendTo : '#' + testDom,
+                                        wrapper : false,
+                                        template : '<div id="me"></div>'
+                                    });
+                                    view.start().done(function() {
+                                        $('#' + testDom).html().should.equal('<div id="me"></div>');
+                                        done();
+                                    });
+                                });
                         });
                     });
 
