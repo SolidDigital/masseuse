@@ -58,6 +58,9 @@ define(['backbone'], function (Backbone) {
     function setModelProperty(model, keypath, value) {
         if (model instanceof Backbone.Model) {
             model.set(keypath, value);
+            if (value instanceof Backbone.Model) {
+                model.listenTo(value, 'change', model.trigger.bind(model, 'change'));
+            }
         } else {
             model[keypath] = value;
         }

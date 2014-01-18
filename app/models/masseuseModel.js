@@ -92,6 +92,8 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
                     } else if (attrValue instanceof ProxyProperty) {
                         self.bindProxy(attrKey, attrValue);
                         delete attrs[attrKey];
+                    } else if (attrValue instanceof Backbone.Model) {
+                        self.listenTo(attrValue, 'change', self.trigger.bind(self, 'change'));
                     } else {
                         if (self.computedCallbacks[attrKey]) {
                             stack.push(self.computedCallbacks[attrKey]);
@@ -99,6 +101,9 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
                     }
                 });
             } else {
+                if (val instanceof Backbone.Model) {
+                    self.listenTo(val, 'change', self.trigger.bind(self, 'change'));
+                }
                 if (key.indexOf('.') > 0 && _.isString(key)) {
                     propertyOn = key.slice(key.indexOf('.') + 1);
                     key = key.split('.')[0];
