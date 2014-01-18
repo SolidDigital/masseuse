@@ -1,12 +1,13 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPlugin', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, rivetsPlugin) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPlugin', 'masseuse', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, rivetsPlugin, masseuse) {
 
         'use strict';
 
         var testDom = 'testDom',
             riveted = 'riveted',
             $body = $('body'),
-            RivetView = rivetsPlugin.view;
+            RivetView = rivetsPlugin.view,
+            Model = masseuse.MasseuseModel;
 
         chai.use(sinonChai);
         mocha.setup('bdd');
@@ -75,10 +76,37 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                             };
                             rivetView = new RivetView(options);
                         });
-                        it('test dom is riveted with nested data', function(done) {
+                        it('test dom is riveted with nested data in a model', function(done) {
                             rivetView.start().done(function() {
                                 $('#' + riveted).html().should.equal('A the an.');
                                 done();
+                            });
+                        });
+                        describe('nested models', function() {
+                            var nested;
+                            beforeEach(function() {
+                                nested = new Model({title:'test'});
+                                options = {
+                                    el : '#' + testDom,
+                                    template : '<div id="' + riveted + '">{{model:nested->title}}</div>',
+                                    modelData : {
+                                        nested : nested
+                                    }
+                                };
+                                rivetView = new RivetView(options);
+                            });
+                            it('test dom is riveted with nested model in a model', function(done) {
+                                rivetView.start().done(function() {
+                                    $('#' + riveted).html().should.equal('test');
+                                    done();
+                                });
+                            });
+                            it('test dom changes when nested model changes', function(done) {
+                                rivetView.start().done(function() {
+                                    nested.set('title', 'other');
+                                    $('#' + riveted).html().should.equal('other');
+                                    done();
+                                });
                             });
                         });
                     });
