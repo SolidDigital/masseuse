@@ -109,6 +109,44 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                 });
                             });
                         });
+                        describe('deeply nested model', function() {
+                            var nested,
+                                deepNested;
+                            beforeEach(function() {
+                                nested = new Model({title:'test'});
+                                deepNested = new Model({oh:{yeah:'boom'}});
+                                nested.set({this:{that:{other: deepNested}}});
+                                options = {
+                                    el : '#' + testDom,
+                                    template : '<div id="' + riveted +
+                                        '">{{model:nested->this->that->other->oh->yeah}}</div>',
+                                    modelData : {
+                                        nested : nested
+                                    }
+                                };
+                                rivetView = new RivetView(options);
+                            });
+                            it('test dom is riveted when deeply nested model changes', function(done) {
+                                rivetView.start().done(function() {
+                                    $('#' + riveted).html().should.equal('boom');
+                                    done();
+                                });
+                            });
+                            it('test dom changes when top level model sets nested model', function(done) {
+                                rivetView.start().done(function() {
+                                    rivetView.model.set('nested.this.that.other.oh.yeah', 'changed');
+                                    $('#' + riveted).html().should.equal('changed');
+                                    done();
+                                });
+                            });
+                            it('test dom changes when deep model sets nested model', function(done) {
+                                rivetView.start().done(function() {
+                                    deepNested.set('oh.yeah', 'la la la');
+                                    $('#' + riveted).html().should.equal('la la la');
+                                    done();
+                                });
+                            });
+                        });
                     });
                 });
 
