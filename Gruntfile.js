@@ -170,7 +170,13 @@ module.exports = function (grunt) {
             'testPhantom' : {
                 options : {
                     stdout : true,
-                    stderr : true
+                    stderr : true,
+                    callback : function(err, stdout, stderr, cb) {
+                        if (err) {
+                            grunt.fail.fatal('Tests failed. Stop.');
+                        }
+                        cb();
+                    }
                 },
                 command : 'mocha-phantomjs tests/index.html'
             },

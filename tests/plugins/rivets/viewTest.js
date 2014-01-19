@@ -146,6 +146,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     done();
                                 });
                             });
+
                         });
                     });
                 });
