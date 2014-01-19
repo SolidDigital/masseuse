@@ -1,11 +1,11 @@
 /*global define:false*/
 define([
     'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', './lifeCycle',
-    '../utilities/accessors', '../utilities/configFactory'
-], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, ConfigFactory) {
+    '../utilities/accessors', '../utilities/configFactory', '../models/masseuseModel'
+], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, ConfigFactory, MasseuseModel) {
     'use strict';
 
-    var viewOptions = ['name', 'appendView'],
+    var viewOptions = ['name', 'appendTo', 'wrapper'],
         BEFORE_RENDER_DONE = 'beforeRenderDone',
         RENDER_DONE = 'renderDone',
         AFTER_RENDER_DONE = 'afterRenderDone',
@@ -29,8 +29,7 @@ define([
             removeChild : removeChild,
             refreshChildren : refreshChildren,
             removeAllChildren : removeAllChildren,
-            appendOrInsertView : appendOrInsertView,
-            setEl : setEl
+            appendOrInsertView : appendOrInsertView
 
             // Dynamically created, so the cache is not shared on the prototype:
             // elementCache: elementCache
@@ -58,6 +57,7 @@ define([
         this.elementCache = _.memoize(elementCache);
 
         if(options) {
+            options = _.clone(options, true);
             this.initialEl = options.el;
             if (options.viewOptions) {
                 viewOptions = viewOptions.concat(options.viewOptions);
@@ -108,33 +108,26 @@ define([
     }
 
     function render () {
-        this.setEl();
         this.appendOrInsertView();
     }
 
-    function setEl () {
-        if (undefined === this.el && undefined !== this.initialEl || this.parent && undefined !== this.initialEl) {
-            this.setElement($(this.initialEl));
-        }
-    }
-
     function appendOrInsertView () {
-        if (this.$el && this.template) {
-            if (this.appendView) {
-                _appendView.call(this);
-            } else {
-                _insertView.call(this);
-            }
-        }
+        this.appendTo ? _appendTo.call(this) : _insertView.call(this);
     }
 
-    function _appendView () {
-        this.$el.append(this.template(this.dataToJSON()));
-        this.setElement(this.$el.children().last());
+    function _appendTo () {
+        var template = this.template;
+        if (false === this.wrapper) {
+            this.setElement($(template(this.dataToJSON())));
+        } else {
+            this.$el.html(template ? template(this.dataToJSON()) : '');
+        }
+        $(this.appendTo).append(this.el);
     }
 
     function _insertView () {
-        this.$el.html(this.template(this.dataToJSON()));
+        var template = this.template;
+        this.$el.html(template ? template(this.dataToJSON()) : '');
     }
 
     // This function is memoized in initialize
@@ -241,14 +234,14 @@ define([
      */
 
     function _setTemplate (options) {
-        if (options && options.templateHtml) {
-            this.template = _.template(options.templateHtml);
+        if (options && options.template) {
+            this.template = _.template(options.template);
         }
     }
 
     function _setModel (options) {
         var self = this,
-            ModelType = Backbone.Model,
+            ModelType = MasseuseModel,
             modelData;
 
         if (options && options.ModelType) {
