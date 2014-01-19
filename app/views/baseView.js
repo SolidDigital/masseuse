@@ -1,8 +1,8 @@
 /*global define:false*/
 define([
     'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', './lifeCycle',
-    '../utilities/accessors', '../utilities/configFactory', '../models/masseuseModel'
-], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, ConfigFactory, MasseuseModel) {
+    '../utilities/accessors', '../utilities/createOptions', '../models/masseuseModel'
+], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, createOptions, MasseuseModel) {
     'use strict';
 
     var viewOptions = ['name', 'appendTo', 'wrapper'],
@@ -51,14 +51,12 @@ define([
     function initialize (options) {
         var self = this;
 
-        //don't use 'new' keyword here or it won't be able to return an undefined value
-        options = ConfigFactory(options, this.defaultConfig);
+        options = createOptions(options, this.defaultConfig);
 
         this.elementCache = _.memoize(elementCache);
 
         if(options) {
             options = _.clone(options, true);
-            this.initialEl = options.el;
             if (options.viewOptions) {
                 viewOptions = viewOptions.concat(options.viewOptions);
             }
