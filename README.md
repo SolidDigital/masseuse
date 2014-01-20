@@ -1,6 +1,6 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=bower)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-Version: _1.0.0_
+Version: _1.0.1_
 
 Bower pulls from the [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower) (build badge is showing results for branch bower):
 
@@ -45,10 +45,11 @@ Masseuse is a Backbone helper library that uses RequireJS AMDs.
 
 Masseuse is functional, and documentation and tests are being fleshed out.
 
-Masseuse does five main things:
+Masseuse does six main things:
 
 1. Adds lifecycle methods to Views that are optionally async using jQuery promises.
 1. Allows easier separation of Views into a config and functionality sections by providing several shortcut configs.
+1. Adds support of a View that uses Rivets
 1. Adds support for adding child Views.
 1. Provides Proxy and Computed Properties for Masseuse Models
 1. Provides a Masseuse Router extension of the Backbone Router with a before routing callback.
@@ -85,6 +86,7 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
+* 1.0.1 - 2014-01-20 - [patches](release_notes/1.0.1.md)
 * 1.0.0 - 2014-01-20 - [backwards incompatibilities](release_notes/1.0.0.md)
 * 0.2.2 - 2014-01-16 - [patches](release_notes/0.2.2.md)
 * 0.2.1 - 2014-01-15 - [patches](release_notes/0.2.1.md)

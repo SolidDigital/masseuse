@@ -58,6 +58,14 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'squire', 'sinonSpy
                     sharedKey: 'sharedValueInOtherOptions'
                 });
             });
+            it('defaultOptions can be ignored by setting the "useDefaults" to false', function() {
+                var options = createOptions(customOptions, defaultOptions, false);
+
+                options.should.deep.equal({
+                    customKey: 'customOptionValue',
+                    sharedKey: 'sharedValueInCustomOption'
+                });
+            });
             describe('backwards compatibility with earlier versions requires that', function() {
                 it('should have undefined options if no defaultOptions and no options are given', function() {
                     var options = createOptions(undefined, undefined);

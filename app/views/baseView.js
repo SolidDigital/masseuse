@@ -48,10 +48,10 @@ define([
      * @method initialize
      * @memberof BaseView
      * */
-    function initialize (options) {
+    function initialize (options, useDefaultOptions) {
         var self = this;
 
-        options = createOptions(options, this.defaultConfig);
+        options = createOptions(options, this.defaultOptions, useDefaultOptions);
 
         this.elementCache = _.memoize(elementCache);
 
@@ -116,7 +116,9 @@ define([
     function _appendTo () {
         var template = this.template;
         if (false === this.wrapper) {
-            this.setElement($(template(this.dataToJSON())));
+            if (template) {
+                this.setElement($(template(this.dataToJSON())));
+            }
         } else {
             this.$el.html(template ? template(this.dataToJSON()) : '');
         }
