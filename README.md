@@ -85,7 +85,7 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
-* 1.0.0 - 2014-wx-yz - [patches](release_notes/0.2.2.md)
+* 1.0.0 - 2014-01-20 - [backwards incompatibilities](release_notes/1.0.0.md)
 * 0.2.2 - 2014-01-16 - [patches](release_notes/0.2.2.md)
 * 0.2.1 - 2014-01-15 - [patches](release_notes/0.2.1.md)
 * 0.2.0 - 2014-01-14 - [features](release_notes/0.2.0.md)
@@ -97,9 +97,10 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Contributors (`git shortlog -s -n`)
 
-* Peter Ajtai
-* Greg Larrenaga
-* Cooper Hilscher
-* Jonathan Waltner
-* Jesse McCabe
-* Travis McHattie
+* [Peter Ajtai](https://github.com/pajtai)
+* [Greg Larrenaga](https://github.com/Duder-onomy)
+* [Cooper Hilscher](https://github.com/dobbobolina)
+* [Jonathan Waltner](https://github.com/uselessinfo)
+* [Travis McHattie](https://github.com/travism)
+* [Michael Fenwick](https://github.com/MichaelFenwick)
+* [Jesse McCabe](https://github.com/thinksolid)
