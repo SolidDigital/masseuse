@@ -22,7 +22,7 @@ define(['underscore', './adapter', './binders', './formatters'],
 
             if ('auto' === this.rivetConfig) {
                 this.rivetView = rivetView({
-                    rivetPrefix : 'rv',
+                    rivetPrefix : 'data-rv',
                     rivetFormatters : _.extend.apply(null, this.rivetFormatters),
                     rivetBinders : _.extend.apply(null, this.rivetBinders)
                 }).methodWithActualOptions;

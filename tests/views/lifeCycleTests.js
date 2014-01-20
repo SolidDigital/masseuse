@@ -169,42 +169,10 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy
                         viewInstance.render.should.be.a('function');
                     });
 
-                    it('should call checkForEl', function () {
-                        var checkElSpy = sinon.spy(viewInstance, 'setEl');
-                        viewInstance.render();
-                        checkElSpy.should.have.been.calledOnce;
-                    });
-
                     it('should call appendOrInsertView', function () {
                         var checkAppendOrInsertSpy = sinon.spy(viewInstance, 'appendOrInsertView');
                         viewInstance.render();
                         checkAppendOrInsertSpy.should.have.been.calledOnce;
-                    });
-                });
-
-                describe('setEl method', function () {
-                    it('should call set element if it doesn\'t have an el and its options do', function () {
-                        var setElementSpy = sinon.spy(viewInstance, 'setElement');
-                        viewInstance.el = undefined;
-                        viewInstance.initialEl = true;
-                        viewInstance.render();
-                        setElementSpy.should.have.been.calledOnce;
-                    });
-
-                    it('should not call set element if it doesn\'t have an el and options dont either', function () {
-                        var setElementSpy = sinon.spy(viewInstance, 'setElement');
-                        viewInstance.el = undefined;
-                        viewInstance.initialEl = undefined;
-                        viewInstance.render();
-                        setElementSpy.should.not.have.been.called;
-                    });
-
-                    it('should call set element if it has a parent and option el', function () {
-                        var setElementSpy = sinon.spy(viewInstance, 'setElement');
-                        viewInstance.parent = true;
-                        viewInstance.initialEl = true;
-                        viewInstance.render();
-                        setElementSpy.should.have.been.calledOnce;
                     });
                 });
 
