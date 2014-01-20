@@ -171,24 +171,35 @@ module.exports = function (grunt) {
                 options : {
                     stdout : true,
                     stderr : true,
-                    callback : function(err, stdout, stderr, cb) {
-                        if (err) {
-                            grunt.fail.fatal('Tests failed. Stop.');
-                        }
-                        cb();
-                    }
+                    callback : fullStop.bind(null, 'Tests failed.')
                 },
                 command : 'mocha-phantomjs tests/index.html'
             },
             'bower'  : {
                 options : {
                     stdout : true,
-                    stderr : true
+                    stderr : true,
+                    callback : fullStop.bind(null, 'Bower install failed.')
                 },
                 command : 'bower install'
+            },
+            'commitJsdoc' : {
+                options : {
+                    stdout : true,
+                    stderr : true,
+                    callback : fullStop.bind(null, 'Docs commit failed.')
+                },
+                command : 'git commit docs -m "jsdoc update"'
             }
         }
     });
+
+    function fullStop(msg, err, stdout, stderr, cb) {
+        if (err) {
+            grunt.fail.fatal(msg + ' Full stop.');
+        }
+        cb();
+    }
 
     // To start editing your slideshow using livereload, run 'grunt server'
     grunt.registerTask('test', 'Build and watch task', [
@@ -198,7 +209,7 @@ module.exports = function (grunt) {
         'jshint', 'shell:bower', 'shell:testPhantom'
     ]);
     grunt.registerTask('deployDocs', 'Deploy to gh-pages', [
-        'clean:build', 'jshint', 'shell:bower', 'copy:jsdoc',
+        'clean:build', 'jshint', 'jsdoc', 'shell:commitJsdoc', 'shell:bower', 'copy:jsdoc',
         'copy:app', 'copy:tests', 'build_gh_pages:jsdoc', 'shell:bower'
     ]);
     grunt.registerTask('deployBower', 'Deploy to bower', [
