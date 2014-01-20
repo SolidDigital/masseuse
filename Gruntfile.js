@@ -111,7 +111,7 @@ module.exports = function (grunt) {
                             'app/**',
                             '!app/vendor/**',
                             'tests/**',
-                            'release/**',
+                            'release_notes/**',
                             'LICENSE-MIT',
                             'README.md',
                             'bower.json',
@@ -205,45 +205,4 @@ module.exports = function (grunt) {
     grunt.registerTask('deployBower', 'Deploy to bower', [
         'clean:build', 'copy:bower', 'build_gh_pages:bower', 'shell:bower'
     ]);
-
-    function livereloadSnippet(req, res, next) {
-        var write = res.write,
-            writeHead = res.writeHead,
-            end = res.end,
-            data = "";
-
-        var filepath = url.parse(req.url).pathname;
-        filepath = filepath.slice(-1) === '/' ? filepath + 'index.html' : filepath;
-
-        if (path.extname( filepath ) !== '.html' && res.send === undefined) {
-            return next();
-        }
-
-        // Bypass write until end
-        var inject = res.write = function (string, encoding) {
-
-            if ( string !== undefined ) {
-                var body = string instanceof Buffer ? string.toString(encoding) : string;
-
-                data += body.replace(/<\/body>/, function (w) {
-                    return getSnippet() + w;
-                });
-            }
-        };
-
-        // Prevent headers from being finalized
-        res.writeHead = function() {};
-
-        // Write everything at the end
-        res.end = function (string, encoding) {
-            inject(string, encoding);
-
-            // Restore writeHead
-            this.writeHead = writeHead;
-            this.setHeader('content-length', Buffer.byteLength(data, encoding));
-            end.call(res, data, encoding);
-        }
-
-        next();
-    };
 };
