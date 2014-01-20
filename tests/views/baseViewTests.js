@@ -28,6 +28,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
             //-----------Tests-----------
             it('should exist', function () {
+                // testing fail
                 should.exist(BaseView);
             });
 
