@@ -26,9 +26,46 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
             });
 
 
-            //-----------Tests-----------
-            it('should exist', function () {
-                should.exist(BaseView);
+            describe('initialize', function() {
+                var OptionsView;
+
+                beforeEach(function() {
+                    OptionsView = BaseView.extend({
+                        name : VIEW1_NAME,
+                        defaultOptions: {
+                            defaultKey : true,
+                            viewOptions : [
+                                'defaultKey',
+                                'passedInKey'
+                            ]
+                        }
+                    });
+                });
+
+                it('a view instance can be newed up from BaseView', function() {
+                    should.exist(viewInstance);
+                });
+
+                it('a view instance is initialized with view.defaultOptions if no options are passed in', function() {
+                    var view = new OptionsView();
+                    view.defaultKey.should.equal(true);
+                    _.has(view, 'passedInKey').should.be.false;
+                });
+                it('a view instance is initialized with an extend of defaultOptions and passed in options', function() {
+                    var view = new OptionsView({
+                        passedInKey : true
+                    });
+                    view.defaultKey.should.equal(true);
+                    view.passedInKey.should.equal(true);
+                });
+                it('a view instance is initialized with the passed in options and ignores default options if the' +
+                    ' second argument is false', function() {
+                    var view = new OptionsView({
+                        passedInKey : true
+                    }, false);
+                    _.has(view, 'defaultKey').should.be.false;
+                    view.passedInKey.should.equal(true);
+                });
             });
 
             describe('remove method', function () {
