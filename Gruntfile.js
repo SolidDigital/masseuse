@@ -191,6 +191,9 @@ module.exports = function (grunt) {
     });
 
     function fullStop(msg, err, stdout, stderr, cb) {
+	if (stdout) {
+	    grunt.log.writeln(stdout);
+	}
         if (err) {
             grunt.fail.fatal(msg + ' Full stop.');
         }
