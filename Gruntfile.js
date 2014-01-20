@@ -2,12 +2,6 @@ module.exports = function (grunt) {
 
     'use strict';
 
-    var path = require('path'),
-        lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet,
-        folderMount = function folderMount (connect, point) {
-            return connect.static(path.resolve(point));
-        };
-
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
