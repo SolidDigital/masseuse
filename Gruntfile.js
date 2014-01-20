@@ -111,7 +111,7 @@ module.exports = function (grunt) {
                             'app/**',
                             '!app/vendor/**',
                             'tests/**',
-                            'release'
+                            'release/**',
                             'LICENSE-MIT',
                             'README.md',
                             'bower.json',
