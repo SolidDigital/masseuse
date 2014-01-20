@@ -28,7 +28,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
             //-----------Tests-----------
             it('should exist', function () {
-                should.exist(BaseView);
+                // testing fail
+                should.not.exist(BaseView);
             });
 
             describe('remove method', function () {
