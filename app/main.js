@@ -4,7 +4,7 @@ define([
 ], function (BaseView, channels, ViewContext, MasseuseRouter, MasseuseModel, ComputedProperty, ProxyProperty) {
     'use strict';
 
-    /** `Masseuse` is:
+    /** @description `Masseuse` is:
      *  BB helper library
      *      helps with
      *          views
