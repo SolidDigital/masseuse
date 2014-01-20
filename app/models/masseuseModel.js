@@ -2,6 +2,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
     function (Backbone, $, ComputedProperty, ProxyProperty, accessors, _) {
         'use strict';
 
+        var maxRecursionDepth = 10;
         /**
          * A Backbone Model with Proxy and Computed Properties.
          * Proxy and Computed properties are tirggered directly and not via events for performance reasons.
@@ -53,6 +54,22 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
             return result;
         }
 
+
+        function listenToNestedModels(obj, parentModel, depth) {
+            if (depth > maxRecursionDepth) {
+                return;
+            }
+            if (typeof obj == 'object') {
+                _.each(obj, function(value) {
+                    if (value instanceof Backbone.Model) {
+                        parentModel.listenTo(value, 'change', parentModel.trigger.bind(parentModel, 'change'));
+                    } else if (typeof value == 'object') {
+                        listenToNestedModels(value, parentModel, ++depth);
+                    }
+                });
+            }
+        }
+
         /**
          * @function
          * @memberof MasseuseModel
@@ -92,18 +109,23 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
                     } else if (attrValue instanceof ProxyProperty) {
                         self.bindProxy(attrKey, attrValue);
                         delete attrs[attrKey];
+                    } else if (attrValue instanceof Backbone.Model) {
+                        self.listenTo(attrValue, 'change', self.trigger.bind(self, 'change'));
                     } else {
+                        listenToNestedModels(attrValue, self, 0);
                         if (self.computedCallbacks[attrKey]) {
                             stack.push(self.computedCallbacks[attrKey]);
                         }
                     }
                 });
             } else {
+                if (val instanceof Backbone.Model) {
+                    self.listenTo(val, 'change', self.trigger.bind(self, 'change'));
+                }
                 if (key.indexOf('.') > 0 && _.isString(key)) {
                     propertyOn = key.slice(key.indexOf('.') + 1);
                     key = key.split('.')[0];
 
-                    // Will do a deep clone if available (e.g. lodash - compat / modern - not underscore)
                     wholeObj = {};
                     $.extend(true, wholeObj, this.get(key) || {});
                     accessors.setProperty(wholeObj, propertyOn, val);

@@ -58,6 +58,7 @@
         './models/proxyPropertyTests',
         './plugins/rivets/viewTest',
         './utilities/channelsTests',
+        './utilities/createOptionsTests',
         './utilities/deferMethodTests',
         './routers/masseuseRouterTests.js'
     ], function (mocha) {

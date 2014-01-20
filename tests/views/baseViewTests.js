@@ -1,10 +1,9 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
-    function (_, chai, Squire, mocha, sinon, sinonChai, masseuse) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
         var VIEW1_NAME = 'testView1',
             CHILD_VIEW_NAME = 'childView',
-            injector = new Squire(),
             should = chai.should();
 
 
@@ -267,50 +266,116 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     });
                 });
             });
-        });
 
-        describe('An instance of extending the BaseView', function () {
+            describe('render', function() {
+                var testDom = 'testDom',
+                //riveted = 'riveted',
+                    $body = $('body'),
+                    view;
 
-            //-----------Setup-----------
-            var BaseView,
-                AsyncExtendedBaseView,
-                SyncExtendedBaseView,
-                asyncInstance,
-                syncInstance,
-                $beforeRenderDeferred,
-                $afterRenderDeferred;
+                beforeEach(function() {
+                    var $div = $('<div id="' + testDom + '"/>');
+                    $body.append($div);
+                });
+
+                afterEach(function() {
+                    view.remove();
+                    $('#' + testDom).html('');
+                });
+
+                describe('not including an options.el', function() {
 
 
-            beforeEach(function (done) {
-                injector.require(['masseuse'], function (masseuse) {
-
-                        BaseView = masseuse.BaseView;
-                        AsyncExtendedBaseView = BaseView.extend({
-                            beforeRender : function (deferred) {
-                                $beforeRenderDeferred = deferred;
-                            },
-                            afterRender : function (deferred) {
-                                $afterRenderDeferred = deferred;
-                            }
+                    describe('or id, tag, class, or attrs', function() {
+                        beforeEach(function() {
+                            view = new BaseView({
+                                template : '<div id="me"></div>'
+                            });
                         });
-                        SyncExtendedBaseView = BaseView.extend({
-                            beforeRender : function () {
-                            },
-                            afterRender : function () {
-                            }
+                        it('will create an empty wrapping div for view.el', function() {
+                            outerHtml($(view.el)).should.equal('<div></div>');
                         });
+                        it('will render the template into that div', function(done) {
+                            view.start().done(function() {
+                                view.$el.html().should.equal('<div id="me"></div>');
+                                done();
+                            });
+                        });
+                        describe('and adding an option.appendTo sizzle', function() {
+                            beforeEach(function() {
+                                view = new BaseView({
+                                    appendTo : '#' + testDom,
+                                    template : '<div id="me"></div>'
+                                });
+                            });
+                            it('will append view.el to $(appendTo)', function(done) {
+                                view.start().done(function() {
+                                    $('#' + testDom).html().should.equal('<div><div id="me"></div></div>');
+                                    done();
+                                });
+                            });
+                            it('will append the template without view.el to $(appendTo) if options.wrapper === false',
+                                function(done) {
+                                    view = new BaseView({
+                                        appendTo : '#' + testDom,
+                                        wrapper : false,
+                                        template : '<div id="me"></div>'
+                                    });
+                                    view.start().done(function() {
+                                        $('#' + testDom).html().should.equal('<div id="me"></div>');
+                                        done();
+                                    });
+                                });
+                        });
+                    });
 
-                        asyncInstance = new AsyncExtendedBaseView({
-                            name : VIEW1_NAME
+                    describe('supplying a classname', function() {
+                        beforeEach(function() {
+                            view = new BaseView({
+                                className : 'test'
+                            });
                         });
-                        syncInstance = new SyncExtendedBaseView({
-                            name : VIEW1_NAME
+                        it('will create a div with the right classname', function() {
+                            outerHtml($(view.el)).should.equal('<div class="test"></div>');
                         });
+                    });
+                    describe('supplying a tagname', function() {
+                        beforeEach(function() {
+                            view = new BaseView({
+                                tagName : 'ul'
+                            });
+                        });
+                        it('will create a div with the right tagname', function() {
+                            outerHtml($(view.el)).should.equal('<ul></ul>');
+                        });
+                    });
+                    describe('supplying a id', function() {
+                        beforeEach(function() {
+                            view = new BaseView({
+                                id : 'test'
+                            });
+                        });
+                        it('will create a div with the right id', function() {
+                            outerHtml($(view.el)).should.equal('<div id="test"></div>');
+                        });
+                    });
+                    describe('supplying a attributes', function() {
+                        beforeEach(function() {
+                            view = new BaseView({
+                                attributes : { href : 'http://blah.ha' }
+                            });
+                        });
+                        it('will create a div with the right attribute', function() {
+                            outerHtml($(view.el)).should.equal('<div href="http://blah.ha"></div>');
+                        });
+                    });
 
-                        done();
-                    },
-                    function () {});
+                });
+
             });
         });
 
+        function outerHtml(ellie) {
+            return $('<div>').append($(ellie).clone()).html();
+        }
     });
