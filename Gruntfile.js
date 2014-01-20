@@ -92,12 +92,7 @@ module.exports = function (grunt) {
             dist : {
                 src: ['README.md', 'app/**/*.js', '!app/vendor/**'],
                 options: {
-                    'destination' : 'docs',
-                    'plugins': [ 'plugins/markdown' ],
-                    'markdown': {
-                        'parser': 'gfm',
-                        'hardwrap': true
-                    }
+                    'jsdoc' : 'jsdoc.json'
                 }
             }
         },

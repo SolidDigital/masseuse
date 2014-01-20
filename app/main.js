@@ -4,31 +4,25 @@ define([
 ], function (BaseView, channels, ViewContext, MasseuseRouter, MasseuseModel, ComputedProperty, ProxyProperty) {
     'use strict';
 
-    /**
-     *
-     * Masseuse is:
-     *  BB helper library based on promises
+    /** `Masseuse` is:
+     *  BB helper library
      *      helps with
-     *          the BB View lifecycle
-     *          child views
-     *          separating View definitions from View options
+     *          views
+     *              baseView
+     *                  the BB View lifecycle - based on promises
+     *                  child views
+     *                  separating View definitions from View options
+     *              rivetView
+     *                  a baseView with built in rivetjs
      *          models
      *              allows for model specific logic to be packaged with the model
      *                computed properties
+     *                proxy properties
+     *              nested models with bubbling up of change events
      *          router
+     *              with a beforeRouting method
      *
-     *
-     *      has a BB BaseView with life cycle methods
-     *
-     *      Things to note in docs:
-     *          BB removed this.options so we do not provide a way to attach app state
-     *              but you can prototype it on in one line
-     *
-     *
-     */
-    /**
-     * @constructor
-     * @alias module:masseuse
+     * @namespace masseuse
      */
     return {
         BaseView : BaseView,
