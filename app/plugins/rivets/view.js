@@ -1,4 +1,4 @@
-define(['../../views/baseView', './plugin'], function(BaseView, plugin) {
+define(['../../views/baseView', './plugin', 'underscore'], function(BaseView, plugin, _) {
     'use strict';
     return BaseView.extend({
         initialize : initialize,
@@ -7,7 +7,7 @@ define(['../../views/baseView', './plugin'], function(BaseView, plugin) {
 
     function initialize (options) {
         options.plugins = [];
-        options.viewOptions = ['rivetConfig'];
+        options.viewOptions = _.uniq((options.viewOptions || []).concat(['rivetConfig','rivetFormatters']));
         options.rivetConfig = 'auto';
         options.plugins.push(plugin);
         this.options = options;
