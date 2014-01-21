@@ -1,5 +1,6 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPlugin', 'masseuse', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, rivetsPlugin, masseuse) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPlugin', 'masseuse',
+    'backbone', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, rivetsPlugin, masseuse, Backbone) {
 
         'use strict';
 
@@ -7,7 +8,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
             riveted = 'riveted',
             $body = $('body'),
             RivetView = rivetsPlugin.view,
-            Model = masseuse.MasseuseModel;
+            Model = masseuse.MasseuseModel,
+            should = chai.should();
 
         chai.use(sinonChai);
         mocha.setup('bdd');
@@ -85,7 +87,10 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         describe('nested models', function() {
                             var nested;
                             beforeEach(function() {
-                                nested = new Model({title:'test'});
+                                nested = new Model({
+                                    title:'test',
+                                    rating : 'hooha'
+                                });
                                 options = {
                                     el : '#' + testDom,
                                     template : '<div id="' + riveted + '">{{model:nested->title}}</div>',
@@ -108,6 +113,25 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     done();
                                 });
                             });
+                            it('test dom changes when nested model is changed from top level', function(done) {
+                                rivetView.start().done(function() {
+                                    rivetView.model.set('nested.title', 'other');
+                                    $('#' + riveted).html().should.equal('other');
+                                    done();
+                                });
+                            });
+                            it('model is preserved as a model when nested model is changed from top level',
+                                function(done) {
+                                    rivetView.start().done(function() {
+                                        should.equal(rivetView.model.get('nested') instanceof Backbone.Model, true);
+                                        rivetView.model.set('nested.title', 'other');
+                                        $('#' + riveted).html().should.equal('other');
+                                        should.equal(rivetView.model.get('nested') instanceof Backbone.Model, true);
+                                        rivetView.model.get('nested.title').should.equal('other');
+                                        rivetView.model.get('nested.rating').should.equal('hooha');
+                                        done();
+                                    });
+                                });
                         });
                         describe('deeply nested model', function() {
                             var nested,
