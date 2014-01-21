@@ -30,7 +30,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                 subscribe : function (model, keypath, callback) {
                     keypath = keypath.replace(keySeparator,'.');
                     if (model instanceof Backbone.Collection) {
-                        model.on('add remove reset refresh', function (obj, keypath) {
+                        model.on('add remove reset change', function (obj, keypath) {
                             callback(obj.get(keypath));
                         });
                     } else if (model instanceof Backbone.Model) {
@@ -52,7 +52,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                         return;
                     }
                     if (model instanceof Backbone.Collection) {
-                        model.off('add remove reset refresh');
+                        model.off('add remove reset change');
                     } else if (model.off) {
                         model.off('change:' + keypath.replace(keySeparator,'.'));
                     }
@@ -66,6 +66,9 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                  * @returns {*}
                  */
                 read : function (model, keypath) {
+                    if(model instanceof Backbone.Collection) {
+                        return model.models;
+                    }
                     return model.get(keypath.replace(keySeparator,'.'));
                 },
                 /**
@@ -76,8 +79,14 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                  * @param value
                  */
                 publish : function (model, keypath, value) {
+                    var existingModel;
                     if (model instanceof Backbone.Collection) {
-                        model[keypath.replace(keySeparator,'.')] = value;
+                        existingModel = model.get(value.cid);
+                        if (!existingModel) {
+                            existingModel.set(value.attributes);
+                        } else {
+                            model.add(value);
+                        }
                     } else if (model instanceof Backbone.Model) {
                         model.set(keypath.replace(keySeparator,'.'), value);
                     }
@@ -107,7 +116,11 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
             _.extend(Rivets.binders, config.rivetBinders);
 
             // bind data to rivets values.
-            return Rivets.bind(this.$el, {model : this.model, view : this});
+            return Rivets.bind(this.$el, {
+                model : this.model,
+                view : this,
+                collection: this.collection
+            });
 
         }).methodWithDefaultOptions;
     });
