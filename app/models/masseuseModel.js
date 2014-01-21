@@ -126,8 +126,9 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
                     propertyOn = key.slice(key.indexOf('.') + 1);
                     key = key.split('.')[0];
 
-                    wholeObj = {};
-                    $.extend(true, wholeObj, this.get(key) || {});
+                    wholeObj = this.get(key) || {};
+                    // This is a hack to have the change event fire exactly once without having to clone wholeObj
+                    this.set(key, {}, {silent:true});
                     accessors.setProperty(wholeObj, propertyOn, val);
                     val = wholeObj;
                 }
