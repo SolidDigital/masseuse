@@ -6,11 +6,10 @@ define(['../../views/baseView', './plugin', 'underscore'], function(BaseView, pl
     });
 
     function initialize (options) {
-        options.plugins = [];
+        options.plugins = options.plugins || [];
         options.viewOptions = _.uniq((options.viewOptions || []).concat(['rivetConfig','rivetFormatters']));
         options.rivetConfig = 'auto';
         options.plugins.push(plugin);
-        this.options = options;
         BaseView.prototype.initialize.call(this, options);
     }
 

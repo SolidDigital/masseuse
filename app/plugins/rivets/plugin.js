@@ -6,33 +6,25 @@ define(['underscore', './adapter', './binders', './formatters'],
          * Can pass in arrays of binder and formatter objects which will be extended with the rivets binders and
          * formatters on the view.
          * @function
-         * @param defaultBindersArray
-         * @param defaultFormattersArray
+         *
          */
-        function setViewRiveting () {
-            this.model.set('viewId', this.cid);
+        function setViewRiveting (options) {
 
             defaultBinders = defaultBinders || {};
             defaultFormatters = defaultFormatters || {};
-            this.rivetFormatters = this.rivetFormatters || [];
-            this.rivetBinders = this.rivetBinders || [];
+            options.rivetFormatters = options.rivetFormatters || [];
+            options.rivetBinders = options.rivetBinders || [];
 
-            this.rivetFormatters = [{}, defaultFormatters].concat(this.rivetFormatters);
-            this.rivetBinders = [{}, defaultBinders].concat(this.rivetBinders);
+            options.rivetFormatters = [{}, defaultFormatters].concat(options.rivetFormatters);
+            options.rivetBinders = [{}, defaultBinders].concat(options.rivetBinders);
 
-            if ('auto' === this.rivetConfig) {
-                this.rivetView = rivetView({
-                    rivetPrefix : 'data-rv',
-                    rivetFormatters : _.extend.apply(null, this.rivetFormatters),
-                    rivetBinders : _.extend.apply(null, this.rivetBinders)
-                }).methodWithActualOptions;
-            } else if (this.rivetConfig) {
-                this.rivetView = rivetView({
-                    rivetPrefix : this.rivetConfig.prefix,
-                    rivetFormatters : _.extend.apply(null, this.rivetFormatters),
-                    rivetBinders : _.extend.apply(null, this.rivetBinders),
-                    instaUpdateRivets : (this.rivetConfig.instaUpdateRivets ? true : false)
-                }).methodWithActualOptions;
+            if (options.rivetConfig) {
+                this.rivetView = rivetView.bind(this, {
+                    rivetPrefix : options.rivetPrefix || 'data-rv',
+                    rivetDelimiters : options.rivetDelimiters || ['{{', '}}'],
+                    rivetFormatters : _.extend.apply(_, options.rivetFormatters),
+                    rivetBinders : _.extend.apply(_, options.rivetBinders)
+                });
             }
         }
     });

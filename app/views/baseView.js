@@ -68,7 +68,7 @@ define([
         _setBoundEventListeners.call(this, options);
         if (options && options.plugins && options.plugins.length) {
             _.each(options.plugins, function (plugin) {
-                plugin.call(self);
+                plugin.call(self, options);
             });
 
         }
