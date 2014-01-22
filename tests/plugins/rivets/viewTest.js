@@ -505,8 +505,11 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
 
                             it('models should respond to changes in the dom', function(done) {
                                 rivetView.start().done(function() {
-                                    $('#' + riveted).children().first().val().should.equal('George Harrison');
-                                    $('#' + riveted).children().first().val('Johnathan');
+                                    var $riveted = $('#' + riveted);
+                                    $riveted.children().first().val().should.equal('George Harrison');
+                                    $riveted.children().first().val('Johnathan');
+                                    $riveted.children().first().change();
+
                                     this.collection.first().get('name').should.equal('Johnathan');
                                     done();
                                 });
