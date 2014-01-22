@@ -75,7 +75,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
             };
             Rivets.configure({
                 preloadData : true,
-                prefix : optionsForRivets.rivetPrefix,
+                prefix : optionsForRivets.rivetsPrefix,
                 // This fires when you use data-rv-on-click.
                 handler : function(context, ev, binding) {
                     this.call(binding.model, ev, binding.view.models);
@@ -90,10 +90,10 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                     });
             }
 
-            Rivets.config.templateDelimiters = optionsForRivets.rivetDelimiters;
+            Rivets.config.templateDelimiters = optionsForRivets.rivetsDelimiters;
 
-            _.extend(Rivets.formatters, optionsForRivets.rivetFormatters);
-            _.extend(Rivets.binders, optionsForRivets.rivetBinders);
+            _.extend(Rivets.formatters, optionsForRivets.rivetsFormatters);
+            _.extend(Rivets.binders, optionsForRivets.rivetsBinders);
 
             // bind data to rivets values.
             return Rivets.bind(this.$el, {model : this.model, view : this});
