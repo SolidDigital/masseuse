@@ -68,6 +68,10 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                 done();
                             });
                         });
+
+                        xit('model changes when dom changes', function() {
+
+                        });
                         describe('nested fields', function() {
                             beforeEach(function() {
                                 options = {
@@ -203,6 +207,10 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     done();
                                 });
                             });
+
+                            xit('model changes when dom is changed', function() {
+
+                            });
                         });
 
                         describe('arrays', function() {
@@ -280,6 +288,10 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     done();
                                 });
                             });
+
+                            xit('model should change when dom changes', function() {
+
+                            });
                         });
 
                         describe('array of objects', function() {
@@ -351,6 +363,10 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
 
                                     done();
                                 });
+                            });
+
+                            xit('model should change when iterated is changed in the dom', function() {
+
                             });
                         });
                     });
