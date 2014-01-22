@@ -9,7 +9,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
             riveted = 'riveted',
             $body = $('body'),
             RivetView = rivetsPlugin.view,
-            Model = masseuse.MasseuseModel;
+            Model = masseuse.MasseuseModel,
+            should = chai.should();
 
         chai.use(sinonChai);
         mocha.setup('bdd');
@@ -74,7 +75,10 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     template : '<div id="' + riveted + '">{{model:movie->title}}</div>',
                                     modelData : {
                                         movie : {
-                                            title : 'A the an.'
+                                            title : 'A the an.',
+                                            nested : new Backbone.Model({
+                                                title : 'Juju'
+                                            })
                                         }
                                     }
                                 };
@@ -86,6 +90,24 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     done();
                                 });
                             });
+
+                            it('test dom changes when nested model is changed from top level', function(done) {
+                                rivetView.start().done(function() {
+                                    rivetView.model.set('movie.title', 'other');
+                                    $('#' + riveted).html().should.equal('other');
+                                    done();
+                                });
+                            });
+                            it('model is preserved as a model when nested model is changed from top level',
+                                function(done) {
+                                    rivetView.start().done(function() {
+                                        should.equal(rivetView.model.get('movie.nested') instanceof Backbone.Model,true);
+                                        rivetView.model.set('movie.nested.title', 'other');
+                                        should.equal(rivetView.model.get('movie.nested') instanceof Backbone.Model,true);
+                                        done();
+                                    });
+                                });
+
                             describe('nested models', function() {
                                 var nested;
                                 beforeEach(function() {
@@ -334,7 +356,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                     });
                 });
 
-
                 describe('Backbone Collections', function() {
                     describe('iteration', function() {
                         var collectionTemplate = '<ul id="' + riveted + '">' +
@@ -485,7 +506,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                             it('models should respond to changes in the dom', function(done) {
                                 rivetView.start().done(function() {
                                     $('#' + riveted).children().first().val().should.equal('George Harrison');
-                                    $('#' + riveted).children().first().attr('value', 'Johnathan');
+                                    $('#' + riveted).children().first().val('Johnathan');
                                     this.collection.first().get('name').should.equal('Johnathan');
                                     done();
                                 });

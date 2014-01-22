@@ -1,9 +1,8 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'backbone', 'sinonSpy'],
-    function (_, chai, Squire, mocha, sinon, sinonChai, Backbone) {
+define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'backbone', 'masseuse', 'sinonSpy'],
+    function (_, chai, mocha, sinon, sinonChai, Backbone, masseuse) {
 
         'use strict';
-        var injector = new Squire(),
-            should = chai.should();
+        var should = chai.should();
 
 
         // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
@@ -20,17 +19,11 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'backbone
                 ComputedProperty,
                 ProxyProperty;
 
-            beforeEach(function (done) {
-                injector.require(['masseuse'], function (masseuse) {
-                        ComputedProperty = masseuse.ComputedProperty;
-                        ProxyProperty = masseuse.ProxyProperty;
-                        Model = masseuse.MasseuseModel;
-                        modelInstance = new Model();
-                        done();
-                    },
-                    function () {
-                        done();
-                    });
+            beforeEach(function () {
+                ComputedProperty = masseuse.ComputedProperty;
+                ProxyProperty = masseuse.ProxyProperty;
+                Model = masseuse.MasseuseModel;
+                modelInstance = new Model();
             });
 
             //-----------Tests-----------
@@ -95,10 +88,13 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'backbone
                     modelInstance.get('nestedProperty').subProperty.should.equal('JohnyDeepNested');
                 });
                 it('should set a nested field on a model even if intermediate fields are models', function() {
-                    var nested = new Model();
+                    var nested = new Model({title:'new'});
                     modelInstance.set('nestedProperty', nested);
                     modelInstance.set('nestedProperty.title', 'blah');
-                    modelInstance.get('nestedProperty.title').should.equal('blah');
+                    should.equal(nested instanceof Backbone.Model, true);
+                    modelInstance.attributes.nestedProperty.attributes.title.should.equal('blah');
+                    should.not.exist(modelInstance.attributes.nestedProperty.title);
+
                 });
                 it('should fire a change event on the top level property when setting a nested attribute', function() {
                     var listener = _.extend({}, Backbone.Events),
