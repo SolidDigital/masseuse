@@ -7,6 +7,7 @@ define([
 
     var viewOptions = ['name', 'appendTo', 'wrapper'],
         BEFORE_RENDER_DONE = 'beforeRenderDone',
+        AFTER_TEMPLATING_DONE = 'afterTemplatingDone',
         RENDER_DONE = 'renderDone',
         AFTER_RENDER_DONE = 'afterRenderDone',
         MODEL_DATA = 'modelData',
@@ -36,6 +37,7 @@ define([
         });
 
     BaseView.beforeRenderDone = BEFORE_RENDER_DONE;
+    BaseView.afterTemplatingDone = AFTER_TEMPLATING_DONE;
     BaseView.renderDone = RENDER_DONE;
     BaseView.afterRenderDone = AFTER_RENDER_DONE;
 
@@ -106,22 +108,24 @@ define([
     }
 
     function render () {
-        this.appendOrInsertView();
+        this.appendOrInsertView(arguments[arguments.length - 1]);
     }
 
-    function appendOrInsertView () {
-        this.appendTo ? _appendTo.call(this) : _insertView.call(this);
+    function appendOrInsertView ($startDeferred) {
+        this.appendTo ? _appendTo.call(this, $startDeferred) : _insertView.call(this, $startDeferred);
     }
 
-    function _appendTo () {
+    function _appendTo ($startDeferred) {
         var template = this.template;
         this.$el.html(template ? template(this.dataToJSON()) : '');
+        $startDeferred && $startDeferred.notify(AFTER_TEMPLATING_DONE);
         $(this.appendTo).append(this.el);
     }
 
-    function _insertView () {
+    function _insertView ($startDeferred) {
         var template = this.template;
         this.$el.html(template ? template(this.dataToJSON()) : ' ');
+        $startDeferred && $startDeferred.notify(AFTER_TEMPLATING_DONE);
     }
 
     // This function is memoized in initialize

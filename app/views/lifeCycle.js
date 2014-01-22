@@ -44,7 +44,7 @@ define(['jquery', 'underscore'],
          * @returns {*}
          * @private
          */
-        function _runLifeCycleMethod (lifeCycleMethod) {
+        function _runLifeCycleMethod (lifeCycleMethod, $startDeferred) {
             var $deferred,
                 args = Array.prototype.slice.call(arguments),
                 returned;
@@ -56,6 +56,10 @@ define(['jquery', 'underscore'],
             if (lifeCycleMethod.length) {
                 $deferred = new $.Deferred();
                 args.unshift($deferred);
+            }
+
+            if ($startDeferred) {
+                args.push($startDeferred);
             }
 
             returned = lifeCycleMethod.apply(this, args);
@@ -73,7 +77,7 @@ define(['jquery', 'underscore'],
         function _renderAndAfterRender ($deferred, afterRender) {
             var rejectStart = $deferred.reject.bind(this);
             $
-                .when(_runLifeCycleMethod.call(this, this.render))
+                .when(_runLifeCycleMethod.call(this, this.render, $deferred))
                 .then($deferred.notify.bind(this,RENDER_DONE))
                 .then(
                     afterRender,
