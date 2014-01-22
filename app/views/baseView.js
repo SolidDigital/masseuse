@@ -115,19 +115,13 @@ define([
 
     function _appendTo () {
         var template = this.template;
-        if (false === this.wrapper) {
-            if (template) {
-                this.setElement($(template(this.dataToJSON())));
-            }
-        } else {
-            this.$el.html(template ? template(this.dataToJSON()) : '');
-        }
+        this.$el.html(template ? template(this.dataToJSON()) : '');
         $(this.appendTo).append(this.el);
     }
 
     function _insertView () {
         var template = this.template;
-        this.$el.html(template ? template(this.dataToJSON()) : '');
+        this.$el.html(template ? template(this.dataToJSON()) : ' ');
     }
 
     // This function is memoized in initialize
