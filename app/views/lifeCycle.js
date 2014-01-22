@@ -22,6 +22,8 @@ define(['jquery', 'underscore'],
                 renderAndAfterRender = _renderAndAfterRender.bind(this, $deferred, afterRender),
                 rejectStart = $deferred.reject.bind(this);
 
+            $deferred.progress(this.trigger.bind(this));
+
             $
                 .when(_runLifeCycleMethod.call(this, this.beforeRender))
                 .then(notifyBeforeRenderDone)

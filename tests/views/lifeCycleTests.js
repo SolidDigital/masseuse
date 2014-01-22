@@ -114,6 +114,20 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy
                                 }
                             });
                         });
+                    it('view should have events "beforeRenderDone", "renderDone", and "afterRenderDone" in sequence',
+                        function (done) {
+                            var eventSpy = sinon.spy();
+                            viewInstance.on('all', function(event) {
+                                eventSpy(event);
+                                if (3 <= eventSpy.callCount) {
+                                    eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
+                                    eventSpy.secondCall.args[0].should.equal('renderDone');
+                                    eventSpy.thirdCall.args[0].should.equal('afterRenderDone');
+                                    done();
+                                }
+                            });
+                            viewInstance.start();
+                        });
 
                     describe('when rejected', function () {
 
