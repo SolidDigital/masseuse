@@ -1,5 +1,5 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
-    function (_, chai, Squire, mocha, sinon, sinonChai, masseuse) {
+define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
+    function (_, chai, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
         var VIEW1_NAME = 'testView1',
