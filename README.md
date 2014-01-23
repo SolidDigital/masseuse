@@ -84,6 +84,21 @@ npm install -g mocha-phantomjs phantomjs
 `grunt test` runs, opens, and watches the tests in the browser. Pull requests welcomed!
 `grunt test-cli` runs tests headless.
 
+## Utilities
+
+* grunt task called `notes:since` to show release notes since a version number (have to match versions exactly)
+
+    ```shell
+    # all release notes
+    grunt notes:since
+
+    # all release notes since 1.0.0
+    grunt notes:since:1.0.0
+
+    # all release notes since the beginning until 0.0.3
+    grunt notes:since::0.0.3
+    ```
+
 ## Release Notes
 
 * 1.1.0 - 2014-01-22 - [features](release_notes/0.2.0.md)

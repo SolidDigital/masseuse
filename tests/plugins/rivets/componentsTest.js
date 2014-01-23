@@ -34,7 +34,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
 
         describe('rivets components with rivet views', function () {
             beforeEach(function() {
-                var $div = $('<div id="' + testDom + '"/>');
+                var $div = $('<div id="' + testDom + '"><ul></ul></div>');
                 $body.append($div);
             });
 
@@ -49,12 +49,27 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
 
             describe('riveting', function() {
                 beforeEach(function() {
-                    template = '<data-rv-list data-rv-each-item="collection:"></data-rv-list>'
+                    // TODO: redo with collections
+                    template = '<li data-rv-each-item="model:list">' +
+                                    '<data-rv-list></data-rv-list>' +
+                                '</li>',
                     options = {
                         el : '#' + testDom,
                         template : template,
                         modelData : {
-                            title : 'There it is.'
+                            list : [
+                                {
+                                top1 : {
+
+                                }
+                                },
+                                'top2',
+                                {
+                                    top3 : {
+
+                                }
+                                }
+                            ]
                         },
                         rivetsConfig : true
                     };
