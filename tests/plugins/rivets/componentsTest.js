@@ -59,15 +59,15 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                         modelData : {
                             list : [
                                 {
-                                top1 : {
+                                    top1 : {
 
-                                }
+                                    }
                                 },
                                 'top2',
                                 {
                                     top3 : {
 
-                                }
+                                    }
                                 }
                             ]
                         },
