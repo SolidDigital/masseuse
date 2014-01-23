@@ -339,18 +339,30 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             });
                         });
                         describe('and adding an option.appendTo sizzle', function() {
-                            beforeEach(function() {
+                            it('will append view.el to $(appendTo)', function (done) {
                                 view = new BaseView({
-                                    appendTo : '#' + testDom,
-                                    template : '<div id="me"></div>'
+                                    appendTo: '#' + testDom,
+                                    template: '<div id="me"></div>'
                                 });
-                            });
-                            it('will append view.el to $(appendTo)', function(done) {
-                                view.start().done(function() {
+
+                                view.start().done(function () {
                                     $('#' + testDom).html().should.equal('<div><div id="me"></div></div>');
                                     done();
                                 });
                             });
+                            it('will append view.el to $(appendTo) without a wrapper is `false === options.wrapper`',
+                                function (done) {
+                                    view = new BaseView({
+                                        appendTo: '#' + testDom,
+                                        template: '<div id="me"></div>',
+                                        wrapper: false
+                                    });
+
+                                    view.start().done(function () {
+                                        $('#' + testDom).html().should.equal('<div id="me"></div>');
+                                        done();
+                                    });
+                                });
                         });
                     });
 
