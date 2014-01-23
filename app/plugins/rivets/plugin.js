@@ -25,8 +25,10 @@ define(['underscore', './adapter', './binders', './formatters'],
                 rivetsBinders : _.extend.apply(_, options.rivetsBinders)
             };
 
-            if (options.rivetsConfig || options.rivetConfig) {
-                this.rivetView = rivetView.bind(this, rivetsOptions);
-            }
+            this.listenTo(this, 'afterTemplatingDone', function() {
+                if (options.rivetsConfig || options.rivetConfig) {
+                    rivetView.call(this, rivetsOptions);
+                }
+            });
         }
     });

@@ -118,14 +118,14 @@ define([
     function _appendTo ($startDeferred) {
         var template = this.template;
         this.$el.html(template ? template(this.dataToJSON()) : '');
-        $startDeferred && $startDeferred.notify(AFTER_TEMPLATING_DONE);
+        $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
         $(this.appendTo).append(this.el);
     }
 
     function _insertView ($startDeferred) {
         var template = this.template;
         this.$el.html(template ? template(this.dataToJSON()) : ' ');
-        $startDeferred && $startDeferred.notify(AFTER_TEMPLATING_DONE);
+        $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
     }
 
     // This function is memoized in initialize
