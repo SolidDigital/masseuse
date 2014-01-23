@@ -1,8 +1,7 @@
-define(['underscore','chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy'],
-    function (_, chai, Squire, mocha, sinon, sinonChai) {
+define(['underscore','chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
+    function (_, chai, mocha, sinon, sinonChai, masseuse) {
 
     'use strict';
-    var injector = new Squire();
 
     chai.should();
     chai.use(sinonChai);
@@ -15,25 +14,19 @@ define(['underscore','chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy'
             ProxyProperty,
             otherModel;
 
-        beforeEach(function (done) {
-            injector.require(['masseuse'], function (masseuse) {
-                    ProxyProperty = masseuse.ProxyProperty;
-                    Model = masseuse.MasseuseModel;
-                    modelInstance = new Model();
-                    otherModel = new Model();
-                    otherModel.set('name', 'Jack');
-                    otherModel.set('nestedName', {
-                        name: 'DanteAleghieri',
-                        subNestedName: {
-                            b: 'DanteAleghieri'
-                        }
-                    });
-                    done();
-                },
-                function () {
-                    done();
+        beforeEach(function () {
+                ProxyProperty = masseuse.ProxyProperty;
+                Model = masseuse.MasseuseModel;
+                modelInstance = new Model();
+                otherModel = new Model();
+                otherModel.set('name', 'Jack');
+                otherModel.set('nestedName', {
+                    name: 'DanteAleghieri',
+                    subNestedName: {
+                        b: 'DanteAleghieri'
+                    }
                 });
-        });
+            });
 
         it('should allow the user to see changes of a property on another model', function() {
             modelInstance.set('nameProxy', new ProxyProperty('name', otherModel));

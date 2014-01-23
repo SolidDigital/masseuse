@@ -456,6 +456,7 @@
     Binding.prototype.bind = function(silent) {
       var dependency, key, observer, _i, _len, _ref, _ref1, _ref2, _results,
         _this = this;
+
       if (silent == null) {
         silent = false;
       }
@@ -1071,6 +1072,7 @@
       }
     },
     update: function(models) {
+      debugger;
       var data, key, model, view, _i, _len, _ref, _results;
       data = {};
       for (key in models) {
