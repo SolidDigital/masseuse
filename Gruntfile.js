@@ -22,7 +22,8 @@ module.exports = function (grunt) {
                 },
                 files : [
                     'tests/**/*.js',
-                    'app/*.js'
+                    'app/**/*.js',
+                    '!app/vendor/**'
                 ],
                 tasks : [
                     'jshint'
@@ -205,4 +206,5 @@ module.exports = function (grunt) {
     grunt.registerTask('deployBower', 'Deploy to bower', [
         'clean:build', 'copy:bower', 'build_gh_pages:bower', 'shell:bower'
     ]);
+    grunt.registerTask('deploy', 'deploy docs and bower', ['deployDocs', 'deployBower']);
 };

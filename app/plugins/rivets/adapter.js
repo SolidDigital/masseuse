@@ -6,19 +6,9 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
         var keySeparator = /->/g;
 
         /**
-         * Adapter originally from https://gist.github.com/mogadanez/5728747
-         */
-
-        // TODO: remove configureMethod, it is not really being used here
-
-        /**
          * @namespace adapter
          */
-        return configureMethod({
-            rivetScope : undefined,
-            rivetPrefix : undefined,
-            instaUpdateRivets : false
-        }, function (config) {
+        return function (optionsForRivets) {
             Rivets.adapters[':'] =  {
                 /**
                  * @memberof adapter
@@ -85,9 +75,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
             };
             Rivets.configure({
                 preloadData : true,
-                prefix : config.rivetPrefix,
-                // preloadData: false
-
+                prefix : optionsForRivets.rivetsPrefix,
                 // This fires when you use data-rv-on-click.
                 handler : function(context, ev, binding) {
                     this.call(binding.model, ev, binding.view.models);
@@ -95,19 +83,20 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
             });
             // Rivets works off of listening to the change event, which doesn't happen on inputs until loss of focus
             // Work around that if desired
-            if (config.instaUpdateRivets) {
-                this.elementCache(config.rivetScope + ' input').on('keypress paste textInput input', function () {
-                    $(this).trigger('change');
-                });
+            if (optionsForRivets.instaUpdateRivets) {
+                this.$('input').on('keypress paste textInput input',
+                    function () {
+                        $(this).trigger('change');
+                    });
             }
 
-            Rivets.config.templateDelimiters = ['{{', '}}'];
+            Rivets.config.templateDelimiters = optionsForRivets.rivetsDelimiters;
 
-            _.extend(Rivets.formatters, config.rivetFormatters);
-            _.extend(Rivets.binders, config.rivetBinders);
+            _.extend(Rivets.formatters, optionsForRivets.rivetsFormatters);
+            _.extend(Rivets.binders, optionsForRivets.rivetsBinders);
 
             // bind data to rivets values.
             return Rivets.bind(this.$el, {model : this.model, view : this});
 
-        }).methodWithDefaultOptions;
+        };
     });
