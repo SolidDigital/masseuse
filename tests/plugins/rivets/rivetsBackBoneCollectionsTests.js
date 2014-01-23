@@ -68,6 +68,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'rivetsPlugin',
 
                     options = {
                         el : '#' + testDom,
+                        rivetConfig : true,
                         template : collectionTemplate,
                         modelData : {
                             title : 'There it is.'
@@ -133,6 +134,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'rivetsPlugin',
 
                         options = {
                             el : '#' + testDom,
+                            rivetConfig : true,
                             template : collectionTemplate,
                             modelData : {
                                 title : 'There it is.'

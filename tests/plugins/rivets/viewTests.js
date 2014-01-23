@@ -48,6 +48,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                             options = {
                                 el : '#' + testDom,
                                 template : template,
+                                rivetConfig : true,
                                 modelData : {
                                     title : 'There it is.'
                                 }
@@ -76,6 +77,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                             beforeEach(function() {
                                 options = {
                                     el : '#' + testDom,
+                                    rivetConfig : true,
                                     template : '<div id="' + riveted + '">{{model:movie->title}}</div>',
                                     modelData : {
                                         movie : {
@@ -118,6 +120,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     nested = new Model({title:'test'});
                                     options = {
                                         el : '#' + testDom,
+                                        rivetConfig : true,
                                         template : '<div id="' + riveted + '">{{model:nested->title}}</div>',
                                         modelData : {
                                             nested : nested
@@ -148,6 +151,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     nested.set({this:{that:{other: deepNested}}});
                                     options = {
                                         el : '#' + testDom,
+                                        rivetConfig : true,
                                         template : '<div id="' + riveted +
                                             '">{{model:nested->this->that->other->oh->yeah}}</div>',
                                         modelData : {
@@ -187,6 +191,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                             beforeEach(function() {
                                 attributeOptions = {
                                     el : '#' + testDom,
+                                    rivetConfig : true,
                                     template : '<div id="' + riveted + '" data-rv-href="model:href">test</div>',
                                     modelData : {
                                         href : 'http://www.blah.com'
@@ -219,6 +224,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                             beforeEach(function() {
                                 attributeOptions = {
                                     el : '#' + testDom,
+                                    rivetConfig : true,
                                     template : '<div data-rv-each-ref="model:href" id="' + riveted +
                                         '" >{{ref}}</div>',
                                     modelData : {
@@ -255,6 +261,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                 options = {
                                     el : '#' + testDom,
                                     template : iterationTemplate,
+                                    rivetConfig : true,
                                     modelData : {
                                         items : [
                                             'Mike',
@@ -308,6 +315,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                             beforeEach(function() {
                                 options = {
                                     el : '#' + testDom,
+                                    rivetConfig : true,
                                     template : iterationTemplate,
                                     modelData : {
                                         items : [
