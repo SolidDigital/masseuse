@@ -56,7 +56,7 @@
         './views/viewContextTests',
         './models/masseuseModelTests',
         './models/computedPropertyTests',
-//        './models/proxyPropertyTests',
+        './models/proxyPropertyTests',
 //        './plugins/rivets/viewTest',
         './plugins/rivets/rivetsBackBoneCollections',
         './utilities/channelsTests',
