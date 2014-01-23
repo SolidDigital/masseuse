@@ -61,7 +61,7 @@
         './plugins/rivets/rivetsBackBoneCollections',
         './utilities/channelsTests',
         './utilities/createOptionsTests',
-//        './utilities/deferMethodTests',
+        './utilities/deferMethodTests',
 //        './routers/masseuseRouterTests.js'
     ], function (mocha) {
         if (typeof mochaPhantomJS !== 'undefined') {

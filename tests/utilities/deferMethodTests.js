@@ -1,9 +1,7 @@
-define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'squire', 'sinonSpy'],
-    function (_, chai, mocha, sinon, sinonChai, Squire) {
+define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', '../../app/utilities/deferMethod', 'sinonSpy'],
+    function (_, chai, mocha, sinon, sinonChai, deferMethod) {
 
         'use strict';
-
-        var injector = new Squire();
 
         chai.should();
 
@@ -12,15 +10,6 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'squire', 'sinonSpy
         mocha.setup('bdd');
 
         describe('deferMethod', function() {
-
-            var deferMethod;
-
-            beforeEach(function (done) {
-                injector.require(['../app/utilities/deferMethod'], function (deferMethodDep) {
-                    deferMethod = deferMethodDep;
-                    done();
-                });
-            });
 
             it('a deferred method returns a promise', function() {
                 var promise = deferMethod(function() {}).closure();
