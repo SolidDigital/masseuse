@@ -1,7 +1,7 @@
 define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'rivetsPlugin',
-    'masseuse', 'backbone', 'sinonSpy'],
+    'masseuse', 'backbone', 'sinonChai', 'sinonSpy'],
     function ($, _, chai, mocha, sinon, rivetsPlugin,
-              masseuse, Backbone) {
+              masseuse, Backbone, sinonChai) {
 
         'use strict';
 
@@ -9,6 +9,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'rivetsPlugin',
             riveted = 'riveted',
             $body = $('body'),
             RivetView = rivetsPlugin.view;
+
+        chai.should();
 
         chai.use(sinonChai);
         mocha.setup('bdd');

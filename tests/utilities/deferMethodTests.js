@@ -31,7 +31,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'squire', 'sinonSpy
                 var spy;
 
                 beforeEach(function() {
-                    spy = sinon.spy(),
+                    spy = sinon.spy();
 
                     deferMethod(spy).closure(1,2);
                 });

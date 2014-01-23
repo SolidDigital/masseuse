@@ -15,7 +15,8 @@
                 exports : 'sinon'
             },
             sinonSpy : {
-                deps : ['sinonCall']
+                deps : ['sinonCall'],
+                exports : 'sinonSpy'
             }
         },
         paths : {
@@ -50,18 +51,18 @@
 
     require([
         'mocha',
-        './views/baseViewTests',
-        './views/lifeCycleTests',
-        './views/viewContextTests',
-        './models/masseuseModelTests',
-        './models/computedPropertyTests',
-        './models/proxyPropertyTests',
-        './plugins/rivets/viewTest',
+//        './views/baseViewTests',
+//        './views/lifeCycleTests',
+//        './views/viewContextTests',
+//        './models/masseuseModelTests',
+//        './models/computedPropertyTests',
+//        './models/proxyPropertyTests',
+//        './plugins/rivets/viewTest',
         './plugins/rivets/rivetsBackBoneCollections',
         './utilities/channelsTests',
-        './utilities/createOptionsTests',
-        './utilities/deferMethodTests',
-        './routers/masseuseRouterTests.js'
+//        './utilities/createOptionsTests',
+//        './utilities/deferMethodTests',
+//        './routers/masseuseRouterTests.js'
     ], function (mocha) {
         if (typeof mochaPhantomJS !== 'undefined') {
             mochaPhantomJS.run();
