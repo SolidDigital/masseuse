@@ -79,15 +79,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                  * @param value
                  */
                 publish : function (model, keypath, value) {
-                    var existingModel;
-                    if (model instanceof Backbone.Collection) {
-                        existingModel = model.get(value.cid);
-                        if (!existingModel) {
-                            existingModel.set(value.attributes);
-                        } else {
-                            model.add(value);
-                        }
-                    } else if (model instanceof Backbone.Model) {
+                    if (model instanceof Backbone.Model) {
                         model.set(keypath.replace(keySeparator,'.'), value);
                     }
                 }
