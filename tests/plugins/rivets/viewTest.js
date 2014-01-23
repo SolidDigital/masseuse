@@ -47,7 +47,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                             template : template,
                             modelData : {
                                 title : 'There it is.'
-                            }
+                            },
+                            rivetsConfig : true
                         };
                         rivetView = new RivetView(options);
                     });
@@ -74,7 +75,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     movie : {
                                         title : 'A the an.'
                                     }
-                                }
+                                },
+                                rivetsConfig : true
                             };
                             rivetView = new RivetView(options);
                         });
@@ -96,7 +98,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     template : '<div id="' + riveted + '">{{model:nested->title}}</div>',
                                     modelData : {
                                         nested : nested
-                                    }
+                                    },
+                                    rivetsConfig : true
                                 };
                                 rivetView = new RivetView(options);
                             });
@@ -146,7 +149,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                         '">{{model:nested->this->that->other->oh->yeah}}</div>',
                                     modelData : {
                                         nested : nested
-                                    }
+                                    },
+                                    rivetsConfig : true
                                 };
                                 rivetView = new RivetView(options);
                             });
@@ -184,7 +188,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                 template : '<div id="' + riveted + '" data-rv-href="model:href">test</div>',
                                 modelData : {
                                     href : 'http://www.blah.com'
-                                }
+                                },
+                                rivetsConfig : true
                             };
                             rivetView = new RivetView(attributeOptions);
                         });
@@ -213,7 +218,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                     '" >{{ref}}</div>',
                                 modelData : {
                                     href : ['http://www.blah.com']
-                                }
+                                },
+                                rivetsConfig : true
                             };
                             rivetView = new RivetView(attributeOptions);
                         });
@@ -257,7 +263,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                         'Travis',
                                         'Cooper'
                                     ]
-                                }
+                                },
+                                rivetsConfig : true
                             };
                             rivetView = new RivetView(options);
                         });
@@ -308,7 +315,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
                                             href: 'www.ghengisKahn.com'
                                         }
                                     ]
-                                }
+                                },
+                                rivetsConfig : true
                             };
                             rivetView = new RivetView(options);
                         });
