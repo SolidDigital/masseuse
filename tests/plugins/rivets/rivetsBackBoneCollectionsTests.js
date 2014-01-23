@@ -1,6 +1,6 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'rivetsPlugin',
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPlugin',
     'masseuse', 'backbone', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, rivetsPlugin,
+    function ($, _, chai, mocha, sinon, sinonChai, rivetsPlugin,
               masseuse, Backbone) {
 
         'use strict';
@@ -8,7 +8,14 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'rivetsPlugin',
         var testDom = 'testDom',
             riveted = 'riveted',
             $body = $('body'),
-            RivetView = rivetsPlugin.view;
+            RivetView = rivetsPlugin.view,
+            collectionTemplate,
+            options,
+            rivetView,
+            beatles,
+            masseuse;
+
+        chai.should();
 
         chai.use(sinonChai);
         mocha.setup('bdd');
@@ -24,16 +31,13 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'rivetsPlugin',
             });
 
             describe('iteration', function() {
-                var collectionTemplate = '<ul id="' + riveted + '">' +
-                        '<li data-rv-each-beatle="collection:" data-rv-text="beatle:name"></li>' +
-                        '</ul>',
-                    options,
-                    rivetView;
-
                 beforeEach(function() {
-                    var Beatles = new Backbone.Collection();
+                    collectionTemplate = '<ul id="' + riveted + '">' +
+                            '<li data-rv-each-beatle="collection:" data-rv-text="beatle:name"></li>' +
+                            '</ul>';
+                    beatles = new Backbone.Collection();
 
-                    Beatles.add([
+                    beatles.add([
                         {
                             name: 'George Harrison',
                             instrument: [
@@ -68,7 +72,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'rivetsPlugin',
                         modelData : {
                             title : 'There it is.'
                         },
-                        collection : Beatles
+                        collection : beatles
                     };
 
                     rivetView = new RivetView(options);
@@ -90,16 +94,15 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'rivetsPlugin',
                 });
 
                 describe('binding', function() {
-                    var collectionTemplate = '<ul id="' + riveted + '">' +
-                            '<input data-rv-each-beatle="collection:" data-rv-value="beatle:name"/>' +
-                            '</ul>',
-                        options,
-                        rivetView;
+
 
                     beforeEach(function() {
-                        var Beatles = new Backbone.Collection();
+                        collectionTemplate = '<ul id="' + riveted + '">' +
+                            '<input data-rv-each-beatle="collection:" data-rv-value="beatle:name"/>' +
+                            '</ul>';
+                        beatles = new Backbone.Collection();
 
-                        Beatles.add([
+                        beatles.add([
                             {
                                 name: 'George Harrison',
                                 instrument: [
@@ -134,7 +137,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'rivetsPlugin',
                             modelData : {
                                 title : 'There it is.'
                             },
-                            collection : Beatles
+                            collection : beatles
                         };
 
                         rivetView = new RivetView(options);
