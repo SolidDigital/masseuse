@@ -57,10 +57,10 @@
         './models/masseuseModelTests',
         './models/computedPropertyTests',
         './models/proxyPropertyTests',
-//        './plugins/rivets/viewTest',
+        './plugins/rivets/viewTest',
         './plugins/rivets/rivetsBackBoneCollections',
         './utilities/channelsTests',
-//        './utilities/createOptionsTests',
+        './utilities/createOptionsTests',
 //        './utilities/deferMethodTests',
 //        './routers/masseuseRouterTests.js'
     ], function (mocha) {

@@ -26,7 +26,7 @@ define(['underscore','chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSp
                         b: 'DanteAleghieri'
                     }
                 });
-        });
+            });
 
         it('should allow the user to see changes of a property on another model', function() {
             modelInstance.set('nameProxy', new ProxyProperty('name', otherModel));
