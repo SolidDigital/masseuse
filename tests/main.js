@@ -51,8 +51,8 @@
 
     require([
         'mocha',
-//        './views/baseViewTests',
-//        './views/lifeCycleTests',
+        './views/baseViewTests',
+        './views/lifeCycleTests',
 //        './views/viewContextTests',
 //        './models/masseuseModelTests',
 //        './models/computedPropertyTests',
