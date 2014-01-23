@@ -62,7 +62,7 @@
         './utilities/channelsTests',
         './utilities/createOptionsTests',
         './utilities/deferMethodTests',
-//        './routers/masseuseRouterTests.js'
+        './routers/masseuseRouterTests.js'
     ], function (mocha) {
         if (typeof mochaPhantomJS !== 'undefined') {
             mochaPhantomJS.run();
