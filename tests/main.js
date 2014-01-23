@@ -15,7 +15,8 @@
                 exports : 'sinon'
             },
             sinonSpy : {
-                deps : ['sinonCall']
+                deps : ['sinonCall'],
+                exports : 'sinonSpy'
             }
         },
         paths : {
@@ -56,7 +57,8 @@
         './models/masseuseModelTests',
         './models/computedPropertyTests',
         './models/proxyPropertyTests',
-        './plugins/rivets/viewTest',
+        './plugins/rivets/viewTests',
+        './plugins/rivets/rivetsBackBoneCollectionsTests',
         './utilities/channelsTests',
         './utilities/createOptionsTests',
         './utilities/deferMethodTests',

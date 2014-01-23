@@ -1,7 +1,6 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy'],
-    function (_, chai, Squire, mocha, sinon, sinonChai) {
+define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
+    function (_, chai, mocha, sinon, sinonChai, masseuse) {
         'use strict';
-        var injector = new Squire();
 
         chai.should();
 
@@ -12,14 +11,8 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy
         describe('ViewContext', function () {
 
             var ViewContext;
-            beforeEach(function (done) {
-                injector.require(['masseuse'], function (masseuse) {
-                        ViewContext = masseuse.ViewContext;
-                        done();
-                    },
-                    function () {
-                        done();
-                    });
+            beforeEach(function () {
+                ViewContext = masseuse.ViewContext;
             });
 
             it('binds correctly in simple case', function () {

@@ -17,6 +17,7 @@ define(['chai', 'mocha', 'sinonChai'],
     function (chai, mocha, sinonChai) {
     'use strict';
 
+    chai.should();
     chai.use(sinonChai);
     mocha.setup('bdd');
 
