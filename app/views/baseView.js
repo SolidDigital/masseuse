@@ -116,8 +116,20 @@ define([
     }
 
     function _appendTo ($startDeferred) {
-        var template = this.template;
-        this.$el.html(template ? template(this.dataToJSON()) : '');
+        var template = this.template,
+            $newEl,
+            wrapper = this.wrapper !== false;
+
+        template = template ? template(this.dataToJSON()) : '';
+
+        $newEl = wrapper ? this.el : $(template);
+        // More than 1 root level element and no wrapper leads to this.el being incorrect.
+        if (!wrapper && 1 === $newEl.length) {
+            this.setElement($newEl);
+        } else {
+            this.$el.html(template);
+        }
+
         $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
         $(this.appendTo).append(this.el);
     }
