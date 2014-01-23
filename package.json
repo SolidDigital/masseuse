@@ -1,6 +1,6 @@
 {
   "name": "masseuse",
-  "version": "1.0.3",
+  "version": "1.1.0-inProgress",
   "description": "A Backbone helper library with a View lifecycle, View configs, child Views, Proxy and Computed Properties, and a custom Router with beforeRouting support",
   "main": " ",
   "scripts": {
@@ -36,7 +36,7 @@
     "grunt-contrib-watch": "0.5.3",
     "grunt-open": "0.2.2",
     "grunt-contrib-requirejs": "0.4.1",
-    "grunt-shell": "0.6.2",
+    "grunt-shell": "0.6.4",
     "matchdep": "0.3.0",
     "grunt-jsdoc": "0.5.1",
     "grunt-contrib-clean": "0.5.0",

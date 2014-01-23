@@ -22,7 +22,8 @@ module.exports = function (grunt) {
                 },
                 files : [
                     'tests/**/*.js',
-                    'app/*.js'
+                    'app/**/*.js',
+                    '!app/vendor/**'
                 ],
                 tasks : [
                     'jshint'

@@ -106,13 +106,29 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy
                             var eventSpy = sinon.spy();
                             viewInstance.start().progress(function (event) {
                                 eventSpy(event);
-                                if (3 <= eventSpy.callCount) {
+                                if (4 <= eventSpy.callCount) {
                                     eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
-                                    eventSpy.secondCall.args[0].should.equal('renderDone');
-                                    eventSpy.thirdCall.args[0].should.equal('afterRenderDone');
+                                    eventSpy.secondCall.args[0].should.equal('afterTemplatingDone');
+                                    eventSpy.thirdCall.args[0].should.equal('renderDone');
+                                    eventSpy.getCall(3).args[0].should.equal('afterRenderDone');
                                     done();
                                 }
                             });
+                        });
+                    it('view should have events "beforeRenderDone", "renderDone", and "afterRenderDone" in sequence',
+                        function (done) {
+                            var eventSpy = sinon.spy();
+                            viewInstance.on('all', function(event) {
+                                eventSpy(event);
+                                if (4 <= eventSpy.callCount) {
+                                    eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
+                                    eventSpy.secondCall.args[0].should.equal('afterTemplatingDone');
+                                    eventSpy.thirdCall.args[0].should.equal('renderDone');
+                                    eventSpy.getCall(3).args[0].should.equal('afterRenderDone');
+                                    done();
+                                }
+                            });
+                            viewInstance.start();
                         });
 
                     describe('when rejected', function () {
@@ -128,34 +144,39 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy
                         });
 
                         describe('in render', function () {
-                            it('should notify beforeRenderDone then not notify renderDone', function () {
+                            it('should notify beforeRenderDone then not notify renderDone', function (done) {
                                 var eventSpy = sinon.spy(),
                                     viewInstance = new AsyncBaseViewRejectedInRender({name : VIEW1_NAME});
 
-                                viewInstance.start().progress(function (event) {
-                                    eventSpy(event);
-                                    if (2 <= eventSpy.callCount) {
+                                viewInstance
+                                    .start()
+                                    .progress(eventSpy)
+                                    .fail(function() {
                                         eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
-                                        eventSpy.secondCall.args[0].should.not.equal('renderDone');
-                                    }
-                                });
+                                        should.not.exist(eventSpy.secondCall);
+                                        done();
+                                    });
+
                             });
                         });
 
+                        // Not sure how to test not calling somethign w/o a timeout
                         describe('in afterRender', function () {
                             it('should notify beforeRenderDone then notify renderDone then NOT notify afterRenderDone',
-                                function () {
+                                function (done) {
                                     var eventSpy = sinon.spy(),
                                         viewInstance = new AsyncBaseViewRejectedInAfterRender({name : VIEW1_NAME});
 
-                                    viewInstance.start().progress(function (event) {
-                                        eventSpy(event);
-                                        if (3 === eventSpy.callCount) {
+                                    viewInstance
+                                        .start()
+                                        .progress(eventSpy)
+                                        .fail(function() {
                                             eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
-                                            eventSpy.secondCall.args[0].should.equal('renderDone');
-                                            eventSpy.thirdCall.args[0].should.not.equal('afterRenderDone');
-                                        }
-                                    });
+                                            eventSpy.secondCall.args[0].should.equal('afterTemplatingDone');
+                                            eventSpy.thirdCall.args[0].should.equal('renderDone');
+                                            should.not.exist(eventSpy.getCall(3));
+                                            done();
+                                        });
                                 });
                         });
                     });
