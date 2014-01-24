@@ -10,6 +10,7 @@ module.exports = function (grunt) {
                         'app/**',
                         '!app/vendor/**',
                         'tests/**',
+                        'task-configs/**',
                         'release_notes/**',
                         'LICENSE-MIT',
                         'README.md',

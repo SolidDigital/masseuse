@@ -1,10 +1,9 @@
-define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy'],
-    function (_, chai, Squire, mocha, sinon, sinonChai) {
+define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
+    function (_, chai, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
         var VIEW1_NAME = 'testView1',
             CHILD_VIEW_NAME = 'childView',
-            injector = new Squire(),
             should = chai.should();
 
 
@@ -29,49 +28,45 @@ define(['underscore', 'chai', 'squire', 'mocha', 'sinon', 'sinonChai', 'sinonSpy
 
 
             beforeEach(function (done) {
-                injector.require(['masseuse'], function (masseuse) {
-
-                        BaseView = masseuse.BaseView;
-                        AsyncExtendedBaseView = BaseView.extend({
-                            beforeRender : function (deferred) {
-                                $beforeRenderDeferred = deferred;
-                            },
-                            afterRender : function (deferred) {
-                                $afterRenderDeferred = deferred;
-                            }
-                        });
-                        AsyncBaseViewRejectedInBeforeRender = BaseView.extend({
-                            beforeRender : function (deferred) {
-                                deferred.reject();
-                            }
-                        });
-                        AsyncBaseViewRejectedInRender = BaseView.extend({
-                            render : function (deferred) {
-                                deferred.reject();
-                            }
-                        });
-                        AsyncBaseViewRejectedInAfterRender = BaseView.extend({
-                            afterRender : function (deferred) {
-                                deferred.reject();
-                            }
-                        });
-                        SyncExtendedBaseView = BaseView.extend({
-                            beforeRender : function () {
-                            },
-                            afterRender : function () {
-                            }
-                        });
-
-                        asyncInstance = new AsyncExtendedBaseView({
-                            name : VIEW1_NAME
-                        });
-                        viewInstance = syncInstance = new SyncExtendedBaseView({
-                            name : VIEW1_NAME
-                        });
-
-                        done();
+                BaseView = masseuse.BaseView;
+                AsyncExtendedBaseView = BaseView.extend({
+                    beforeRender : function (deferred) {
+                        $beforeRenderDeferred = deferred;
                     },
-                    function () {});
+                    afterRender : function (deferred) {
+                        $afterRenderDeferred = deferred;
+                    }
+                });
+                AsyncBaseViewRejectedInBeforeRender = BaseView.extend({
+                    beforeRender : function (deferred) {
+                        deferred.reject();
+                    }
+                });
+                AsyncBaseViewRejectedInRender = BaseView.extend({
+                    render : function (deferred) {
+                        deferred.reject();
+                    }
+                });
+                AsyncBaseViewRejectedInAfterRender = BaseView.extend({
+                    afterRender : function (deferred) {
+                        deferred.reject();
+                    }
+                });
+                SyncExtendedBaseView = BaseView.extend({
+                    beforeRender : function () {
+                    },
+                    afterRender : function () {
+                    }
+                });
+
+                asyncInstance = new AsyncExtendedBaseView({
+                    name : VIEW1_NAME
+                });
+                viewInstance = syncInstance = new SyncExtendedBaseView({
+                    name : VIEW1_NAME
+                });
+
+                done();
             });
 
             //-----------Tests-----------

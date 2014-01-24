@@ -15,7 +15,8 @@
                 exports : 'sinon'
             },
             sinonSpy : {
-                deps : ['sinonCall']
+                deps : ['sinonCall'],
+                exports : 'sinonSpy'
             }
         },
         paths : {
@@ -25,7 +26,6 @@
             text : '../app/vendor/requirejs-text/text',
             mocha : '../app/vendor/mocha/mocha',
             chai : '../app/vendor/chai/chai',
-            squire : '../app/vendor/squire/src/Squire',
             sinon : '../app/vendor/sinon/lib/sinon',
             sinonSpy : '../app/vendor/sinon/lib/sinon/spy',
             sinonChai : '../app/vendor/sinon-chai/lib/sinon-chai',
@@ -56,7 +56,8 @@
         './models/masseuseModelTests',
         './models/computedPropertyTests',
         './models/proxyPropertyTests',
-        './plugins/rivets/viewTest',
+        './plugins/rivets/viewTests',
+        './plugins/rivets/rivetsBackBoneCollectionsTests',
         './plugins/rivets/componentsTest',
         './utilities/channelsTests',
         './utilities/createOptionsTests',

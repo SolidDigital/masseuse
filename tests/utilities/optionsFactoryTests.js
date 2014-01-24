@@ -1,17 +1,15 @@
-define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'squire', 'sinonSpy'],
-    function (_, chai, mocha, sinon, sinonChai, Squire) {
+define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', '../../app/utilities/optionsFactory', 'sinonSpy'],
+    function (_, chai, mocha, sinon, sinonChai, OptionsFactory) {
         'use strict';
 
-        var injector = new Squire(),
-            should = chai.should();
+        var should = chai.should();
 
         // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
         chai.use(sinonChai);
         mocha.setup('bdd');
 
         describe('OptionsFactory', function() {
-            var OptionsFactory,
-                defaultOptions = {
+            var defaultOptions = {
                     defaultOptionsKey: 'defaultOptionsValue',
                     sharedKey: 'sharedValueInDefaultOptions'
                 },
@@ -24,12 +22,6 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'squire', 'sinonSpy
                     sharedKey: 'sharedValueInCustomOption'
                 };
 
-            beforeEach(function (done) {
-                injector.require(['../app/utilities/optionsFactory'], function (OptionsFactoryDep) {
-                    OptionsFactory = OptionsFactoryDep;
-                    done();
-                });
-            });
 
             it('should use the defaultOptions if view defines one and none is passed in', function() {
                 var options = OptionsFactory(undefined, defaultOptions);
