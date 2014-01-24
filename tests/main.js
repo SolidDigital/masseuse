@@ -58,6 +58,7 @@
         './models/proxyPropertyTests',
         './plugins/rivets/viewTests',
         './plugins/rivets/rivetsBackBoneCollectionsTests',
+        './plugins/rivets/componentsTest',
         './utilities/channelsTests',
         './utilities/createOptionsTests',
         './utilities/deferMethodTests',

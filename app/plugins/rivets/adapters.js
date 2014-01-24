@@ -1,6 +1,6 @@
 /* jshint loopfunc:true, maxdepth:3 */
-define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
-    function ($, Rivets, configureMethod, Backbone, _) {
+define(['jquery', 'rivets', './configureMethod', 'backbone'],
+    function ($, Rivets, configureMethod, Backbone) {
         'use strict';
 
         var keySeparator = /->/g;
@@ -8,8 +8,9 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
         /**
          * @namespace adapter
          */
-        return function (optionsForRivets) {
-            Rivets.adapters[':'] =  {
+        return {
+            ':' :  {
+
                 /**
                  * @memberof adapter
                  * @instance
@@ -73,35 +74,6 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
                         model.set(keypath.replace(keySeparator,'.'), value);
                     }
                 }
-            };
-            Rivets.configure({
-                preloadData : true,
-                prefix : optionsForRivets.rivetsPrefix,
-                // This fires when you use data-rv-on-click.
-                handler : function(context, ev, binding) {
-                    this.call(binding.model, ev, binding.view.models);
-                }
-            });
-            // Rivets works off of listening to the change event, which doesn't happen on inputs until loss of focus
-            // Work around that if desired
-            if (optionsForRivets.instaUpdateRivets) {
-                this.$('input').on('keypress paste textInput input',
-                    function () {
-                        $(this).trigger('change');
-                    });
             }
-
-            Rivets.config.templateDelimiters = optionsForRivets.rivetsDelimiters;
-
-            _.extend(Rivets.formatters, optionsForRivets.rivetsFormatters);
-            _.extend(Rivets.binders, optionsForRivets.rivetsBinders);
-
-            // bind data to rivets values.
-            return Rivets.bind(this.$el, {
-                model : this.model,
-                view : this,
-                collection: this.collection
-            });
-
         };
     });
