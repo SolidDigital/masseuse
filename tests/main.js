@@ -5,9 +5,6 @@
 // Require.js allows us to configure shortcut alias
     require.config({
         shim : {
-            underscore : {
-                exports : '_'
-            },
             mocha : {
                 exports : 'mocha'
             },
