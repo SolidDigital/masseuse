@@ -5,7 +5,8 @@ define([
 ], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, createOptions, MasseuseModel) {
     'use strict';
 
-    var viewOptions = ['name', 'appendTo', 'wrapper'],
+    var viewOptions = ['model', 'collection', 'el', 'id', 'attributes', 'className', 'tagName', 'events',
+        'name', 'appendTo', 'wrapper'],
         BEFORE_RENDER_DONE = 'beforeRenderDone',
         AFTER_TEMPLATING_DONE = 'afterTemplatingDone',
         RENDER_DONE = 'renderDone',
@@ -18,6 +19,7 @@ define([
          * @type {*|extend|extend|extend|void|Object}
          */
         BaseView = Backbone.View.extend({
+            constructor : constructor,
             defaultBindings : [],
             initialize : initialize,
             start : start,
@@ -47,13 +49,28 @@ define([
     return BaseView;
 
     /**
+     * @method constructor
+     * @memberof BaseView
+     * */
+    function constructor(options, useDefaultOptions) {
+        var args = Array.prototype.slice.call(arguments, 0);
+        this.cid = _.uniqueId('view');
+        options || (options = {});
+        options = createOptions(options, this.defaultOptions, useDefaultOptions);
+        args.shift();
+        args.unshift(options);
+        _.extend(this, _.pick(options, viewOptions));
+        this._ensureElement();
+        this.initialize.apply(this, args);
+        this.delegateEvents();
+    }
+
+    /**
      * @method initialize
      * @memberof BaseView
      * */
-    function initialize (options, useDefaultOptions) {
+    function initialize (options) {
         var self = this;
-
-        options = createOptions(options, this.defaultOptions, useDefaultOptions);
 
         this.elementCache = _.memoize(elementCache);
 

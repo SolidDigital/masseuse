@@ -33,8 +33,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'rivetsPlugin',
             describe('iteration', function() {
                 beforeEach(function() {
                     collectionTemplate = '<ul id="' + riveted + '">' +
-                            '<li data-rv-each-beatle="collection:" data-rv-text="beatle:name"></li>' +
-                            '</ul>';
+                        '<li data-rv-each-beatle="collection:" data-rv-text="beatle:name"></li>' +
+                        '</ul>';
                     beatles = new Backbone.Collection();
 
                     beatles.add([

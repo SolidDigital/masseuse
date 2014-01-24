@@ -15,7 +15,7 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
             defaultFormatters = defaultFormatters || {};
 
             options.rivetsComponents =
-                [{}].concat(options.rivetsFormatters || options.rivetComponents);
+                [{}].concat(options.rivetsComponents || options.rivetComponents);
             options.rivetsFormatters =
                 [{}, defaultFormatters].concat(options.rivetsFormatters || options.rivetFormatters);
             options.rivetsAdapters =
