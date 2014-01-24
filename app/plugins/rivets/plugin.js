@@ -1,5 +1,5 @@
-define(['underscore', './adapter', './binders', './formatters'],
-    function(_, rivetView, defaultBinders, defaultFormatters) {
+define(['underscore', './loadRivets', './binders', './formatters', './adapters'],
+    function(_, rivetView, defaultBinders, defaultFormatters, defaultAdapters) {
         'use strict';
         return setViewRiveting;
         /**
@@ -11,17 +11,24 @@ define(['underscore', './adapter', './binders', './formatters'],
         function setViewRiveting (options) {
             var rivetsOptions;
             defaultBinders = defaultBinders || {};
+            defaultAdapters = defaultAdapters || {};
             defaultFormatters = defaultFormatters || {};
 
+            options.rivetsComponents =
+                [{}].concat(options.rivetsComponents || options.rivetComponents);
             options.rivetsFormatters =
                 [{}, defaultFormatters].concat(options.rivetsFormatters || options.rivetFormatters);
+            options.rivetsAdapters =
+                [{}, defaultAdapters].concat(options.rivetsAdapters || options.rivetAdapters);
             options.rivetsBinders =
                 [{}, defaultBinders].concat(options.rivetsBinders || options.rivetBinders);
 
             rivetsOptions = {
-                rivetsPrefix : options.rivetsPrefix || options.rivetPrefix || 'data-rv',
                 rivetsDelimiters : options.rivetsDelimiters || options.rivetDelimiters || ['{{', '}}'],
+                rivetsPrefix : options.rivetsPrefix || options.rivetPrefix || 'data-rv',
+                rivetsComponents : _.extend.apply(_, options.rivetsComponents),
                 rivetsFormatters : _.extend.apply(_, options.rivetsFormatters),
+                rivetsAdapters : _.extend.apply(_, options.rivetsAdapters),
                 rivetsBinders : _.extend.apply(_, options.rivetsBinders)
             };
 
