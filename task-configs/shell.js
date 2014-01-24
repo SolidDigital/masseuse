@@ -24,7 +24,7 @@ module.exports = function(grunt) {
                 stderr : true,
                 failOnError : true
             },
-            command : 'git commit docs -m "jsdoc update"'
+            command : 'git add -A && git commit docs -am "jsdoc update"'
         }
     });
 };
