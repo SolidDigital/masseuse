@@ -37,7 +37,10 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             viewOptions : [
                                 'defaultKey',
                                 'passedInKey'
-                            ]
+                            ],
+                            attributes : {
+                                class : 'boom'
+                            }
                         }
                     });
                 });
@@ -65,6 +68,10 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     }, false);
                     _.has(view, 'defaultKey').should.be.false;
                     view.passedInKey.should.equal(true);
+                });
+                it('default options are applied to this.el', function() {
+                    var view = new OptionsView();
+                    $(view.el).attr('class').should.equal('boom');
                 });
             });
 
