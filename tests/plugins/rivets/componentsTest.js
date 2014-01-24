@@ -7,6 +7,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
         var testDom = 'testDom',
             riveted = 'riveted',
             $body = $('body'),
+            $testDom,
             RivetView = rivetsPlugin.view,
             Model = masseuse.MasseuseModel,
             should = chai.should(),
@@ -17,70 +18,66 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPl
         chai.use(sinonChai);
         mocha.setup('bdd');
 
-        /*
-         rivets.components.partial = {
-            attributes: ["ref"],
-
-            build: function() {
-
-                var view;
-                config = {stuff:this.stuff};
-                view = new View(config);
-
-                return view.el;
-            }
-         }
-         */
-
         describe('rivets components with rivet views', function () {
-            beforeEach(function() {
-                var $div = $('<div id="' + testDom + '"><ul></ul></div>');
-                $body.append($div);
+            beforeEach(function () {
+                $testDom = $('<div id="' + testDom + '"></div>');
+                $body.append($testDom);
+                template = '<ul>' +
+                                '<li data-rv-each-item="model:items">' +
+                                    '<data-rv-list datum="item"></data-rv-list>' +
+                                '</li>' +
+                            '</ul>';
+                options = {
+                    appendTo : '#' + testDom,
+                    wrapper : false,
+                    template : template,
+                    modelData : {
+                        items : [
+                            {
+                                top : 1
+                            },
+                            {
+                                top : 2
+                            },
+                            {
+                                top : 3
+                            }
+                        ]
+                    },
+                    rivetsConfig : true
+                };
             });
 
-            afterEach(function() {
+            afterEach(function () {
+                if (rivetView) {
+                    rivetView.remove();
+                }
                 $('#' + testDom).remove();
             });
 
-            it('test dom is present', function() {
+            it('test dom is present', function () {
                 $('#' + testDom).length.should.equal(1);
             });
 
 
-            describe('riveting', function() {
-                beforeEach(function() {
-                    // TODO: redo with collections
-                    template = '<li data-rv-each-item="model:list">' +
-                                    '<data-rv-list></data-rv-list>' +
-                                '</li>',
-                    options = {
-                        el : '#' + testDom,
-                        template : template,
-                        modelData : {
-                            list : [
-                                {
-                                    top1 : {
-
-                                    }
-                                },
-                                'top2',
-                                {
-                                    top3 : {
-
-                                    }
-                                }
-                            ]
-                        },
-                        rivetsConfig : true
-                    };
-                    rivetView = new RivetView(options);
-                });
-                afterEach(function() {
-                    if (rivetView) {
-                        rivetView.remove();
+            it('simple component', function (done) {
+                rivetView = new RivetView(_.extend({}, options, {
+                    rivetsComponents : {
+                        list : {
+                            attributes : [],
+                            build : function () {
+                                return $('<p data-rv-text="datum.top"></p>')[0];
+                            }
+                        }
                     }
-                });
-
+                }));
+                rivetView
+                    .start()
+                    .done(function() {
+                        $testDom.find('ul > li > p').length.should.equal(3);
+                        $testDom.find('ul li:eq(1) p').html().should.equal('2');
+                        done();
+                    });
             });
         });
     });
