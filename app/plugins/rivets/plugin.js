@@ -24,6 +24,7 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
                 [{}, defaultBinders].concat(options.rivetsBinders || options.rivetBinders);
 
             rivetsOptions = {
+                rivetsInstaUpdate : options.rivetsInstaUpdate,
                 rivetsDelimiters : options.rivetsDelimiters || options.rivetDelimiters || ['{{', '}}'],
                 rivetsPrefix : options.rivetsPrefix || options.rivetPrefix || 'data-rv',
                 rivetsComponents : _.extend.apply(_, options.rivetsComponents),
