@@ -18,7 +18,7 @@ define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
             });
             // Rivets works off of listening to the change event, which doesn't happen on inputs until loss of focus
             // Work around that if desired
-            if (optionsForRivets.instaUpdateRivets) {
+            if (optionsForRivets.rivetsInstaUpdate) {
                 this.$('input').on('keypress paste textInput input',
                     function () {
                         $(this).trigger('change');
