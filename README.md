@@ -1,6 +1,6 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=bower)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-Version: _0.2.1_
+Version: _1.3.2_
 
 Bower pulls from the [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower) (build badge is showing results for branch bower):
 
@@ -45,10 +45,11 @@ Masseuse is a Backbone helper library that uses RequireJS AMDs.
 
 Masseuse is functional, and documentation and tests are being fleshed out.
 
-Masseuse does five main things:
+Masseuse does six main things:
 
 1. Adds lifecycle methods to Views that are optionally async using jQuery promises.
 1. Allows easier separation of Views into a config and functionality sections by providing several shortcut configs.
+1. Adds support of a View that uses Rivets
 1. Adds support for adding child Views.
 1. Provides Proxy and Computed Properties for Masseuse Models
 1. Provides a Masseuse Router extension of the Backbone Router with a before routing callback.
@@ -83,8 +84,33 @@ npm install -g mocha-phantomjs phantomjs
 `grunt test` runs, opens, and watches the tests in the browser. Pull requests welcomed!
 `grunt test-cli` runs tests headless.
 
+## Utilities
+
+* grunt task called `notes:since` to show release notes since a version number (have to match versions exactly)
+
+    ```shell
+    # all release notes
+    grunt notes:since
+
+    # all release notes since 1.0.0
+    grunt notes:since:1.0.0
+
+    # all release notes since the beginning until 0.0.3
+    grunt notes:since::0.0.3
+    ```
+
 ## Release Notes
 
+* 1.3.2 - 2014-01-24 - [patches](release_notes/1.3.2.md)
+* 1.3.1 - 2014-01-24 - [patches](release_notes/1.3.1.md)
+* 1.3.0 - 2014-01-24 - [features](release_notes/1.3.0.md)
+* 1.2.1 - 2014-01-23 - [patches](release_notes/1.2.1.md)
+* 1.2.0 - 2014-01-23 - [features](release_notes/1.2.0.md)
+* 1.1.0 - 2014-01-22 - [features](release_notes/1.1.0.md)
+* 1.0.3 - 2014-01-21 - [patches](release_notes/1.0.3.md)
+* 1.0.2 - 2014-01-20 - [patches](release_notes/1.0.2.md)
+* 1.0.1 - 2014-01-20 - [patches](release_notes/1.0.1.md)
+* 1.0.0 - 2014-01-20 - [backwards incompatibilities](release_notes/1.0.0.md)
 * 0.2.2 - 2014-01-16 - [patches](release_notes/0.2.2.md)
 * 0.2.1 - 2014-01-15 - [patches](release_notes/0.2.1.md)
 * 0.2.0 - 2014-01-14 - [features](release_notes/0.2.0.md)
@@ -96,9 +122,10 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Contributors (`git shortlog -s -n`)
 
-* Peter Ajtai
-* Greg Larrenaga
-* Cooper Hilscher
-* Jonathan Waltner
-* Jesse McCabe
-* Travis McHattie
+* [Peter Ajtai](https://github.com/pajtai)
+* [Greg Larrenaga](https://github.com/Duder-onomy)
+* [Cooper Hilscher](https://github.com/dobbobolina)
+* [Jonathan Waltner](https://github.com/uselessinfo)
+* [Travis McHattie](https://github.com/travism)
+* [Michael Fenwick](https://github.com/MichaelFenwick)
+* [Jesse McCabe](https://github.com/thinksolid)

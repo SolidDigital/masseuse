@@ -1,12 +1,14 @@
 /*global define:false*/
 define([
     'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', './lifeCycle',
-    '../utilities/accessors', '../models/masseuseModel'
-], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, MasseuseModel) {
+    '../utilities/accessors', '../utilities/createOptions', '../models/masseuseModel'
+], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, createOptions, MasseuseModel) {
     'use strict';
 
-    var viewOptions = ['name', 'appendView'],
+    var viewOptions = ['model', 'collection', 'el', 'id', 'attributes', 'className', 'tagName', 'events',
+        'name', 'appendTo', 'wrapper'],
         BEFORE_RENDER_DONE = 'beforeRenderDone',
+        AFTER_TEMPLATING_DONE = 'afterTemplatingDone',
         RENDER_DONE = 'renderDone',
         AFTER_RENDER_DONE = 'afterRenderDone',
         MODEL_DATA = 'modelData',
@@ -17,6 +19,7 @@ define([
          * @type {*|extend|extend|extend|void|Object}
          */
         BaseView = Backbone.View.extend({
+            constructor : constructor,
             defaultBindings : [],
             initialize : initialize,
             start : start,
@@ -29,14 +32,14 @@ define([
             removeChild : removeChild,
             refreshChildren : refreshChildren,
             removeAllChildren : removeAllChildren,
-            appendOrInsertView : appendOrInsertView,
-            setEl : setEl
+            appendOrInsertView : appendOrInsertView
 
             // Dynamically created, so the cache is not shared on the prototype:
             // elementCache: elementCache
         });
 
     BaseView.beforeRenderDone = BEFORE_RENDER_DONE;
+    BaseView.afterTemplatingDone = AFTER_TEMPLATING_DONE;
     BaseView.renderDone = RENDER_DONE;
     BaseView.afterRenderDone = AFTER_RENDER_DONE;
 
@@ -44,6 +47,23 @@ define([
     BaseView.prototype.channels = BaseView.prototype.channels ||  new Channels();
 
     return BaseView;
+
+    /**
+     * @method constructor
+     * @memberof BaseView
+     * */
+    function constructor(options, useDefaultOptions) {
+        var args = Array.prototype.slice.call(arguments, 0);
+        this.cid = _.uniqueId('view');
+        options || (options = {});
+        options = createOptions(options, this.defaultOptions, useDefaultOptions);
+        args.shift();
+        args.unshift(options);
+        _.extend(this, _.pick(options, viewOptions));
+        this._ensureElement();
+        this.initialize.apply(this, args);
+        this.delegateEvents();
+    }
 
     /**
      * @method initialize
@@ -56,20 +76,18 @@ define([
 
         if(options) {
             options = _.clone(options, true);
-            this.initialEl = options.el;
             if (options.viewOptions) {
                 viewOptions = viewOptions.concat(options.viewOptions);
             }
             _.extend(this, _.pick(options, viewOptions));
         }
 
-
         _setTemplate.call(this, options);
         _setModel.call(this, options);
         _setBoundEventListeners.call(this, options);
         if (options && options.plugins && options.plugins.length) {
             _.each(options.plugins, function (plugin) {
-                plugin.call(self);
+                plugin.call(self, options);
             });
 
         }
@@ -107,33 +125,36 @@ define([
     }
 
     function render () {
-        this.setEl();
-        this.appendOrInsertView();
+        this.appendOrInsertView(arguments[arguments.length - 1]);
     }
 
-    function setEl () {
-        if (undefined === this.el && undefined !== this.initialEl || this.parent && undefined !== this.initialEl) {
-            this.setElement($(this.initialEl));
+    function appendOrInsertView ($startDeferred) {
+        this.appendTo ? _appendTo.call(this, $startDeferred) : _insertView.call(this, $startDeferred);
+    }
+
+    function _appendTo ($startDeferred) {
+        var template = this.template,
+            $newEl,
+            wrapper = this.wrapper !== false;
+
+        template = template ? template(this.dataToJSON()) : '';
+
+        $newEl = wrapper ? this.el : $(template);
+        // More than 1 root level element and no wrapper leads to this.el being incorrect.
+        if (!wrapper && 1 === $newEl.length) {
+            this.setElement($newEl);
+        } else {
+            this.$el.html(template);
         }
+
+        $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
+        $(this.appendTo).append(this.el);
     }
 
-    function appendOrInsertView () {
-        if (this.$el && this.template) {
-            if (this.appendView) {
-                _appendView.call(this);
-            } else {
-                _insertView.call(this);
-            }
-        }
-    }
-
-    function _appendView () {
-        this.$el.append(this.template(this.dataToJSON()));
-        this.setElement(this.$el.children().last());
-    }
-
-    function _insertView () {
-        this.$el.html(this.template(this.dataToJSON()));
+    function _insertView ($startDeferred) {
+        var template = this.template;
+        this.$el.html(template ? template(this.dataToJSON()) : ' ');
+        $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
     }
 
     // This function is memoized in initialize

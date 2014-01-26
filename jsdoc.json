@@ -1,0 +1,7 @@
+{
+    "plugins": [ "node_modules/grunt-jsdoc/node_modules/jsdoc/plugins/markdown" ],
+    "markdown": {
+        "parser": "gfm",
+        "hardwrap": true
+    }
+}
