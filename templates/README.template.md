@@ -124,4 +124,4 @@ npm install -g mocha-phantomjs phantomjs
 
 <%= contributors %>
 
-_<%= warning + ' Created: ' + grunt.template.today('yyyy-mm-dd:hh:MM') %>_
+_<%= warning + ' Created: ' + grunt.template.today('yyyy-mm-dd:hh:MM:ss') %>_
