@@ -1,6 +1,10 @@
 /*globals module:true*/
 module.exports = function(grunt) {
     'use strict';
+    // TODO: add windows support
+    var lineEnding = '\n',
+        _ = grunt.util._;
+
     grunt.config('shell', {
         'testPhantom' : {
             options : {
@@ -25,6 +29,22 @@ module.exports = function(grunt) {
                 failOnError : true
             },
             command : 'git add docs && git commit docs -m "jsdoc update"'
+        },
+        'shortlog' : {
+            options : {
+                stderr : true,
+                stdout : false,
+                failOnError : true,
+                callback : function(err, stdout, stderr, cb) {
+                    stdout = stdout.split(lineEnding);
+                    _.each(stdout, function(line, index) {
+                        stdout[index] = line.replace(/^\s*\d+\s+([^\s])/,'* $1');
+                    });
+                    grunt.config.set('contributors', stdout.join(lineEnding));
+                    cb();
+                }
+            },
+            command : 'git --no-pager shortlog -ns HEAD'
         }
     });
 };
