@@ -7,9 +7,7 @@ module.exports = function (grunt) {
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
     // Project configuration.
-    grunt.initConfig({
-        pkg : grunt.file.readJSON('package.json')
-    });
+    grunt.initConfig({});
 
     grunt.loadTasks('task-configs');
 
@@ -27,7 +25,7 @@ module.exports = function (grunt) {
     grunt.registerTask('deployBower', 'Deploy to bower', [
         'clean:build', 'copy:bower', 'build_gh_pages:bower', 'shell:bower'
     ]);
-    grunt.registerTask('deploy', 'deploy docs and bower', ['deployDocs', 'deployBower']);
+    grunt.registerTask('deploy', 'deploy docs and bower', ['readme', 'deployDocs', 'deployBower']);
 
     grunt.registerTask('notes:since', function(start, stop) {
         var display = start ? false : true;
@@ -44,5 +42,16 @@ module.exports = function (grunt) {
                 display = false;
             }
         });
+    });
+
+    grunt.registerTask('readme:template', function() {
+        grunt.file.write('README.md',
+            grunt.template.process(
+                grunt.file.read('templates/README.template.md')));
+    });
+    grunt.registerTask('readme', 'create README.md from template', function() {
+        grunt.config.set('pkg', grunt.file.readJSON('package.json'));
+        grunt.config.set('warning', 'Compiled file. Do not modify directly.')
+        grunt.task.run(['shell:shortlog', 'readme:template']);
     });
 };
