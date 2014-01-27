@@ -19,13 +19,13 @@ module.exports = function (grunt) {
         'jshint', 'shell:bower', 'shell:testPhantom'
     ]);
     grunt.registerTask('deployDocs', 'Deploy to gh-pages', [
-        'clean:build', 'jshint', 'jsdoc', 'shell:commitJsdoc', 'shell:bower', 'copy:jsdoc',
+        'readme', 'clean:build', 'jshint', 'jsdoc', 'shell:commitJsdoc', 'shell:bower', 'copy:jsdoc',
         'copy:app', 'copy:tests', 'build_gh_pages:jsdoc', 'shell:bower'
     ]);
     grunt.registerTask('deployBower', 'Deploy to bower', [
-        'clean:build', 'copy:bower', 'build_gh_pages:bower', 'shell:bower'
+        'readme', 'clean:build', 'copy:bower', 'build_gh_pages:bower', 'shell:bower'
     ]);
-    grunt.registerTask('deploy', 'deploy docs and bower', ['readme', 'deployDocs', 'deployBower']);
+    grunt.registerTask('deploy', 'deploy docs and bower', ['deployDocs', 'deployBower']);
 
     grunt.registerTask('notes:since', function(start, stop) {
         var display = start ? false : true;
@@ -50,8 +50,14 @@ module.exports = function (grunt) {
                 grunt.file.read('templates/README.template.md')));
     });
     grunt.registerTask('readme', 'create README.md from template', function() {
+        if (grunt.config.get('shortlogDone')) {
+            return;
+        }
+
         grunt.config.set('pkg', grunt.file.readJSON('package.json'));
-        grunt.config.set('warning', 'Compiled file. Do not modify directly.')
-        grunt.task.run(['shell:shortlog', 'readme:template']);
+        grunt.config.set('warning', 'Compiled file. Do not modify directly.');
+        grunt.task.run(['shell:shortlog', 'readme:template', 'shell:commitReadme']);
+
+        grunt.config.set('shortlogDone', true);
     });
 };

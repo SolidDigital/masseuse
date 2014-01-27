@@ -30,6 +30,14 @@ module.exports = function(grunt) {
             },
             command : 'git add docs && git commit docs -m "jsdoc update"'
         },
+        'commitReadme' : {
+            options : {
+                stdout : true,
+                stderr : true,
+                failOnError : true
+            },
+            command : 'git add README.md && git commit README.md -m "README update"'
+        },
         'shortlog' : {
             options : {
                 stderr : true,
