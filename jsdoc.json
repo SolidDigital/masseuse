@@ -1,7 +1,25 @@
 {
-    "plugins": [ "node_modules/grunt-jsdoc/node_modules/jsdoc/plugins/markdown" ],
-    "markdown": {
-        "parser": "gfm",
-        "hardwrap": true
+    "tags"      : {
+        "allowUnknownTags" : true
+    },
+    "plugins"   : ["node_modules/grunt-jsdoc/node_modules/jsdoc/plugins/markdown"],
+    "templates" : {
+        "cleverLinks"     : false,
+        "monospaceLinks"  : false,
+        "default"         : {
+            "outputSourceFiles" : true
+        },
+        "systemName"      : "DocStrap",
+        "footer"          : "",
+        "copyright"       : "SOLID Interaction 2014",
+        "navType"         : "vertical",
+        "theme"           : "spacelab",
+        "linenums"        : true,
+        "collapseSymbols" : false,
+        "inverseNav"      : true
+    },
+    "markdown"  : {
+        "parser"   : "gfm",
+        "hardwrap" : true
     }
 }
