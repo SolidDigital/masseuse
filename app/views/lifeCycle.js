@@ -101,21 +101,24 @@ define(['jquery', 'underscore'],
 
         function _startChildren ($parentDeferred) {
             var childPromiseArray = [],
-                $deferred = new $.Deferred();
+                $afterRenderDeferred = new $.Deferred();
 
-            _(this.children).each(function (child) {
-                var $afterRenderDeferred = new $.Deferred();
-                $parentDeferred.progress(function (step) {
-                    if (step === RENDER_DONE) {
-                        $afterRenderDeferred.resolve();
-                    }
-                });
-                child.hasStarted = true;
-                childPromiseArray.push(child.start($afterRenderDeferred.promise()));
+            $parentDeferred.progress(function (step) {
+                if (step === RENDER_DONE) {
+                    $afterRenderDeferred.resolve();
+                }
             });
 
-            $.when.apply($, childPromiseArray).then($deferred.resolve);
+            _(this.children).each(function (child) {
+                var $childDeferred = child.start($afterRenderDeferred.promise());
 
-            return $deferred.promise();
+                $childDeferred.done(function () {
+                    child.hasStarted = true;
+                });
+
+                childPromiseArray.push($childDeferred);
+            });
+
+            return $.when.apply($, childPromiseArray);
         }
     });
