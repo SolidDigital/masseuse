@@ -1,6 +1,6 @@
 /* jshint loopfunc:true, maxdepth:3 */
-define(['jquery', 'rivets', './configureMethod', 'backbone'],
-    function ($, Rivets, configureMethod, Backbone) {
+define(['jquery', 'rivets', 'backbone'],
+    function ($, Rivets, Backbone) {
         'use strict';
 
         var keySeparator = /->/g;
