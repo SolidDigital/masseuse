@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>DocStrap Source: routers/masseuseRouter.js</title>
+	<title>DocStrap Source: utilities/channels.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -81,65 +81,56 @@
 					
 
 
-		<h1 class="page-title">Source: routers/masseuseRouter.js</h1>
+		<h1 class="page-title">Source: utilities/channels.js</h1>
     
     <section>
         <article>
             <pre class="sunlight-highlight-javascript linenums">/*global define:false*/
-define([
-    'backbone',
-    'underscore'
-],
-    function (Backbone, _) {
-        'use strict';
+define(['underscore', 'backbone', './nameSpace'], function (_, Backbone, namespace) {
+    'use strict';
 
-        /**
-         * @class A router with an optionally overridable `.beforeRouting()`
-         * @namespace masseuse/MasseuseRouter
-         * @extends Backbone.Router
-         */
-        return Backbone.Router.extend({
-            initialize : initialize,
-            // Override bindRoutes and call it later from the prototype, since _bindRoutes gets called in the constructor
-            // and we don't want it called until after beforeRouting methods are attached
-            _bindRoutes : noop,
-            onRouteFail : noop
-        });
+    var channels;
 
-        function noop () {
+    /**
+     * channels is a singleton event bus.
+     * @param channel
+     * @namespace masseuse/channels
+     */
+    function Channels(channel) {
+        if (channels) {
+            channels.addChannel(channel);
+            return channels;
+        }
+        _.extend(this, Backbone.Events);
+        this.addChannel(channel);
+        channels = this;
+    }
+
+    /**
+     * Channel can either be a string or array of channel strings.
+     * The string takes the form, 'name1.name2.name3'
+     * @memberof masseuse/channels
+     * @param channel
+     */
+    Channels.prototype.addChannel = function(channel) {
+        if (!channel) {
+            return;
         }
 
-        function initialize () {
-            var self = this;
+        if (_.isArray(channel)) {
+            _.each(channel, this.addChannel.bind(this));
+        } else {
 
-            if (_.isFunction(this.beforeRouting)) {
-                _(this.routes).chain()
-                    .omit(this.excludeFromBeforeRouting)
-                    .each(function (methodName) {
-                        wrapRoute.call(self, methodName);
-                    });
-            }
-            Backbone.Router.prototype._bindRoutes.call(this);
+            this.channels = namespace(this, channel, plugin);
         }
+    };
 
-        function wrapRoute (methodName) {
-            var self = this,
-                oldMethod = this[methodName];
+    return Channels;
 
-            self[methodName] = function () {
-                var args = arguments;
-
-                this.beforeRouting()
-                    .done(function () {
-                        oldMethod.apply(self, args);
-                    })
-                    .fail(function () {
-                        self.onRouteFail.apply(self, args);
-                    });
-            };
-        }
-
-    });
+    function plugin(objIn) {
+        return _.extend(objIn, Backbone.Events);
+    }
+});
 </pre>
         </article>
     </section>
