@@ -13,9 +13,41 @@ define([
         AFTER_RENDER_DONE = 'afterRenderDone',
         MODEL_DATA = 'modelData',
         /**
+         *
+         *
+         * The BaseView is a custom extension of Backbone.View with some built in functionality and a defined life
+         * cycle. The life
+         * cycle methods can be run either synchronously or asynchronously.
+         *
+         * To initialize a BaseView, there are several choices of options to pass in.
+         *
+         * The life cycle has three main parts: `beforeRender`, `render`, and `afterRender`. `beforeRender` and
+         * `afterRender` are
+         * noops by default. If they are defined with zero arguments, they are executed synchronously. If they are
+         * defined with
+         * one argument, then a `$.Deferred` is passed in as that argument, and the life cycle doesn't continue until
+         * that
+         * `$.Deferred` is resolved. The render method uses the same convention.
+         *
+         * ```
+         * beforeRender : function() {  synchronous  },
+         * beforeRender : function($deferred) {  must resolve or reject $deferred  }
+         * ```
+         *
+         * The lifecycle is started with `view.start()`. This returns a promise. During the life cycle the promise is
+         * notifed with:
+         * `beforeRenderDone`, `renderDone`, and `afterRenderDone`.
+         *
+         *     Child views are rendered during a parent views `afterDone`. The views start promise is not resolved until
+         *     all the
+         *     children's promises are resolved. Children can be nested arbitrariluy deep. Child views can be added
+         *     before start using
+         * `parent.addChild(child)`.
+         *
+         *
          * @class A View that adds lifecycle methods to Views that are optionally async using jQuery promises.
          * Adds support for adding child Views
-         * @namespace BaseView
+         * @namespace masseuse/BaseView
          * @type {*|extend|extend|extend|void|Object}
          */
         BaseView = Backbone.View.extend({
@@ -49,9 +81,62 @@ define([
     return BaseView;
 
     /**
+     * The constructor of BaseView overrides the default BB constructor, so that the options object can be created and
+     * applied to `this.el` before `this.initialize` is called.
+     *
+     * * `name` - convenience name string for debugging - will be available on the view instance
+     * `appendTo` - if set and `el` is not set then the view will be appended to this eleeent. `appendTo` can be a
+     * sizzle selector, a DOM element, or a jQuery object
+     * `bindings` - declarative syntax to setup view listeners
+     * array of arrays
+     * each sub array contains: what to listen to, the event, and the callback
+     * view context is assumed
+     *
+     * ```javascript
+     * bindings : [
+     * ['model', 'change:price', 'showNewPrice'],
+     * ['model', 'change:discount', 'animateAdvertisement']
+     * ],
+     * ```
+     *
+     * * `defaultOptions` - the options to be used as the default. Passed in options will extend this.
+     * * `ModelType` - if supplied, `this.model` will be of type `ModelType` - default is `MasseuseModel`
+     * * `modelData` - if supplied, `this.model` will be initialized with, `this.model.set(modelData)`
+     * * ViewContext - Convenience helper to acces the view context from within modelData
+     * * this helps in separating view options and view definitions into separate AMDs
+     *
+     * ```javascript
+     * modelData : {
+     *            viewId : ViewContext('cid')
+     *        }
+     * ```
+     *
+     * * `template` - String to be used as the umderscore template
+     * * `viewOptions` - list of keys for which each key value pair from `options` will be transferred to the view
+     * instance
+     *
+     * ```javascript
+     * var view = new BaseView({
+     *    name : 'MyName',
+     *    appendView : false,
+     *    ModelType : MyCustomModel,
+     *    modelData : { ... },
+     *    bindings : [
+     *        ['model', 'change:price', 'showNewPrice'],
+     *        ['model', 'change:discount', 'animateAdvertisement']
+     *    ],
+     *    templateHtml : '<div><%= price %> : <%= discount %></div>',
+     *        // Underscore templating that will - if provided - be turned into this.template using
+     *        _.template(templateHtml)
+     *
+     * });
+     * ```
+     *
      * @method constructor
-     * @memberof BaseView
-     * */
+     * @memberof masseuse/BaseView#
+     * @param options
+     * @param useDefaultOptions
+     */
     function constructor(options, useDefaultOptions) {
         var args = Array.prototype.slice.call(arguments, 0);
         this.cid = _.uniqueId('view');
@@ -67,8 +152,9 @@ define([
 
     /**
      * @method initialize
-     * @memberof BaseView
-     * */
+     * @memberof masseuse/BaseView#
+     * @param options
+     */
     function initialize (options) {
         var self = this;
 
@@ -96,7 +182,9 @@ define([
     }
 
     /**
-     * Wrapper method for lifecycle methods.
+     * Wrapper method for lifecycle methods. Life cycle event are notifed both throw the progress returned by this
+     * method's promise, and by events triggered on the view. So - for example - plugins can hook into life cycle
+     * events.
      *
      * In order, this method:
      * - Calls this.beforeRender()
@@ -109,6 +197,7 @@ define([
      * - Notifies that afterRender is done
      * - Resolves the returned promise
      *
+     * @memberof masseuse/BaseView#
      * @param {jQuery.promise} $parentRenderPromise - If passed in, the start method was called from a parent view
      * start() method.
      * @returns {jQuery.promise} A promise that is resolved when when the start method has completed
@@ -124,6 +213,9 @@ define([
         return $deferred.promise();
     }
 
+    /**
+     * @memberof masseuse/BaseView#
+     */
     function render () {
         this.appendOrInsertView(arguments[arguments.length - 1]);
 
@@ -134,40 +226,27 @@ define([
         });
     }
 
+    /**
+     * @memberof masseuse/BaseView#
+     * @param $startDeferred
+     */
     function appendOrInsertView ($startDeferred) {
         this.appendTo ? _appendTo.call(this, $startDeferred) : _insertView.call(this, $startDeferred);
     }
 
-    function _appendTo ($startDeferred) {
-        var template = this.template,
-            $newEl,
-            wrapper = this.wrapper !== false;
-
-        template = template ? template(this.dataToJSON()) : '';
-
-        $newEl = wrapper ? this.el : $(template);
-        // More than 1 root level element and no wrapper leads to this.el being incorrect.
-        if (!wrapper && 1 === $newEl.length) {
-            this.setElement($newEl);
-        } else {
-            this.$el.html(template);
-        }
-
-        $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
-        $(this.appendTo).append(this.el);
-    }
-
-    function _insertView ($startDeferred) {
-        var template = this.template;
-        this.$el.html(template ? template(this.dataToJSON()) : ' ');
-        $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
-    }
-
-    // This function is memoized in initialize
+    /**
+     * And element cache that uses sizzle selectors and the context of the view.
+     * @param selector - the sizzle selector to look for and cache
+     * @returns {*|Mixed}
+     */
     function elementCache (selector) {
         return this.$el.find(selector);
     }
 
+    /**
+     * @memberof masseuse/BaseView#
+     * @returns {Object|string|*}
+     */
     function dataToJSON () {
         return this.model ? this.model.toJSON() : {};
     }
@@ -176,6 +255,7 @@ define([
      * bindEventListeners
      * Bind all event listeners specified in 'defaultListeners' and 'options.listeners' using 'listenTo'
      *
+     * @memberof masseuse/BaseView#
      * @param listenerArray (Array[Array])  - A collection of arrays of arguments that will be used with
      * 'Backbone.Events.listenTo'
      *
@@ -216,16 +296,27 @@ define([
         });
     }
 
+    /**
+     * Removes this view and all its children. Additionally, this view removes itself from its parent view.
+     * @memberof masseuse/BaseView#
+     */
     function remove () {
         this.removeAllChildren();
 
-        if (this.parent) {
+        if (this.parent && _.contains(this.parent.children, this)) {
             this.parent.removeChild(this);
         }
 
         Backbone.View.prototype.remove.apply(this, arguments);
     }
 
+    /**
+     * Add a child view to the array of this views child view references.
+     * The child must be started later. This happens in start or manually.
+     * @memberof masseuse/BaseView#
+     * @method
+     * @param childView
+     */
     function addChild (childView) {
         if (!_(this.children).contains(childView)) {
             this.children.push(childView);
@@ -233,18 +324,30 @@ define([
         }
     }
 
+    /**
+     * Remove one child from the parentView.
+     * @memberof masseuse/BaseView#
+     * @param childView
+     */
     function removeChild (childView) {
+        // TODO: increase efficiency here
         this.children = _(this.children).without(childView);
+        childView.remove();
     }
 
+    /**
+     * Remove all children from the parentView.
+     * @memberof masseuse/BaseView#
+     */
     function removeAllChildren () {
-        var self = this;
-        _(this.children).each(function (child) {
-            child.remove();
-            self.removeChild(child);
-        });
+        _(this.children).each(this.removeChild.bind(this));
     }
 
+    /**
+     * Remove all children and restart them.
+     * @memberof masseuse/BaseView#
+     * @returns $promise - will be resolved once all children are restarted
+     */
     function refreshChildren () {
         var $deferred = new $.Deferred(),
             childPromiseArray = [];
@@ -265,6 +368,31 @@ define([
      * Private Methods - must be supplied with context
      * @private
      */
+
+    function _appendTo ($startDeferred) {
+        var template = this.template,
+            $newEl,
+            wrapper = this.wrapper !== false;
+
+        template = template ? template(this.dataToJSON()) : '';
+
+        $newEl = wrapper ? this.el : $(template);
+        // More than 1 root level element and no wrapper leads to this.el being incorrect.
+        if (!wrapper && 1 === $newEl.length) {
+            this.setElement($newEl);
+        } else {
+            this.$el.html(template);
+        }
+
+        $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
+        $(this.appendTo).append(this.el);
+    }
+
+    function _insertView ($startDeferred) {
+        var template = this.template;
+        this.$el.html(template ? template(this.dataToJSON()) : ' ');
+        $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
+    }
 
     function _setTemplate (options) {
         if (options && options.template) {

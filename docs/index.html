@@ -1,51 +1,115 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>JSDoc: Index</title>
-    
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+	<meta charset="utf-8">
+	<title>DocStrap Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	
+	<link type="text/css" rel="stylesheet" href="styles/site.simplex.css">
+	
 </head>
 
 <body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">DocStrap</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b
+						class="caret"></b></a>
 
-<div id="main">
-    
-    <h1 class="page-title">Index</h1>
-    
-    
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="masseuse.html">masseuse</a>
+						</li>
+						
+						<li>
+							<a href="BaseView.html">masseuse/BaseView</a>
+						</li>
+						
+						<li>
+							<a href="ComputedProperty.html">masseuse/ComputedProperty</a>
+						</li>
+						
+						<li>
+							<a href="MasseuseModel.html">masseuse/MasseuseModel</a>
+						</li>
+						
+						<li>
+							<a href="MasseuseRouter.html">masseuse/MasseuseRouter</a>
+						</li>
+						
+						<li>
+							<a href="RivetsView.html">masseuse/plugins/rivets/RivetsView</a>
+						</li>
+						
+						<li>
+							<a href="ProxyProperty.html">masseuse/ProxyProperty</a>
+						</li>
+						
+						<li>
+							<a href="Channels.html">masseuse/utilities/Channels</a>
+						</li>
+						
+						<li>
+							<a href="ViewContext.html">masseuse/ViewContext</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+		<div class="span8">
+			
+				<div id="main">
+					
 
 
-    
-
-
-    <h3> </h3>
-
-
-
+	
+	<span class="page-title">Index</span>
+	
+	
 
 
 
 
 
 
-    
+
+
+
+
+
+
+	
+	
+
 
 
 
 
     <section>
-        <article><h1>masseuse <a href="https://travis-ci.org/Solid-Interactive/masseuse"><img src="https://travis-ci.org/Solid-Interactive/masseuse.png?branch=bower" alt="Build Status"></a></h1>
-<p>Version: <em>1.3.3</em></p>
+        <article><h1 id="masseuse-build-status-https-travis-ci-org-solid-interactive-masseuse-png-branch-bower-https-travis-ci-org-solid-interactive-masseuse-">masseuse <a href="https://travis-ci.org/Solid-Interactive/masseuse"><img src="https://travis-ci.org/Solid-Interactive/masseuse.png?branch=bower" alt="Build Status"></a></h1>
+<p>Version: <em>1.3.4</em></p>
 <p>Bower pulls from the <a href="https://github.com/Solid-Interactive/masseuse/tree/bower">bower branch</a> (build badge is showing results for <a href="https://github.com/Solid-Interactive/masseuse/tree/bower">bower branch</a>):</p>
-<p><a href="https://github.com/Solid-Interactive/masseuse">https://github.com/Solid-Interactive/masseuse</a></p>
-<h2>Docs &amp; Tests</h2>
+<p>https://github.com/Solid-Interactive/masseuse</p>
+<h2 id="docs-tests">Docs &amp; Tests</h2>
 <ul>
 <li><a href="http://solid-interactive.github.io/masseuse/docs/">JSDocs</a></li>
 <li><a href="http://solid-interactive.github.io/masseuse/tests/">Tests - unoptimized for readability</a></li>
@@ -59,7 +123,7 @@
 </ul>
 </li>
 </ul>
-<h2>Installation</h2>
+<h2 id="installation">Installation</h2>
 <pre><code class="lang-shell">bower install masseuse</code></pre>
 <p>After getting masseuse, include it as a package in your requirejs config:</p>
 <pre><code class="lang-javascript">require.config({
@@ -72,7 +136,7 @@
     ]
     ...
 });</code></pre>
-<h2>Description</h2>
+<h2 id="description">Description</h2>
 <p>Masseuse is a Backbone helper library that uses RequireJS AMDs.</p>
 <p>Masseuse is functional, and documentation and tests are being fleshed out.</p>
 <p>Masseuse does six main things:</p>
@@ -86,9 +150,9 @@
 </ol>
 <p>Additionally there is support for append or replacing the <code>el</code> of views, optional plugin methods on view initialization,
 and a channels singleton for use as an event bus.</p>
-<h2>Usage</h2>
+<h2 id="usage">Usage</h2>
 <p>Look at the tests for example usage. More documentation coming soon.</p>
-<h2>Contributing</h2>
+<h2 id="contributing">Contributing</h2>
 <p>Fork git repo, then:</p>
 <pre><code class="lang-shell">bower install</code></pre>
 <p>For use in the browser:</p>
@@ -97,7 +161,7 @@ and a channels singleton for use as an event bus.</p>
 <pre><code class="lang-shell">npm install -g mocha-phantomjs phantomjs</code></pre>
 <p><code>grunt test</code> runs, opens, and watches the tests in the browser. Pull requests welcomed!
 <code>grunt test-cli</code> runs tests headless.</p>
-<h2>Utilities</h2>
+<h2 id="utilities">Utilities</h2>
 <ul>
 <li><p>grunt task called <code>notes:since</code> to show release notes since a version number (have to match versions exactly)</p>
 <pre><code class="lang-shell">  # all release notes
@@ -110,7 +174,7 @@ and a channels singleton for use as an event bus.</p>
   grunt notes:since::0.0.3</code></pre>
 </li>
 </ul>
-<h2>Release Notes</h2>
+<h2 id="release-notes">Release Notes</h2>
 <ul>
 <li>1.3.2 - 2014-01-24 - <a href="release_notes/1.3.2.md">patches</a></li>
 <li>1.3.1 - 2014-01-24 - <a href="release_notes/1.3.1.md">patches</a></li>
@@ -131,7 +195,7 @@ and a channels singleton for use as an event bus.</p>
 <li>0.0.2 - 2014-01-07 - <a href="release_notes/0.0.2.md">patches</a></li>
 <li>0.0.1-alpha - 2014-01-03 - <a href="release_notes/0.0.1.md">patches</a></li>
 </ul>
-<h2>Contributors (<code>git shortlog -s -n</code>)</h2>
+<h2 id="contributors-git-shortlog-s-n-">Contributors (<code>git shortlog -s -n</code>)</h2>
 <ul>
 <li>Peter Ajtai</li>
 <li>Greg Larrenaga</li>
@@ -141,7 +205,7 @@ and a channels singleton for use as an event bus.</p>
 <li>michael.fenwick</li>
 <li>Jesse McCabe</li>
 </ul>
-<p><em>Compiled file. Do not modify directly. Created: 2014-01-28:06:25:12</em></p></article>
+<p><em>Compiled file. Do not modify directly. Created: 2014-01-29 11:29:38</em></p></article>
     </section>
 
 
@@ -149,19 +213,62 @@ and a channels singleton for use as an event bus.</p>
 
 
 
-</div>
 
-<nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="MasseuseRouter.html">routers/MasseuseRouter</a></li><li><a href="Channels.html">utilities/Channels</a></li><li><a href="getProperty.html">utilities/getProperty</a></li><li><a href="lifeCycle.html">views/lifeCycle</a></li><li><a href="ViewContext.html">views/ViewContext</a></li></ul><h3>Namespaces</h3><ul><li><a href="adapter.html">adapter</a></li><li><a href="BaseView.html">BaseView</a></li><li><a href="binders.html">binders</a></li><li><a href="ComputedProperty.html">ComputedProperty</a></li><li><a href="formatters.html">formatters</a></li><li><a href="masseuse.html">masseuse</a></li><li><a href="MasseuseModel.html">MasseuseModel</a></li><li><a href="ProxyProperty.html">ProxyProperty</a></li></ul>
-</nav>
+				</div>
 
-<br clear="both">
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		SOLID Interaction 2014
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha4</a>
+		on Wed Jan 29 2014 11:29:42 GMT-0800 (PST) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
 
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Jan 28 2014 18:25:21 GMT-0800 (PST)
-</footer>
+			
+			<div class="span3">
+				<div id="toc"></div>
+			</div>
+			
+			<br clear="both">
+		</div>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+	</div>
+	<script src="scripts/sunlight.js"></script>
+	<script src="scripts/sunlight.javascript.js"></script>
+	<script src="scripts/sunlight-plugin.doclinks.js"></script>
+	<script src="scripts/sunlight-plugin.linenumbers.js"></script>
+	<script src="scripts/sunlight-plugin.menu.js"></script>
+	<script src="scripts/jquery.min.js"></script>
+	<script src="scripts/jquery.scrollTo.js"></script>
+	<script src="scripts/jquery.localScroll.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+
+	<script>  Sunlight.highlightAll({lineNumbers:true,  showMenu: true, enableDoclinks :true}); </script>
+
+	<script>
+		$( function () {
+			$( "#toc" ).toc( {
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : 60
+			} );
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+
+		} );
+	</script>
+
+	
+
 </body>
 </html>
