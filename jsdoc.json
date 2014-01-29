@@ -17,9 +17,9 @@
         },
         "systemName"      : "masseuse",
         "footer"          : "",
-        "copyright"       : "SOLID Interaction 2014",
+        "copyright"       : "SOLID Interactive 2014",
         "navType"         : "vertical",
-        "theme"           : "simplex",
+        "theme"           : "flatly",
         "linenums"        : true,
         "collapseSymbols" : false,
         "inverseNav"      : true
