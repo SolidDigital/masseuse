@@ -3,9 +3,7 @@
         "include" : [
             "README.md", "app"
         ],
-        "exclude" : [
-            "app/vendor"
-        ]
+        "excludePattern": "(\/|\\\\)app(\/|\\\\)vendor"
     },
     "tags"      : {
         "allowUnknownTags" : true
@@ -32,6 +30,7 @@
     },
     "opts" : {
         "destination": "docs",
-        "template" : "node_modules/ink-docstrap/template"
+        "template" : "node_modules/ink-docstrap/template",
+        "recurse": true
     }
 }

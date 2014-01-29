@@ -44,6 +44,8 @@ module.exports = function (grunt) {
         });
     });
 
+    grunt.registerTask('jsdoc', ['clean:jsdoc', 'shell:jsdoc']);
+
     grunt.registerTask('readme:template', function() {
         grunt.file.write('README.md',
             grunt.template.process(

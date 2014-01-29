@@ -52,7 +52,7 @@ define([
      * The constructor of BaseView overrides the default BB constructor, so that the options object can be created and
      * applied to `this.el` before `this.initialize` is called.
      * @method constructor
-     * @memberof masseuse/BaseView
+     * @memberof masseuse/BaseView#
      * @param options
      * @param useDefaultOptions
      */
@@ -71,7 +71,7 @@ define([
 
     /**
      * @method initialize
-     * @memberof masseuse/BaseView
+     * @memberof masseuse/BaseView#
      * @param options
      */
     function initialize (options) {
@@ -116,7 +116,7 @@ define([
      * - Notifies that afterRender is done
      * - Resolves the returned promise
      *
-     * @memberof masseuse/BaseView
+     * @memberof masseuse/BaseView#
      * @param {jQuery.promise} $parentRenderPromise - If passed in, the start method was called from a parent view
      * start() method.
      * @returns {jQuery.promise} A promise that is resolved when when the start method has completed
@@ -133,7 +133,7 @@ define([
     }
 
     /**
-     * @memberof masseuse/BaseView
+     * @memberof masseuse/BaseView#
      */
     function render () {
         this.appendOrInsertView(arguments[arguments.length - 1]);
@@ -146,7 +146,7 @@ define([
     }
 
     /**
-     * @memberof masseuse/BaseView
+     * @memberof masseuse/BaseView#
      * @param $startDeferred
      */
     function appendOrInsertView ($startDeferred) {
@@ -163,7 +163,7 @@ define([
     }
 
     /**
-     * @memberof masseuse/BaseView
+     * @memberof masseuse/BaseView#
      * @returns {Object|string|*}
      */
     function dataToJSON () {
@@ -174,7 +174,7 @@ define([
      * bindEventListeners
      * Bind all event listeners specified in 'defaultListeners' and 'options.listeners' using 'listenTo'
      *
-     * @memberof masseuse/BaseView
+     * @memberof masseuse/BaseView#
      * @param listenerArray (Array[Array])  - A collection of arrays of arguments that will be used with
      * 'Backbone.Events.listenTo'
      *
@@ -217,7 +217,7 @@ define([
 
     /**
      * Removes this view and all its children. Additionally, this view removes itself from its parent view.
-     * @memberof masseuse/BaseView
+     * @memberof masseuse/BaseView#
      */
     function remove () {
         this.removeAllChildren();
@@ -232,7 +232,8 @@ define([
     /**
      * Add a child view to the array of this views child view references.
      * The child must be started later. This happens in start or manually.
-     * @memberof masseuse/BaseView
+     * @memberof masseuse/BaseView#
+     * @method
      * @param childView
      */
     function addChild (childView) {
@@ -244,7 +245,7 @@ define([
 
     /**
      * Remove one child from the parentView.
-     * @memberof masseuse/BaseView
+     * @memberof masseuse/BaseView#
      * @param childView
      */
     function removeChild (childView) {
@@ -255,7 +256,7 @@ define([
 
     /**
      * Remove all children from the parentView.
-     * @memberof masseuse/BaseView
+     * @memberof masseuse/BaseView#
      */
     function removeAllChildren () {
         _(this.children).each(this.removeChild.bind(this));
@@ -263,7 +264,7 @@ define([
 
     /**
      * Remove all children and restart them.
-     * @memberof masseuse/BaseView
+     * @memberof masseuse/BaseView#
      * @returns $promise - will be resolved once all children are restarted
      */
     function refreshChildren () {
