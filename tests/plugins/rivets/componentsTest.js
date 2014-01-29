@@ -1,12 +1,12 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPlugin', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, rivetsPlugin) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
 
         var testDom = 'testDom',
             $body = $('body'),
             $testDom,
-            RivetView = rivetsPlugin.view,
+            RivetView = masseuse.plugins.rivets.RivetsView,
             rivetView,
             options,
             template;

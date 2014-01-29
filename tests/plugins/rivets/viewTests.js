@@ -1,14 +1,13 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'rivetsPlugin',
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
     'masseuse', 'backbone', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, rivetsPlugin,
-              masseuse, Backbone) {
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse, Backbone) {
 
         'use strict';
 
         var testDom = 'testDom',
             riveted = 'riveted',
             $body = $('body'),
-            RivetView = rivetsPlugin.view,
+            RivetView = masseuse.plugins.rivets.RivetsView,
             Model = masseuse.MasseuseModel,
             should = chai.should();
 

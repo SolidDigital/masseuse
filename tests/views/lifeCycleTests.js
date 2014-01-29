@@ -190,6 +190,31 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                         viewInstance.render();
                         checkAppendOrInsertSpy.should.have.been.calledOnce;
                     });
+
+                    it('should not call render on all children, if they have not been started', function () {
+                        var childView = new SyncExtendedBaseView(),
+                            childRenderSpy = sinon.spy(childView, 'render');
+
+                        viewInstance.addChild(childView);
+
+                        viewInstance.render();
+                        childRenderSpy.should.not.have.been.called;
+                    });
+
+                    it('should call render on all children, if they have already started', function (done) {
+                        var childView = new SyncExtendedBaseView(),
+                            childRenderSpy = sinon.spy(childView, 'render');
+
+                        viewInstance.addChild(childView);
+
+                        childView.start().done(function () {
+                            viewInstance.render();
+
+                            childRenderSpy.should.have.been.calledOnce;
+
+                            done();
+                        });
+                    });
                 });
 
                 it('should call start on any children', function (done) {
