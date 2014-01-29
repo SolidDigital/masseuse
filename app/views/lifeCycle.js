@@ -8,9 +8,6 @@ define(['jquery', 'underscore'],
             RENDER_DONE = 'renderDone',
             AFTER_RENDER_DONE = 'afterRenderDone';
 
-        /**
-         * @module views/lifeCycle
-         */
         return {
             runAllMethods : runAllMethods
         };
@@ -38,11 +35,6 @@ define(['jquery', 'underscore'],
          * If a life cycle method has one or more arguments, then the first argument passed in is its deferred.
          * The life cycle method will automatically return this deferred, otherwise it will pass through whatever
          * the method itself returns.
-         *
-         * @function
-         * @param lifeCycleMethod
-         * @returns {*}
-         * @private
          */
         function _runLifeCycleMethod (lifeCycleMethod, $startDeferred) {
             var $deferred,

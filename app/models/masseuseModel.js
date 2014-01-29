@@ -6,10 +6,22 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
         /**
          * A Backbone Model with Proxy and Computed Properties.
          * Proxy and Computed properties are tirggered directly and not via events for performance reasons.
-         * @description
-         * `test`
+         *
+         * ### Infinite Nesting
+         *
+         * Masseuse Models support infinite nesting. The properties of a model can be get() or set() infinitely deep.
+         *
+         * ```javascript
+         * // 'change:object' event triggered
+         * model.set('object.nestedObject.tripleNestedObject', 'Holy Diver');
+         *
+         * model.get('person.address.state.population.something.someOtherThing');
+         * ```
+         *
+         * When setting a nested field, the model events are triggered for the appropriate model attribute.
+         *
          * @constructor
-         * @namespace MasseuseModel
+         * @namespace masseuse/MasseuseModel
          * @extends Backbone.Model
          */
         return Backbone.Model.extend({
@@ -24,7 +36,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
         /**
          * @function
          * @param attribute
-         * @memberof MasseuseModel
+         * @memberof masseuse/MasseuseModel#
          */
         function toggleAttribute(attribute) {
             this.set(attribute, !this.get(attribute));
@@ -32,7 +44,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
 
         /**
          * @function
-         * @memberof MasseuseModel
+         * @memberof masseuse/MasseuseModel#
          * @instance
          * @param key
          * @returns {*}
@@ -72,7 +84,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
 
         /**
          * @function
-         * @memberof MasseuseModel
+         * @memberof masseuse/MasseuseModel#
          * @instance
          * @param key
          * @param val
@@ -164,7 +176,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
         /**
          * Attach a ComputedProperty to a model and setup listeners for it.
          * @instance
-         * @memberof MasseuseModel
+         * @memberof masseuse/MasseuseModel#
          * @param key
          * @param computed
          */
@@ -187,7 +199,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
 
         /**
          * @instance
-         * @memberof MasseuseModel
+         * @memberof masseuse/MasseuseModel#
          * @param key
          * @param proxy
          */
@@ -213,7 +225,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
 
         /**
          * @instance
-         * @memberof MasseuseModel
+         * @memberof masseuse/MasseuseModel#
          * @param listenables
          * @returns {Array}
          */
@@ -229,7 +241,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
         }
 
         /**
-         * @memberof MasseuseModel
+         * @memberof masseuse/MasseuseModel#
          * @instance
          * @private
          * @param key

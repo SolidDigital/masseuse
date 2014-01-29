@@ -3,9 +3,6 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
     function ($, Rivets, Backbone, _) {
         'use strict';
 
-        /**
-         * @namespace adapter
-         */
         return function (optionsForRivets) {
 
             Rivets.configure({
