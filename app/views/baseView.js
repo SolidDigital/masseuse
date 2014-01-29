@@ -76,6 +76,52 @@ define([
     /**
      * The constructor of BaseView overrides the default BB constructor, so that the options object can be created and
      * applied to `this.el` before `this.initialize` is called.
+     *
+     * * `name` - convenience name string for debugging - will be available on the view instance
+     * `appendTo` - if set and `el` is not set then the view will be appended to this eleeent. `appendTo` can be a sizzle selector, a DOM element, or a jQuery object
+     * `bindings` - declarative syntax to setup view listeners
+     * array of arrays
+     * each sub array contains: what to listen to, the event, and the callback
+     * view context is assumed
+     *
+     * ```javascript
+     * bindings : [
+     * ['model', 'change:price', 'showNewPrice'],
+     * ['model', 'change:discount', 'animateAdvertisement']
+     * ],
+     * ```
+     *
+     * * `defaultOptions` - the options to be used as the default. Passed in options will extend this.
+     * * `ModelType` - if supplied, `this.model` will be of type `ModelType` - default is `MasseuseModel`
+     * * `modelData` - if supplied, `this.model` will be initialized with, `this.model.set(modelData)`
+     * * ViewContext - Convenience helper to acces the view context from within modelData
+     * * this helps in separating view options and view definitions into separate AMDs
+     *
+     * ```javascript
+     * modelData : {
+     *            viewId : ViewContext('cid')
+     *        }
+     * ```
+     *
+     * * `template` - String to be used as the umderscore template
+     * * `viewOptions` - list of keys for which each key value pair from `options` will be transferred to the view instance
+     *
+     * ```javascript
+     * var view = new BaseView({
+     *    name : 'MyName',
+     *    appendView : false,
+     *    ModelType : MyCustomModel,
+     *    modelData : { ... },
+     *    bindings : [
+     *        ['model', 'change:price', 'showNewPrice'],
+     *        ['model', 'change:discount', 'animateAdvertisement']
+     *    ],
+     *    templateHtml : '<div><%= price %> : <%= discount %></div>',
+     *        // Underscore templating that will - if provided - be turned into this.template using _.template(templateHtml)
+     *
+     * });
+     * ```
+     *
      * @method constructor
      * @memberof masseuse/BaseView#
      * @param options

@@ -19,7 +19,7 @@
         "footer"          : "",
         "copyright"       : "SOLID Interaction 2014",
         "navType"         : "vertical",
-        "theme"           : "readable",
+        "theme"           : "simplex",
         "linenums"        : true,
         "collapseSymbols" : false,
         "inverseNav"      : true

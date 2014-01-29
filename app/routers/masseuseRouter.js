@@ -8,7 +8,7 @@ define([
 
         /**
          * @class A router with an optionally overridable `.beforeRouting()`
-         * @module routers/MasseuseRouter
+         * @namespace masseuse/MasseuseRouter
          * @extends Backbone.Router
          */
         return Backbone.Router.extend({
