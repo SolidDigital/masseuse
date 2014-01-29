@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>DocStrap Source: views/viewContext.js</title>
+	<title>DocStrap Namespace: masseuse/plugins/rivets/RivetsView</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -75,41 +75,105 @@
 	<div class="row-fluid">
 
 		
-			<div class="span12">
-				
+		<div class="span8">
+			
 				<div id="main">
 					
 
 
-		<h1 class="page-title">Source: views/viewContext.js</h1>
+	<h1 class="page-title">Namespace: masseuse/plugins/rivets/RivetsView</h1>
+<section>
+
+<header>
+    <h2>
+    masseuse/plugins/rivets/RivetsView
+    </h2>
     
-    <section>
-        <article>
-            <pre class="sunlight-highlight-javascript linenums">define(['../utilities/accessors'], function (accessors) {
-    'use strict';
+</header>
 
-    ViewContext.prototype.getBoundFunction = function (context) {
-        return accessors.getProperty(context, this.field);
-    };
+<article>
+    <div class="container-overview">
+    
 
-    return ViewContext;
+    
+        
+            <div class="description"><p>RivetView is in the plugins: <code>masseuse.plugin.rivets.RivetsView</code></p>
+<pre><code class="lang-javascript">RivetView = masseuse.plugin.rivets.RivetsView;
+rivetView = new RivetView({
+ el : '#blah',
+ templateHtml : '&lt;div&gt;{{data.title}}&lt;/div&gt;',
+ modelData : {
+     title : 'There it is.'
+ }
+}).start();</code></pre>
+<p>After the view starts, the following html:</p>
+<pre><code class="lang-html">&lt;div id=&quot;blah&quot;&gt;&lt;/div&gt;</code></pre>
+<p>will be riveted to <code>rivetView.model</code> and the html will look like:</p>
+<pre><code class="lang-html">&lt;div id=&quot;blah&quot;&gt;
+&lt;div&gt;There it is.&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p><a href="https://github.com/mikeric/rivets/wiki">See the Rivets.js Repo for more information. </a></p></div>
+        
 
-    /**
-     * Allows the storage of a method for later retrieval and attachment to a context.
-     * @namespace masseuse/ViewContext
-     * @param field
-     */
-    function ViewContext (field) {
-        if (!(this instanceof ViewContext)) {
-            return new ViewContext(field);
-        }
-        this.field = field;
-    }
-});
-</pre>
-        </article>
-    </section>
+        
+<dl class="details">
+    
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="view.js.html">plugins/rivets/view.js</a>, <a href="view.js.html#sunlight-1-line-7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -132,6 +196,10 @@
 				</footer>
 			</div>
 
+			
+			<div class="span3">
+				<div id="toc"></div>
+			</div>
 			
 			<br clear="both">
 		</div>

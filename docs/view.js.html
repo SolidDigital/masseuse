@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>DocStrap Source: views/viewContext.js</title>
+	<title>DocStrap Source: plugins/rivets/view.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -81,29 +81,54 @@
 					
 
 
-		<h1 class="page-title">Source: views/viewContext.js</h1>
+		<h1 class="page-title">Source: plugins/rivets/view.js</h1>
     
     <section>
         <article>
-            <pre class="sunlight-highlight-javascript linenums">define(['../utilities/accessors'], function (accessors) {
+            <pre class="sunlight-highlight-javascript linenums">define(['../../views/baseView', './plugin'], function(BaseView, plugin) {
     'use strict';
-
-    ViewContext.prototype.getBoundFunction = function (context) {
-        return accessors.getProperty(context, this.field);
-    };
-
-    return ViewContext;
+    return BaseView.extend({
+        initialize : initialize
+    });
 
     /**
-     * Allows the storage of a method for later retrieval and attachment to a context.
-     * @namespace masseuse/ViewContext
-     * @param field
+     *
+     * RivetView is in the plugins: `masseuse.plugin.rivets.RivetsView`
+     *
+     * ```javascript
+     * RivetView = masseuse.plugin.rivets.RivetsView;
+     * rivetView = new RivetView({
+     *  el : '#blah',
+     *  templateHtml : '&lt;div>{{data.title}}&lt;/div>',
+     *  modelData : {
+     *      title : 'There it is.'
+     *  }
+     * }).start();
+     * ```
+     *
+     * After the view starts, the following html:
+     *
+     * ```html
+     * &lt;div id="blah">&lt;/div>
+     * ```
+     *
+     * will be riveted to `rivetView.model` and the html will look like:
+     *
+     * ```html
+     * &lt;div id="blah">
+     * &lt;div>There it is.&lt;/div>
+     * &lt;/div>
+     * ```
+     *
+     * [See the Rivets.js Repo for more information. ](https://github.com/mikeric/rivets/wiki)
+     *
+     * @namespace masseuse/plugins/rivets/RivetsView
+     * @param options
      */
-    function ViewContext (field) {
-        if (!(this instanceof ViewContext)) {
-            return new ViewContext(field);
-        }
-        this.field = field;
+    function initialize (options) {
+        options.plugins = options.plugins || [];
+        options.plugins.push(plugin);
+        BaseView.prototype.initialize.call(this, options);
     }
 });
 </pre>
