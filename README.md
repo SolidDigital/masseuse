@@ -1,8 +1,8 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=bower)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-Version: _1.3.2_
+Version: _1.3.4_
 
-Bower pulls from the [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower) (build badge is showing results for branch bower):
+Bower pulls from the [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower) (build badge is showing results for [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower)):
 
 https://github.com/Solid-Interactive/masseuse
 
@@ -122,10 +122,13 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Contributors (`git shortlog -s -n`)
 
-* [Peter Ajtai](https://github.com/pajtai)
-* [Greg Larrenaga](https://github.com/Duder-onomy)
-* [Cooper Hilscher](https://github.com/dobbobolina)
-* [Jonathan Waltner](https://github.com/uselessinfo)
-* [Travis McHattie](https://github.com/travism)
-* [Michael Fenwick](https://github.com/MichaelFenwick)
-* [Jesse McCabe](https://github.com/thinksolid)
+* Peter Ajtai
+* Greg Larrenaga
+* Cooper Hilscher
+* Jonathan Waltner
+* Travis McHattie
+* michael.fenwick
+* Jesse McCabe
+
+
+_Compiled file. Do not modify directly. Created: 2014-01-27:08:01:17_

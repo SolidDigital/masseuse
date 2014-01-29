@@ -37,10 +37,6 @@
             {
                 name : 'masseuse',
                 location : '../app'
-            },
-            {
-                name : 'rivetsPlugin',
-                location : '../app/plugins/rivets'
             }
         ]
     });

@@ -2,7 +2,7 @@
 
 Version: _<%=pkg.version%>_
 
-Bower pulls from the [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower) (build badge is showing results for branch bower):
+Bower pulls from the [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower) (build badge is showing results for [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower)):
 
 https://github.com/Solid-Interactive/masseuse
 
@@ -84,9 +84,29 @@ npm install -g mocha-phantomjs phantomjs
 `grunt test` runs, opens, and watches the tests in the browser. Pull requests welcomed!
 `grunt test-cli` runs tests headless.
 
+## Utilities
+
+* grunt task called `notes:since` to show release notes since a version number (have to match versions exactly)
+
+    ```shell
+    # all release notes
+    grunt notes:since
+
+    # all release notes since 1.0.0
+    grunt notes:since:1.0.0
+
+    # all release notes since the beginning until 0.0.3
+    grunt notes:since::0.0.3
+    ```
+
 ## Release Notes
 
-* 1.1.0 - 2014-01-22 - [features](release_notes/0.2.0.md)
+* 1.3.2 - 2014-01-24 - [patches](release_notes/1.3.2.md)
+* 1.3.1 - 2014-01-24 - [patches](release_notes/1.3.1.md)
+* 1.3.0 - 2014-01-24 - [features](release_notes/1.3.0.md)
+* 1.2.1 - 2014-01-23 - [patches](release_notes/1.2.1.md)
+* 1.2.0 - 2014-01-23 - [features](release_notes/1.2.0.md)
+* 1.1.0 - 2014-01-22 - [features](release_notes/1.1.0.md)
 * 1.0.3 - 2014-01-21 - [patches](release_notes/1.0.3.md)
 * 1.0.2 - 2014-01-20 - [patches](release_notes/1.0.2.md)
 * 1.0.1 - 2014-01-20 - [patches](release_notes/1.0.1.md)
@@ -103,3 +123,5 @@ npm install -g mocha-phantomjs phantomjs
 ## Contributors (`git shortlog -s -n`)
 
 <%= contributors %>
+
+_<%= warning + ' Created: ' + grunt.template.today('yyyy-mm-dd:hh:MM:ss') %>_
