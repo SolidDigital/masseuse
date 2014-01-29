@@ -9,14 +9,20 @@ https://github.com/Solid-Interactive/masseuse
 ## Docs & Tests
 
 * [JSDocs](http://solid-interactive.github.io/masseuse/docs/)
+    * [masseuse](http://solid-interactive.github.io/masseuse/docs/masseuse.html)
+        * [BaseView](http://solid-interactive.github.io/masseuse/docs/BaseView.html)
+        * [channels](http://solid-interactive.github.io/masseuse/docs/Channels.html)
+        * [ComputedProperty](http://solid-interactive.github.io/masseuse/docs/ComputedProperty.html)
+        * [MasseuseModel](http://solid-interactive.github.io/masseuse/docs/MasseuseModel.html)
+        * [MasseuseRouter](http://solid-interactive.github.io/masseuse/docs/MasseuseRouter.html)
+        * [ProxyProperty](http://solid-interactive.github.io/masseuse/docs/ProxyProperty.html)
+        * [ViewContext](http://solid-interactive.github.io/masseuse/docs/ViewContext.html)
+        * plugins
+            * rivets
+                * [RivetsView](http://solid-interactive.github.io/masseuse/docs/RivetsView.html)
+
 * [Tests - unoptimized for readability](http://solid-interactive.github.io/masseuse/tests/)
-* See the [wiki](https://github.com/Solid-Interactive/masseuse/wiki) for more detailed explanations.
-    * [BaseView](https://github.com/Solid-Interactive/masseuse/wiki/BaseView)
-    * [ComputedProperty](https://github.com/Solid-Interactive/masseuse/wiki/ComputedProperty)
-    * [MasseuseModel](https://github.com/Solid-Interactive/masseuse/wiki/MasseuseModel)
-    * [Options](https://github.com/Solid-Interactive/masseuse/wiki/Options)
-    * [ProxyProperty](https://github.com/Solid-Interactive/masseuse/wiki/ProxyProperty)
-    * [RivetView](https://github.com/Solid-Interactive/masseuse/wiki/Rivetview)
+
 
 ## Installation
 
