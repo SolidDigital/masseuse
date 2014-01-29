@@ -15,7 +15,7 @@
         "default"         : {
             "outputSourceFiles" : true
         },
-        "systemName"      : "DocStrap",
+        "systemName"      : "masseuse",
         "footer"          : "",
         "copyright"       : "SOLID Interaction 2014",
         "navType"         : "vertical",
