@@ -6,10 +6,12 @@ define(function () {
      * values is changed, the ComputeProperty callback is called with the values of all the dependent fields.
      * See the tests for example usage.
      *
-     * Computed Properties are properties on models that are computed from an array of other properties on the same model. Any
+     * Computed Properties are properties on models that are computed from an array of other properties on the same
+     * model. Any
      * time one of the dependent properties are chenged, the computed property is recalculated.
      *
-     * Computed Properties are set, optionally, when the computed property is defined, and subsequently anytime one of the
+     * Computed Properties are set, optionally, when the computed property is defined, and subsequently anytime one of
+     * the
      * dependent properties are chnaged.
      *
      * For example if there is a `PurchasedItem` model with properties of `price`, `taxes`, `discounts` then a Computed
@@ -30,7 +32,8 @@ define(function () {
      * console.log(7.8 == item.get('total'));
      * ```
      *
-     * Computed Properties can be set like other Backbone properties. This is they can be set on initialization or after, and
+     * Computed Properties can be set like other Backbone properties. This is they can be set on initialization or
+     * after, and
      * they can be set using a key, value or as part of a larger attributes object.
      *
      * An optional thired parameter of a Computed Property can be set to truthy to skip the initial Computed Property

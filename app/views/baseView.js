@@ -15,14 +15,18 @@ define([
         /**
          *
          *
-         * The BaseView is a custom extension of Backbone.View with some built in functionality and a defined life cycle. The life
+         * The BaseView is a custom extension of Backbone.View with some built in functionality and a defined life
+         * cycle. The life
          * cycle methods can be run either synchronously or asynchronously.
          *
          * To initialize a BaseView, there are several choices of options to pass in.
          *
-         * The life cycle has three main parts: `beforeRender`, `render`, and `afterRender`. `beforeRender` and `afterRender` are
-         * noops by default. If they are defined with zero arguments, they are executed synchronously. If they are defined with
-         * one argument, then a `$.Deferred` is passed in as that argument, and the life cycle doesn't continue until that
+         * The life cycle has three main parts: `beforeRender`, `render`, and `afterRender`. `beforeRender` and
+         * `afterRender` are
+         * noops by default. If they are defined with zero arguments, they are executed synchronously. If they are
+         * defined with
+         * one argument, then a `$.Deferred` is passed in as that argument, and the life cycle doesn't continue until
+         * that
          * `$.Deferred` is resolved. The render method uses the same convention.
          *
          * ```
@@ -30,11 +34,14 @@ define([
          * beforeRender : function($deferred) {  must resolve or reject $deferred  }
          * ```
          *
-         * The lifecycle is started with `view.start()`. This returns a promise. During the life cycle the promise is notifed with:
+         * The lifecycle is started with `view.start()`. This returns a promise. During the life cycle the promise is
+         * notifed with:
          * `beforeRenderDone`, `renderDone`, and `afterRenderDone`.
          *
-         *     Child views are rendered during a parent views `afterDone`. The views start promise is not resolved until all the
-         *     children's promises are resolved. Children can be nested arbitrariluy deep. Child views can be added before start using
+         *     Child views are rendered during a parent views `afterDone`. The views start promise is not resolved until
+         *     all the
+         *     children's promises are resolved. Children can be nested arbitrariluy deep. Child views can be added
+         *     before start using
          * `parent.addChild(child)`.
          *
          *
@@ -78,7 +85,8 @@ define([
      * applied to `this.el` before `this.initialize` is called.
      *
      * * `name` - convenience name string for debugging - will be available on the view instance
-     * `appendTo` - if set and `el` is not set then the view will be appended to this eleeent. `appendTo` can be a sizzle selector, a DOM element, or a jQuery object
+     * `appendTo` - if set and `el` is not set then the view will be appended to this eleeent. `appendTo` can be a
+     * sizzle selector, a DOM element, or a jQuery object
      * `bindings` - declarative syntax to setup view listeners
      * array of arrays
      * each sub array contains: what to listen to, the event, and the callback
@@ -104,7 +112,8 @@ define([
      * ```
      *
      * * `template` - String to be used as the umderscore template
-     * * `viewOptions` - list of keys for which each key value pair from `options` will be transferred to the view instance
+     * * `viewOptions` - list of keys for which each key value pair from `options` will be transferred to the view
+     * instance
      *
      * ```javascript
      * var view = new BaseView({
@@ -117,7 +126,8 @@ define([
      *        ['model', 'change:discount', 'animateAdvertisement']
      *    ],
      *    templateHtml : '<div><%= price %> : <%= discount %></div>',
-     *        // Underscore templating that will - if provided - be turned into this.template using _.template(templateHtml)
+     *        // Underscore templating that will - if provided - be turned into this.template using
+     *        _.template(templateHtml)
      *
      * });
      * ```
