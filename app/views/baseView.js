@@ -13,6 +13,31 @@ define([
         AFTER_RENDER_DONE = 'afterRenderDone',
         MODEL_DATA = 'modelData',
         /**
+         *
+         *
+         * The BaseView is a custom extension of Backbone.View with some built in functionality and a defined life cycle. The life
+         * cycle methods can be run either synchronously or asynchronously.
+         *
+         * To initialize a BaseView, there are several choices of options to pass in.
+         *
+         * The life cycle has three main parts: `beforeRender`, `render`, and `afterRender`. `beforeRender` and `afterRender` are
+         * noops by default. If they are defined with zero arguments, they are executed synchronously. If they are defined with
+         * one argument, then a `$.Deferred` is passed in as that argument, and the life cycle doesn't continue until that
+         * `$.Deferred` is resolved. The render method uses the same convention.
+         *
+         * ```
+         * beforeRender : function() {  synchronous  },
+         * beforeRender : function($deferred) {  must resolve or reject $deferred  }
+         * ```
+         *
+         * The lifecycle is started with `view.start()`. This returns a promise. During the life cycle the promise is notifed with:
+         * `beforeRenderDone`, `renderDone`, and `afterRenderDone`.
+         *
+         *     Child views are rendered during a parent views `afterDone`. The views start promise is not resolved until all the
+         *     children's promises are resolved. Children can be nested arbitrariluy deep. Child views can be added before start using
+         * `parent.addChild(child)`.
+         *
+         *
          * @class A View that adds lifecycle methods to Views that are optionally async using jQuery promises.
          * Adds support for adding child Views
          * @namespace masseuse/BaseView
