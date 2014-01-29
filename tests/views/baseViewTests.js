@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'rivetsPlugin', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, masseuse, rivetsPlugin) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
         var VIEW1_NAME = 'testView1',
@@ -22,7 +22,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
             beforeEach(function () {
                 BaseView = masseuse.BaseView;
-                RivetsView = rivetsPlugin.view;
+                RivetsView = masseuse.plugins.rivets.RivetsView;
                 viewInstance = new BaseView({
                     name : VIEW1_NAME
                 });

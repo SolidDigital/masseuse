@@ -1,6 +1,6 @@
 /* jshint loopfunc:true, maxdepth:3 */
-define(['jquery', 'rivets', './configureMethod', 'backbone', 'underscore'],
-    function ($, Rivets, configureMethod, Backbone, _) {
+define(['jquery', 'rivets', 'backbone', 'underscore'],
+    function ($, Rivets, Backbone, _) {
         'use strict';
 
         /**
