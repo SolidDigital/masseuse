@@ -2,6 +2,7 @@
 module.exports = function (grunt) {
     'use strict';
     grunt.config('clean', {
-        build : ['build']
+        build : ['build'],
+        jsdoc : ['jsdoc']
     });
 };

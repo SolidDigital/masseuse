@@ -1,148 +1,283 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>JSDoc: Namespace: BaseView</title>
-    
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+	<meta charset="utf-8">
+	<title>DocStrap Namespace: masseuse/BaseView</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	
+	<link type="text/css" rel="stylesheet" href="styles/site.readable.css">
+	
 </head>
 
 <body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">DocStrap</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b
+						class="caret"></b></a>
 
-<div id="main">
-    
-    <h1 class="page-title">Namespace: BaseView</h1>
-    
-    
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="adapter.html">adapter</a>
+						</li>
+						
+						<li>
+							<a href="binders.html">binders</a>
+						</li>
+						
+						<li>
+							<a href="ComputedProperty.html">ComputedProperty</a>
+						</li>
+						
+						<li>
+							<a href="formatters.html">formatters</a>
+						</li>
+						
+						<li>
+							<a href="masseuse.html">masseuse</a>
+						</li>
+						
+						<li>
+							<a href="BaseView.html">masseuse/BaseView</a>
+						</li>
+						
+						<li>
+							<a href="Channels.html">masseuse/utilities/Channels</a>
+						</li>
+						
+						<li>
+							<a href="ViewContext.html">masseuse/ViewContext</a>
+						</li>
+						
+						<li>
+							<a href="MasseuseModel.html">MasseuseModel</a>
+						</li>
+						
+						<li>
+							<a href="ProxyProperty.html">ProxyProperty</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="MasseuseRouter.html">routers/MasseuseRouter</a>
+						</li>
+						
+						<li>
+							<a href="getProperty.html">utilities/getProperty</a>
+						</li>
+						
+						<li>
+							<a href="lifeCycle.html">views/lifeCycle</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+		<div class="span8">
+			
+				<div id="main">
+					
 
 
-
+	<h1 class="page-title">Namespace: masseuse/BaseView</h1>
 <section>
-    
+
 <header>
     <h2>
-    BaseView
+    masseuse/BaseView
     </h2>
     
-        <div class="class-description">A View that adds lifecycle methods to Views that are optionally async using jQuery promises.Adds support for adding child Views</div>
+        <div class="class-description"><p>A View that adds lifecycle methods to Views that are optionally async using jQuery promises.
+Adds support for adding child Views</p></div>
     
-</header>  
+</header>
 
 <article>
     <div class="container-overview">
     
-    
+
     
         
-        
+
         
 <dl class="details">
     
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
-    
-    
-    
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#line15">line 15</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-15">line 15</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-        
+
         
     
     </div>
+
     
+
     
+
     
+
     
+
     
+
     
-    
-    
-    
-    
-    
-    
-    
+
     
         <h3 class="subsection-title">Methods</h3>
-        
+
         <dl>
             
 <dt>
-    <h4 class="name" id="constructor"><span class="type-signature">&lt;static> </span>constructor<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addChild"><span class="type-signature"></span>addChild<span class="signature">(childView)</span><span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
     
     
+    <div class="description">
+        <p>Add a child view to the array of this views child view references.
+The child must be started later. This happens in start or manually.</p>
+    </div>
+    
 
     
     
     
     
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>childView</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
     
     
     
 <dl class="details">
     
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
-    
-    
-    
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#line51">line 51</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-239">line 239</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
@@ -163,7 +298,363 @@
         
             
 <dt>
-    <h4 class="name" id="initialize"><span class="type-signature">&lt;static> </span>initialize<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="appendOrInsertView"><span class="type-signature"></span>appendOrInsertView<span class="signature">($startDeferred)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>$startDeferred</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-152">line 152</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="bindEventListeners"><span class="type-signature"></span>bindEventListeners<span class="signature">(listenerArray)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>bindEventListeners
+Bind all event listeners specified in 'defaultListeners' and 'options.listeners' using 'listenTo'</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>listenerArray</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>(Array[Array])  - A collection of arrays of arguments that will be used with
+'Backbone.Events.listenTo'</p></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-188">line 188</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="constructor"><span class="type-signature"></span>constructor<span class="signature">(options, useDefaultOptions)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>The constructor of BaseView overrides the default BB constructor, so that the options object can be created and
+applied to <code>this.el</code> before <code>this.initialize</code> is called.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>useDefaultOptions</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-51">line 51</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="dataToJSON"><span class="type-signature"></span>dataToJSON<span class="signature">()</span><span class="type-signature"> &rarr; {Object|string|*}</span></h4>
     
     
 </dt>
@@ -180,34 +671,34 @@
     
 <dl class="details">
     
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
-    
-    
-    
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#line68">line 68</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-169">line 169</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
@@ -221,36 +712,764 @@
     
     
     
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">string</span>
+|
+
+<span class="param-type">*</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="initialize"><span class="type-signature"></span>initialize<span class="signature">(options)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-72">line 72</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="refreshChildren"><span class="type-signature"></span>refreshChildren<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Remove all children and restart them.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-270">line 270</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>$promise - will be resolved once all children are restarted</p>
+</div>
+
+
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="remove"><span class="type-signature"></span>remove<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Removes this view and all its children. Additionally, this view removes itself from its parent view.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-222">line 222</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeAllChildren"><span class="type-signature"></span>removeAllChildren<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Remove all children from the parentView.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-261">line 261</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeChild"><span class="type-signature"></span>removeChild<span class="signature">(childView)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Remove one child from the parentView.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>childView</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-251">line 251</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="render"><span class="type-signature"></span>render<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-138">line 138</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="start"><span class="type-signature"></span>start<span class="signature">($parentRenderPromise)</span><span class="type-signature"> &rarr; {jQuery.promise}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Wrapper method for lifecycle methods. Life cycle event are notifed both throw the progress returned by this
+method's promise, and by events triggered on the view. So - for example - plugins can hook into life cycle
+events.</p>
+<p>In order, this method:</p>
+<ul>
+<li>Calls this.beforeRender()</li>
+<li>Starts any child views</li>
+<li>Notifies that beforeRender is done</li>
+<li>If the view has a parent, waits for its parent to render</li>
+<li>Calls this.render()</li>
+<li>Notifies that render is done</li>
+<li>Calls this.afterRender()</li>
+<li>Notifies that afterRender is done</li>
+<li>Resolves the returned promise</li>
+</ul>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>$parentRenderPromise</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">jQuery.promise</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>If passed in, the start method was called from a parent view
+start() method.</p></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-124">line 124</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>A promise that is resolved when when the start method has completed</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">jQuery.promise</span>
+
+
+	</dd>
+</dl>
+
+
+        
     
     
 </dd>
 
         </dl>
     
+
     
-    
-    
+
     
 </article>
 
-</section>  
+</section>
 
 
 
 
-</div>
+				</div>
 
-<nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="MasseuseRouter.html">routers/MasseuseRouter</a></li><li><a href="Channels.html">utilities/Channels</a></li><li><a href="getProperty.html">utilities/getProperty</a></li><li><a href="lifeCycle.html">views/lifeCycle</a></li><li><a href="ViewContext.html">views/ViewContext</a></li></ul><h3>Namespaces</h3><ul><li><a href="adapter.html">adapter</a></li><li><a href="BaseView.html">BaseView</a></li><li><a href="binders.html">binders</a></li><li><a href="ComputedProperty.html">ComputedProperty</a></li><li><a href="formatters.html">formatters</a></li><li><a href="masseuse.html">masseuse</a></li><li><a href="MasseuseModel.html">MasseuseModel</a></li><li><a href="ProxyProperty.html">ProxyProperty</a></li></ul>
-</nav>
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		SOLID Interaction 2014
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha4</a>
+		on Wed Jan 29 2014 08:53:20 GMT-0800 (PST) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
 
-<br clear="both">
+			
+			<div class="span3">
+				<div id="toc"></div>
+			</div>
+			
+			<br clear="both">
+		</div>
 
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Jan 28 2014 18:25:21 GMT-0800 (PST)
-</footer>
+	</div>
+	<script src="scripts/sunlight.js"></script>
+	<script src="scripts/sunlight.javascript.js"></script>
+	<script src="scripts/sunlight-plugin.doclinks.js"></script>
+	<script src="scripts/sunlight-plugin.linenumbers.js"></script>
+	<script src="scripts/sunlight-plugin.menu.js"></script>
+	<script src="scripts/jquery.min.js"></script>
+	<script src="scripts/jquery.scrollTo.js"></script>
+	<script src="scripts/jquery.localScroll.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+
+	<script>  Sunlight.highlightAll({lineNumbers:true,  showMenu: true, enableDoclinks :true}); </script>
+
+	<script>
+		$( function () {
+			$( "#toc" ).toc( {
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : 60
+			} );
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+
+		} );
+	</script>
+
+	
+
 </body>
 </html>

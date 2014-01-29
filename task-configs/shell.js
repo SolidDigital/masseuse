@@ -53,6 +53,14 @@ module.exports = function(grunt) {
                 }
             },
             command : 'git --no-pager shortlog -ns HEAD'
+        },
+        'jsdoc'  : {
+            options : {
+                stdout : true,
+                stderr : true,
+                failOnError : true
+            },
+            command : 'node_modules/.bin/jsdoc -c jsdoc.json'
         }
     });
 };

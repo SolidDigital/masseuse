@@ -1,7 +1,36 @@
 {
-    "plugins": [ "node_modules/grunt-jsdoc/node_modules/jsdoc/plugins/markdown" ],
-    "markdown": {
-        "parser": "gfm",
-        "hardwrap": true
+    "source" : {
+        "include" : [
+            "README.md", "app"
+        ],
+        "excludePattern": "(\/|\\\\)app(\/|\\\\)vendor"
+    },
+    "tags"      : {
+        "allowUnknownTags" : true
+    },
+    "plugins"   : ["node_modules/grunt-jsdoc/node_modules/jsdoc/plugins/markdown"],
+    "templates" : {
+        "cleverLinks"     : false,
+        "monospaceLinks"  : false,
+        "default"         : {
+            "outputSourceFiles" : true
+        },
+        "systemName"      : "DocStrap",
+        "footer"          : "",
+        "copyright"       : "SOLID Interaction 2014",
+        "navType"         : "vertical",
+        "theme"           : "simplex",
+        "linenums"        : true,
+        "collapseSymbols" : false,
+        "inverseNav"      : true
+    },
+    "markdown"  : {
+        "parser"   : "gfm",
+        "hardwrap" : true
+    },
+    "opts" : {
+        "destination": "docs",
+        "template" : "node_modules/ink-docstrap/template",
+        "recurse": true
     }
 }

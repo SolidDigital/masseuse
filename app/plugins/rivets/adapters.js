@@ -5,19 +5,9 @@ define(['jquery', 'rivets', 'backbone'],
 
         var keySeparator = /->/g;
 
-        /**
-         * @namespace adapter
-         */
         return {
             ':' :  {
 
-                /**
-                 * @memberof adapter
-                 * @instance
-                 * @param model
-                 * @param keypath
-                 * @param callback
-                 */
                 subscribe : function (model, keypath, callback) {
                     keypath = keypath.replace(keySeparator,'.');
                     if (model instanceof Backbone.Collection) {
@@ -32,12 +22,6 @@ define(['jquery', 'rivets', 'backbone'],
                     }
                 },
 
-                /**
-                 * @memberof adapter
-                 * @instance
-                 * @param model
-                 * @param keypath
-                 */
                 unsubscribe : function (model, keypath) {
                     if (typeof (model) == 'undefined') {
                         return;
@@ -49,26 +33,13 @@ define(['jquery', 'rivets', 'backbone'],
                     }
                 },
 
-                /**
-                 * @memberof adapter
-                 * @instance
-                 * @param model
-                 * @param keypath
-                 * @returns {*}
-                 */
                 read : function (model, keypath) {
                     if(model instanceof Backbone.Collection) {
                         return model.models;
                     }
                     return model.get(keypath.replace(keySeparator,'.'));
                 },
-                /**
-                 * @memberof adapter
-                 * @instance
-                 * @param model
-                 * @param keypath
-                 * @param value
-                 */
+
                 publish : function (model, keypath, value) {
                     if (model instanceof Backbone.Model) {
                         model.set(keypath.replace(keySeparator,'.'), value);
