@@ -1,5 +1,5 @@
-define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
-    function (_, chai, mocha, sinon, sinonChai, masseuse) {
+define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'rivetsPlugin', 'sinonSpy'],
+    function (_, chai, mocha, sinon, sinonChai, masseuse, plugin) {
         'use strict';
 
         chai.should();

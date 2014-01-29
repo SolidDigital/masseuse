@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, masseuse) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'rivetsPlugin', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse, rivetsPlugin) {
 
         'use strict';
         var VIEW1_NAME = 'testView1',
@@ -16,10 +16,13 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
             //-----------Setup-----------
             var BaseView,
-                viewInstance;
+                RivetsView,
+                viewInstance,
+                options;
 
             beforeEach(function () {
                 BaseView = masseuse.BaseView;
+                RivetsView = rivetsPlugin.view;
                 viewInstance = new BaseView({
                     name : VIEW1_NAME
                 });
@@ -30,18 +33,20 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 var OptionsView;
 
                 beforeEach(function() {
+                    options = {
+                        defaultKey : true,
+                        viewOptions : [
+                            'defaultKey',
+                            'passedInKey'
+                        ],
+                        attributes : {
+                            class : 'boom'
+                        }
+                    };
+
                     OptionsView = BaseView.extend({
                         name : VIEW1_NAME,
-                        defaultOptions: {
-                            defaultKey : true,
-                            viewOptions : [
-                                'defaultKey',
-                                'passedInKey'
-                            ],
-                            attributes : {
-                                class : 'boom'
-                            }
-                        }
+                        defaultOptions: options
                     });
                 });
 
@@ -72,6 +77,27 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 it('default options are applied to this.el', function() {
                     var view = new OptionsView();
                     $(view.el).attr('class').should.equal('boom');
+                });
+
+                describe('ViewContext', function() {
+                    it('ViewContext should be run on modelData for an instance of BaseView', function() {
+                        var view = new OptionsView({
+                            modelData : {
+                                name : masseuse.ViewContext('name')
+                            }
+                        });
+                        view.model.get('name').should.equal(VIEW1_NAME);
+                    });
+
+                    it('ViewContext should be run on modelData for an instance of RivetView', function() {
+                        var view = new RivetsView({
+                            name : VIEW1_NAME,
+                            modelData : {
+                                name : masseuse.ViewContext('name')
+                            }
+                        });
+                        view.model.get('name').should.equal(VIEW1_NAME);
+                    });
                 });
             });
 
