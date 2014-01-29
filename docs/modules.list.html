@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Documentation Source: plugins/rivets/configureMethod.js</title>
+	<title>Documentation Modules</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -119,83 +119,120 @@
 	<div class="row-fluid">
 
 		
-			<div class="span12">
-				
+		<div class="span8">
+			
 				<div id="main">
 					
 
 
-		<h1 class="page-title">Source: plugins/rivets/configureMethod.js</h1>
+	<h1 class="page-title">Modules</h1>
+<section>
+
+<header>
+    <h2>
     
-    <section>
-        <article>
-            <pre class="sunlight-highlight-javascript ">define(['underscore', 'jquery'], function (_, $) {
+    </h2>
+    
+</header>
 
-    'use strict';
+<article>
+    <div class="container-overview">
+    
 
-    /**
-     * configureMethod allows the reuse of a function
-     *
-     * a configureMethod is curried twice. in other words, first configureMethod is called with the configureItFunction
-     * and the default options.
-     * this creates a "general" configureMethod function. this general function can then be called with the actual,
-     * specific
-     * options for the situation. this will return the final function that can be attached to your object.
-     *
-     * in addition to the availability of options, configureIts provide two other pieces of functionality that can be
-     * deployed
-     * through options.
-     *
-     * 1) configureIts can implement $.Deferred. to do this set options.async to true. if async is true, then the first
-     * argument
-     * passed to the configureItFunction will be a deferred instance. this instance can be resolved or rejected as seen
-     * fit. its
-     * promise will be returned by the final function attached to the object.
-     *
-     * @namespace configureMethod
-     * @function
-     * @param defaultOptions
-     * @param configureItFunction
-     * @returns {Function}
-     */
-    return function configureMethod (defaultOptions, methodToConfigure) {
+    
+        
 
-        // Return a once curried function that can be customized for a particular use
-        return {
-            methodWithDefaultOptions : function (options) {
-                var config = {};
+        
+<dl class="details">
+    
 
-                // Create the final config object from the default options and actual options
-                _.extend(config, defaultOptions, options);
+    
 
-                // Return the final function that can be attached to the object
-                return {
-                    methodWithActualOptions : function () {
-                        // Arguments is not an array, so we create an array out of it
-                        var args = Array.prototype.slice.call(arguments),
-                            $deferred,
-                            returned;
+    
 
-                        args.unshift(config);
+    
 
-                        if (config.async) {
-                            $deferred = new $.Deferred();
-                            args.unshift($deferred);
-                        }
+    
 
-                        returned = methodToConfigure.apply(this, args);
+    
 
-                        return config.async ? $deferred.promise() : returned;
-                    }
-                };
-            }
-        };
-    };
-});
-</pre>
-        </article>
-    </section>
+    
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Namespaces</h3>
+
+        <dl>
+            <dt><a href="namespaces.html#adapter"><a href="adapter.html">adapter</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#adapter"><a href="adapter.html">adapter</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#binders"><a href="binders.html">binders</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#ComputedProperty"><a href="ComputedProperty.html">ComputedProperty</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#formatters"><a href="formatters.html">formatters</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#masseuse"><a href="masseuse.html">masseuse</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#masseuse/BaseView"><a href="BaseView.html">masseuse/BaseView</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#masseuse/utilities/Channels"><a href="Channels.html">masseuse/utilities/Channels</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#masseuse/ViewContext"><a href="ViewContext.html">masseuse/ViewContext</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#MasseuseModel"><a href="MasseuseModel.html">MasseuseModel</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#ProxyProperty"><a href="ProxyProperty.html">ProxyProperty</a></a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -213,6 +250,10 @@
 				</footer>
 			</div>
 
+			
+			<div class="span3">
+				<div id="toc"></div>
+			</div>
 			
 			<br clear="both">
 		</div>

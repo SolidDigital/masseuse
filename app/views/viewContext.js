@@ -3,7 +3,7 @@ define(['../utilities/accessors'], function (accessors) {
 
     /**
      * @class Allows the storage of a method for later retrieval and attachment to a context.
-     * @module views/ViewContext
+     * @namespace masseuse/ViewContext
      * @param context
      * @returns {*}
      */

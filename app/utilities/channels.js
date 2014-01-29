@@ -7,7 +7,7 @@ define(['underscore', 'backbone', './nameSpace'], function (_, Backbone, namespa
     /**
      * @class Channels is a singleton event bus.
      * @param channel
-     * @module utilities/Channels
+     * @namespace masseuse/utilities/Channels
      */
     function Channels(channel) {
         if (channels) {
@@ -22,6 +22,7 @@ define(['underscore', 'backbone', './nameSpace'], function (_, Backbone, namespa
     /**
      * Channel can either be a string or array of channel strings.
      * The string takes the form, 'name1.name2.name3'
+     * @memberof masseuse/utilities/Channels
      * @param channel
      */
     Channels.prototype.addChannel = function(channel) {

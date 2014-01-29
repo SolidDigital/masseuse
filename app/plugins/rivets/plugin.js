@@ -34,6 +34,7 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
             };
 
             this.listenTo(this, 'afterTemplatingDone', function() {
+                console.log('asdfasdf');
                 if (options.rivetsConfig || options.rivetConfig) {
                     rivetView.call(this, rivetsOptions);
                 }
