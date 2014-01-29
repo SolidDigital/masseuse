@@ -56,7 +56,7 @@ define([
      * @param options
      * @param useDefaultOptions
      */
-     function constructor(options, useDefaultOptions) {
+    function constructor(options, useDefaultOptions) {
         var args = Array.prototype.slice.call(arguments, 0);
         this.cid = _.uniqueId('view');
         options || (options = {});
@@ -222,7 +222,7 @@ define([
     function remove () {
         this.removeAllChildren();
 
-        if (this.parent) {
+        if (this.parent && _.contains(this.parent.children, this)) {
             this.parent.removeChild(this);
         }
 
