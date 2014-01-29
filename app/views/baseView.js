@@ -126,6 +126,12 @@ define([
 
     function render () {
         this.appendOrInsertView(arguments[arguments.length - 1]);
+
+        _(this.children).each(function(child) {
+            if (child.hasStarted) {
+                child.render();
+            }
+        });
     }
 
     function appendOrInsertView ($startDeferred) {

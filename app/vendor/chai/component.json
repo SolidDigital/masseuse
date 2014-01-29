@@ -1,7 +1,7 @@
 {
     "name": "chai"
   , "repo": "chaijs/chai"
-  , "version": "1.7.2"
+  , "version": "1.8.1"
   , "description": "BDD/TDD assertion library for node.js and the browser. Test framework agnostic."
   , "license": "MIT"
   , "keywords": [
@@ -23,7 +23,6 @@
       , "lib/chai/utils/addChainableMethod.js"
       , "lib/chai/utils/addMethod.js"
       , "lib/chai/utils/addProperty.js"
-      , "lib/chai/utils/eql.js"
       , "lib/chai/utils/flag.js"
       , "lib/chai/utils/getActual.js"
       , "lib/chai/utils/getEnumerableProperties.js"
@@ -42,6 +41,7 @@
     ]
   , "dependencies": {
         "chaijs/assertion-error": "1.0.0"
+      , "chaijs/deep-eql": "0.1.3"
     }
   , "development": {}
 }
