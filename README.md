@@ -107,8 +107,9 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
-* 1.3.4 - 2014-01-29 - [patches](release_notes/1.3.2.md)
-* 1.3.3 - 2014-01-28 - [patches](release_notes/1.3.2.md)
+* 1.4.0 - 2014-01-30 - [patches](release_notes/1.4.0.md)
+* 1.3.4 - 2014-01-29 - [patches](release_notes/1.3.4.md)
+* 1.3.3 - 2014-01-28 - [patches](release_notes/1.3.3.md)
 * 1.3.2 - 2014-01-24 - [patches](release_notes/1.3.2.md)
 * 1.3.1 - 2014-01-24 - [patches](release_notes/1.3.1.md)
 * 1.3.0 - 2014-01-24 - [features](release_notes/1.3.0.md)
@@ -139,4 +140,4 @@ npm install -g mocha-phantomjs phantomjs
 * Jesse McCabe
 
 
-_Compiled file. Do not modify directly. Created: 2014-01-29 12:46:20_
+_Compiled file. Do not modify directly. Created: 2014-01-30 08:30:11_

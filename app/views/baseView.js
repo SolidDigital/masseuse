@@ -52,7 +52,6 @@ define([
          */
         BaseView = Backbone.View.extend({
             constructor : constructor,
-            defaultBindings : [],
             initialize : initialize,
             start : start,
             render : render,
@@ -253,10 +252,11 @@ define([
 
     /**
      * bindEventListeners
-     * Bind all event listeners specified in 'defaultListeners' and 'options.listeners' using 'listenTo'
+     * Bind all event listeners specified in and 'options.listeners' using 'listenTo'. Either `option.bindings` or
+     * `options.listeners` can be used.
      *
      * @memberof masseuse/BaseView#
-     * @param listenerArray (Array[Array])  - A collection of arrays of arguments that will be used with
+     * @param bindingsArray (Array[Array])  - A collection of arrays of arguments that will be used with
      * 'Backbone.Events.listenTo'
      *
      * @example:
@@ -266,32 +266,37 @@ define([
      * Passing in an array with a string as the first parameter will attempt to bind to this[firstArgument] so that
      * it is possible to listen to view properties that have not yet been instantiated (i.e. viewModels)
      */
-    function bindEventListeners (listenerArray) {
-        var self = this,
-            listenerArgs;
+    function bindEventListeners (bindingsArray) {
+        var self = this;
 
         this.stopListening();
 
-        listenerArgs = _.map(listenerArray.concat(this.defaultBindings), function (argsArray) {
+        bindingsArray = _.map(bindingsArray, function (oneBindingArray) {
+
+            var onListener = 2 === oneBindingArray.length,
+                excludedIndex = onListener ? 0 : 1;
 
             // Since the view config object doesn't have access to the view's context, we must provide it
-            _.each([argsArray[0], argsArray[1] , argsArray[2]], function (arg, index) {
-                if (_.isString(arg) && index != 1) {
-                    argsArray[index] = accessors.getProperty(self, arg);
-                } else if (index == 1) {
-                    argsArray[index] = arg;
+            _.each(oneBindingArray, function (arg, index) {
+                // Leave the second array item as a string
+                if (_.isString(arg) && index != excludedIndex) {
+                    oneBindingArray[index] = accessors.getProperty(self, arg);
                 }
             });
 
-            return argsArray;
+            if (onListener) {
+                oneBindingArray.unshift(self);
+            }
+
+            return oneBindingArray;
         });
 
         // TODO: test that duplicate items will pick the bindings from options, throwing out defaults
-        listenerArray = _.uniq(listenerArgs, function (a) {
+        bindingsArray = _.uniq(bindingsArray, function (a) {
             return _.identity(a);
         });
 
-        _.each(listenerArray, function (listenerArgs) {
+        _.each(bindingsArray, function (listenerArgs) {
             self.listenTo.apply(self, listenerArgs);
         });
     }
@@ -422,8 +427,9 @@ define([
     }
 
     function _setBoundEventListeners (options) {
-        if (options && options.bindings) {
-            this.bindEventListeners(options.bindings);
+        if (!options) {
+            return;
         }
+        this.bindEventListeners(options.listeners || options.bindings);
     }
 });
