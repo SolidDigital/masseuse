@@ -18,7 +18,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
             var BaseView,
                 RivetsView,
                 viewInstance,
-                options;
+                options,
+                methodSpy;
 
             beforeEach(function () {
                 BaseView = masseuse.BaseView;
@@ -44,9 +45,42 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         }
                     };
 
+                    methodSpy = sinon.spy();
+
                     OptionsView = BaseView.extend({
                         name : VIEW1_NAME,
-                        defaultOptions: options
+                        defaultOptions: options,
+                        testDone : methodSpy
+                    });
+                });
+
+                describe('options', function() {
+                    describe('bindings', function() {
+                        it('can listen to object events on things other than the view by using the bindings array',
+                            function () {
+                                options.bindings = [
+                                    ['model', 'change', 'testDone']
+                                ];
+                                options.modelData = { test : 'test' };
+                                viewInstance = new OptionsView(options);
+                                methodSpy.should.not.have.been.called;
+                                viewInstance.model.set('test', 'other');
+                                methodSpy.should.have.been.calledOnce;
+                            });
+                        it('can listen to object events on the view iteslf by using the bindings array',
+                            function (done) {
+                                options.listeners = [
+                                    ['afterTemplatingDone', 'testDone']
+                                ];
+                                options.modelData = { test : 'test' };
+                                methodSpy.should.not.have.been.called;
+                                new OptionsView(options)
+                                    .start()
+                                    .done(function() {
+                                        methodSpy.should.have.been.calledOnce;
+                                        done();
+                                    });
+                            });
                     });
                 });
 
