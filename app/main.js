@@ -28,11 +28,13 @@ define([
     return {
         BaseView : BaseView,
         ViewContext : ViewContext,
-        channels : channels,
         MasseuseModel : MasseuseModel,
         ComputedProperty : ComputedProperty,
         MasseuseRouter : MasseuseRouter,
         ProxyProperty : ProxyProperty,
+        utilities : {
+            channels : channels
+        },
         plugins : {
             rivets : {
                 RivetsView : RivetsView
