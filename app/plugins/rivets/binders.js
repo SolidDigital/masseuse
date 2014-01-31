@@ -10,6 +10,11 @@ define(['jquery'], function ($) {
                 this.view.binders.text.call(this, el, model);
             },
             bind : function(el) {
+                var $el = $(el);
+                if(!$el.attr('contenteditable')) {
+                    $el.attr('contenteditable', true);
+                }
+
                 el.addEventListener('input', _callback.bind(this,el), false);
             },
             unbind: function(el) {
