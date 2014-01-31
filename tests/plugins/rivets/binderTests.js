@@ -1,3 +1,4 @@
+/*globals Event:true*/
 define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
     function ($, _, chai, mocha, sinon, sinonChai, masseuse) {
 
@@ -20,7 +21,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 beforeEach(function () {
                     $testDom = $('<div id="' + testDom + '"></div>');
                     $body.append($testDom);
-                    templateWithAttribute = '<span id="testHere" data-rv-content="model:name" contenteditable="true"></span>' +
+                    templateWithAttribute = '<span id="testHere" data-rv-content="model:name" contenteditable="true">' +
+                        '</span>' +
                         '<div id="something"></div>',
                     templateWithoutAttribute = '',
                     options = {
@@ -28,7 +30,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         wrapper : false,
                         template : templateWithAttribute,
                         modelData : {
-                            name : 'Kareem Abdul Jabbar',
+                            name : 'Kareem Abdul Jabbar'
                         },
                         rivetsConfig : true
                     };
@@ -94,12 +96,14 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         .start()
                         .done(function() {
                             $testDom.find('#testHere').html('The Farmers in the Den');
-                            $testDom.find('#testHere').trigger('input');
 
-                            setTimeout(function() {
-                                rivetView.model.get('name').should.equal('The Farmers in the Den');
-                                done();
-                            }, 1000);
+                            var event = new Event('input');
+                            $testDom.find('#testHere')[0].dispatchEvent(event);
+
+                            $testDom.find('#testHere').blur();
+                            rivetView.model.get('name').should.equal('The Farmers in the Den');
+                            done();
+
                         });
                 });
             });

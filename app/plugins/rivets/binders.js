@@ -10,21 +10,17 @@ define(['jquery'], function ($) {
                 this.view.binders.text.call(this, el, model);
             },
             bind : function(el) {
-                var self = this;
-
-
-
-                this.callback = function() {
-                    self.view.adapters[':'].publish(self.model, self.key.path, el.textContent);
-                };
-
-                el.addEventListener('input', this.callback, false);
+                el.addEventListener('input', _callback.bind(this,el), false);
             },
             unbind: function(el) {
-                el.removeEventListener('input', this.callback, false);
+                el.removeEventListener('input', _callback.bind(this,el), false);
             }
         }
     };
+
+    function _callback(el) {
+        this.view.adapters[':'].publish(this.model,this.keypath.substring(this.keypath.indexOf(':')+1), el.textContent);
+    }
 
     function addClass(el, value) {
         if (el.addedClass) {
