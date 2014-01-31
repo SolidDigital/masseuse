@@ -17,13 +17,13 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
         mocha.setup('bdd');
 
         describe('rivets binders with rivet views', function () {
-            describe('contenteditable binder', function() {
+            describe('editable binder', function() {
                 beforeEach(function () {
                     $testDom = $('<div id="' + testDom + '"></div>');
                     $body.append($testDom);
-                    templateWithAttribute = '<span id="testHere" data-rv-content="model:name" contenteditable="true">' +
+                    templateWithAttribute = '<span id="testHere" data-rv-editable="model:name" contenteditable="true">' +
                         '</span>',
-                    templateWithoutAttribute = '<span id="testHere" data-rv-content="model:name"></span>',
+                    templateWithoutAttribute = '<span id="testHere" data-rv-editable="model:name"></span>',
                     options = {
                         appendTo : '#' + testDom,
                         wrapper : false,
@@ -59,7 +59,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 });
 
                 describe('when riveting to backbone models', function() {
-                    it('data-rv-content should support model to view binding', function (done) {
+                    it('should support model to view binding', function (done) {
                         rivetView = new RivetView(_.extend({}, options));
                         rivetView
                             .start()
@@ -72,7 +72,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             });
                     });
 
-                    it('data-rv-content should support view to model binding', function (done) {
+                    it('should support view to model binding', function (done) {
                         rivetView = new RivetView(_.extend({}, options));
                         rivetView
                             .start()

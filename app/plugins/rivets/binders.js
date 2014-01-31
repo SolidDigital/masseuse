@@ -5,7 +5,7 @@ define(['jquery'], function ($) {
 
         addclass : addClass,
         width : width,
-        content : {
+        editable : {
             routine: function(el, model) {
                 this.view.binders.text.call(this, el, model);
             },
