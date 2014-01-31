@@ -12,6 +12,8 @@ define(['jquery'], function ($) {
             bind : function(el) {
                 var self = this;
 
+
+
                 this.callback = function() {
                     self.view.adapters[':'].publish(self.model, self.key.path, el.textContent);
                 };
