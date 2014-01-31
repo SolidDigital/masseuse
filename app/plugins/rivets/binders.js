@@ -4,7 +4,24 @@ define(['jquery'], function ($) {
     return {
 
         addclass : addClass,
-        width : width
+        width : width,
+        content : {
+            routine: function(el, model) {
+                this.view.binders.text.call(this, el, model);
+            },
+            bind : function(el) {
+                var self = this;
+
+                this.callback = function() {
+                    self.view.adapters[':'].publish(self.model, self.key.path, el.textContent);
+                };
+
+                el.addEventListener('input', this.callback, false);
+            },
+            unbind: function(el) {
+                el.removeEventListener('input', this.callback, false);
+            }
+        }
     };
 
     function addClass(el, value) {
