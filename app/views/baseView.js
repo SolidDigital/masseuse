@@ -136,16 +136,28 @@ define([
      * @param options
      * @param useDefaultOptions
      */
-    function constructor(options, useDefaultOptions) {
-        var args = Array.prototype.slice.call(arguments, 0);
+    function constructor() {
+        var options,
+            args = Array.prototype.slice.call(arguments, 0),
+            length = args.length,
+            last = args[length - 1],
+            useDefaultOptions = false !== last;
+
+        // remove optional boolean indicator of wanting to use defaultOptions
+        if (length && 'object' !== typeof last) {
+            args.pop();
+        }
+
+        if (useDefaultOptions && this.defaultOptions) {
+            args.unshift(this.defaultOptions);
+        }
+
+        options = createOptions.apply(null, args);
+
         this.cid = _.uniqueId('view');
-        options || (options = {});
-        options = createOptions(options, this.defaultOptions, useDefaultOptions);
-        args.shift();
-        args.unshift(options);
         _.extend(this, _.pick(options, viewOptions));
         this._ensureElement();
-        this.initialize.apply(this, args);
+        this.initialize.call(this, options);
         this.delegateEvents();
     }
 
@@ -160,7 +172,6 @@ define([
         this.elementCache = _.memoize(elementCache);
 
         if(options) {
-            options = _.clone(options, true);
             if (options.viewOptions) {
                 viewOptions = viewOptions.concat(options.viewOptions);
             }

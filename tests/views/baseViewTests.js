@@ -38,7 +38,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         defaultKey : true,
                         viewOptions : [
                             'defaultKey',
-                            'passedInKey'
+                            'passedInKey',
+                            'extraKey'
                         ],
                         attributes : {
                             class : 'boom'
@@ -99,6 +100,17 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     });
                     view.defaultKey.should.equal(true);
                     view.passedInKey.should.equal(true);
+                });
+                it('a view instance is initialized with an extend of all arguments and defaultOptions', function() {
+
+                    var view = new OptionsView({
+                        passedInKey : true
+                    },{
+                        extraKey : true
+                    });
+                    view.defaultKey.should.equal(true);
+                    view.passedInKey.should.equal(true);
+                    view.extraKey.should.equal(true);
                 });
                 it('a view instance is initialized with the passed in options and ignores default options if the' +
                     ' second argument is false', function() {

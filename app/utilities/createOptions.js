@@ -1,34 +1,35 @@
 /*global define:false*/
-define(['jquery', 'backbone', 'underscore'], function ($, Backbone, _) {
+define(['./jqueryDeepExtend'], function ($) {
     'use strict';
 
-    return function(options, defaultOptions, useDefaultOptions) {
-        var optionsClone = $.extend(true, {}, options),
-            defaultOptionsClone = $.extend(true, {}, defaultOptions);
-
-        useDefaultOptions = false !== useDefaultOptions;
-
-        // Undefined properties are not copied. http://api.jquery.com/jquery.extend/
-        // For shadowing only the root level needs to be checked
-        _.each(options, function(value, key) {
-            if (undefined === value) {
-                optionsClone[key] = value;
-            }
-        });
-
-        if (!options && !defaultOptions) {
-            return undefined;
-        }
-
-        if (!options && defaultOptions && useDefaultOptions) {
-            return defaultOptionsClone;
-        }
-
-        if (options) {
-            if (defaultOptions && useDefaultOptions) {
-                return _.extend(defaultOptionsClone, optionsClone);
-            }
-            return optionsClone;
-        }
+    /**
+     * `createOptions` allows for the proper creation of options objects, so that the object references passed in to it
+     * are not modified.
+     *
+     * The method returns a new object.
+     *
+     * The order of arguments is that of `_.extend`. Passing an empty object in as the first argument is not required.
+     *
+     * Example:
+     *
+     * ```javascript
+     * new BaseView(createOptions(generalOptions, specificOptions));
+     * ```
+     *
+     * The options are deep extended, so fields are combined if both objects.
+     *
+     * `undefined` can be used to clobber fields:
+     *
+     * ```javascript
+     * // will return {a:undefined}
+     * createOptions({a:1},{a:undefined});
+     * ```
+     *
+     * @namespace masseuse/utilities/createOptions
+     */
+    return function() {
+        var args = Array.prototype.slice.call(arguments, 0);
+        args = [true,{},{}].concat(args);
+        return $.deepExtend.apply($, args);
     };
 });
