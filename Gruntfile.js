@@ -1,8 +1,8 @@
 /*globals module:true */
 module.exports = function (grunt) {
     'use strict';
-
-    var path = require('path');
+    var path = require('path'),
+        _ = grunt.util._;
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
@@ -19,11 +19,11 @@ module.exports = function (grunt) {
         'jshint', 'shell:bower', 'shell:testPhantom'
     ]);
     grunt.registerTask('deployDocs', 'Deploy to gh-pages', [
-        'readme', 'clean:build', 'jshint', 'jsdoc', 'shell:commitJsdoc', 'shell:bower', 'copy:jsdoc',
+        'clean:build', 'jshint', 'jsdoc', 'shell:commitJsdoc', 'shell:bower', 'copy:jsdoc',
         'copy:app', 'copy:tests', 'build_gh_pages:jsdoc', 'shell:bower'
     ]);
     grunt.registerTask('deployBower', 'Deploy to bower', [
-        'readme', 'clean:build', 'copy:bower', 'build_gh_pages:bower', 'shell:bower'
+        'clean:build', 'copy:bower', 'build_gh_pages:bower', 'shell:bower'
     ]);
     grunt.registerTask('deploy', 'deploy docs and bower', ['deployDocs', 'deployBower']);
 
@@ -31,6 +31,7 @@ module.exports = function (grunt) {
         var display = start ? false : true;
         grunt.file.recurse('release_notes', function(file) {
             var version = path.basename(file, '.md');
+            version = version.substring(0,version.indexOf('|'));
             if (start === version) {
                 display = true;
             }
@@ -44,13 +45,40 @@ module.exports = function (grunt) {
         });
     });
 
-    grunt.registerTask('jsdoc', ['clean:jsdoc', 'shell:jsdoc']);
+    grunt.registerTask('jsdoc', ['clean:jsdoc', 'releaseNotes', 'readme', 'shell:jsdoc']);
 
     grunt.registerTask('readme:template', function() {
         grunt.file.write('README.md',
             grunt.template.process(
                 grunt.file.read('templates/README.template.md')));
     });
+
+    grunt.registerTask('releaseNotes', 'read in files to make release notes', function() {
+        var types = ['backward incompatibilities', 'features', 'patches'],
+            previous = ['0','0','0'],
+            notes = '';
+
+        grunt.file.recurse('release_notes', function(file) {
+            var name = path.basename(file, '.md'),
+                pipeAt = name.indexOf('|'),
+                version = name.substring(0,pipeAt),
+                date = name.substring(pipeAt + 1),
+                current = version.split('.'),
+                updateType = '';
+
+            _.each(current, function(value, index) {
+                if (_.trim(previous[index]) != _.trim(current[index])) {
+                    updateType = types[index];
+                    return false;
+                }
+            });
+            previous = current;
+
+            notes += '* ' + version + ' - ' + date + ' - [' + updateType + '](release_notes/' + version + '.md)\n';
+        });
+        grunt.config.set('releaseNotes', notes);
+    });
+
     grunt.registerTask('readme', 'create README.md from template', function() {
         if (grunt.config.get('shortlogDone')) {
             return;
