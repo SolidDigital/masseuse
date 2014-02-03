@@ -108,29 +108,29 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
-* 0.0.1-alpha - 14-01-03 - [patches](release_notes/0.0.1-alpha|14-01-03.md)
-* 0.0.2 - 14-01-07 - [patches](release_notes/0.0.2|14-01-07.md)
-* 0.0.3 - 14-01-07 - [patches](release_notes/0.0.3|14-01-07.md)
-* 0.1.0 - 14-01-08 - [features](release_notes/0.1.0|14-01-08.md)
-* 0.1.1 - 14-01-09 - [patches](release_notes/0.1.1|14-01-09.md)
-* 0.2.0 - 14-01-14 - [features](release_notes/0.2.0|14-01-14.md)
-* 0.2.1 - 14-01-15 - [patches](release_notes/0.2.1|14-01-15.md)
-* 0.2.2 - 14-01-16 - [patches](release_notes/0.2.2|14-01-16.md)
-* 1.0.0 - 14-01-20 - [backward incompatibilities](release_notes/1.0.0|14-01-20.md)
-* 1.0.1 - 14-01-20 - [patches](release_notes/1.0.1|14-01-20.md)
-* 1.0.2 - 14-01-20 - [patches](release_notes/1.0.2|14-01-20.md)
-* 1.0.3 - 14-01-21 - [patches](release_notes/1.0.3|14-01-21.md)
-* 1.1.0 - 14-01-22 - [features](release_notes/1.1.0|14-01-22.md)
-* 1.2.0 - 14-01-23 - [features](release_notes/1.2.0|14-01-23.md)
-* 1.2.1 - 14-01-23 - [patches](release_notes/1.2.1|14-01-23.md)
-* 1.3.0 - 14-01-24 - [features](release_notes/1.3.0|14-01-24.md)
-* 1.3.1 - 14-01-24 - [patches](release_notes/1.3.1|14-01-24.md)
-* 1.3.2 - 14-01-24 - [patches](release_notes/1.3.2|14-01-24.md)
-* 1.3.3 - 14-01-28 - [patches](release_notes/1.3.3|14-01-28.md)
-* 1.3.4 - 14-01-29 - [patches](release_notes/1.3.4|14-01-29.md)
-* 1.4.0 - 14-01-30 - [features](release_notes/1.4.0|14-01-30.md)
-* 1.5.0 - 14-01-31 - [features](release_notes/1.5.0|14-01-31.md)
-* 1.5.1 - 14-02-03 - [patches](release_notes/1.5.1|14-02-03.md)
+* 0.0.1-alpha - 14-01-03 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/0.0.1-alpha|14-01-03.md)
+* 0.0.2 - 14-01-07 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/0.0.2|14-01-07.md)
+* 0.0.3 - 14-01-07 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/0.0.3|14-01-07.md)
+* 0.1.0 - 14-01-08 - [features](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/0.1.0|14-01-08.md)
+* 0.1.1 - 14-01-09 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/0.1.1|14-01-09.md)
+* 0.2.0 - 14-01-14 - [features](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/0.2.0|14-01-14.md)
+* 0.2.1 - 14-01-15 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/0.2.1|14-01-15.md)
+* 0.2.2 - 14-01-16 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/0.2.2|14-01-16.md)
+* 1.0.0 - 14-01-20 - [backward incompatibilities](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.0.0|14-01-20.md)
+* 1.0.1 - 14-01-20 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.0.1|14-01-20.md)
+* 1.0.2 - 14-01-20 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.0.2|14-01-20.md)
+* 1.0.3 - 14-01-21 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.0.3|14-01-21.md)
+* 1.1.0 - 14-01-22 - [features](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.1.0|14-01-22.md)
+* 1.2.0 - 14-01-23 - [features](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.2.0|14-01-23.md)
+* 1.2.1 - 14-01-23 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.2.1|14-01-23.md)
+* 1.3.0 - 14-01-24 - [features](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.3.0|14-01-24.md)
+* 1.3.1 - 14-01-24 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.3.1|14-01-24.md)
+* 1.3.2 - 14-01-24 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.3.2|14-01-24.md)
+* 1.3.3 - 14-01-28 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.3.3|14-01-28.md)
+* 1.3.4 - 14-01-29 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.3.4|14-01-29.md)
+* 1.4.0 - 14-01-30 - [features](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.4.0|14-01-30.md)
+* 1.5.0 - 14-01-31 - [features](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.5.0|14-01-31.md)
+* 1.5.1 - 14-02-03 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.5.1|14-02-03.md)
 
 
 ## Contributors (`git shortlog -s -n`)
@@ -144,4 +144,4 @@ npm install -g mocha-phantomjs phantomjs
 * Jesse McCabe
 
 
-_Compiled file. Do not modify directly. Created: 2014-02-03 10:20:18_
+_Compiled file. Do not modify directly. Created: 2014-02-03 10:33:21_
