@@ -15,16 +15,23 @@ define(['jquery'], function ($) {
                     $el.attr('contenteditable', true);
                 }
 
-                el.addEventListener('input', _callback.bind(this,el), false);
+                el.addEventListener('keypress', _callback.bind(this, el), false);
+                el.addEventListener('blur', _callback.bind(this, el), false);
             },
             unbind: function(el) {
-                el.removeEventListener('input', _callback.bind(this,el), false);
+                el.removeEventListener('keypress', _callback.bind(this, el), false);
+                el.removeEventListener('blur', _callback.bind(this, el), false);
             }
         }
     };
 
-    function _callback(el) {
-        this.view.adapters[':'].publish(this.model,this.keypath.substring(this.keypath.indexOf(':')+1), el.textContent);
+    function _callback(el, evt) {
+        // listen for the enter key or Blur to save to the model.
+        if(evt.keyCode === 13 || evt.type === 'blur') {
+            this.view.adapters[':'].publish(
+                this.model,this.keypath.substring(this.keypath.indexOf(':')+1), el.textContent);
+        }
+
     }
 
     function addClass(el, value) {

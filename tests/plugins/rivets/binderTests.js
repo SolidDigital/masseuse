@@ -1,4 +1,3 @@
-/*globals Event:true*/
 define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
     function ($, _, chai, mocha, sinon, sinonChai, masseuse) {
 
@@ -77,15 +76,28 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         rivetView
                             .start()
                             .done(function() {
+                                $testDom.find('#testHere').focus();
                                 $testDom.find('#testHere').html('The Farmers in the Den');
 
-                                var event = new Event('input');
-                                $testDom.find('#testHere')[0].dispatchEvent(event);
                                 $testDom.find('#testHere').blur();
 
                                 rivetView.model.get('name').should.equal('The Farmers in the Den');
                                 done();
+                            });
+                    });
 
+                    it('should set the model when the user loses focus', function(done) {
+                        rivetView = new RivetView(_.extend({}, options));
+                        rivetView
+                            .start()
+                            .done(function() {
+                                $testDom.find('#testHere').focus();
+                                $testDom.find('#testHere').html('The Farmers in the Den');
+
+                                $testDom.find('#testHere').blur();
+
+                                rivetView.model.get('name').should.equal('The Farmers in the Den');
+                                done();
                             });
                     });
                 });
