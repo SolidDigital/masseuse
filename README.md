@@ -108,29 +108,29 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
-* 0.0.1-alpha - 14-01-03 - [patches](release_notes/0.0.1-alpha.md)
-* 0.0.2 - 14-01-07 - [patches](release_notes/0.0.2.md)
-* 0.0.3 - 14-01-07 - [patches](release_notes/0.0.3.md)
-* 0.1.0 - 14-01-08 - [features](release_notes/0.1.0.md)
-* 0.1.1 - 14-01-09 - [patches](release_notes/0.1.1.md)
-* 0.2.0 - 14-01-14 - [features](release_notes/0.2.0.md)
-* 0.2.1 - 14-01-15 - [patches](release_notes/0.2.1.md)
-* 0.2.2 - 14-01-16 - [patches](release_notes/0.2.2.md)
-* 1.0.0 - 14-01-20 - [backward incompatibilities](release_notes/1.0.0.md)
-* 1.0.1 - 14-01-20 - [patches](release_notes/1.0.1.md)
-* 1.0.2 - 14-01-20 - [patches](release_notes/1.0.2.md)
-* 1.0.3 - 14-01-21 - [patches](release_notes/1.0.3.md)
-* 1.1.0 - 14-01-22 - [features](release_notes/1.1.0.md)
-* 1.2.0 - 14-01-23 - [features](release_notes/1.2.0.md)
-* 1.2.1 - 14-01-23 - [patches](release_notes/1.2.1.md)
-* 1.3.0 - 14-01-24 - [features](release_notes/1.3.0.md)
-* 1.3.1 - 14-01-24 - [patches](release_notes/1.3.1.md)
-* 1.3.2 - 14-01-24 - [patches](release_notes/1.3.2.md)
-* 1.3.3 - 14-01-28 - [patches](release_notes/1.3.3.md)
-* 1.3.4 - 14-01-29 - [patches](release_notes/1.3.4.md)
-* 1.4.0 - 14-01-30 - [features](release_notes/1.4.0.md)
-* 1.5.0 - 14-01-31 - [features](release_notes/1.5.0.md)
-* 1.5.1 - 14-02-03 - [patches](release_notes/1.5.1.md)
+* 0.0.1-alpha - 14-01-03 - [patches](release_notes/0.0.1-alpha|14-01-03.md)
+* 0.0.2 - 14-01-07 - [patches](release_notes/0.0.2|14-01-07.md)
+* 0.0.3 - 14-01-07 - [patches](release_notes/0.0.3|14-01-07.md)
+* 0.1.0 - 14-01-08 - [features](release_notes/0.1.0|14-01-08.md)
+* 0.1.1 - 14-01-09 - [patches](release_notes/0.1.1|14-01-09.md)
+* 0.2.0 - 14-01-14 - [features](release_notes/0.2.0|14-01-14.md)
+* 0.2.1 - 14-01-15 - [patches](release_notes/0.2.1|14-01-15.md)
+* 0.2.2 - 14-01-16 - [patches](release_notes/0.2.2|14-01-16.md)
+* 1.0.0 - 14-01-20 - [backward incompatibilities](release_notes/1.0.0|14-01-20.md)
+* 1.0.1 - 14-01-20 - [patches](release_notes/1.0.1|14-01-20.md)
+* 1.0.2 - 14-01-20 - [patches](release_notes/1.0.2|14-01-20.md)
+* 1.0.3 - 14-01-21 - [patches](release_notes/1.0.3|14-01-21.md)
+* 1.1.0 - 14-01-22 - [features](release_notes/1.1.0|14-01-22.md)
+* 1.2.0 - 14-01-23 - [features](release_notes/1.2.0|14-01-23.md)
+* 1.2.1 - 14-01-23 - [patches](release_notes/1.2.1|14-01-23.md)
+* 1.3.0 - 14-01-24 - [features](release_notes/1.3.0|14-01-24.md)
+* 1.3.1 - 14-01-24 - [patches](release_notes/1.3.1|14-01-24.md)
+* 1.3.2 - 14-01-24 - [patches](release_notes/1.3.2|14-01-24.md)
+* 1.3.3 - 14-01-28 - [patches](release_notes/1.3.3|14-01-28.md)
+* 1.3.4 - 14-01-29 - [patches](release_notes/1.3.4|14-01-29.md)
+* 1.4.0 - 14-01-30 - [features](release_notes/1.4.0|14-01-30.md)
+* 1.5.0 - 14-01-31 - [features](release_notes/1.5.0|14-01-31.md)
+* 1.5.1 - 14-02-03 - [patches](release_notes/1.5.1|14-02-03.md)
 
 
 ## Contributors (`git shortlog -s -n`)
@@ -144,4 +144,4 @@ npm install -g mocha-phantomjs phantomjs
 * Jesse McCabe
 
 
-_Compiled file. Do not modify directly. Created: 2014-02-03 09:54:55_
+_Compiled file. Do not modify directly. Created: 2014-02-03 10:18:07_
