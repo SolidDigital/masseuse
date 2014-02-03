@@ -7,7 +7,9 @@ module.exports = function (grunt) {
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
     // Project configuration.
-    grunt.initConfig({});
+    grunt.initConfig({
+        pkg : grunt.file.readJSON('package.json')
+    });
 
     grunt.loadTasks('task-configs');
 
@@ -56,12 +58,13 @@ module.exports = function (grunt) {
     grunt.registerTask('releaseNotes', 'read in files to make release notes', function() {
         var types = ['backward incompatibilities', 'features', 'patches'],
             previous = ['0','0','0'],
-            notes = '';
+            notes = '',
+            last = '';
 
         grunt.file.recurse('release_notes', function(file) {
             var name = path.basename(file, '.md'),
                 pipeAt = name.indexOf('|'),
-                version = name.substring(0,pipeAt),
+                version = last = name.substring(0,pipeAt),
                 date = name.substring(pipeAt + 1),
                 current = version.split('.'),
                 updateType = '';
@@ -76,6 +79,10 @@ module.exports = function (grunt) {
 
             notes += '* ' + version + ' - ' + date + ' - [' + updateType + '](release_notes/' + version + '.md)\n';
         });
+        if (grunt.config.get('pkg').version !== last) {
+            grunt.fatal('Latest release notes and package.version do not match');
+        }
+        grunt.log.writeln(notes);
         grunt.config.set('releaseNotes', notes);
     });
 
