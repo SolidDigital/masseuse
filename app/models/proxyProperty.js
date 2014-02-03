@@ -1,6 +1,8 @@
 define(function () {
     'use strict';
 
+    return ProxyProperty;
+
     /**
      * A ProxyProperty will allow a field on a model to depend on a field on another model.
      * See tests for use case.
@@ -55,6 +57,4 @@ define(function () {
         this.propertyNameOnModel = propertyNameOnModel;
         this.model = model;
     }
-
-    return ProxyProperty;
 });

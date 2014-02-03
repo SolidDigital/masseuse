@@ -489,6 +489,40 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 });
 
             });
+
+            describe('modelData', function() {
+                var MasseuseModel,
+                    ProxyProperty,
+                    ViewContext,
+                    model;
+                beforeEach(function() {
+                    MasseuseModel = masseuse.MasseuseModel;
+                    ProxyProperty = masseuse.ProxyProperty;
+                    ViewContext = masseuse.ViewContext;
+                    model = new MasseuseModel({
+                        mark : 'twain'
+                    });
+                });
+                it('ProxyProperties can be set via modelData', function() {
+                    var view = new BaseView({
+                        modelData : {
+                            depth : ProxyProperty('mark', model)
+                        }
+                    });
+                    view.model.get('depth').should.equal('twain');
+                });
+                it('ViewContext can be used on ProxyProperties via modelData', function() {
+                    var view = new BaseView({
+                            modelData : {
+                                depth : ProxyProperty('mark', ViewContext('depthData'))
+                            },
+                            depthData : model,
+                            viewOptions : ['depthData']
+                        });
+
+                    view.model.get('depth').should.equal('twain');
+                });
+            });
         });
 
         function outerHtml(ellie) {
