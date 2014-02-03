@@ -1,8 +1,8 @@
 /*global define:false*/
 define([
     'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', './lifeCycle',
-    '../utilities/accessors', '../utilities/createOptions', '../models/masseuseModel'
-], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, createOptions, MasseuseModel) {
+    '../utilities/accessors', '../utilities/createOptions', '../models/masseuseModel', '../models/proxyProperty'
+], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, createOptions, MasseuseModel, ProxyProperty) {
     'use strict';
 
     var viewOptions = ['model', 'collection', 'el', 'id', 'attributes', 'className', 'tagName', 'events',
@@ -439,6 +439,11 @@ define([
             _.each(modelData, function (datum, key) {
                 if (datum instanceof ViewContext) {
                     modelData[key] = datum.getBoundFunction(self);
+                }
+                if (datum instanceof ProxyProperty) {
+                    if (datum.model instanceof ViewContext) {
+                        datum.model = datum.model.getBoundFunction(self);
+                    }
                 }
             });
             this.model = new ModelType(modelData);
