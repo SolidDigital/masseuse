@@ -38,6 +38,14 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                     }
                 });
 
+                xit('should bind the view when event afterTemplatingDone is fired', function() {
+
+                });
+
+                xit('should unbind the view when event onRemove event is fired', function() {
+
+                });
+
                 describe('Backbone Models', function() {
                     describe('templating', function() {
                         var options,

@@ -52,6 +52,7 @@
         './plugins/rivets/viewTests',
         './plugins/rivets/rivetsBackBoneCollectionsTests',
         './plugins/rivets/componentsTest',
+        './plugins/rivets/binderTests',
         './utilities/channelsTests',
         './utilities/createOptionsTests',
         './utilities/deferMethodTests',
