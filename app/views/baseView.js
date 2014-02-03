@@ -61,6 +61,7 @@ define([
             children : null,
             addChild : addChild,
             removeChild : removeChild,
+            refresh : refresh,
             refreshChildren : refreshChildren,
             removeAllChildren : removeAllChildren,
             appendOrInsertView : appendOrInsertView
@@ -360,6 +361,18 @@ define([
     }
 
     /**
+     * Remove this view and all its children. Then restart them all.
+     * @memberof masseuse/BaseView#
+     * @returns {$promise}
+     */
+    function refresh () {
+        if (this.hasStarted) {
+            Backbone.View.prototype.remove.apply(this);
+        }
+        return this.start();
+    }
+
+    /**
      * Remove all children and restart them.
      * @memberof masseuse/BaseView#
      * @returns $promise - will be resolved once all children are restarted
@@ -369,10 +382,7 @@ define([
             childPromiseArray = [];
 
         _(this.children).each(function (child) {
-            if (child.hasStarted) {
-                Backbone.View.prototype.remove.apply(child);
-            }
-            childPromiseArray.push(child.start());
+            childPromiseArray.push(child.refresh());
         });
 
         $.when.apply($, childPromiseArray).then($deferred.resolve);
