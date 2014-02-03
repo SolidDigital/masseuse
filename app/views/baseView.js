@@ -312,6 +312,8 @@ define([
             this.parent.removeChild(this);
         }
 
+        this.trigger('onRemove');
+
         Backbone.View.prototype.remove.apply(this, arguments);
     }
 
