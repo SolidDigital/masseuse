@@ -1,6 +1,6 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=bower)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-Version: _1.5.0_
+Version: _1.5.1_
 
 Bower pulls from the [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower) (build badge is showing results for [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower)):
 
@@ -11,12 +11,13 @@ https://github.com/Solid-Interactive/masseuse
 * [JSDocs](http://solid-interactive.github.io/masseuse/docs/)
     * [masseuse](http://solid-interactive.github.io/masseuse/docs/masseuse.html)
         * [BaseView](http://solid-interactive.github.io/masseuse/docs/BaseView.html)
-        * [channels](http://solid-interactive.github.io/masseuse/docs/Channels.html)
         * [ComputedProperty](http://solid-interactive.github.io/masseuse/docs/ComputedProperty.html)
         * [MasseuseModel](http://solid-interactive.github.io/masseuse/docs/MasseuseModel.html)
         * [MasseuseRouter](http://solid-interactive.github.io/masseuse/docs/MasseuseRouter.html)
         * [ProxyProperty](http://solid-interactive.github.io/masseuse/docs/ProxyProperty.html)
         * [ViewContext](http://solid-interactive.github.io/masseuse/docs/ViewContext.html)
+        * utilities
+            * [channels](http://solid-interactive.github.io/masseuse/docs/channels.html)
         * plugins
             * rivets
                 * [RivetsView](http://solid-interactive.github.io/masseuse/docs/RivetsView.html)
@@ -107,27 +108,30 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
-* 1.4.0 - 2014-01-30 - [features](release_notes/1.4.0.md)
-* 1.3.4 - 2014-01-29 - [patches](release_notes/1.3.4.md)
-* 1.3.3 - 2014-01-28 - [patches](release_notes/1.3.3.md)
-* 1.3.2 - 2014-01-24 - [patches](release_notes/1.3.2.md)
-* 1.3.1 - 2014-01-24 - [patches](release_notes/1.3.1.md)
-* 1.3.0 - 2014-01-24 - [features](release_notes/1.3.0.md)
-* 1.2.1 - 2014-01-23 - [patches](release_notes/1.2.1.md)
-* 1.2.0 - 2014-01-23 - [features](release_notes/1.2.0.md)
-* 1.1.0 - 2014-01-22 - [features](release_notes/1.1.0.md)
-* 1.0.3 - 2014-01-21 - [patches](release_notes/1.0.3.md)
-* 1.0.2 - 2014-01-20 - [patches](release_notes/1.0.2.md)
-* 1.0.1 - 2014-01-20 - [patches](release_notes/1.0.1.md)
-* 1.0.0 - 2014-01-20 - [backwards incompatibilities](release_notes/1.0.0.md)
-* 0.2.2 - 2014-01-16 - [patches](release_notes/0.2.2.md)
-* 0.2.1 - 2014-01-15 - [patches](release_notes/0.2.1.md)
-* 0.2.0 - 2014-01-14 - [features](release_notes/0.2.0.md)
-* 0.1.1 - 2014-01-09 - [patches](release_notes/0.1.1.md)
-* 0.1.0 - 2014-01-08 - [features](release_notes/0.1.0.md)
-* 0.0.3 - 2014-01-07 - [patches](release_notes/0.0.3.md)
-* 0.0.2 - 2014-01-07 - [patches](release_notes/0.0.2.md)
-* 0.0.1-alpha - 2014-01-03 - [patches](release_notes/0.0.1.md)
+* 0.0.1-alpha - 14-01-03 - [patches](release_notes/0.0.1-alpha.md)
+* 0.0.2 - 14-01-07 - [patches](release_notes/0.0.2.md)
+* 0.0.3 - 14-01-07 - [patches](release_notes/0.0.3.md)
+* 0.1.0 - 14-01-08 - [features](release_notes/0.1.0.md)
+* 0.1.1 - 14-01-09 - [patches](release_notes/0.1.1.md)
+* 0.2.0 - 14-01-14 - [features](release_notes/0.2.0.md)
+* 0.2.1 - 14-01-15 - [patches](release_notes/0.2.1.md)
+* 0.2.2 - 14-01-16 - [patches](release_notes/0.2.2.md)
+* 1.0.0 - 14-01-20 - [backward incompatibilities](release_notes/1.0.0.md)
+* 1.0.1 - 14-01-20 - [patches](release_notes/1.0.1.md)
+* 1.0.2 - 14-01-20 - [patches](release_notes/1.0.2.md)
+* 1.0.3 - 14-01-21 - [patches](release_notes/1.0.3.md)
+* 1.1.0 - 14-01-22 - [features](release_notes/1.1.0.md)
+* 1.2.0 - 14-01-23 - [features](release_notes/1.2.0.md)
+* 1.2.1 - 14-01-23 - [patches](release_notes/1.2.1.md)
+* 1.3.0 - 14-01-24 - [features](release_notes/1.3.0.md)
+* 1.3.1 - 14-01-24 - [patches](release_notes/1.3.1.md)
+* 1.3.2 - 14-01-24 - [patches](release_notes/1.3.2.md)
+* 1.3.3 - 14-01-28 - [patches](release_notes/1.3.3.md)
+* 1.3.4 - 14-01-29 - [patches](release_notes/1.3.4.md)
+* 1.4.0 - 14-01-30 - [features](release_notes/1.4.0.md)
+* 1.5.0 - 14-01-31 - [features](release_notes/1.5.0.md)
+* 1.5.1 - 14-02-03 - [patches](release_notes/1.5.1.md)
+
 
 ## Contributors (`git shortlog -s -n`)
 
@@ -140,4 +144,4 @@ npm install -g mocha-phantomjs phantomjs
 * Jesse McCabe
 
 
-_Compiled file. Do not modify directly. Created: 2014-01-31 09:36:29_
+_Compiled file. Do not modify directly. Created: 2014-02-03 09:54:55_
