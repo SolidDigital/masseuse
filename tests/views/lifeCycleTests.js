@@ -217,6 +217,38 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                     });
                 });
 
+                describe('remove method', function() {
+                    it('should remove any children', function(done) {
+                        var childView = new BaseView();
+
+                        childView.remove = sinon.spy(childView, 'remove');
+
+                        viewInstance.addChild(childView);
+
+                        childView.remove.should.not.have.been.called;
+
+                        viewInstance.start().done(function () {
+                            viewInstance.remove();
+                            childView.remove.should.have.been.called;
+                            done();
+                        });
+                    });
+
+                    it('should fire an onRemove event', function(done) {
+                        var callback = sinon.spy();
+
+                        viewInstance.listenTo(viewInstance, 'onRemove', function() {
+                            callback();
+                        });
+
+                        viewInstance.start().done(function() {
+                            viewInstance.remove();
+                            callback.should.have.been.called;
+                            done();
+                        });
+                    });
+                });
+
                 it('should call start on any children', function (done) {
                     var childView = new BaseView();
 

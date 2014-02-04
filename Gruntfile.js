@@ -77,7 +77,7 @@ module.exports = function (grunt) {
             });
             previous = current;
 
-            notes += '* ' + version + ' - ' + date + ' - [' + updateType + '](release_notes/' + version + '.md)\n';
+            notes += '* ' + version + ' - ' + date + ' - [' + updateType + '](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/' + name + '.md)\n';
         });
         if (grunt.config.get('pkg').version !== last) {
             grunt.fatal('Latest release notes and package.version do not match');
