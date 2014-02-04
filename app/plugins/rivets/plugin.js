@@ -34,11 +34,11 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
                 rivetsBinders : _.extend.apply(_, options.rivetsBinders)
             };
 
-            this.listenTo(this, 'afterTemplatingDone', function() {
-                if (options.rivetsConfig || options.rivetConfig) {
+            if (options.rivetsConfig || options.rivetConfig) {
+                this.listenTo(this, 'afterTemplatingDone', function() {
                     rivetedView = rivetView.call(this, rivetsOptions);
-                }
-            });
+                });
+            }
 
             this.listenTo(this, 'onRemove', function () {
                 if (null !== rivetedView) {
