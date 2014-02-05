@@ -77,14 +77,12 @@ define(['jquery', 'underscore'],
         }
 
         function _afterRender ($deferred) {
-            var $afterRenderDeferred = _runLifeCycleMethod.call(this, this.afterRender),
+            var $allChildrenStartedPromise = _startChildren.call(this, $deferred),
                 resolveStart = $deferred.resolve.bind(this),
                 rejectStart = $deferred.reject.bind(this);
-            $
-                .when(
-                    $afterRenderDeferred,
-                    _startChildren.call(this, $deferred)
-                )
+
+            $allChildrenStartedPromise
+                .then(_runLifeCycleMethod.bind(this, this.afterRender))
                 .then($deferred.notify.bind(this,AFTER_RENDER_DONE))
                 .then(
                     resolveStart,

@@ -394,27 +394,24 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     });
 
                     it('should be fired after child render methods are fired', function(done) {
-                        var Parent, parent, child;
-
-                        Parent = BaseView.extend({
+                        new (BaseView.extend({
                             defaultOptions : {
                                 el : $testDom[0],
                                 template : '<ul></ul>'
                             },
                             beforeRender : function () {
-                                child = new BaseView({
-                                    appendTo : this.el,
-                                    defaultOptions : { template : '<li>test</li>'}
+                                var child = new BaseView({
+                                    appendTo : 'ul',
+                                    wrapper : false,
+                                    template : '<li>test</li>'
                                 });
                                 this.addChild(child);
                             },
                             afterRender : function () {
                                 this.$el.html().should.equal('<ul><li>test</li></ul>');
+                                done();
                             }
-                        });
-
-                        new Parent()
-                            .start();
+                        }))().start();
                     });
                 });
             });
