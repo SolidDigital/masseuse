@@ -137,6 +137,7 @@ npm install -g mocha-phantomjs phantomjs
 * 1.6.1 - 14-02-04 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.6.1|14-02-04.md)
 * 1.6.2 - 14-02-04 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.6.2|14-02-04.md)
 * 1.7.0 - 14-02-05 - [features](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.7.0|14-02-05.md)
+* 1.7.1 - 14-02-05 - [features](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.7.1|14-02-05.md)
 
 
 ## Contributors (`git shortlog -s -n`)
