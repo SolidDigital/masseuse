@@ -381,6 +381,39 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             });
                     });
                 });
+
+                describe('parent afterRender method', function() {
+                    var $testDom;
+
+                    beforeEach(function() {
+                        $testDom = $('<div>').appendTo('body');
+                    });
+
+                    afterEach(function() {
+                        $testDom.remove();
+                    });
+
+                    it('should be fired after child render methods are fired', function(done) {
+                        new (BaseView.extend({
+                            defaultOptions : {
+                                el : $testDom[0],
+                                template : '<ul></ul>'
+                            },
+                            beforeRender : function () {
+                                var child = new BaseView({
+                                    appendTo : 'ul',
+                                    wrapper : false,
+                                    template : '<li>test</li>'
+                                });
+                                this.addChild(child);
+                            },
+                            afterRender : function () {
+                                this.$el.html().should.equal('<ul><li>test</li></ul>');
+                                done();
+                            }
+                        }))().start();
+                    });
+                });
             });
 
             describe('render', function() {

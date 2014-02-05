@@ -413,7 +413,11 @@ define([
         }
 
         $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
-        $(this.appendTo).append(this.el);
+        if (this.parent) {
+            this.parent.$(this.appendTo).append(this.el);
+        } else {
+            $(this.appendTo).append(this.el);
+        }
     }
 
     function _insertView ($startDeferred) {
