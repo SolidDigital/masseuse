@@ -178,7 +178,7 @@ define([
     function initialize (options) {
         var self = this;
 
-        this.elementCache = _.memoize(elementCache);
+        this.elementCache = _.memoize(elementCache.bind(this));
 
         if(options) {
             if (options.viewOptions) {
@@ -237,6 +237,8 @@ define([
      */
     function render () {
         this.appendOrInsertView(arguments[arguments.length - 1]);
+
+        this.elementCache = _.memoize(elementCache.bind(this));
 
         _(this.children).each(function(child) {
             if (child.hasStarted) {
