@@ -83,6 +83,12 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                     });
                             });
                     });
+                    it('options.ViewType will declare the type of the view', function() {
+                        var view = new BaseView({
+                            ViewType : RivetsView
+                        });
+                        (view instanceof RivetsView).should.be.true;
+                    });
                 });
 
                 it('a view instance can be newed up from BaseView', function() {
@@ -197,6 +203,52 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         viewInstance.addChild(childView);
 
                         viewInstance.children.length.should.equal(1);
+                    });
+
+                    it('should be able to declaratively add child views using an options object', function() {
+                        viewInstance.children.length.should.equal(0);
+
+                        viewInstance.addChild({
+                            name : CHILD_VIEW_NAME
+                        });
+
+                        viewInstance.children.length.should.equal(1);
+                        (viewInstance.children[0] instanceof BaseView).should.be.true;
+                    });
+                });
+
+                describe('addChildren method', function() {
+                    it('multiple children can be added as arguments', function() {
+                        var childView = new BaseView({
+                                name : CHILD_VIEW_NAME
+                            }),
+                            childOptions = {
+                                name : CHILD_VIEW_NAME,
+                                ViewType : RivetsView
+                            };
+
+                        viewInstance.children.length.should.equal(0);
+                        viewInstance.addChildren(childView, childOptions);
+                        viewInstance.children.length.should.equal(2);
+                        (viewInstance.children[0] instanceof BaseView).should.be.true;
+                        (viewInstance.children[1] instanceof RivetsView).should.be.true;
+                    });
+                    it('multiple children can be added as an array', function() {
+                        var childView = new BaseView({
+                                name : CHILD_VIEW_NAME
+                            }),
+                            childOptions = {
+                                name : CHILD_VIEW_NAME,
+                                ViewType : RivetsView
+                            };
+
+                        viewInstance.children.length.should.equal(0);
+                        viewInstance.addChildren([
+                            childView, childOptions
+                        ]);
+                        viewInstance.children.length.should.equal(2);
+                        (viewInstance.children[0] instanceof BaseView).should.be.true;
+                        (viewInstance.children[1] instanceof RivetsView).should.be.true;
                     });
                 });
 
@@ -381,6 +433,40 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             });
                     });
                 });
+
+                describe('parent afterRender method', function() {
+                    var $testDom;
+
+                    beforeEach(function() {
+                        $testDom = $('<div>').appendTo('body');
+                    });
+
+                    afterEach(function() {
+                        $testDom.remove();
+                    });
+
+                    it('should be fired after child render methods are fired', function(done) {
+                        new (BaseView.extend({
+                            defaultOptions : {
+                                el : $testDom[0],
+                                template : '<ul></ul>'
+                            },
+                            beforeRender : function () {
+                                var child = new BaseView({
+                                    appendTo : 'ul',
+                                    wrapper : false,
+                                    template : '<li>test</li>'
+                                });
+                                this.addChild(child);
+                            },
+                            afterRender : function () {
+                                this.$el.html().should.equal('<ul><li>test</li></ul>');
+                                done();
+                            }
+                        }))().start();
+                    });
+                });
+
             });
 
             describe('render', function() {

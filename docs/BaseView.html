@@ -194,6 +194,9 @@ before start using</code></pre>
     <div class="description">
         <p>Add a child view to the array of this views child view references.
 The child must be started later. This happens in start or manually.</p>
+<p>This method can take either a view instance or options for a view.</p>
+<p>If options for a view are passed in, then BaseView is the default ViewType. The
+ViewType can be declared on the <code>options.ViewType</code>.</p>
     </div>
     
 
@@ -270,7 +273,121 @@ The child must be started later. This happens in start or manually.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-339">line 339</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-365">line 365</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="addChildren"><span class="type-signature"></span>addChildren<span class="signature">(childView)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Add multiple child views. The method receives either an array of views to be
+added or is called with all the views to be added.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>childView</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-347">line 347</a>
     </li></ul></dd>
     
 
@@ -379,7 +496,7 @@ The child must be started later. This happens in start or manually.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-244">line 244</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-252">line 252</a>
     </li></ul></dd>
     
 
@@ -495,7 +612,7 @@ Bind all event listeners specified in and 'options.listeners' using 'listenTo'. 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-281">line 281</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-289">line 289</a>
     </li></ul></dd>
     
 
@@ -669,7 +786,7 @@ instance</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-83">line 83</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-84">line 84</a>
     </li></ul></dd>
     
 
@@ -734,7 +851,7 @@ instance</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-261">line 261</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-269">line 269</a>
     </li></ul></dd>
     
 
@@ -868,7 +985,7 @@ instance</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-165">line 165</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-173">line 173</a>
     </li></ul></dd>
     
 
@@ -937,7 +1054,7 @@ instance</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-370">line 370</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-404">line 404</a>
     </li></ul></dd>
     
 
@@ -1025,7 +1142,7 @@ instance</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-382">line 382</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-416">line 416</a>
     </li></ul></dd>
     
 
@@ -1105,7 +1222,7 @@ instance</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-320">line 320</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-328">line 328</a>
     </li></ul></dd>
     
 
@@ -1174,7 +1291,7 @@ instance</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-361">line 361</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-395">line 395</a>
     </li></ul></dd>
     
 
@@ -1287,7 +1404,7 @@ instance</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-351">line 351</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-385">line 385</a>
     </li></ul></dd>
     
 
@@ -1352,7 +1469,7 @@ instance</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-230">line 230</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-238">line 238</a>
     </li></ul></dd>
     
 
@@ -1485,7 +1602,7 @@ start() method.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-216">line 216</a>
+        <a href="baseView.js.html">views/baseView.js</a>, <a href="baseView.js.html#sunlight-1-line-224">line 224</a>
     </li></ul></dd>
     
 
@@ -1559,7 +1676,7 @@ start() method.</p></td>
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha4</a>
-		on Tue Feb 04 2014 14:51:02 GMT-0800 (PST) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Wed Feb 05 2014 08:06:09 GMT-0800 (PST) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>
