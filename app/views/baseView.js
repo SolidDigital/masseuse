@@ -142,7 +142,8 @@ define([
             args = Array.prototype.slice.call(arguments, 0),
             length = args.length,
             last = args[length - 1],
-            useDefaultOptions = false !== last;
+            useDefaultOptions = false !== last,
+            ViewType;
 
         // remove optional boolean indicator of wanting to use defaultOptions
         if (length && 'object' !== typeof last) {
@@ -154,6 +155,12 @@ define([
         }
 
         options = createOptions.apply(null, args);
+
+        ViewType = options.ViewType;
+        if (ViewType) {
+            delete options.ViewType;
+            return new ViewType(options);
+        }
 
         this.cid = _.uniqueId('view');
         _.extend(this, _.pick(options, viewOptions));

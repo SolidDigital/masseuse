@@ -83,6 +83,12 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                     });
                             });
                     });
+                    it('options.ViewType will declare the type of the view', function() {
+                        var view = new BaseView({
+                            ViewType : RivetsView
+                        });
+                        (view instanceof RivetsView).should.be.true;
+                    });
                 });
 
                 it('a view instance can be newed up from BaseView', function() {
@@ -414,6 +420,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         }))().start();
                     });
                 });
+
             });
 
             describe('render', function() {
