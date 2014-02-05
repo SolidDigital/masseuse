@@ -204,6 +204,52 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
                         viewInstance.children.length.should.equal(1);
                     });
+
+                    it('should be able to declaratively add child views using an options object', function() {
+                        viewInstance.children.length.should.equal(0);
+
+                        viewInstance.addChild({
+                            name : CHILD_VIEW_NAME
+                        });
+
+                        viewInstance.children.length.should.equal(1);
+                        (viewInstance.children[0] instanceof BaseView).should.be.true;
+                    });
+                });
+
+                describe('addChildren method', function() {
+                    it('multiple children can be added as arguments', function() {
+                        var childView = new BaseView({
+                                name : CHILD_VIEW_NAME
+                            }),
+                            childOptions = {
+                                name : CHILD_VIEW_NAME,
+                                ViewType : RivetsView
+                            };
+
+                        viewInstance.children.length.should.equal(0);
+                        viewInstance.addChildren(childView, childOptions);
+                        viewInstance.children.length.should.equal(2);
+                        (viewInstance.children[0] instanceof BaseView).should.be.true;
+                        (viewInstance.children[1] instanceof RivetsView).should.be.true;
+                    });
+                    it('multiple children can be added as an array', function() {
+                        var childView = new BaseView({
+                                name : CHILD_VIEW_NAME
+                            }),
+                            childOptions = {
+                                name : CHILD_VIEW_NAME,
+                                ViewType : RivetsView
+                            };
+
+                        viewInstance.children.length.should.equal(0);
+                        viewInstance.addChildren([
+                            childView, childOptions
+                        ]);
+                        viewInstance.children.length.should.equal(2);
+                        (viewInstance.children[0] instanceof BaseView).should.be.true;
+                        (viewInstance.children[1] instanceof RivetsView).should.be.true;
+                    });
                 });
 
                 describe('removeChild method', function () {

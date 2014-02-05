@@ -60,6 +60,7 @@ define([
             remove : remove,
             children : null,
             addChild : addChild,
+            addChildren : addChildren,
             removeChild : removeChild,
             refresh : refresh,
             refreshChildren : refreshChildren,
@@ -337,13 +338,39 @@ define([
     }
 
     /**
+     * Add multiple child views. The method receives either an array of views to be
+     * added or is called with all the views to be added.
+     * @memberof masseuse/BaseView#
+     * @method
+     * @param childView
+     */
+    function addChildren () {
+        var args = _.isArray(arguments[0]) ? arguments[0] : arguments;
+        _.each(args, this.addChild.bind(this));
+    }
+
+    /**
      * Add a child view to the array of this views child view references.
      * The child must be started later. This happens in start or manually.
+     *
+     * This method can take either a view instance or options for a view.
+     *
+     * If options for a view are passed in, then BaseView is the default ViewType. The
+     * ViewType can be declared on the `options.ViewType`.
+     *
      * @memberof masseuse/BaseView#
      * @method
      * @param childView
      */
     function addChild (childView) {
+        if (childView instanceof Backbone.View) {
+            _addChildInstance.call(this, childView);
+        } else {
+            _addChildInstance.call(this, new BaseView(childView));
+        }
+    }
+
+    function _addChildInstance (childView) {
         if (!_(this.children).contains(childView)) {
             this.children.push(childView);
             childView.parent = this;
