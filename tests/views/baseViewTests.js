@@ -609,6 +609,63 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     view.model.get('depth').should.equal('twain');
                 });
             });
+
+            describe('elementCache', function() {
+                var view;
+
+                beforeEach(function (done) {
+                    view = new masseuse.BaseView({
+                        tagName: 'div',
+                        template: '<div id="el"><div id="test1"></div><div id="test2"></div></div>'
+                    });
+
+                    view.start().done(function () {
+                        done();
+                    });
+                });
+
+                it('exists', function() {
+                    view.elementCache.should.be.a.function;
+                });
+
+                it('Returns a jQuery element when a selector is found in the view', function () {
+                    var el = view.elementCache('#test1');
+
+                    view.$el.children().length.should.be.greaterThan(0);
+
+                    (el instanceof $).should.be.true;
+                    el.length.should.equal(1);
+                    el[0].id.should.equal('test1');
+                });
+
+                it('Returns an empty jQuery object if the selector is not found', function () {
+                    var el = view.elementCache('#test3');
+
+                    (el instanceof $).should.be.true;
+                    el.length.should.equal(0);
+                });
+
+                it('Returns the cached version of the jQuery object if it has already been found', function () {
+                    var el = view.elementCache('#test1'),
+                        el2 = view.elementCache('#test1');
+
+                    el.should.not.equal(view.$el.find('#test1'));
+                    el.should.equal(el2);
+                });
+
+                it('Is cleared when the view is rendered', function () {
+                    var el = view.elementCache('#test1'),
+                        el2 = view.elementCache('#test1');
+
+                    el2.should.equal(el);
+
+                    view.render();
+
+                    el2 = view.elementCache('#test1');
+
+                    el2.should.not.equal(el);
+                });
+            });
         });
 
         function outerHtml(ellie) {
