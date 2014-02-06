@@ -1,5 +1,5 @@
 /*global define:false*/
-define(['./jqueryDeepExtend'], function ($) {
+define(['./deepExtend'], function (deepExtend) {
     'use strict';
 
     /**
@@ -29,7 +29,6 @@ define(['./jqueryDeepExtend'], function ($) {
      */
     return function() {
         var args = Array.prototype.slice.call(arguments, 0);
-        args = [true,{},{}].concat(args);
-        return $.deepExtend.apply($, args);
+        return deepExtend.apply(null, [{}].concat(args));
     };
 });
