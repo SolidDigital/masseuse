@@ -40,8 +40,9 @@
     "matchdep": "0.3.0",
     "grunt-contrib-clean": "0.5.0",
     "mocha-phantomjs": "3.3.1",
-    "grunt-contrib-livereload": "~0.1.2",
-    "ink-docstrap": "~0.3.0-0",
-    "jsdoc": "~3.3.0-alpha4"
+    "grunt-contrib-livereload": "0.1.2",
+    "ink-docstrap": "0.3.0-0",
+    "jsdoc": "3.3.0-alpha4",
+    "lodash": "2.4.1"
   }
 }
