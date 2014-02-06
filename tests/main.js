@@ -51,6 +51,7 @@
         './models/proxyPropertyTests',
         './plugins/rivets/viewTests',
         './plugins/rivets/rivetsBackBoneCollectionsTests',
+        './plugins/rivets/collectionWithMasseuseModelsTests',
         './plugins/rivets/componentsTest',
         './plugins/rivets/binderTests',
         './utilities/channelsTests',
