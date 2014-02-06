@@ -2,7 +2,8 @@
 module.exports = function(grunt) {
     'use strict';
 
-    var path = require('path'),
+    var fileSeparator = require('./config').fileSeparator,
+        path = require('path'),
         _ = require('lodash');
             // grunt.util._ is depracated
 
@@ -14,9 +15,9 @@ module.exports = function(grunt) {
 
         grunt.file.recurse('release_notes', function(file) {
             var name = path.basename(file, '.md'),
-                pipeAt = name.indexOf('|'),
-                version = name.substring(0,pipeAt),
-                date = name.substring(pipeAt + 1),
+                separatorAt = name.indexOf(fileSeparator),
+                version = name.substring(0,separatorAt),
+                date = name.substring(separatorAt + 1),
                 current = version.split('.'),
                 updateType = '';
 
