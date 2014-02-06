@@ -118,6 +118,13 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     view.passedInKey.should.equal(true);
                     view.extraKey.should.equal(true);
                 });
+                it('the passed in options are not modified', function() {
+                    var options = {test:{a:1},viewOptions:['test']},
+                        view = new OptionsView(options);
+                    options.test.a.should.equal(1);
+                    view.test.a = 0;
+                    options.test.a.should.equal(1);
+                });
                 it('a view instance is initialized with the passed in options and ignores default options if the' +
                     ' second argument is false', function() {
                     var view = new OptionsView({
