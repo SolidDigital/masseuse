@@ -23,7 +23,7 @@ module.exports = function(grunt) {
             last = version;
 
             _.each(current, function(value, index) {
-                if (_.trim(previous[index]) != _.trim(current[index])) {
+                if (previous[index].trim() != current[index].trim()) {
                     updateType = types[index];
                     return false;
                 }
