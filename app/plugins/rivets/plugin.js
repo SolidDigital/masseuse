@@ -44,7 +44,7 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
             });
 
             this.listenTo(this, 'onRemove', function () {
-                if (null !== rivetedView) {
+                if (!rivetedView) {
                     rivetedView.unbind();
                 }
             });
