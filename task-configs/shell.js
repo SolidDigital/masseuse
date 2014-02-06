@@ -61,6 +61,14 @@ module.exports = function(grunt) {
                 failOnError : true
             },
             command : 'node_modules/.bin/jsdoc -c jsdoc.json'
+        },
+        'pushMaster'  : {
+            options : {
+                stdout : true,
+                stderr : true,
+                failOnError : true
+            },
+            command : 'git push origin master'
         }
     });
 };
