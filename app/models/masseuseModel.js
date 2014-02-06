@@ -54,7 +54,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
                 wholeObj,
                 result;
 
-            if(key.indexOf('.') > 0 && _.isString(key)) {
+            if(_.isString(key) && key.indexOf('.') > 0) {
                 propertyOn = key.slice(key.indexOf('.') + 1);
                 key = key.split('.')[0];
                 wholeObj = Backbone.Model.prototype.get.call(this, key);
