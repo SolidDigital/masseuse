@@ -223,12 +223,7 @@ define([
      */
     function start ($parentRenderPromise) {
         var $deferred = new $.Deferred();
-
-        // ParentView calls .start() on all children
-        // ParentView doesn't render until all children have notified that they are done
-        // After rendering, the ParentView notifies all children and they continue their lifecycle
-        _.defer(lifeCycle.runAllMethods.bind(this, $deferred, $parentRenderPromise));
-
+        lifeCycle.runAllMethods.call(this, $deferred, $parentRenderPromise);
         return $deferred.promise();
     }
 
