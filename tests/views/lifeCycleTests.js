@@ -91,24 +91,21 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                                 done();
                             });
                     });
-                    it('should not be resolved immediately after start is called', function () {
+                    it('should be resolved immediately after start is called if all implemented life cycle methods' +
+                        'are synchronous', function () {
                         var $promise = viewInstance.start();
-                        $promise.state().should.equal('pending');
+                        $promise.state().should.equal('resolved');
 
                     });
-                    it('should be notified with "beforeRenderDone", "renderDone", and "afterRenderDone" in sequence',
-                        function (done) {
+                    it('should be triggered with "beforeRenderDone", "renderDone", and "afterRenderDone" in sequence',
+                        function () {
                             var eventSpy = sinon.spy();
-                            viewInstance.start().progress(function (event) {
-                                eventSpy(event);
-                                if (4 <= eventSpy.callCount) {
-                                    eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
-                                    eventSpy.secondCall.args[0].should.equal('afterTemplatingDone');
-                                    eventSpy.thirdCall.args[0].should.equal('renderDone');
-                                    eventSpy.getCall(3).args[0].should.equal('afterRenderDone');
-                                    done();
-                                }
-                            });
+                            viewInstance.on('all', eventSpy);
+                            viewInstance.start();
+                            eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
+                            eventSpy.secondCall.args[0].should.equal('afterTemplatingDone');
+                            eventSpy.thirdCall.args[0].should.equal('renderDone');
+                            eventSpy.getCall(3).args[0].should.equal('afterRenderDone');
                         });
                     it('view should have events "beforeRenderDone", "renderDone", and "afterRenderDone" in sequence',
                         function (done) {
@@ -155,16 +152,16 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                             });
                         });
 
-                        // Not sure how to test not calling somethign w/o a timeout
                         describe('in afterRender', function () {
-                            it('should notify beforeRenderDone then notify renderDone then NOT notify afterRenderDone',
+                            it('should trigger beforeRenderDone then then trigger renderDone then NOT trigger ' +
+                                'afterRenderDone',
                                 function (done) {
                                     var eventSpy = sinon.spy(),
                                         viewInstance = new AsyncBaseViewRejectedInAfterRender({name : VIEW1_NAME});
 
+                                    viewInstance.on('all', eventSpy);
                                     viewInstance
                                         .start()
-                                        .progress(eventSpy)
                                         .fail(function() {
                                             eventSpy.firstCall.args[0].should.equal('beforeRenderDone');
                                             eventSpy.secondCall.args[0].should.equal('afterTemplatingDone');
