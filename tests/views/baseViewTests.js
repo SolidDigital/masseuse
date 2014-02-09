@@ -492,6 +492,19 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     $('#' + testDom).html('');
                 });
 
+                describe('including an options.el and no template', function() {
+                    beforeEach(function() {
+                        $('#' + testDom).append('<ul></ul>');
+                        view = new BaseView({
+                            el : '#' + testDom
+                        });
+                    });
+                    it('should leave the dom as is', function() {
+                        view.start();
+                        $('#' + testDom).html().should.equal('<ul></ul>');
+                    });
+                });
+
                 describe('not including an options.el', function() {
 
 
