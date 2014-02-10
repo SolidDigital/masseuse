@@ -1,6 +1,6 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=bower)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-Version: _1.7.5_
+Version: _1.7.6_
 
 Bower pulls from the [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower) (build badge is showing results for [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower)):
 
@@ -52,13 +52,14 @@ Masseuse is a Backbone helper library that uses RequireJS AMDs.
 
 Masseuse is functional, and documentation and tests are being fleshed out.
 
-Masseuse does six main things:
+Masseuse does the following:
 
 1. Adds lifecycle methods to Views that are optionally async using jQuery promises.
-1. Allows easier separation of Views into a config and functionality sections by providing several shortcut configs.
-1. Adds support of a View that uses Rivets
+1. Allows simiple two way binding between DOM and Model / Colection data through a View with Rivets support
+1. Allows easier separation of Views into a config containing options and functionality sections by providing several declarative shortcuts.
 1. Adds support for adding child Views.
 1. Provides Proxy and Computed Properties for Masseuse Models
+1. Support getters and setters using dot notation with support for nested models.
 1. Provides a Masseuse Router extension of the Backbone Router with a before routing callback.
 
 Additionally there is support for append or replacing the `el` of views, optional plugin methods on view initialization,
@@ -142,6 +143,7 @@ npm install -g mocha-phantomjs phantomjs
 * 1.7.3 - 14-02-06 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.7.3_14-02-06.md)
 * 1.7.4 - 14-02-06 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.7.4_14-02-06.md)
 * 1.7.5 - 14-02-06 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.7.5_14-02-06.md)
+* 1.7.6 - 14-02-09 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.7.6_14-02-09.md)
 
 
 ## Contributors (`git shortlog -s -n`)
@@ -155,4 +157,4 @@ npm install -g mocha-phantomjs phantomjs
 * Jesse McCabe
 
 
-_Compiled file. Do not modify directly. Created: 2014-02-06 09:26:54_
+_Compiled file. Do not modify directly. Created: 2014-02-09 10:55:07_
