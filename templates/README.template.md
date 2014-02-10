@@ -52,13 +52,14 @@ Masseuse is a Backbone helper library that uses RequireJS AMDs.
 
 Masseuse is functional, and documentation and tests are being fleshed out.
 
-Masseuse does six main things:
+Masseuse does the following:
 
 1. Adds lifecycle methods to Views that are optionally async using jQuery promises.
-1. Allows easier separation of Views into a config and functionality sections by providing several shortcut configs.
-1. Adds support of a View that uses Rivets
+1. Allows simiple two way binding between DOM and Model / Colection data through a View with Rivets support
+1. Allows easier separation of Views into a config containing options and functionality sections by providing several declarative shortcuts.
 1. Adds support for adding child Views.
 1. Provides Proxy and Computed Properties for Masseuse Models
+1. Support getters and setters using dot notation with support for nested models.
 1. Provides a Masseuse Router extension of the Backbone Router with a before routing callback.
 
 Additionally there is support for append or replacing the `el` of views, optional plugin methods on view initialization,

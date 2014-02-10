@@ -453,7 +453,9 @@ define([
 
     function _insertView ($startDeferred) {
         var template = this.template;
-        this.$el.html(template ? template(this.dataToJSON()) : ' ');
+        if (template) {
+            this.$el.html(template(this.dataToJSON()));
+        }
         $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
     }
 
