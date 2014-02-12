@@ -510,6 +510,15 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     });
                 });
 
+                describe('options.appendTo', function() {
+                    it('can accept a jQuery object', function() {
+                        var child = viewInstance.addChild({
+                            appendTo : viewInstance.el
+                        });
+                        viewInstance.start();
+                        child.$el.parent()[0].should.equal(viewInstance.$el[0]);
+                    });
+                });
             });
 
             describe('render', function() {

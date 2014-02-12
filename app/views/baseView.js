@@ -451,7 +451,8 @@ define([
         }
 
         $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
-        if (this.parent) {
+
+        if (this.parent && _.isString(this.appendTo)) {
             this.parent.$(this.appendTo).append(this.el);
         } else {
             $(this.appendTo).append(this.el);
