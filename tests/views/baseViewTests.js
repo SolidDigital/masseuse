@@ -196,6 +196,42 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         viewInstance.children.length.should.equal(1);
                     });
 
+                    describe('should return the views added', function() {
+
+                        var childView;
+
+                        beforeEach(function() {
+                            childView = new BaseView({
+                                name : CHILD_VIEW_NAME
+                            });
+                        });
+
+                        describe('for addChild', function() {
+                            it('should return the same view instance if supplied', function() {
+                                viewInstance.addChild(childView).should.equal(childView);
+                            });
+
+                            it('should return the created view if an options object is supplied', function() {
+                                viewInstance.addChild({
+                                    name : CHILD_VIEW_NAME
+                                }).should.equal(viewInstance.children[0]);
+                            });
+                        });
+
+                        describe('for addChildren', function() {
+                            it('should return the children added in an array, including nulls for duplicates',
+                                function() {
+                                    var children = viewInstance.addChildren(childView, childView, { name : 'test' });
+
+                                    children[0].should.equal(childView);
+                                    should.not.exist(children[1]);
+                                    children[2].should.equal(viewInstance.children[1]);
+
+                                    children[2].name.should.equal('test');
+                                });
+                        });
+                    });
+
                     it('should not add the same child view twice', function () {
                         var childView = new BaseView({
                             name : CHILD_VIEW_NAME
