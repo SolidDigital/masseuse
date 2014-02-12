@@ -342,8 +342,13 @@ define([
      * @param childView
      */
     function addChildren () {
-        var args = _.isArray(arguments[0]) ? arguments[0] : arguments;
-        _.each(args, this.addChild.bind(this));
+        var args = _.isArray(arguments[0]) ? arguments[0] : arguments,
+            self = this,
+            children = [];
+        _.each(args, function(child) {
+            children.push(self.addChild.call(self, child));
+        });
+        return children;
     }
 
     /**
@@ -361,17 +366,19 @@ define([
      */
     function addChild (childView) {
         if (childView instanceof Backbone.View) {
-            _addChildInstance.call(this, childView);
+            return _addChildInstance.call(this, childView);
         } else {
-            _addChildInstance.call(this, new BaseView(childView));
+            return _addChildInstance.call(this, new BaseView(childView));
         }
     }
 
     function _addChildInstance (childView) {
+        var child;
         if (!_(this.children).contains(childView)) {
-            this.children.push(childView);
+            this.children.push(child = childView);
             childView.parent = this;
         }
+        return child;
     }
 
     /**
@@ -444,7 +451,8 @@ define([
         }
 
         $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
-        if (this.parent) {
+
+        if (this.parent && _.isString(this.appendTo)) {
             this.parent.$(this.appendTo).append(this.el);
         } else {
             $(this.appendTo).append(this.el);
