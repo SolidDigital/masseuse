@@ -42,20 +42,20 @@ You can use either [grunt-init](http://gruntjs.com/project-scaffolding) to setup
       bower install masseuse
       ```
 
-After getting masseuse, include it as a package in your requirejs config:
+      1. Include it as a package in your requirejs config:
 
-```javascript
-require.config({
-    ...
-    packages : [
-        {
-            name : 'masseuse',
-            location : 'components/masseuse/app'
-        }
-    ]
-    ...
-});
-```
+         ```javascript
+         require.config({
+             ...
+             packages : [
+                 {
+                     name : 'masseuse',
+                     location : 'components/masseuse/app'
+                 }
+             ]
+             ...
+         });
+         ```
 
 ## Description
 
