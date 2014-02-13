@@ -27,9 +27,20 @@ https://github.com/Solid-Interactive/masseuse
 
 ## Installation
 
-```shell
-bower install masseuse
-```
+You can use either [grunt-init](http://gruntjs.com/project-scaffolding) to setup your initial project scaffolding or [bower](http://bower.io/) to pull in masseuse as a dependency to an existing project.
+
+   1. Use the [grunt-init-masseuse](https://github.com/Solid-Interactive/grunt-init-masseuse) template to create your  initial project scaffolding:
+    
+      ```
+      # after following the setup instructions on grunt-init-masseuse
+      grunt-init masseuse
+      ```
+
+   1. Pull masseuse into an existing project:
+   
+      ```shell
+      bower install masseuse
+      ```
 
 After getting masseuse, include it as a package in your requirejs config:
 
