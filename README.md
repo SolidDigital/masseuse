@@ -33,7 +33,10 @@ You can use either [grunt-init](http://gruntjs.com/project-scaffolding) to setup
     
       ```
       # after following the setup instructions on grunt-init-masseuse
+      cd my-new-project
       grunt-init masseuse
+      [answer some questions about your project]
+      npm install && bower install && grunt server
       ```
 
    1. Pull masseuse into an existing project:
