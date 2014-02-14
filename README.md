@@ -64,8 +64,6 @@ You can use either [grunt-init](http://gruntjs.com/project-scaffolding) to setup
 
 Masseuse is a Backbone helper library that uses RequireJS AMDs.
 
-Masseuse is functional, and documentation and tests are being fleshed out.
-
 Masseuse does the following:
 
 1. Adds lifecycle methods to Views that are optionally async using jQuery promises.
@@ -172,4 +170,4 @@ npm install -g mocha-phantomjs phantomjs
 * Jesse McCabe
 
 
-_Compiled file. Do not modify directly. Created: 2014-02-13 03:09:32_
+_Compiled file. Do not modify directly. Created: 2014-02-14 08:01:28_
