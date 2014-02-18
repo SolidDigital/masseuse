@@ -17,7 +17,7 @@
             }
         },
         paths : {
-            jquery : '../app/vendor/jquery/jquery',
+            jquery : '../app/vendor/jquery/dist/jquery',
             rivets : '../app/vendor/rivets/dist/rivets',
             backbone : '../app/vendor/backbone-amd/backbone',
             text : '../app/vendor/requirejs-text/text',
