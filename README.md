@@ -1,6 +1,6 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=bower)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-Version: _1.8.0_
+Version: _1.9.0_
 
 Bower pulls from the [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower) (build badge is showing results for [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower)):
 
@@ -27,30 +27,42 @@ https://github.com/Solid-Interactive/masseuse
 
 ## Installation
 
-```shell
-bower install masseuse
-```
+You can use either [grunt-init](http://gruntjs.com/project-scaffolding) to setup your initial project scaffolding or [bower](http://bower.io/) to pull in masseuse as a dependency to an existing project.
 
-After getting masseuse, include it as a package in your requirejs config:
+   1. Use the [grunt-init-masseuse](https://github.com/Solid-Interactive/grunt-init-masseuse) template to create your  initial project scaffolding:
 
-```javascript
-require.config({
-    ...
-    packages : [
-        {
-            name : 'masseuse',
-            location : 'components/masseuse/app'
-        }
-    ]
-    ...
-});
-```
+      ```
+      # after following the setup instructions on grunt-init-masseuse
+      cd my-new-project
+      grunt-init masseuse
+      [answer some questions about your project]
+      npm install && bower install && grunt server
+      ```
+
+   1. Pull masseuse into an existing project:
+
+      ```shell
+      bower install masseuse
+      ```
+
+      1. Include it as a package in your requirejs config:
+
+         ```javascript
+         require.config({
+             ...
+             packages : [
+                 {
+                     name : 'masseuse',
+                     location : 'components/masseuse/app'
+                 }
+             ]
+             ...
+         });
+         ```
 
 ## Description
 
 Masseuse is a Backbone helper library that uses RequireJS AMDs.
-
-Masseuse is functional, and documentation and tests are being fleshed out.
 
 Masseuse does the following:
 
@@ -145,6 +157,7 @@ npm install -g mocha-phantomjs phantomjs
 * 1.7.5 - 14-02-06 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.7.5_14-02-06.md)
 * 1.7.6 - 14-02-09 - [patches](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.7.6_14-02-09.md)
 * 1.8.0 - 14-02-11 - [features](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.8.0_14-02-11.md)
+* 1.9.0 - 14-02-18 - [features](https://github.com/Solid-Interactive/masseuse/blob/master/release_notes/1.9.0_14-02-18.md)
 
 
 ## Contributors (`git shortlog -s -n`)
@@ -158,4 +171,4 @@ npm install -g mocha-phantomjs phantomjs
 * Jesse McCabe
 
 
-_Compiled file. Do not modify directly. Created: 2014-02-11 06:12:02_
+_Compiled file. Do not modify directly. Created: 2014-02-18 08:13:08_
