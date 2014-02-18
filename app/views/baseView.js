@@ -6,7 +6,7 @@ define([
     'use strict';
 
     var viewOptions = ['model', 'collection', 'el', 'id', 'attributes', 'className', 'tagName', 'events',
-        'name', 'appendTo', 'wrapper'],
+        'name', 'appendTo', 'prependTo', 'wrapper'],
         BEFORE_RENDER_DONE = 'beforeRenderDone',
         AFTER_TEMPLATING_DONE = 'afterTemplatingDone',
         RENDER_DONE = 'renderDone',
@@ -247,7 +247,7 @@ define([
      * @param $startDeferred
      */
     function appendOrInsertView ($startDeferred) {
-        this.appendTo ? _appendTo.call(this, $startDeferred) : _insertView.call(this, $startDeferred);
+        this.appendTo || this.prependTo ? _appendTo.call(this, $startDeferred) : _insertView.call(this, $startDeferred);
     }
 
     /**
@@ -452,10 +452,18 @@ define([
 
         $startDeferred && $startDeferred.notify && $startDeferred.notify(AFTER_TEMPLATING_DONE);
 
-        if (this.parent && _.isString(this.appendTo)) {
-            this.parent.$(this.appendTo).append(this.el);
+        if (this.appendTo) {
+            _addViewElement.call(this, 'appendTo');
+        } else if (this.prependTo) {
+            _addViewElement.call(this, 'prependTo');
+        }
+    }
+
+    function _addViewElement (action) {
+        if (this.parent && _.isString(this[action])) {
+            $(this.el)[action](this.parent.$(this[action]));
         } else {
-            $(this.appendTo).append(this.el);
+            $(this.el)[action]($(this[action]));
         }
     }
 

@@ -509,16 +509,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         }))().start();
                     });
                 });
-
-                describe('options.appendTo', function() {
-                    it('can accept a jQuery object', function() {
-                        var child = viewInstance.addChild({
-                            appendTo : viewInstance.el
-                        });
-                        viewInstance.start();
-                        child.$el.parent()[0].should.equal(viewInstance.$el[0]);
-                    });
-                });
             });
 
             describe('render', function() {
@@ -567,31 +557,55 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                 done();
                             });
                         });
-                        describe('and adding an option.appendTo sizzle', function() {
-                            it('will append view.el to $(appendTo)', function (done) {
-                                view = new BaseView({
-                                    appendTo: '#' + testDom,
-                                    template: '<div id="me"></div>'
-                                });
-
-                                view.start().done(function () {
-                                    $('#' + testDom).html().should.equal('<div><div id="me"></div></div>');
-                                    done();
+                        describe('and adding an options.prependTo', function() {
+                            describe('dom element', function() {
+                                it('will prepend view.el to options.appendTo', function() {
+                                    viewInstance.addChild({
+                                        prependTo : viewInstance.el
+                                    });
+                                    viewInstance.$el.html('<ul></ul>');
+                                    viewInstance.start();
+                                    viewInstance.$el.html().should.equal('<div></div><ul></ul>');
                                 });
                             });
-                            it('will append view.el to $(appendTo) without a wrapper is `false === options.wrapper`',
-                                function (done) {
+                        });
+                        describe('and adding an options.appendTo', function() {
+                            describe('dom element', function() {
+                                it('will append view.el to options.appendTo', function() {
+                                    var child = viewInstance.addChild({
+                                        appendTo : viewInstance.el
+                                    });
+                                    viewInstance.start();
+                                    child.$el.parent()[0].should.equal(viewInstance.$el[0]);
+                                });
+                            });
+
+                            describe('sizzle selector', function() {
+                                it('will append view.el to $(appendTo)', function (done) {
                                     view = new BaseView({
                                         appendTo: '#' + testDom,
-                                        template: '<div id="me"></div>',
-                                        wrapper: false
+                                        template: '<div id="me"></div>'
                                     });
 
                                     view.start().done(function () {
-                                        $('#' + testDom).html().should.equal('<div id="me"></div>');
+                                        $('#' + testDom).html().should.equal('<div><div id="me"></div></div>');
                                         done();
                                     });
                                 });
+                                it('will append view.el to $(appendTo) without a wrapper is `false === options.wrapper`',
+                                    function (done) {
+                                        view = new BaseView({
+                                            appendTo: '#' + testDom,
+                                            template: '<div id="me"></div>',
+                                            wrapper: false
+                                        });
+
+                                        view.start().done(function () {
+                                            $('#' + testDom).html().should.equal('<div id="me"></div>');
+                                            done();
+                                        });
+                                    });
+                            });
                         });
                     });
 

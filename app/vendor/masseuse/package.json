@@ -1,0 +1,48 @@
+{
+  "name": "masseuse",
+  "version": "1.8.0",
+  "description": "A Backbone helper library with a View lifecycle, View configs, child Views, Proxy and Computed Properties, and a custom Router with beforeRouting support",
+  "main": " ",
+  "scripts": {
+    "test": "grunt test-cli"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Solid-Interactive/masseuse.git"
+  },
+  "keywords": [
+    "backbone",
+    "rivets",
+    "view lifecycle",
+    "async",
+    "promises",
+    "config",
+    "child views",
+    "bower"
+  ],
+  "author": "SOLID Interactive",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "56581e51a6dc834d9d4e424b0b45e38ed3331fa4",
+  "bugs": {
+    "url": "https://github.com/Solid-Interactive/masseuse/issues"
+  },
+  "devDependencies": {
+    "grunt": "0.4.2",
+    "grunt-build-gh-pages": "0.1.7",
+    "grunt-contrib-connect": "0.6.0",
+    "grunt-contrib-copy": "0.5.0",
+    "grunt-contrib-jshint": "0.8.0",
+    "grunt-contrib-watch": "0.5.3",
+    "grunt-open": "0.2.2",
+    "grunt-contrib-requirejs": "0.4.1",
+    "grunt-shell": "0.6.4",
+    "matchdep": "0.3.0",
+    "grunt-contrib-clean": "0.5.0",
+    "mocha-phantomjs": "3.3.1",
+    "grunt-contrib-livereload": "0.1.2",
+    "ink-docstrap": "0.3.0-0",
+    "jsdoc": "3.3.0-alpha4",
+    "lodash": "2.4.1"
+  }
+}
