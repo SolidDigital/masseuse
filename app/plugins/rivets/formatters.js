@@ -2,6 +2,7 @@ define(function () {
     'use strict';
 
     return {
+        and: and,
         booleantoenabled : booleantoenabled,
         dollars: dollars,
         equals: equals,
@@ -14,6 +15,7 @@ define(function () {
         joinWithComma: joinWithComma,
         jsonAsString: jsonAsString,
         limit: limit,
+        not: not,
         pluralize: pluralize,
         prefix : prefix,
         prettyDate: prettyDate,
@@ -153,5 +155,17 @@ define(function () {
 
     function suffix(value, suff) {
         return suff + value;
+    }
+
+    function not(value) {
+        return !value;
+    }
+
+    function and() {
+        var i, bool = true;
+        for  (i in arguments) {
+            bool = bool && arguments[i];
+        }
+        return bool;
     }
 });
