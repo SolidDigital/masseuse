@@ -134,7 +134,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
                 if (val instanceof Backbone.Model) {
                     self.listenTo(val, 'change', self.trigger.bind(self, 'change'));
                 }
-                if (key.indexOf('.') > 0 && _.isString(key)) {
+                if (_.isString(key) && key.indexOf('.') > 0) {
                     propertyOn = key.slice(key.indexOf('.') + 1);
                     key = key.split('.')[0];
 
@@ -210,7 +210,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
 
             this.set(key, proxyModel.get(modelAttribute));
 
-            if(modelAttribute.indexOf('.') > 0 && _.isString(modelAttribute)) {
+            if(_.isString(modelAttribute) && modelAttribute.indexOf('.') > 0) {
                 modelAttribute = modelAttribute.split('.')[0];
             }
 
