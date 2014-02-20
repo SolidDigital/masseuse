@@ -1,8 +1,10 @@
 /*global define:false*/
 define([
     'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', './lifeCycle',
-    '../utilities/accessors', '../utilities/createOptions', '../models/masseuseModel', '../models/proxyProperty'
-], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, createOptions, MasseuseModel, ProxyProperty) {
+    '../utilities/accessors', '../utilities/createOptions', '../models/masseuseModel', '../models/proxyProperty',
+    '../models/observerProperty'
+], function ($, Backbone, _, Channels, ViewContext, lifeCycle, accessors, createOptions, MasseuseModel, ProxyProperty,
+    ObserverProperty) {
     'use strict';
 
     var viewOptions = ['model', 'collection', 'el', 'id', 'attributes', 'className', 'tagName', 'events',
@@ -495,7 +497,7 @@ define([
                 if (datum instanceof ViewContext) {
                     modelData[key] = datum.getBoundFunction(self);
                 }
-                if (datum instanceof ProxyProperty) {
+                if (datum instanceof ProxyProperty || datum instanceof ObserverProperty) {
                     if (datum.model instanceof ViewContext) {
                         datum.model = datum.model.getBoundFunction(self);
                     }
