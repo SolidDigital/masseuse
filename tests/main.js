@@ -55,6 +55,7 @@
         './plugins/rivets/collectionWithMasseuseModelsTests',
         './plugins/rivets/componentsTest',
         './plugins/rivets/binderTests',
+        './plugins/rivets/formattersTests',
         './utilities/channelsTests',
         './utilities/createOptionsTests',
         './utilities/deferMethodTests',
