@@ -168,4 +168,12 @@ define(function () {
         }
         return bool;
     }
+
+    function or() {
+        var i, bool = false;
+        for  (i in arguments) {
+            bool = bool || arguments[i];
+        }
+        return bool;
+    }
 });
