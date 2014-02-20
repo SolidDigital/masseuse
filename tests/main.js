@@ -49,6 +49,7 @@
         './models/masseuseModelTests',
         './models/computedPropertyTests',
         './models/proxyPropertyTests',
+        './models/observerPropertyTests',
         './plugins/rivets/viewTests',
         './plugins/rivets/rivetsBackBoneCollectionsTests',
         './plugins/rivets/collectionWithMasseuseModelsTests',
