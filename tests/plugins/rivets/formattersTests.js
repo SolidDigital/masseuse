@@ -1,12 +1,12 @@
 define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../app/plugins/rivets/formatters',
-    'sinonSpy'],
-    function (_, chai, mocha, sinon, sinonChai, check, formatters) {
+    'masseuse', 'jquery', 'sinonSpy'],
+    function (_, chai, mocha, sinon, sinonChai, check, formatters, masseuse, $) {
 
         'use strict';
-        var should = chai.should();
+        var should = chai.should(),
+            $body = $('body'),
+            RivetView = masseuse.plugins.rivets.RivetsView;
 
-
-        //-------------To make JSHINT pass-------------
         should;
 
         require(['sinonCall', 'sinonSpy']);
@@ -15,6 +15,39 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
         mocha.setup('bdd');
 
         describe('Formatters', function() {
+            beforeEach(function() {
+                var $div = $('<div id="testDom"/>');
+                $body.append($div);
+            });
+
+            afterEach(function() {
+                $('#testDom').remove();
+            });
+
+            it('test dom is present', function() {
+                $('#testDom').length.should.equal(1);
+            });
+
+            it('should work in an actual view', function(done) {
+                var template = '<div id="riveted" data-rv-text="model:title | withColon"></div>',
+                    rivetView,
+                    options = {
+                        el : '#testDom',
+                        template : template,
+                        rivetConfig : true,
+                        modelData : {
+                            title : 'Inferno'
+                        }
+                    };
+
+                rivetView = new RivetView(options);
+
+                rivetView.start().done(function() {
+                    $('#riveted').html().should.equal('Inferno : ');
+                    done();
+                    rivetView.remove();
+                });
+            });
 
             it('prettyFileSize turns bytes into nice file sizes', function() {
                 check(formatters.prettyFileSize, [
@@ -77,9 +110,31 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
 
             it('prettyDate makes a iso date string nicer looking', function() {
                 // phantom JS has issues parsing dates : https://github.com/ariya/phantomjs/issues/11151
-                var expected = typeof mochaPhantomJS === 'undefined' ? '12/31/1969 4:00:00 PM' : '12/31/1969 16:00:00';
+                // mocking out date object to handle time zone diffs.
+                var expected = '12/21/2014 7:29:36 AM',
+                    oldToLocaleDateString = window.Date.prototype.toLocaleDateString,
+                    oldToLocaleTimeString = window.Date.prototype.toLocaleTimeString;
+
+                window.Date.prototype.toLocaleDateString = function() {
+                    return '12/21/2014';
+                };
+
+                window.Date.prototype.toLocaleTimeString = function() {
+                    return '7:29:36 AM';
+                };
+
                 check(formatters.prettyDate, [
-                    [120, expected]
+                    ['2014-12-21T15:29:36.228Z', expected]
+                ]);
+
+
+                window.Date.prototype.toLocaleDateString = oldToLocaleDateString;
+                window.Date.prototype.toLocaleTimeString = oldToLocaleTimeString;
+            });
+
+            it('prettyDateNoTime returns a formatted date without the time', function() {
+                check(formatters.prettyDateNoTime, [
+                    ['2014-12-21T15:29:36.228Z', '12/21/2014']
                 ]);
             });
 
@@ -140,12 +195,6 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
                 check(formatters.booleantoenabled, [
                     [true, 'Enabled'],
                     [false, 'Disabled']
-                ]);
-            });
-
-            it('prettyDateNoTime returns a formatted date without the time', function() {
-                check(formatters.prettyDateNoTime, [
-                    [120, '12/31/1969']
                 ]);
             });
 
