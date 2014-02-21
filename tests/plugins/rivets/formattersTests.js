@@ -1,12 +1,12 @@
 define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../app/plugins/rivets/formatters',
-    'sinonSpy'],
-    function (_, chai, mocha, sinon, sinonChai, check, formatters) {
+    'masseuse', 'jquery', 'sinonSpy'],
+    function (_, chai, mocha, sinon, sinonChai, check, formatters, masseuse, $) {
 
         'use strict';
-        var should = chai.should();
+        var should = chai.should(),
+            $body = $('body'),
+            RivetView = masseuse.plugins.rivets.RivetsView;
 
-
-        //-------------To make JSHINT pass-------------
         should;
 
         require(['sinonCall', 'sinonSpy']);
@@ -15,6 +15,39 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
         mocha.setup('bdd');
 
         describe('Formatters', function() {
+            beforeEach(function() {
+                var $div = $('<div id="testDom"/>');
+                $body.append($div);
+            });
+
+            afterEach(function() {
+                $('#testDom').remove();
+            });
+
+            it('test dom is present', function() {
+                $('#testDom').length.should.equal(1);
+            });
+
+            it('should work in an actual view', function(done) {
+                var template = '<div id="riveted" data-rv-text="model:title | withColon"></div>',
+                    rivetView,
+                    options = {
+                        el : '#testDom',
+                        template : template,
+                        rivetConfig : true,
+                        modelData : {
+                            title : 'Inferno'
+                        }
+                    };
+
+                rivetView = new RivetView(options);
+
+                rivetView.start().done(function() {
+                    $('#riveted').html().should.equal('Inferno : ');
+                    done();
+                    rivetView.remove();
+                });
+            });
 
             it('prettyFileSize turns bytes into nice file sizes', function() {
                 check(formatters.prettyFileSize, [
@@ -87,7 +120,6 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
                 };
 
                 window.Date.prototype.toLocaleTimeString = function() {
-                    window.console.log('this gus');
                     return '7:29:36 AM';
                 };
 
