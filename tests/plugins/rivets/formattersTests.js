@@ -77,10 +77,18 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
 
             it('prettyDate makes a iso date string nicer looking', function() {
                 // phantom JS has issues parsing dates : https://github.com/ariya/phantomjs/issues/11151
-                var expected = typeof mochaPhantomJS === 'undefined' ? '12/21/2014 7:29:36 AM' : '12/21/2014 07:29:36';
+                var expected = typeof mochaPhantomJS === 'undefined' ? '12/21/2014 7:29:36 AM' : '12/21/2014 07:29:36',
+                    options = {
+                        timeZone : 'UTC',
+                        timeZoneName : 'short'
+                    },
+                    date = new Date('2014-12-21T15:29:36.228Z');
+                expected;
                 check(formatters.prettyDate, [
-                    ['2014-12-21T15:29:36.228Z', expected]
+                    [date.toUTCString(), date.toLocaleDateString('en-US', options) + ' ' +
+                        date.toLocaleTimeString('en-US', _.extend({}, options, { hour12 : true}))]
                 ]);
+                //toLocaleDateString() + ' ' + date.toLocaleTimeString('en-US', {hour12: true})
             });
 
             it('prettyDateNoTime returns a formatted date without the time', function() {
