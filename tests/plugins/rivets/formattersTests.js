@@ -76,25 +76,28 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
             });
 
             it('prettyDate makes a iso date string nicer looking', function() {
-                var options = {
-                        timeZone : 'UTC',
-                        timeZoneName : 'short'
-                    },
-                    date = new Date('2014-12-21T15:29:36.228Z');
+                // phantom JS has issues parsing dates : https://github.com/ariya/phantomjs/issues/11151
+                // mocking out date object to handle time zone diffs.
+                var expected = '12/21/2014 7:29:36 AM',
+                    oldToLocaleDateString = window.Date.prototype.toLocaleDateString,
+                    oldToLocaleTimeString = window.Date.prototype.toLocaleTimeString;
+
+                window.Date.prototype.toLocaleDateString = function() {
+                    return '12/21/2014';
+                };
+
+                window.Date.prototype.toLocaleTimeString = function() {
+                    window.console.log('this gus');
+                    return '7:29:36 AM';
+                };
 
                 check(formatters.prettyDate, [
-                    [date.toUTCString(), date.toLocaleDateString('en-US', options) + ' ' +
-                        date.toLocaleTimeString('en-US', _.extend({}, options, { hour12 : true}))]
+                    ['2014-12-21T15:29:36.228Z', expected]
                 ]);
-            });
 
-            it('prettyDate makes a iso date string nicer looking', function() {
-                var date = new Date('2014-12-21T15:29:36.228Z');
 
-                check(formatters.prettyDate, [
-                    [date.toUTCString(), date.toLocaleDateString('en-US') + ' ' +
-                        date.toLocaleTimeString('en-US', { hour12 : true})]
-                ]);
+                window.Date.prototype.toLocaleDateString = oldToLocaleDateString;
+                window.Date.prototype.toLocaleTimeString = oldToLocaleTimeString;
             });
 
             it('prettyDateNoTime returns a formatted date without the time', function() {
