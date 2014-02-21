@@ -85,7 +85,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
 
             it('prettyDateNoTime returns a formatted date without the time', function() {
                 check(formatters.prettyDateNoTime, [
-                    [120, '12/31/1969']
+                    ['2014-12-21T15:29:36.228Z', '12/31/1969']
                 ]);
             });
 
