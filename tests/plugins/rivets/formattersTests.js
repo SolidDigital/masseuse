@@ -77,11 +77,18 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
 
             it('prettyDate makes a iso date string nicer looking', function() {
                 // phantom JS has issues parsing dates : https://github.com/ariya/phantomjs/issues/11151
-                var expected = typeof mochaPhantomJS === 'undefined' ? '12/31/1969 4:00:00 PM' : '12/31/1969 16:00:00';
+                var expected = typeof mochaPhantomJS === 'undefined' ? '12/21/2014 7:29:36 AM' : '12/21/2014 07:29:36';
                 check(formatters.prettyDate, [
-                    [120, expected]
+                    ['2014-12-21T15:29:36.228Z', expected]
                 ]);
             });
+
+            it('prettyDateNoTime returns a formatted date without the time', function() {
+                check(formatters.prettyDateNoTime, [
+                    [120, '12/31/1969']
+                ]);
+            });
+
 
             it('dollars formats a number as American Dollars', function() {
                 check(formatters.dollars, [
@@ -140,12 +147,6 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
                 check(formatters.booleantoenabled, [
                     [true, 'Enabled'],
                     [false, 'Disabled']
-                ]);
-            });
-
-            it('prettyDateNoTime returns a formatted date without the time', function() {
-                check(formatters.prettyDateNoTime, [
-                    [120, '12/31/1969']
                 ]);
             });
 
