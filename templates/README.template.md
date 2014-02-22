@@ -121,7 +121,7 @@ npm install -g mocha-phantomjs phantomjs
 
 ## Release Notes
 
-<%= releaseNotes %>
+<%= releaseNotes.notes %>
 
 ## Contributors (`git shortlog -s -n`)
 
