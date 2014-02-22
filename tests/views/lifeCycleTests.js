@@ -23,6 +23,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                 SyncExtendedBaseView,
                 asyncInstance,
                 syncInstance,
+                baseView,
                 $beforeRenderDeferred,
                 $afterRenderDeferred;
 
@@ -65,7 +66,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                 viewInstance = syncInstance = new SyncExtendedBaseView({
                     name : VIEW1_NAME
                 });
-
+                baseView = new BaseView();
                 done();
             });
 
@@ -306,6 +307,32 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                 });
             });
 
+            describe('lifecycle methods', function() {
+                it('are fired in order for a synchronous method', function() {
+                    var events = [];
+                    baseView.on('all', function(event) {
+                        events.push(event);
+                    });
+                    baseView.start();
+                    events.should.deep
+                        .equal(['beforeRenderDone', 'afterTemplatingDone', 'renderDone', 'afterRenderDone']);
+                });
+                it('are fired in order for a asynchronous method', function(done) {
+                    var events = [];
+                    asyncInstance.on('all', function(event) {
+                        events.push(event);
+                    });
+
+                    asyncInstance.start().done(function() {
+                        events.should.deep
+                            .equal(['beforeRenderDone', 'afterTemplatingDone', 'renderDone', 'afterRenderDone']);
+                        done();
+                    });
+
+                    $beforeRenderDeferred.resolve();
+                    $afterRenderDeferred.resolve();
+                });
+            });
 
             describe('beforeRender method, if implemented', function () {
                 describe('with zero arguments', function () {
