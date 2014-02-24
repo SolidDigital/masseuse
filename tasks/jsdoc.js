@@ -2,5 +2,5 @@
 module.exports = function(grunt) {
     'use strict';
 
-    grunt.registerTask('jsdoc', ['clean:jsdoc', 'releaseNotes', 'readme', 'shell:jsdoc']);
+    grunt.registerTask('jsdoc', ['clean:jsdoc', 'readme', 'shell:jsdoc']);
 };
