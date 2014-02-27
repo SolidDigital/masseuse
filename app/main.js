@@ -1,8 +1,8 @@
 define([
-    './views/baseView', './utilities/utilities', './views/viewContext', './routers/masseuseRouter',
+    './views/baseView', './utilities/channels', './views/viewContext', './routers/masseuseRouter',
     './models/masseuseModel', './models/computedProperty', './models/proxyProperty', './models/observerProperty',
     './plugins/rivets/view'
-], function (BaseView, utilities, ViewContext, MasseuseRouter, MasseuseModel, ComputedProperty, ProxyProperty,
+], function (BaseView, channels, ViewContext, MasseuseRouter, MasseuseModel, ComputedProperty, ProxyProperty,
              ObserverProperty, RivetsView) {
     'use strict';
 
@@ -34,7 +34,9 @@ define([
         MasseuseRouter : MasseuseRouter,
         ProxyProperty : ProxyProperty,
         ObserverProperty : ObserverProperty,
-        utilities : utilities,
+        utilities : {
+            channels : channels
+        },
         plugins : {
             rivets : {
                 RivetsView : RivetsView
