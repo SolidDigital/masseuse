@@ -1,5 +1,6 @@
-define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utilities/accessors', 'underscore'],
-    function (Backbone, $, ComputedProperty, ProxyProperty, accessors, _) {
+define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observerProperty', '../utilities/accessors',
+    'underscore'],
+    function (Backbone, $, ComputedProperty, ProxyProperty, ObserverProperty, accessors, _) {
         'use strict';
 
         var maxRecursionDepth = 10;
@@ -30,6 +31,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
             set : set,
             bindComputed : bindComputed,
             bindProxy : bindProxy,
+            bindObserver : bindObserver,
             getListenableValues : getListenableValues
         });
 
@@ -121,6 +123,9 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
                     } else if (attrValue instanceof ProxyProperty) {
                         self.bindProxy(attrKey, attrValue);
                         delete attrs[attrKey];
+                    } else if (attrValue instanceof ObserverProperty) {
+                        self.bindObserver(attrKey, attrValue);
+                        delete attrs[attrKey];
                     } else if (attrValue instanceof Backbone.Model) {
                         self.listenTo(attrValue, 'change', self.trigger.bind(self, 'change'));
                     } else {
@@ -150,6 +155,9 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
                     return;
                 } else if (val instanceof ProxyProperty) {
                     this.bindProxy(key, val);
+                    return;
+                } else if (val instanceof ObserverProperty) {
+                    this.bindObserver(key, val);
                     return;
                 } else {
                     _pushToComputedCallbacks.call(this, key, stack);
@@ -205,8 +213,26 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
          */
         function bindProxy(key, proxy) {
             var self = this,
-                proxyModel = proxy.model,
+                proxyModel = proxy.model;
+
+            this.bindObserver(key, proxy, proxyModel);
+
+            this.on('change:' + key, function () {
+                proxyModel.set(proxy.propertyNameOnModel, self.get(key));
+            });
+        }
+
+        /**
+         * @instance
+         * @memberof masseuse/MasseuseModel#
+         * @param key
+         * @param proxy
+         */
+        function bindObserver(key, proxy, proxyModel) {
+            var self = this,
                 modelAttribute = proxy.propertyNameOnModel;
+
+            proxyModel = proxyModel || proxy.model;
 
             this.set(key, proxyModel.get(modelAttribute));
 
@@ -216,10 +242,6 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', '../utili
 
             proxyModel.on('change:' + modelAttribute, function () {
                 self.set(key, proxyModel.get(proxy.propertyNameOnModel));
-            });
-
-            this.on('change:' + key, function () {
-                proxyModel.set(proxy.propertyNameOnModel, self.get(key));
             });
         }
 

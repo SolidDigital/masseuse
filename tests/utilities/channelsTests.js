@@ -33,6 +33,17 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', '../../app/utilitie
                 spy1.should.have.been.calledOnce;
             });
 
+            it('can be used without requiring the "new" keyword', function () {
+                var channels = Channels(),
+                    spy = sinon.spy();
+
+                channels.on('test', spy);
+
+                channels.trigger('test');
+
+                spy.should.have.been.calledOnce;
+            });
+
             it('channels can be instantiated with a namespace array', function() {
                 var channels = new Channels(['test1', 'test2']),
                     spy1 = sinon.spy(),

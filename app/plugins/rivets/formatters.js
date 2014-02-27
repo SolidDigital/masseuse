@@ -1,7 +1,8 @@
-define(function () {
+define(['underscore'], function (_) {
     'use strict';
 
     return {
+        and: and,
         booleantoenabled : booleantoenabled,
         dollars: dollars,
         equals: equals,
@@ -14,6 +15,8 @@ define(function () {
         joinWithComma: joinWithComma,
         jsonAsString: jsonAsString,
         limit: limit,
+        not: not,
+        or: or,
         pluralize: pluralize,
         prefix : prefix,
         prettyDate: prettyDate,
@@ -76,7 +79,7 @@ define(function () {
 
     function prettyDate(dateStr) {
         var date = new Date(dateStr);
-        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString('en-US', {hour12: true});
     }
 
     function prettyDateNoTime(dateStr) {
@@ -153,5 +156,29 @@ define(function () {
 
     function suffix(value, suff) {
         return suff + value;
+    }
+
+    function not(value) {
+        return !value;
+    }
+
+    function and() {
+        var bool = true;
+
+        _.each(arguments, function(argument) {
+            bool = bool && argument;
+        });
+
+        return bool;
+    }
+
+    function or() {
+        var bool = false;
+
+        _.each(arguments, function(argument) {
+            bool = bool || argument;
+        });
+
+        return bool;
     }
 });
