@@ -13,10 +13,13 @@ define(['underscore', 'backbone', './nameSpace'], function (_, Backbone, namespa
         if (channels) {
             channels.addChannel(channel);
             return channels;
+        } else if (!this instanceof Channels) {
+            return new Channels(channel);
+        } else {
+            _.extend(this, Backbone.Events);
+            this.addChannel(channel);
+            channels = this;
         }
-        _.extend(this, Backbone.Events);
-        this.addChannel(channel);
-        channels = this;
     }
 
     /**
