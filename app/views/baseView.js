@@ -379,6 +379,9 @@ define([
         if (!_(this.children).contains(childView)) {
             this.children.push(child = childView);
             childView.parent = this;
+            if(this.hasStarted && !childView.hasStarted) {
+                childView.start();
+            }
         }
         return child;
     }
