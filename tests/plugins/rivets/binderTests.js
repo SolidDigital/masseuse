@@ -31,7 +31,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
                 describe('Binders should be present for Views passed in with "childViewBinder"', function() {
                     it('if a model is passed to a binder, the model should become childView.model', function() {
-                        var template = '<div id="childView" data-rv-new-TestView="model"></div>',
+                        var template = '<div id="childView"><p data-rv-new-TestView="model"></p></div>',
                             TestView = RivetView.extend({
                                 defaultOptions : {
                                     template : '<ul><li data-rv-text="model:name"></li></ul>',
@@ -54,7 +54,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
                         new RivetView(options).start();
                         $('#childView').html()
-                            .should.equal('<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul>');
+                            .should.equal('<p data-rv-new-testview="model">' +
+                                '<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul></p>');
                     });
                     it('if an object is passed to a binder, the object should become childView.options.modelData',
                         function() {
