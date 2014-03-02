@@ -29,31 +29,62 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     $('#' + testDom).remove();
                 });
 
-                it('Binders should be present for Views passed in with "childViewBinder"', function() {
-                    var template = '<div id="childView" data-rv-new-TestView="model"></div>',
-                        TestView = RivetView.extend({
-                            defaultOptions : {
-                                template : '<ul><li data-rv-text="model:name"></li></ul>',
-                                wrapper : false
-                            }
-                        }),
-                        options = {
-                            appendTo : '#' + testDom,
-                            wrapper : false,
-                            template : template,
-                            modelData : {
-                                name : 'Kareem Abdul Jabbar'
-                            },
-                            rivetsConfig : {
-                                childViewBinders : {
-                                    TestView : TestView
+                describe('Binders should be present for Views passed in with "childViewBinder"', function() {
+                    it('if a model is passed to a binder, the model should become childView.model', function() {
+                        var template = '<div id="childView" data-rv-new-TestView="model"></div>',
+                            TestView = RivetView.extend({
+                                defaultOptions : {
+                                    template : '<ul><li data-rv-text="model:name"></li></ul>',
+                                    wrapper : false
                                 }
-                            }
-                        };
+                            }),
+                            options = {
+                                appendTo : '#' + testDom,
+                                wrapper : false,
+                                template : template,
+                                modelData : {
+                                    name : 'Kareem Abdul Jabbar'
+                                },
+                                rivetsConfig : {
+                                    childViewBinders : {
+                                        TestView : TestView
+                                    }
+                                }
+                            };
 
-                    new RivetView(options).start();
-                    $('#childView').html()
-                        .should.equal('<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul>');
+                        new RivetView(options).start();
+                        $('#childView').html()
+                            .should.equal('<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul>');
+                    });
+                    it('if an object is passed to a binder, the object should become childView.options.modelData',
+                        function() {
+                            var template = '<div id="childView" data-rv-new-TestView="model:person"></div>',
+                                TestView = RivetView.extend({
+                                    defaultOptions : {
+                                        template : '<ul><li data-rv-text="model:name"></li></ul>',
+                                        wrapper : false
+                                    }
+                                }),
+                                options = {
+                                    appendTo : '#' + testDom,
+                                    wrapper : false,
+                                    template : template,
+                                    modelData : {
+                                        person : {
+                                            name : 'Kareem Abdul Jabbar'
+                                        }
+                                    },
+                                    rivetsConfig : {
+                                        childViewBinders : {
+                                            TestView : TestView
+                                        }
+                                    }
+                                };
+
+                            new RivetView(options).start();
+                            $('#childView').html()
+                                .should.equal('<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul>');
+                        });
                 });
             });
             describe('editable binder', function() {
