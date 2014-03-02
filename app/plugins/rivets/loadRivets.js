@@ -23,16 +23,31 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
             }
 
             Rivets.config.templateDelimiters = optionsForRivets.rivetsDelimiters;
-
             _.extend(Rivets.components, optionsForRivets.rivetsComponents);
             _.extend(Rivets.formatters, optionsForRivets.rivetsFormatters);
             _.extend(Rivets.adapters, optionsForRivets.rivetsAdapters);
-            _.extend(Rivets.binders, optionsForRivets.rivetsBinders);
-
+            _.extend(Rivets.binders, optionsForRivets.rivetsBinders,
+                _createBinders.call(this, optionsForRivets.childViewBinders));
             return Rivets.bind(this.$el, {
                 model : this.model,
                 view : this,
                 collection: this.collection
             });
         };
+
+        function _createBinders(childViewBinders) {
+            var self = this,
+                binders = {};
+
+            _.each(childViewBinders, function(value, key) {
+                binders['new-' + key.toLowerCase()] = function(el, model) {
+                    self.addChild({
+                        model : model,
+                        ViewType : value,
+                        appendTo : self.el
+                    });
+                };
+            });
+            return binders;
+        }
     });
