@@ -41,11 +41,18 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
 
             _.each(childViewBinders, function(value, key) {
                 binders['new-' + key.toLowerCase()] = function(el, model) {
-                    self.addChild({
-                        model : model,
+                    var options = {
                         ViewType : value,
                         appendTo : self.el
-                    });
+                    };
+                    if (model instanceof Backbone.Model) {
+                        options.model = model;
+                    } else {
+                        // No error handling for if model is not an object.
+                        // In this way the binder will error out, and that is more debuggable than a silent fail.
+                        options.modelData = model;
+                    }
+                    self.addChild(options);
                 };
             });
             return binders;
