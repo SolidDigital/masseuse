@@ -43,7 +43,7 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
                 binders['new-' + key.toLowerCase()] = function(el, model) {
                     var options = {
                         ViewType : value,
-                        appendTo : self.el
+                        appendTo : el
                     };
                     if (model instanceof Backbone.Model) {
                         options.model = model;
