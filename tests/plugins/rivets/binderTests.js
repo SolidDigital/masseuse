@@ -16,6 +16,46 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
         mocha.setup('bdd');
 
         describe('rivets binders with rivet views', function () {
+            describe('child view binder', function() {
+                beforeEach(function () {
+                    $testDom = $('<div id="' + testDom + '"></div>');
+                    $body.append($testDom);
+                });
+
+                afterEach(function () {
+                    if (rivetView) {
+                        rivetView.remove();
+                    }
+                    $('#' + testDom).remove();
+                });
+
+                it('Binders should be present for Views passed in with "childViewBinder"', function() {
+                    var template = '<div id="childView" data-rv-new-TestView="model"></div>',
+                        TestView = RivetView.extend({
+                            defaultOptions : {
+                                template : '<ul><li data-rv-text="model:name"></li></ul>',
+                                wrapper : false
+                            }
+                        }),
+                        options = {
+                            appendTo : '#' + testDom,
+                            wrapper : false,
+                            template : template,
+                            modelData : {
+                                name : 'Kareem Abdul Jabbar'
+                            },
+                            rivetsConfig : {
+                                childViewBinders : {
+                                    TestView : TestView
+                                }
+                            }
+                        };
+
+                    new RivetView(options).start();
+                    $('#childView').html()
+                        .should.equal('<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul>');
+                });
+            });
             describe('editable binder', function() {
                 beforeEach(function () {
                     $testDom = $('<div id="' + testDom + '"></div>');
@@ -46,9 +86,9 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 });
 
                 it('should add the contenteditable attribute if it is not there', function (done) {
-                    rivetView = new RivetView(_.extend({}, options, {
+                    rivetView = new RivetView(options, {
                         template : templateWithoutAttribute
-                    }));
+                    });
                     rivetView
                         .start()
                         .done(function() {
@@ -77,11 +117,11 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             .start()
                             .done(function() {
                                 $testDom.find('#testHere').focus();
-                                $testDom.find('#testHere').html('The Farmers in the Den');
+                                $testDom.find('#testHere').html('The Farmers in the Dell');
 
                                 $testDom.find('#testHere').blur();
 
-                                rivetView.model.get('name').should.equal('The Farmers in the Den');
+                                rivetView.model.get('name').should.equal('The Farmers in the Dell');
                                 done();
                             });
                     });
@@ -92,11 +132,11 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             .start()
                             .done(function() {
                                 $testDom.find('#testHere').focus();
-                                $testDom.find('#testHere').html('The Farmers in the Den');
+                                $testDom.find('#testHere').html('The Farmers in the Dell');
 
                                 $testDom.find('#testHere').blur();
 
-                                rivetView.model.get('name').should.equal('The Farmers in the Den');
+                                rivetView.model.get('name').should.equal('The Farmers in the Dell');
                                 done();
                             });
                     });
