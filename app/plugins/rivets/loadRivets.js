@@ -42,7 +42,6 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
             _.each(childViewBinders, function(value, key) {
                 binders['new-' + key.toLowerCase()] = function(el, model) {
                     var options = {
-                        ViewType : value,
                         appendTo : el
                     };
                     if (model instanceof Backbone.Model) {
@@ -52,7 +51,7 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
                         // In this way the binder will error out, and that is more debuggable than a silent fail.
                         options.modelData = model;
                     }
-                    self.addChild(options);
+                    self.addChild(new value(options));
                 };
             });
             return binders;
