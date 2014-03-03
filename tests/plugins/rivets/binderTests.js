@@ -86,6 +86,57 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             $('#childView').html()
                                 .should.equal('<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul>');
                         });
+                    it('use of a factory is possible as a childViewBinder value', function() {
+                        var parentView,
+                            $childView,
+                            ViewA = RivetView.extend({
+                                defaultOptions : {
+                                    template : '<div>a</div>',
+                                    wrapper : false
+                                }
+                            }),
+                            ViewB = RivetView.extend({
+                                defaultOptions : {
+                                    template :'<div>b</div>',
+                                    wrapper : false
+                                }
+                            }),
+                            options = {
+                                appendTo : '#' + testDom,
+                                wrapper : false,
+                                template :
+                                    '<ul id="childView">' +
+                                        '<li data-rv-each-view="model:views" data-rv-new-ab-factory="view"></li>' +
+                                    '</ul>',
+                                modelData : {
+                                    views : [
+                                        {type : 'a'},{type: 'b'}
+                                    ]
+                                },
+                                rivetsConfig : {
+                                    childViewBinders : {
+                                        'ab-factory' : function(options) {
+                                            switch (options.modelData.type) {
+                                            case 'a':
+                                                return new ViewA(options);
+                                            case 'b':
+                                                return new ViewB(options);
+                                            default:
+                                                return undefined;
+                                            }
+                                        }
+                                    }
+                                }
+                            };
+
+                        parentView = new RivetView(options);
+                        parentView.start();
+                        $childView = $('#childView');
+                        $childView.find('li:eq(0)').text().should.equal('a');
+                        $childView.find('li:eq(1)').text().should.equal('b');
+                        (parentView.children[0] instanceof ViewA).should.be.true;
+                        (parentView.children[1] instanceof ViewB).should.be.true;
+                    });
                 });
             });
             describe('editable binder', function() {
