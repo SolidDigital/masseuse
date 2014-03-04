@@ -4,7 +4,8 @@ define(['underscore'], function (_) {
     return {
         and: and,
         booleantoenabled : booleantoenabled,
-        dollars: dollars,
+        centsToDollars: centsToDollars,
+        asDollars : asDollars,
         equals: equals,
         existsOr: existsOr,
         humanize: {
@@ -107,8 +108,12 @@ define(['underscore'], function (_) {
         return time.join(' ');
     }
 
-    function dollars(amount) {
+    function centsToDollars(amount) {
         return '$' + ((amount / 100).toFixed(2));
+    }
+
+    function asDollars(amount) {
+        return '$' + amount.toFixed(2);
     }
 
     function equals(value, args) {
