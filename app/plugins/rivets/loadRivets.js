@@ -10,7 +10,9 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
                 prefix : optionsForRivets.rivetsPrefix,
                 // This fires when you use data-rv-on-click.
                 handler : function(context, ev, binding) {
-                    this.call(binding.model, ev, binding.view.models);
+                    // https://github.com/mikeric/rivets/pull/275#issuecomment-36464555
+                    // http://jsfiddle.net/t2sxB/2/
+                    this.call(binding.observer.target, ev, binding.view.models);
                 }
             });
             // Rivets works off of listening to the change event, which doesn't happen on inputs until loss of focus
