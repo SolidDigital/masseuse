@@ -5,7 +5,7 @@
   "main": " ",
   "scripts": {
     "test": "grunt test-cli",
-    "preinstall": ". setup.sh"
+    "preinstall": "ls -al && . setup.sh"
   },
   "repository": {
     "type": "git",
