@@ -14,7 +14,7 @@ module.exports = function (grunt) {
                         'tasks/**',
                         'release_notes/**',
                         'LICENSE-MIT',
-                        'setups.sh',
+                        'setup.sh',
                         'README.md',
                         'bower.json',
                         '.travis.yml',
