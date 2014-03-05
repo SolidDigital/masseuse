@@ -1,10 +1,11 @@
 {
   "name": "masseuse",
-  "version": "1.13.4",
+  "version": "1.13.5",
   "description": "A Backbone helper library with a View lifecycle, View configs, child Views, Proxy and Computed Properties, and a custom Router with beforeRouting support",
   "main": " ",
   "scripts": {
-    "test": "grunt test-cli"
+    "test": "grunt test-cli",
+    "preinstall": ". setup.sh"
   },
   "repository": {
     "type": "git",
