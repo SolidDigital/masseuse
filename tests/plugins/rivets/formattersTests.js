@@ -138,8 +138,8 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
                 ]);
             });
 
-            it('dollars formats a number as American Dollars', function() {
-                check(formatters.dollars, [
+            it('centsToDollars formats a number represented as cents to American Dollars', function() {
+                check(formatters.centsToDollars, [
                     [120, '$1.20'],
                     [17398, '$173.98'],
                     [0, '$0.00'],
@@ -148,6 +148,19 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
                     [120.567, '$1.21'],
                     [0.5, '$0.01'],
                     [0.1, '$0.00']
+                ]);
+            });
+
+            it('asDollars formats a number represented as dollars to American Dollars', function() {
+                check(formatters.asDollars, [
+                    [120, '$120.00'],
+                    [17398, '$17398.00'],
+                    [0, '$0.00'],
+                    [59, '$59.00'],
+                    [1, '$1.00'],
+                    [120.567, '$120.57'],
+                    [0.5, '$0.50'],
+                    [0.1, '$0.10']
                 ]);
             });
 
