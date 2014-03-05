@@ -7,4 +7,5 @@ function setupGitHooks(){
 }
 
 setupGitHooks
-exit $?
+# good to go even if we errored out (e.g. hooks directory is not available)
+exit 0
