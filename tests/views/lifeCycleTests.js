@@ -326,6 +326,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                 it('should not return the same promise as the start method', function() {
                     viewInstance.start().should.not.equal(viewInstance.refresh());
                 });
+
                 it('should run the life cycle methods', function() {
                     var events = [];
                     viewInstance.start();
@@ -338,6 +339,10 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                     viewInstance.refresh();
                     events.should.deep
                         .equal(['beforeRenderDone', 'afterTemplatingDone', 'renderDone', 'afterRenderDone']);
+                });
+
+                it('should have an alias of restart', function() {
+                    viewInstance.restart.should.equal(viewInstance.refresh);
                 });
             });
 
