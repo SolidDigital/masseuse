@@ -65,6 +65,7 @@ define([
             addChildren : addChildren,
             removeChild : removeChild,
             refresh : refresh,
+            restart : refresh,
             refreshChildren : refreshChildren,
             removeAllChildren : removeAllChildren,
             appendOrInsertView : appendOrInsertView
@@ -418,8 +419,8 @@ define([
     function refresh () {
         if (this.hasStarted) {
             Backbone.View.prototype.remove.apply(this);
-            this.hasStarted = undefined;
-            this.$startPromise = undefined;
+            delete this.hasStarted;
+            delete this.$startPromise;
         }
         return this.start();
     }

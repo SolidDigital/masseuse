@@ -14,6 +14,10 @@
             sinonSpy : {
                 deps : ['sinonCall'],
                 exports : 'sinonSpy'
+            },
+            sinonStub : {
+                deps : ['sinonCall'],
+                exports : 'sinonStub'
             }
         },
         paths : {
@@ -27,6 +31,7 @@
             sinonSpy : '../app/vendor/sinon/lib/sinon/spy',
             sinonChai : '../app/vendor/sinon-chai/lib/sinon-chai',
             sinonCall : '../app/vendor/sinon/lib/sinon/call',
+            sinonStub : '../app/vendor/sinon/lib/sinon/stub',
             check : './check'
         },
         packages : [
