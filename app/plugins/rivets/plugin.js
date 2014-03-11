@@ -16,27 +16,40 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
                 return;
             }
 
+            rivetsOptions = 'object' === typeof options.rivetsConfig ? options.rivetsConfig : {};
+
+
             defaultBinders = defaultBinders || {};
             defaultAdapters = defaultAdapters || {};
             defaultFormatters = defaultFormatters || {};
 
-            options.rivetsComponents =
-                [{}].concat(options.rivetsComponents || options.rivetComponents);
-            options.rivetsFormatters =
-                [{}, defaultFormatters].concat(options.rivetsFormatters || options.rivetFormatters);
-            options.rivetsAdapters =
-                [{}, defaultAdapters].concat(options.rivetsAdapters || options.rivetAdapters);
-            options.rivetsBinders =
-                [{}, defaultBinders].concat(options.rivetsBinders || options.rivetBinders);
+            rivetsOptions.rivetsComponents =
+                [{}].concat(rivetsOptions.components || options.rivetsComponents || options.rivetComponents);
+            rivetsOptions.rivetsFormatters =
+                [{}, defaultFormatters].concat(
+                    rivetsOptions.formatters || options.rivetsFormatters || options.rivetFormatters);
+            rivetsOptions.rivetsAdapters =
+                [{}, defaultAdapters].concat(
+                    rivetsOptions.adapters || options.rivetsAdapters || options.rivetAdapters);
+            rivetsOptions.rivetsBinders =
+                [{}, defaultBinders].concat(
+                    rivetsOptions.binders || options.rivetsBinders || options.rivetBinders);
+            if (undefined === rivetsOptions.rivetsInstaUpdate) {
+                rivetsOptions.instaUpdate = options.rivetsInstaUpdate;
+            }
+            rivetsOptions.rivetsDelimiters =
+                rivetsOptions.delimiters || options.rivetsDelimiters || options.rivetDelimiters;
+            rivetsOptions.rivetsPrefix =
+                rivetsOptions.prefix || options.rivetsPrefix || options.rivetPrefix;
 
             rivetsOptions = {
-                rivetsInstaUpdate : options.rivetsInstaUpdate,
-                rivetsDelimiters : options.rivetsDelimiters || options.rivetDelimiters || ['{{', '}}'],
-                rivetsPrefix : options.rivetsPrefix || options.rivetPrefix || 'data-rv',
-                rivetsComponents : _.extend.apply(_, options.rivetsComponents),
-                rivetsFormatters : _.extend.apply(_, options.rivetsFormatters),
-                rivetsAdapters : _.extend.apply(_, options.rivetsAdapters),
-                rivetsBinders : _.extend.apply(_, options.rivetsBinders)
+                rivetsDelimiters : rivetsOptions.rivetsDelimiters || ['{{', '}}'],
+                rivetsPrefix : options.rivetsPrefix || 'data-rv',
+                rivetsComponents : _.extend.apply(_, rivetsOptions.rivetsComponents),
+                rivetsFormatters : _.extend.apply(_, rivetsOptions.rivetsFormatters),
+                rivetsAdapters : _.extend.apply(_, rivetsOptions.rivetsAdapters),
+                rivetsBinders : _.extend.apply(_, rivetsOptions.rivetsBinders),
+                childViewBinders : rivetsOptions.childViewBinders
             };
 
             this.listenTo(this, 'afterTemplatingDone', function() {
@@ -44,7 +57,7 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
             });
 
             this.listenTo(this, 'onRemove', function () {
-                if (!rivetedView) {
+                if (rivetedView) {
                     rivetedView.unbind();
                 }
             });

@@ -29,7 +29,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 });
             });
 
-
             describe('initialize', function() {
                 var OptionsView;
 
@@ -194,6 +193,21 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         viewInstance.addChild(childView);
 
                         viewInstance.children.length.should.equal(1);
+                    });
+
+                    it('should immediately call render on the child, if the parent has already started', function() {
+                        var childView = new BaseView({
+                            name : CHILD_VIEW_NAME
+                        }),
+                            childStartSpy = sinon.spy(childView, 'start');
+
+                        viewInstance.children.length.should.equal(0);
+
+                        viewInstance.start();
+
+                        childStartSpy.should.not.have.been.called;
+                        viewInstance.addChild(childView);
+                        childStartSpy.should.have.been.calledOnce;
                     });
 
                     describe('should return the views added', function() {
@@ -376,11 +390,11 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             .done(function () {
                                 viewInstance.addChild(childView2);
                                 childStartView1.should.have.been.calledOnce;
-                                childStartView2.should.not.have.been.called;
+                                childStartView2.should.have.been.calledOnce;
                                 viewInstance.refreshChildren()
                                     .done(function() {
                                         childStartView1.should.have.been.calledTwice;
-                                        childStartView2.should.have.been.calledOnce;
+                                        childStartView2.should.have.been.calledTwice;
                                         done();
                                     });
                             });
@@ -548,15 +562,18 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                 template : '<div id="me"></div>'
                             });
                         });
+
                         it('will create an empty wrapping div for view.el', function() {
                             outerHtml($(view.el)).should.equal('<div></div>');
                         });
+
                         it('will render the template into that div', function(done) {
                             view.start().done(function() {
                                 view.$el.html().should.equal('<div id="me"></div>');
                                 done();
                             });
                         });
+
                         describe('and adding an options.prependTo', function() {
                             describe('dom element', function() {
                                 it('will prepend view.el to options.appendTo', function() {
@@ -569,6 +586,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                 });
                             });
                         });
+
                         describe('and adding an options.appendTo', function() {
                             describe('dom element', function() {
                                 it('will append view.el to options.appendTo', function() {
@@ -619,6 +637,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             outerHtml($(view.el)).should.equal('<div class="test"></div>');
                         });
                     });
+
                     describe('supplying a tagname', function() {
                         beforeEach(function() {
                             view = new BaseView({
@@ -629,6 +648,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             outerHtml($(view.el)).should.equal('<ul></ul>');
                         });
                     });
+
                     describe('supplying a id', function() {
                         beforeEach(function() {
                             view = new BaseView({
@@ -639,6 +659,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             outerHtml($(view.el)).should.equal('<div id="test"></div>');
                         });
                     });
+
                     describe('supplying a attributes', function() {
                         beforeEach(function() {
                             view = new BaseView({

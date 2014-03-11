@@ -119,7 +119,7 @@
      */
     return {
         booleantoenabled : booleantoenabled,
-        dollars: dollars,
+        centsToDollars: centsToDollars,
         equals: equals,
         existsOr: existsOr,
         humanize: {
@@ -293,7 +293,7 @@
      * @param amount
      * @returns {string}
      */
-    function dollars(amount) {
+    function centsToDollars(amount) {
         return '$' + ((amount / 100).toFixed(2));
     }
 
