@@ -1,4 +1,4 @@
-define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
+define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy', 'sinonStub'],
     function (_, chai, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
@@ -343,6 +343,34 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
 
                 it('should have an alias of restart', function() {
                     viewInstance.restart.should.equal(viewInstance.refresh);
+                });
+
+                it('should delete hasStarted, if allready started, ' +
+                    'from the view before calling start again', function(done) {
+
+                    var startStub;
+
+                    viewInstance.start()
+                        .done(function() {
+                            startStub = sinon.stub(viewInstance, 'start');
+                            viewInstance.refresh();
+                            viewInstance.should.not.have.property('hasStarted');
+                            done();
+                        });
+                });
+
+                it('should delete $startPromise, if already started, ' +
+                    'from the view before calling start again', function(done) {
+
+                    var startStub;
+
+                    viewInstance.start()
+                        .done(function() {
+                            startStub = sinon.stub(viewInstance, 'start');
+                            viewInstance.refresh();
+                            viewInstance.should.not.have.property('$startPromise');
+                            done();
+                        });
                 });
             });
 
