@@ -83,6 +83,20 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                     promise.should.have.property('done');
                     promise.should.not.have.property('resolve');
                 });
+                it('should return the same promise if called twice', function() {
+                    viewInstance.start().should.equal(viewInstance.start());
+                });
+                it('should not run the life cycle methods if called twice', function() {
+                    var events = [];
+                    viewInstance.start();
+
+                    viewInstance.on('all', function(event) {
+                        events.push(event);
+                    });
+
+                    viewInstance.start();
+                    events.length.should.equal(0);
+                });
                 describe('promise', function () {
                     // Using done as a spy. If it is not called, the test will fail.
                     it('should be resolved after start promise is resolved', function (done) {
@@ -304,6 +318,26 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                                 });
                             }
                         });
+                });
+            });
+
+
+            describe('refresh method', function() {
+                it('should not return the same promise as the start method', function() {
+                    viewInstance.start().should.not.equal(viewInstance.refresh());
+                });
+                it('should run the life cycle methods', function() {
+                    var events = [];
+                    viewInstance.start();
+
+                    viewInstance.on('all', function(event) {
+                        events.push(event);
+                    });
+
+                    events.length.should.equal(0);
+                    viewInstance.refresh();
+                    events.should.deep
+                        .equal(['beforeRenderDone', 'afterTemplatingDone', 'renderDone', 'afterRenderDone']);
                 });
             });
 

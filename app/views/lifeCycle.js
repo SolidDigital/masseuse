@@ -101,11 +101,6 @@ define(['jquery', 'underscore'],
 
             _(this.children).each(function (child) {
                 var $childDeferred = child.start($afterRenderDeferred.promise());
-
-                $childDeferred.done(function () {
-                    child.hasStarted = true;
-                });
-
                 childPromiseArray.push($childDeferred);
             });
 
