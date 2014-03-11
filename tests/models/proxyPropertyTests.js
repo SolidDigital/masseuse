@@ -75,6 +75,16 @@ define(['underscore','chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSp
             modelInstance.set('nameProxy', 'DanBrown');
             otherModel.get('nestedName').subNestedName.b.should.equal('DanBrown');
         });
+
+        it('should clean up the listener if the model property is set to something else', function() {
+            modelInstance.set('nameProxy', new ProxyProperty('name', otherModel));
+            modelInstance.get('nameProxy').should.equal(otherModel.get('name'));
+
+            modelInstance.set('nameProxy', 'notProxied');
+            otherModel.set('name', 'proxied');
+
+            modelInstance.get('nameProxy').should.equal('notProxied');
+        });
     });
 
 

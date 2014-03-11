@@ -45,6 +45,17 @@ define(['underscore','chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSp
                 otherModel.get('name').should.equal('Jack');
 
             });
+
+            it('should clean up the listener if the model property is set to another value', function () {
+                modelInstance.set('name', new ObserverProperty('name', otherModel));
+                modelInstance.get('name').should.equal(otherModel.get('name'));
+
+                modelInstance.set('name', 'newName');
+
+                otherModel.set('name', 'shouldNotBeSet');
+
+                modelInstance.get('name').should.equal('newName');
+            });
         });
 
 

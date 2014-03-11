@@ -140,5 +140,27 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
                 modelInstance.get('propB').should.equal(5);
                 modelInstance.get('propC').should.equal(10);
             });
+
+            it('should clean up the callback method if the model property is set to something else', function () {
+                var callback = sinon.spy(function (observed) {
+                    return observed;
+                });
+
+                modelInstance = new Model({
+                    'observed': false,
+                    'test': new ComputedProperty(['observed'], callback)
+                });
+
+                callback.should.have.been.calledOnce;
+                modelInstance.get('test').should.equal(true);
+
+                modelInstance.set('test', null);
+                modelInstance.get('test').should.equal(null);
+
+                modelInstance.set('observed', false);
+
+                modelInstance.get('test').should.equal(null);
+                callback.should.have.been.calledOnce;
+            });
         });
     });
