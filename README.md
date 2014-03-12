@@ -186,8 +186,8 @@ npm install -g mocha-phantomjs phantomjs
 * kaijarayne
 * michael.fenwick
 * Travis McHattie
-* Jesse McCabe
 * Main Conf Room
+* Jesse McCabe
 
 
-_Compiled file. Do not modify directly. Created: 2014-03-12 04:09:29_
+_Compiled file. Do not modify directly. Created: 2014-03-12 04:18:19_
