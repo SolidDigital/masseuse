@@ -43,6 +43,7 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
                 rivetsOptions.prefix || options.rivetsPrefix || options.rivetPrefix;
 
             rivetsOptions = {
+                rivetsInstaUpdate : rivetsOptions.instaUpdate,
                 rivetsDelimiters : rivetsOptions.rivetsDelimiters || ['{{', '}}'],
                 rivetsPrefix : options.rivetsPrefix || 'data-rv',
                 rivetsComponents : _.extend.apply(_, rivetsOptions.rivetsComponents),
