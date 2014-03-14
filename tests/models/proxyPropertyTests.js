@@ -75,6 +75,22 @@ define(['underscore','chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSp
             modelInstance.set('nameProxy', 'DanBrown');
             otherModel.get('nestedName').subNestedName.b.should.equal('DanBrown');
         });
+
+        it('should create the property on the original proxy when the proxied property is set, ' +
+            'if the original did not exist', function() {
+            modelInstance.set('nameProxy', new ProxyProperty('nonExistingProperty', otherModel));
+            modelInstance.set('nameProxy', 'DanBrown');
+            otherModel.get('nonExistingProperty').should.equal('DanBrown');
+        });
+
+        it('should create the property on the original proxy when the nested proxied property is set, ' +
+            'if the original did not exist', function() {
+            modelInstance.set('nameProxy',
+                new ProxyProperty('nonExistingProperty.nestedNonExistingProperty', otherModel));
+
+            modelInstance.set('nameProxy', 'DanBrown');
+            otherModel.get('nonExistingProperty').nestedNonExistingProperty.should.equal('DanBrown');
+        });
     });
 
 
