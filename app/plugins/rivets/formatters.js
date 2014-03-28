@@ -2,6 +2,7 @@ define(['underscore'], function (_) {
     'use strict';
 
     return {
+        _: _formatter,
         and: and,
         booleantoenabled : booleantoenabled,
         centsToDollars: centsToDollars,
@@ -31,6 +32,10 @@ define(['underscore'], function (_) {
         withComma : withComma,
         withForwardSlash: withForwardSlash
     };
+
+    function _formatter(value, arg) {
+        return _[arg](value);
+    }
 
     function withComma(value) {
         return value + ', ';
