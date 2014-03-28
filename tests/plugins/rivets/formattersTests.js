@@ -73,6 +73,15 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
                 ]);
             });
 
+            it('_ proxies underscore methods', function() {
+                check(formatters._, [
+                    [[1,2,3], 'size', 3],
+                    [{a:1,b:2,c:3}, 'size', 3],
+                    [[1,0], 'every', false],
+                    [[1,0], 'some', true]
+                ]);
+            });
+
             it('joinWithComma joins an array with commas then spaces', function() {
                 check(formatters.joinWithComma, [
                     [[1,2,3,4,5,6,7], '1, 2, 3, 4, 5, 6, 7'],
