@@ -1,6 +1,6 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=bower)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-Version: _2.0.3_
+Version: _2.1.0_
 
 Bower pulls from the [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower) (build badge is showing results for [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower)):
 
@@ -175,7 +175,7 @@ npm install -g mocha-phantomjs phantomjs
 * 2.0.0 - 2014-03-10 - [backward incompatibilities](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/2.0.0_2014-03-10.md)
 * 2.0.1 - 2014-03-11 - [patches](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/2.0.1_2014-03-11.md)
 * 2.0.2 - 2014-03-12 - [patches](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/2.0.2_2014-03-12.md)
-* 2.0.3 - 2014-02-13 - [patches](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/2.0.3_2014-02-13.md)
+* 2.1.0 - 2014-03-28 - [features](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/2.1.0_2014-03-28.md)
 
 
 ## Contributors (`git shortlog -s -n`)
@@ -191,4 +191,4 @@ npm install -g mocha-phantomjs phantomjs
 * Jesse McCabe
 
 
-_Compiled file. Do not modify directly. Created: 2014-03-13 06:07:23_
+_Compiled file. Do not modify directly. Created: 2014-03-28 03:41:48_

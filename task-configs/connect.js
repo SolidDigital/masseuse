@@ -9,7 +9,7 @@ module.exports = function(grunt) {
     grunt.config('connect', {
         site : {
             options : {
-                port : 9001,
+                port : 9999,
                 hostname : 'localhost',
                 base : './build/',
                 middleware : function (connect, options) {
@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         },
         tests : {
             options : {
-                port : 9001,
+                port : 9999,
                 hostname : 'localhost',
                 base : './',
                 middleware : function (connect, options) {

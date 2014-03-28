@@ -3,10 +3,10 @@ module.exports = function(grunt) {
     'use strict';
     grunt.config('open', {
         reload : {
-            path : 'http://localhost:9001/'
+            path : 'http://localhost:9999/'
         },
         masseuse : {
-            path : 'http://localhost:9001/tests/'
+            path : 'http://localhost:9999/tests/'
         }
     });
 };
