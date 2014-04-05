@@ -1,6 +1,6 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=bower)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-Version: _2.1.0_
+Version: _2.1.1_
 
 Bower pulls from the [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower) (build badge is showing results for [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower)):
 
@@ -137,7 +137,6 @@ npm install -g mocha-phantomjs phantomjs
 * 1.2.0 - 2014-01-23 - [features](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/1.2.0_2014-01-23.md)
 * 1.2.1 - 2014-01-23 - [patches](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/1.2.1_2014-01-23.md)
 * 1.3.0 - 2014-01-24 - [features](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/1.3.0_2014-01-24.md)
-* 1.3.1 - 2014-01-24 - [patches](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/1.3.1_2014-01-24.md)
 * 1.3.2 - 2014-01-24 - [patches](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/1.3.2_2014-01-24.md)
 * 1.3.3 - 2014-01-28 - [patches](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/1.3.3_2014-01-28.md)
 * 1.3.4 - 2014-01-29 - [patches](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/1.3.4_2014-01-29.md)
@@ -177,6 +176,7 @@ npm install -g mocha-phantomjs phantomjs
 * 2.0.2 - 2014-03-12 - [patches](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/2.0.2_2014-03-12.md)
 * 2.0.3 - 2014-02-13 - [patches](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/2.0.3_2014-02-13.md)
 * 2.1.0 - 2014-03-28 - [features](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/2.1.0_2014-03-28.md)
+* 2.1.1 - 2014-04-05 - [patches](https://github.com/Solid-Interactive/masseuse/tree/master/release_notes/2.1.1_2014-04-05.md)
 
 
 ## Contributors (`git shortlog -s -n`)
@@ -192,4 +192,4 @@ npm install -g mocha-phantomjs phantomjs
 * Jesse McCabe
 
 
-_Compiled file. Do not modify directly. Created: 2014-03-28 03:44:31_
+_Compiled file. Do not modify directly. Created: 2014-04-05 07:41:58_
