@@ -34,8 +34,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         var template = '<div id="childView"><p data-rv-new-TestView="model"></p></div>',
                             TestView = RivetView.extend({
                                 defaultOptions : {
-                                    template : '<ul><li data-rv-text="model:name"></li></ul>',
-                                    wrapper : false
+                                    template : '<ul><li data-rv-text="model:name"></li></ul>'
                                 }
                             }),
                             options = {
@@ -62,8 +61,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             var template = '<div id="childView" data-rv-new-TestView="model:person"></div>',
                                 TestView = RivetView.extend({
                                     defaultOptions : {
-                                        template : '<ul><li data-rv-text="model:name"></li></ul>',
-                                        wrapper : false
+                                        template : '<ul><li data-rv-text="model:name"></li></ul>'
                                     }
                                 }),
                                 options = {
@@ -91,8 +89,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             $childView,
                             ViewA = RivetView.extend({
                                 defaultOptions : {
-                                    template : '<div>a</div>',
-                                    wrapper : false
+                                    template : '<div>a</div>'
                                 }
                             }),
                             ViewB = RivetView.extend({
