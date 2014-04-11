@@ -57,7 +57,12 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
                         // In this way the binder will error out, and that is more debuggable than a silent fail.
                         options.modelData = model;
                     }
-                    self.addChild(options);
+                    if (model) {
+                        // only add a child view if meaningful data is coming in
+                        // this binder will usually be called with undefined, since it is the parent level dom element
+                        // of the child view, and the child view does not have the same variables as the parent
+                        self.addChild(options);
+                    }
                 };
             });
             return binders;
