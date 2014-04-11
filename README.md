@@ -1,6 +1,6 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=bower)](https://travis-ci.org/Solid-Interactive/masseuse)
 
-<iframe src="//benschwarz.github.io/bower-badges/embed.html?pkgname=masseuse" width="160" height="32" allowtransparency="true" frameborder="0" scrolling="0">
+[![Bower version](https://badge.fury.io/bo/masseuse.svg)](http://badge.fury.io/bo/masseuse)
 
 Version: _2.1.2_
 
@@ -195,4 +195,4 @@ npm install -g mocha-phantomjs phantomjs
 * Jesse McCabe
 
 
-_Compiled file. Do not modify directly. Created: 2014-04-11 12:03:36_
+_Compiled file. Do not modify directly. Created: 2014-04-11 02:59:27_
