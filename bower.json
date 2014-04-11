@@ -3,9 +3,10 @@
   "dependencies": {
     "backbone-amd": "1.1.0",
     "jquery": "2.1.0",
-    "requirejs": "2.1.10",
+    "requirejs": "2.1.11",
     "lodash-amd": "2.4.1",
     "rivets": "0.6.7"
+
   },
   "devDependencies": {
     "mocha": "1.17.1",

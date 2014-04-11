@@ -45,7 +45,10 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
                 binders['new-' + key.toLowerCase()] = function(el, model) {
                     var options = {
                         ViewType : value,
-                        el : el
+                        el : el,
+                        rivetsConfig : {
+                            skipRoot : true
+                        }
                     };
                     if (model instanceof Backbone.Model) {
                         options.model = model;
