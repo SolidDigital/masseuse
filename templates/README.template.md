@@ -1,5 +1,7 @@
 # masseuse [![Build Status](https://travis-ci.org/Solid-Interactive/masseuse.png?branch=bower)](https://travis-ci.org/Solid-Interactive/masseuse)
 
+<iframe src="//benschwarz.github.io/bower-badges/embed.html?pkgname=masseuse" width="160" height="32" allowtransparency="true" frameborder="0" scrolling="0">
+
 Version: _<%=pkg.version%>_
 
 Bower pulls from the [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower) (build badge is showing results for [bower branch](https://github.com/Solid-Interactive/masseuse/tree/bower)):
