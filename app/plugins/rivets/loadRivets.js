@@ -4,8 +4,6 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
         'use strict';
 
         return function (optionsForRivets) {
-            var boundElement;
-
             Rivets.configure({
                 preloadData : true,
                 prefix : optionsForRivets.rivetsPrefix,

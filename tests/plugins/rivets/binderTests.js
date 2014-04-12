@@ -56,6 +56,57 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             .should.equal('<p data-rv-new-testview="model">' +
                                 '<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul></p>');
                     });
+                    it('child view template can include a text node that is riveted', function() {
+                        var template = '<div id="childView"><p data-rv-new-TestView="model"></p></div>',
+                            TestView = RivetView.extend({
+                                defaultOptions : {
+                                    template : '{{ model:name }}'
+                                }
+                            }),
+                            options = {
+                                appendTo : '#' + testDom,
+                                wrapper : false,
+                                template : template,
+                                modelData : {
+                                    name : 'Kareem Abdul Jabbar'
+                                },
+                                rivetsConfig : {
+                                    childViewBinders : {
+                                        TestView : TestView
+                                    }
+                                }
+                            };
+
+                        new RivetView(options).start();
+                        $('#childView').html()
+                            .should.equal('<p data-rv-new-testview="model">Kareem Abdul Jabbar</p>');
+                    });
+                    it('child view template can include text nodes that are riveted', function() {
+                        var template = '<div id="childView"><p data-rv-new-TestView="model"></p></div>',
+                            TestView = RivetView.extend({
+                                defaultOptions : {
+                                    template : '{{ model:name }}<p>Something</p>{{ model:name }}'
+                                }
+                            }),
+                            options = {
+                                appendTo : '#' + testDom,
+                                wrapper : false,
+                                template : template,
+                                modelData : {
+                                    name : 'Kareem Abdul Jabbar'
+                                },
+                                rivetsConfig : {
+                                    childViewBinders : {
+                                        TestView : TestView
+                                    }
+                                }
+                            };
+
+                        new RivetView(options).start();
+                        $('#childView').html()
+                            .should.equal('<p data-rv-new-testview="model">Kareem Abdul Jabbar<p>Something</p>' +
+                            'Kareem Abdul Jabbar</p>');
+                    });
                     it('if an object is passed to a binder, the object should become childView.options.modelData',
                         function() {
                             var template = '<div id="childView" data-rv-new-TestView="model:person"></div>',
