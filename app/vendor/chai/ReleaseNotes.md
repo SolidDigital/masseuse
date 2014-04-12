@@ -1,5 +1,120 @@
 # Release Notes
 
+## 1.9.1 / 2014-03-19 
+
+The following changes are required if you are upgrading from the previous version:
+
+- **Users:**
+  - Migrate configuration options to new interface. (see notes)
+- **Plugin Developers:** 
+  - No changes required
+- **Core Contributors:** 
+  - Refresh `node_modules` folder for updated dependencies. 
+
+### Configuration
+
+There have been requests for changes and additions to the configuration mechanisms
+and their impact in the Chai architecture. As such, we have decoupled the 
+configuration from the `Assertion` constructor. This not only allows for centralized
+configuration, but will allow us to shift the responsibility from the `Assertion` 
+constructor to the `assert` interface in future releases.
+
+These changes have been implemented in a non-breaking way, but a depretiation
+warning will be presented to users until they migrate. The old config method will 
+be removed in either `v1.11.0` or `v2.0.0`, whichever comes first.
+
+#### Quick Migration
+
+```js
+// change this:
+chai.Assertion.includeStack = true;
+chai.Assertion.showDiff = false;
+
+// ... to this:
+chai.config.includeStack = true;
+chai.config.showDiff = false;
+```
+
+#### All Config Options
+
+##### config.includeStack
+
+- **@param** _{Boolean}_
+- **@default** `false`
+
+User configurable property, influences whether stack trace is included in 
+Assertion error message. Default of `false` suppresses stack trace in the error 
+message.
+
+##### config.showDiff
+
+- **@param** _{Boolean}_
+- **@default** `true`
+
+User configurable property, influences whether or not the `showDiff` flag 
+should be included in the thrown AssertionErrors. `false` will always be `false`; 
+`true` will be true when the assertion has requested a diff be shown.
+
+##### config.truncateThreshold **(NEW)**
+
+- **@param** _{Number}_
+- **@default** `40`
+
+User configurable property, sets length threshold for actual and expected values 
+in assertion errors. If this threshold is exceeded, the value is truncated.
+
+Set it to zero if you want to disable truncating altogether.
+
+```js
+chai.config.truncateThreshold = 0; // disable truncating
+```
+
+### Community Contributions
+
+- [#228](https://github.com/chaijs/chai/pull/228) Deep equality check for memebers. [@duncanbeevers](https://github.com/duncanbeevers)
+- [#247](https://github.com/chaijs/chai/pull/247) Proofreading. [@didorellano](https://github.com/didoarellano)
+- [#244](https://github.com/chaijs/chai/pull/244) Fix `contain`/`include` 1.9.0 regression. [@leider](https://github.com/leider)
+- [#233](https://github.com/chaijs/chai/pull/233) Improvements to `ssfi` for `assert` interface. [@refack](https://github.com/refack)
+- [#251](https://github.com/chaijs/chai/pull/251) New config option: object display threshold. [@romario333](https://github.com/romario333)
+
+Thank you to all who took time to contribute!
+
+### Other Bug Fixes
+
+- [#183](https://github.com/chaijs/chai/issues/183) Allow `undefined` for actual. (internal api)
+- Update Karam(+plugins)/Istanbul to most recent versions.
+
+## 1.9.0 / 2014-01-29 
+
+The following changes are required if you are upgrading from the previous version:
+
+- **Users:**
+  - No changes required
+- **Plugin Developers:** 
+  - Review [#219](https://github.com/chaijs/chai/pull/219).
+- **Core Contributors:** 
+  - Refresh `node_modules` folder for updated dependencies. 
+
+### Community Contributions
+
+- [#202](https://github.com/chaijs/chai/pull/201) Improve error message for .throw(). [@andreineculau](https://github.com/andreineculau)
+- [#217](https://github.com/chaijs/chai/pull/217) Chai tests can be run with `--watch`. [@demands](https://github.com/demands)
+- [#219](https://github.com/chaijs/chai/pull/219) Add overwriteChainableMethod utility. [@demands](https://github.com/demands)
+- [#224](https://github.com/chaijs/chai/pull/224) Return error on throw method to chain on error properties. [@vbardales](https://github.com/vbardales)
+- [#226](https://github.com/chaijs/chai/pull/226) Add `has` to language chains. [@duncanbeevers](https://github.com/duncanbeevers)
+- [#230](https://github.com/chaijs/chai/pull/230) Support `{a:1,b:2}.should.include({a:1})` [@jkroso](https://github.com/jkroso)
+- [#231](https://github.com/chaijs/chai/pull/231) Update Copyright notices to 2014 [@duncanbeevers](https://github.com/duncanbeevers)
+- [#232](https://github.com/chaijs/chai/pull/232) Avoid error instantiation if possible on assert.throws. [@laconbass](https://github.com/laconbass)
+
+Thank you to all who took time to contribute!
+
+### Other Bug Fixes
+
+- [#225](https://github.com/chaijs/chai/pull/225) Improved AMD wrapper provided by upstream `component(1)`.
+- [#185](https://github.com/chaijs/chai/issues/185) `assert.throws()` returns thrown error for further assertions.
+- [#237](https://github.com/chaijs/chai/pull/237) Remove coveralls/jscoverage, include istanbul coverage report in travis test.
+- Update Karma and Sauce runner versions for consistent CI results. No more karma@canary.
+
 ## 1.8.1 / 2013-10-10 
 
 The following changes are required if you are upgrading from the previous version:

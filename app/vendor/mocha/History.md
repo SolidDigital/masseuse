@@ -1,3 +1,19 @@
+1.18.2 / 2014-03-18
+==================
+
+  * fix: html runner was prevented from using #mocha as the default root el (#1162)
+
+1.18.1 / 2014-03-18
+==================
+
+  * fix: named before/after hooks in bdd, tdd, qunit interfaces (#1161)
+
+1.18.0 / 2014-03-13
+==================
+
+  * add: promise support (#329)
+  * add: named before/after hooks (#966)
+
 1.17.1 / 2014-01-22
 ==================
 

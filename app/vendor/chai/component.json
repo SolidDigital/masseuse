@@ -1,7 +1,7 @@
 {
     "name": "chai"
   , "repo": "chaijs/chai"
-  , "version": "1.8.1"
+  , "version": "1.9.1"
   , "description": "BDD/TDD assertion library for node.js and the browser. Test framework agnostic."
   , "license": "MIT"
   , "keywords": [
@@ -16,6 +16,7 @@
         "index.js"
       , "lib/chai.js"
       , "lib/chai/assertion.js"
+      , "lib/chai/config.js"
       , "lib/chai/core/assertions.js"
       , "lib/chai/interface/assert.js"
       , "lib/chai/interface/expect.js"
@@ -35,6 +36,7 @@
       , "lib/chai/utils/objDisplay.js"
       , "lib/chai/utils/overwriteMethod.js"
       , "lib/chai/utils/overwriteProperty.js"
+      , "lib/chai/utils/overwriteChainableMethod.js"
       , "lib/chai/utils/test.js"
       , "lib/chai/utils/transferFlags.js"
       , "lib/chai/utils/type.js"

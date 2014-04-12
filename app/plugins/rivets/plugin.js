@@ -10,7 +10,7 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
          */
         function setViewRiveting (options) {
             var rivetsOptions,
-                rivetedView;
+                rivetedViews;
 
             if (false === options.rivetsConfig || false === options.rivetConfig) {
                 return;
@@ -50,16 +50,19 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
                 rivetsFormatters : _.extend.apply(_, rivetsOptions.rivetsFormatters),
                 rivetsAdapters : _.extend.apply(_, rivetsOptions.rivetsAdapters),
                 rivetsBinders : _.extend.apply(_, rivetsOptions.rivetsBinders),
-                childViewBinders : rivetsOptions.childViewBinders
+                childViewBinders : rivetsOptions.childViewBinders,
+                skipRoot : rivetsOptions.skipRoot || options._rivetsSkipRoot
             };
 
             this.listenTo(this, 'afterTemplatingDone', function() {
-                rivetedView = rivetView.call(this, rivetsOptions);
+                rivetedViews = rivetView.call(this, rivetsOptions);
             });
 
             this.listenTo(this, 'onRemove', function () {
-                if (rivetedView) {
-                    rivetedView.unbind();
+                if (rivetedViews) {
+                    _.each(rivetedViews, function(view) {
+                        view.unbind();
+                    });
                 }
             });
         }

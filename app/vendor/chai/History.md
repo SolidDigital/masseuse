@@ -1,4 +1,70 @@
 
+1.9.1 / 2014-03-19 
+==================
+
+  * deps update
+  * util: [getActual] select actual logic now allows undefined for actual. Closes #183
+  * docs: [config] make public, express param type
+  * Merge pull request #251 from romario333/threshold3
+  * Fix issue #166 - configurable threshold in objDisplay.
+  * Move configuration options to config.js.
+  * Merge pull request #233 from Empeeric/master
+  * Merge pull request #244 from leider/fix_for_contains
+  * Merge pull request #247 from didoarellano/typo-fixes
+  * Fix typos
+  * Merge pull request #245 from lfac-pt/patch-1
+  * Update `exports.version` to 1.9.0
+  * aborting loop on finding
+  * declaring variable only once
+  * additional test finds incomplete implementation
+  * simplified code
+  * fixing #239 (without changing chai.js)
+  * ssfi as it should be
+  * Merge pull request #228 from duncanbeevers/deep_members
+  * Deep equality check for collection membership
+
+1.9.0 / 2014-01-29 
+==================
+
+  * docs: add contributing.md #238
+  * assert: .throws() returns thrown error. Closes #185
+  * Merge pull request #232 from laconbass/assert-throws
+  * assert: .fail() parameter mismatch. Closes #206
+  * Merge branch 'karma-fixes'
+  * Add karma phantomjs launcher
+  * Use latest karma and sauce launcher
+  * Karma tweaks
+  * Merge pull request #230 from jkroso/include
+  * Merge pull request #237 from chaijs/coverage
+  * Add coverage to npmignore
+  * Remove lib-cov from test-travisci dependents
+  * Remove the not longer needed lcov reporter
+  * Test coverage with istanbul
+  * Remove jscoverage
+  * Remove coveralls
+  * Merge pull request #226 from duncanbeevers/add_has
+  * Avoid error instantiation if possible on assert.throws
+  * Merge pull request #231 from duncanbeevers/update_copyright_year
+  * Update Copyright notices to 2014
+  * handle negation correctly
+  * add failing test case
+  * support `{a:1,b:2}.should.include({a:1})`
+  * Merge pull request #224 from vbardales/master
+  * Add `has` to language chains
+  * Merge pull request #219 from demands/overwrite_chainable
+  * return error on throw method to chain on error properties, possibly different from message
+  * util: store chainable behavior in a __methods object on ctx
+  * util: code style fix
+  * util: add overwriteChainableMethod utility (for #215)
+  * Merge pull request #217 from demands/test_cleanup
+  * test: make it possible to run utilities tests with --watch
+  * makefile: change location of karma-runner bin script
+  * Merge pull request #202 from andreineculau/patch-2
+  * test: add tests for throwing custom errors
+  * Merge pull request #201 from andreineculau/patch-1
+  * test: updated for the new assertion errors
+  * core: improve message for assertion errors (throw assertion)
+
 1.8.1 / 2013-10-10 
 ==================
 
