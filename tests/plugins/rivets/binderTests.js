@@ -56,6 +56,57 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             .should.equal('<p data-rv-new-testview="model">' +
                                 '<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul></p>');
                     });
+                    it('child view template can include a text node that is riveted', function() {
+                        var template = '<div id="childView"><p data-rv-new-TestView="model"></p></div>',
+                            TestView = RivetView.extend({
+                                defaultOptions : {
+                                    template : '{{ model:name }}'
+                                }
+                            }),
+                            options = {
+                                appendTo : '#' + testDom,
+                                wrapper : false,
+                                template : template,
+                                modelData : {
+                                    name : 'Kareem Abdul Jabbar'
+                                },
+                                rivetsConfig : {
+                                    childViewBinders : {
+                                        TestView : TestView
+                                    }
+                                }
+                            };
+
+                        new RivetView(options).start();
+                        $('#childView').html()
+                            .should.equal('<p data-rv-new-testview="model">Kareem Abdul Jabbar</p>');
+                    });
+                    it('child view template can include text nodes that are riveted', function() {
+                        var template = '<div id="childView"><p data-rv-new-TestView="model"></p></div>',
+                            TestView = RivetView.extend({
+                                defaultOptions : {
+                                    template : '{{ model:name }}<p>Something</p>{{ model:name }}'
+                                }
+                            }),
+                            options = {
+                                appendTo : '#' + testDom,
+                                wrapper : false,
+                                template : template,
+                                modelData : {
+                                    name : 'Kareem Abdul Jabbar'
+                                },
+                                rivetsConfig : {
+                                    childViewBinders : {
+                                        TestView : TestView
+                                    }
+                                }
+                            };
+
+                        new RivetView(options).start();
+                        $('#childView').html()
+                            .should.equal('<p data-rv-new-testview="model">Kareem Abdul Jabbar<p>Something</p>' +
+                            'Kareem Abdul Jabbar</p>');
+                    });
                     it('if an object is passed to a binder, the object should become childView.options.modelData',
                         function() {
                             var template = '<div id="childView" data-rv-new-TestView="model:person"></div>',
@@ -84,27 +135,32 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             $('#childView').html()
                                 .should.equal('<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul>');
                         });
-                    it('use of a factory is possible as a childViewBinder value', function() {
+                    describe('use of a factory', function() {
                         var parentView,
                             $childView,
+                            ViewA,
+                            ViewB,
+                            options;
+
+                        beforeEach(function() {
                             ViewA = RivetView.extend({
                                 defaultOptions : {
                                     template : '<div>a</div>'
                                 }
-                            }),
+                            });
                             ViewB = RivetView.extend({
                                 defaultOptions : {
                                     template :'<div>b</div>',
                                     wrapper : false
                                 }
-                            }),
+                            });
                             options = {
                                 appendTo : '#' + testDom,
                                 wrapper : false,
                                 template :
-                                    '<ul id="childView">' +
-                                        '<li data-rv-each-view="model:views" data-rv-new-ab-factory="view"></li>' +
-                                    '</ul>',
+                                '<ul id="childView">' +
+                                '<li data-rv-each-view="model:views" data-rv-new-ab-factory="view"></li>' +
+                                '</ul>',
                                 modelData : {
                                     views : [
                                         {type : 'a'},{type: 'b'}
@@ -113,6 +169,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                 rivetsConfig : {
                                     childViewBinders : {
                                         'ab-factory' : function(options) {
+                                            window.console.log('+');
                                             switch (options.modelData.type) {
                                             case 'a':
                                                 return new ViewA(options);
@@ -125,14 +182,24 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                     }
                                 }
                             };
+                        });
+                        it('the factory should be called once per child view binder', function() {
+                            var factorySpy = sinon.spy(options.rivetsConfig.childViewBinders, 'ab-factory');
+                            factorySpy.should.not.have.been.called;
+                            parentView = new RivetView(options);
+                            parentView.start();
+                            factorySpy.should.have.been.calledTwice;
+                        });
+                        it('is possible as a childViewBinder value', function() {
+                            parentView = new RivetView(options);
+                            parentView.start();
+                            $childView = $('#childView');
+                            $childView.find('li:eq(0)').text().should.equal('a');
+                            $childView.find('li:eq(1)').text().should.equal('b');
+                            (parentView.children[0] instanceof ViewA).should.be.true;
+                            (parentView.children[1] instanceof ViewB).should.be.true;
+                        });
 
-                        parentView = new RivetView(options);
-                        parentView.start();
-                        $childView = $('#childView');
-                        $childView.find('li:eq(0)').text().should.equal('a');
-                        $childView.find('li:eq(1)').text().should.equal('b');
-                        (parentView.children[0] instanceof ViewA).should.be.true;
-                        (parentView.children[1] instanceof ViewB).should.be.true;
                     });
                 });
             });

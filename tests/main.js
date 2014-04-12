@@ -11,6 +11,10 @@
             sinon : {
                 exports : 'sinon'
             },
+            sinonCall : {
+                deps : ['sinon'],
+                exports : 'sinonCall'
+            },
             sinonSpy : {
                 deps : ['sinonCall'],
                 exports : 'sinonSpy'

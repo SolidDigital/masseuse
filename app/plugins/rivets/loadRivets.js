@@ -4,7 +4,6 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
         'use strict';
 
         return function (optionsForRivets) {
-
             Rivets.configure({
                 preloadData : true,
                 prefix : optionsForRivets.rivetsPrefix,
@@ -30,12 +29,31 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
             _.extend(Rivets.adapters, optionsForRivets.rivetsAdapters);
             _.extend(Rivets.binders, optionsForRivets.rivetsBinders,
                 _createBinders.call(this, optionsForRivets.childViewBinders));
-            return Rivets.bind(this.$el, {
-                model : this.model,
-                view : this,
-                collection: this.collection
-            });
+
+            return _getBoundViews.call(this, optionsForRivets);
         };
+
+        function _getBoundViews(optionsForRivets) {
+            var boundViews = [],
+                self = this;
+
+            if (optionsForRivets.skipRoot) {
+                _.each(this.$el.contents(), function(element) {
+                    boundViews.push(Rivets.bind($(element), {
+                        model : self.model,
+                        view : self,
+                        collection: self.collection
+                    }));
+                });
+            } else {
+                boundViews.push(Rivets.bind(this.$el, {
+                    model : this.model,
+                    view : this,
+                    collection: this.collection
+                }));
+            }
+            return boundViews;
+        }
 
         function _createBinders(childViewBinders) {
             var self = this,
@@ -45,7 +63,8 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
                 binders['new-' + key.toLowerCase()] = function(el, model) {
                     var options = {
                         ViewType : value,
-                        el : el
+                        el : el,
+                        _rivetsSkipRoot : true
                     };
                     if (model instanceof Backbone.Model) {
                         options.model = model;
@@ -54,12 +73,7 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
                         // In this way the binder will error out, and that is more debuggable than a silent fail.
                         options.modelData = model;
                     }
-                    if (model) {
-                        // only add a child view if meaningful data is coming in
-                        // this binder will usually be called with undefined, since it is the parent level dom element
-                        // of the child view, and the child view does not have the same variables as the parent
-                        self.addChild(options);
-                    }
+                    self.addChild(options);
                 };
             });
             return binders;
