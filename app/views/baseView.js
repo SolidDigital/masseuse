@@ -1,4 +1,3 @@
-/*global define:false*/
 define([
     'jquery', 'backbone', 'underscore', '../utilities/channels', './viewContext', './lifeCycle',
     '../utilities/accessors', '../utilities/createOptions', '../models/masseuseModel', '../models/proxyProperty',

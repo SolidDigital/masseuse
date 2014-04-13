@@ -24,21 +24,7 @@ define(['chai', 'mocha', 'sinonChai'],
     describe('Masseuse Router', function () {
 
         describe('before routing', function () {
-
-            xit('runs the route method immediately, if `beforeRouting` is not defined', function () {
-            });
-
-            xit('runs the `beforeRouting` method before running the router method', function () {
-            });
-
-            xit('does not run the router method if `beforeRouting` fails', function () {
-            });
-
-            xit('calls the `onRouteFail` method if `beforeRouting` fails', function () {
-            });
-
-            xit('does not run `beforeRouting` if the route is included in `excludeFromBeforeRouting`', function () {
-            });
+            // TODO: implement router tests
         });
     });
 });
