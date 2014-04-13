@@ -52,6 +52,7 @@
 
     require([
         'mocha',
+        './package/packageTests',
         './views/baseViewTests',
         './views/lifeCycleTests',
         './views/viewContextTests',
@@ -59,6 +60,7 @@
         './models/computedPropertyTests',
         './models/proxyPropertyTests',
         './models/observerPropertyTests',
+        './collections/masseuseCollectionTests',
         './plugins/rivets/viewTests',
         './plugins/rivets/rivetsBackBoneCollectionsTests',
         './plugins/rivets/collectionWithMasseuseModelsTests',

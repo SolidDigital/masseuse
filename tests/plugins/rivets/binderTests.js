@@ -30,31 +30,90 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 });
 
                 describe('Binders should be present for Views passed in with "childViewBinder"', function() {
-                    it('if a model is passed to a binder, the model should become childView.model', function() {
-                        var template = '<div id="childView"><p data-rv-new-TestView="model"></p></div>',
+                    describe('passing data in', function() {
+                        var TestView,
+                            options;
+                        beforeEach(function() {
                             TestView = RivetView.extend({
                                 defaultOptions : {
                                     template : '<ul><li data-rv-text="model:name"></li></ul>'
                                 }
-                            }),
+                            });
                             options = {
                                 appendTo : '#' + testDom,
                                 wrapper : false,
-                                template : template,
-                                modelData : {
-                                    name : 'Kareem Abdul Jabbar'
-                                },
                                 rivetsConfig : {
                                     childViewBinders : {
                                         TestView : TestView
                                     }
                                 }
                             };
+                        });
+                        it('if a model is passed to a binder, the model should become childView.model', function() {
+                            var template = '<div id="childView"><p data-rv-new-TestView="model"></p></div>';
 
-                        new RivetView(options).start();
-                        $('#childView').html()
-                            .should.equal('<p data-rv-new-testview="model">' +
+                            options = _.extend(options, {
+                                template : template,
+                                modelData : {
+                                    name : 'Kareem Abdul Jabbar'
+                                }
+                            });
+
+                            new RivetView(options).start();
+                            $('#childView').html()
+                                .should.equal('<p data-rv-new-testview="model">' +
                                 '<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul></p>');
+                        });
+                        it('if a collection is passed to a binder, the collection should become childView.collection',
+                            function() {
+                                var template = '<div id="childView" data-rv-new-CollectionView="model:someCollection">'+
+                                        '</div>',
+                                    CollectionView = TestView.extend({
+                                        defaultOptions : {
+                                            template : '<ul><li data-rv-each-person="collection:" ' +
+                                                'data-rv-text="person:name"></li></ul>'
+                                        }
+                                    });
+
+                                options = _.extend(options, {
+                                    template : template,
+                                    modelData : {
+                                        someCollection : new masseuse.Collection([
+                                            {
+                                                name : 'Kareem Abdul Jabbar'
+                                            },
+                                            {
+                                                name : 'Ada Lovelace'
+                                            }
+                                        ])
+                                    },
+                                    rivetsConfig : {
+                                        childViewBinders : {
+                                            CollectionView : CollectionView
+                                        }
+                                    }
+                                });
+
+                                new RivetView(options).start();
+                                $('#childView').text()
+                                    .should.equal('Kareem Abdul JabbarAda Lovelace');
+                            });
+                        it('if an object is passed to a binder, the object should become childView.options.modelData',
+                            function() {
+                                var template = '<div id="childView" data-rv-new-TestView="model:person"></div>';
+                                options = _.extend(options, {
+                                    template : template,
+                                    modelData : {
+                                        person : {
+                                            name : 'Kareem Abdul Jabbar'
+                                        }
+                                    }
+                                });
+
+                                new RivetView(options).start();
+                                $('#childView').html()
+                                    .should.equal('<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul>');
+                            });
                     });
                     it('child view template can include a text node that is riveted', function() {
                         var template = '<div id="childView"><p data-rv-new-TestView="model"></p></div>',
@@ -107,34 +166,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             .should.equal('<p data-rv-new-testview="model">Kareem Abdul Jabbar<p>Something</p>' +
                             'Kareem Abdul Jabbar</p>');
                     });
-                    it('if an object is passed to a binder, the object should become childView.options.modelData',
-                        function() {
-                            var template = '<div id="childView" data-rv-new-TestView="model:person"></div>',
-                                TestView = RivetView.extend({
-                                    defaultOptions : {
-                                        template : '<ul><li data-rv-text="model:name"></li></ul>'
-                                    }
-                                }),
-                                options = {
-                                    appendTo : '#' + testDom,
-                                    wrapper : false,
-                                    template : template,
-                                    modelData : {
-                                        person : {
-                                            name : 'Kareem Abdul Jabbar'
-                                        }
-                                    },
-                                    rivetsConfig : {
-                                        childViewBinders : {
-                                            TestView : TestView
-                                        }
-                                    }
-                                };
-
-                            new RivetView(options).start();
-                            $('#childView').html()
-                                .should.equal('<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul>');
-                        });
                     describe('use of a factory', function() {
                         var parentView,
                             $childView,
@@ -208,8 +239,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     $testDom = $('<div id="' + testDom + '"></div>');
                     $body.append($testDom);
                     templateWithAttribute = '<span id="testHere" data-rv-editable="model:name" contenteditable="true">' +
-                        '</span>',
-                    templateWithoutAttribute = '<span id="testHere" data-rv-editable="model:name"></span>',
+                        '</span>';
+                    templateWithoutAttribute = '<span id="testHere" data-rv-editable="model:name"></span>';
                     options = {
                         appendTo : '#' + testDom,
                         wrapper : false,

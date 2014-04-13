@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, masseuse) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'backbone', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse, Backbone) {
 
         'use strict';
         var VIEW1_NAME = 'testView1',
@@ -27,6 +27,10 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 viewInstance = new BaseView({
                     name : VIEW1_NAME
                 });
+            });
+
+            it('is an instance of Backbone.View', function() {
+                new masseuse.View().should.be.instanceOf(Backbone.View);
             });
 
             describe('initialize', function() {
