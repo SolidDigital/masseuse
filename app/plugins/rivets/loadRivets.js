@@ -68,6 +68,8 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
                     };
                     if (model instanceof Backbone.Model) {
                         options.model = model;
+                    } else if (model instanceof Backbone.Collection) {
+                        options.collection = model;
                     } else {
                         // No error handling for if model is not an object.
                         // In this way the binder will error out, and that is more debuggable than a silent fail.
