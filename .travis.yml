@@ -5,4 +5,5 @@ before_script:
 - npm install -g grunt-cli bower phantomjs mocha-phantomjs
 env:
   global:
-    secure: sBGJsyYduFIfFJtw9wSsHONEd8ZkPB8ViRJI4Xhep3uDVCY/wL2hBpO+fq/gx5Uafed0bMJvdWnEDeHU4GcAdRXblIxyjfHc1iJODtUtSihMqys3IOdQb5FdYZSs7r09T95fRNIn+kHSf0FUCmGHKh6EoZ219E/x7+f/AkaSnJQ=
+  - secure: sBGJsyYduFIfFJtw9wSsHONEd8ZkPB8ViRJI4Xhep3uDVCY/wL2hBpO+fq/gx5Uafed0bMJvdWnEDeHU4GcAdRXblIxyjfHc1iJODtUtSihMqys3IOdQb5FdYZSs7r09T95fRNIn+kHSf0FUCmGHKh6EoZ219E/x7+f/AkaSnJQ=
+  - secure: iibe885PpU96i9daRZ7wEEQbvKs10rJ8iaksc/1XKR99qpjXnKuShrPyt7BLHTFfytQFxcNoUPT96+9g0TYfq7TSbklPsgw13EyM6EqQw59Ht6a4+PGOWn1BL7OlXRw9kVjHknL2ACfhO+wgZQj/b1FU1yVpqsZo9/nPWIfdL+w=
