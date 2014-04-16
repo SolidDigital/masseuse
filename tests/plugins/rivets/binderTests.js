@@ -200,7 +200,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                 rivetsConfig : {
                                     childViewBinders : {
                                         'ab-factory' : function(options) {
-                                            window.console.log('+');
                                             switch (options.modelData.type) {
                                             case 'a':
                                                 return new ViewA(options);

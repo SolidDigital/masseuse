@@ -3,7 +3,8 @@ define(['backbone'], function (Backbone) {
     'use strict';
     return {
         getProperty : getProperty,
-        setProperty : setProperty
+        setProperty : setProperty,
+        unsetProperty : unsetProperty
     };
 
     /**
@@ -42,6 +43,21 @@ define(['backbone'], function (Backbone) {
         }
     }
 
+    function unsetProperty (obj, parts) {
+        var part;
+
+        if (typeof parts === 'string') {
+            parts = parts.split('.');
+        }
+
+        part = parts.pop();
+        obj = this.getProperty(obj, parts, true);
+        if (obj && typeof obj === 'object') {
+            unsetModelProperty(obj, part);
+            return obj;
+        }
+    }
+
     function getModelProperty(model, keypath) {
         if (model instanceof Backbone.Model) {
             return model.get(keypath);
@@ -58,6 +74,14 @@ define(['backbone'], function (Backbone) {
             }
         } else {
             model[keypath] = value;
+        }
+    }
+
+    function unsetModelProperty(model, keypath) {
+        if (model instanceof Backbone.Model) {
+            model.unset(keypath);
+        } else {
+            delete model[keypath];
         }
     }
 });

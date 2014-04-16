@@ -29,6 +29,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
             toggleAttribute : toggleAttribute,
             get : get,
             set : set,
+            unset : unset,
             bindComputed : bindComputed,
             bindProxy : bindProxy,
             bindObserver : bindObserver,
@@ -141,12 +142,21 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                 }
                 if (_.isString(key) && key.indexOf('.') > 0) {
                     propertyOn = key.slice(key.indexOf('.') + 1);
-                    key = key.split('.')[0];
+                    key = key.split('.');
+                    key = key[0];
 
                     wholeObj = this.get(key) || {};
+
                     // This is a hack to have the change event fire exactly once without having to clone wholeObj
                     this.set(key, {}, {silent:true});
-                    accessors.setProperty(wholeObj, propertyOn, val);
+
+                    if (options && options.unset) {
+                        accessors.unsetProperty(wholeObj, propertyOn);
+                        options.unset = false;
+                    } else {
+                        accessors.setProperty(wholeObj, propertyOn, val);
+                    }
+
                     val = wholeObj;
                 }
                 attrs[key] = val;
@@ -179,6 +189,10 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                     cb();
                 });
             }
+        }
+
+        function unset(attr, options) {
+            return this.set(attr, void 0, _.extend({}, options, {unset: true}));
         }
 
         /**
