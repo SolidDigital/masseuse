@@ -142,8 +142,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                 }
                 if (_.isString(key) && key.indexOf('.') > 0) {
                     propertyOn = key.slice(key.indexOf('.') + 1);
-                    key = key.split('.');
-                    key = key[0];
+                    key = key.split('.')[0];
 
                     wholeObj = this.get(key) || {};
 
