@@ -1,5 +1,8 @@
 language: node_js
 node_js:
-  - "0.10"
+- '0.10'
 before_script:
-  - npm install -g grunt-cli bower phantomjs mocha-phantomjs
+- npm install -g grunt-cli bower phantomjs mocha-phantomjs
+env:
+  global:
+    secure: sBGJsyYduFIfFJtw9wSsHONEd8ZkPB8ViRJI4Xhep3uDVCY/wL2hBpO+fq/gx5Uafed0bMJvdWnEDeHU4GcAdRXblIxyjfHc1iJODtUtSihMqys3IOdQb5FdYZSs7r09T95fRNIn+kHSf0FUCmGHKh6EoZ219E/x7+f/AkaSnJQ=
