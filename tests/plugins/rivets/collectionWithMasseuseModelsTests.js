@@ -23,7 +23,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 $body.append($testDom);
                 template = '<ul id="testHere">' +
                     '<li data-rv-each-field="collection:" data-rv-text="field:name"></li></ul>',
-                masseuseModel = masseuse.MasseuseModel.extend({
+                masseuseModel = masseuse.Model.extend({
                     defaults : {}
                 }),
                 modelsCollection = [

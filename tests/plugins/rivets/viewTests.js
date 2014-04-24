@@ -8,7 +8,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
             riveted = 'riveted',
             $body = $('body'),
             RivetView = masseuse.plugins.rivets.RivetsView,
-            Model = masseuse.MasseuseModel,
+            Model = masseuse.Model,
             should = chai.should();
 
         chai.use(sinonChai);

@@ -22,7 +22,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'backbone', 'masseu
             beforeEach(function () {
                 ComputedProperty = masseuse.ComputedProperty;
                 ProxyProperty = masseuse.ProxyProperty;
-                Model = masseuse.MasseuseModel;
+                Model = masseuse.Model;
                 modelInstance = new Model();
             });
 
