@@ -98,19 +98,30 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'backbone', 'masseu
                         should.not.exist(modelInstance.attributes.nestedProperty.title);
 
                     });
-                    it('should fire a change event on the top level property when setting a nested attribute',
-                        function () {
-                            var listener = _.extend({}, Backbone.Events),
-                                callback = sinon.spy();
+                    describe('change events', function() {
+                        // test for model.changed
 
-                            modelInstance.set('nestedName.name', 'PapaEmeritus');
+                        // Trigger all relevant attribute changes.
+//                        if (!silent) {
+//                            if (changes.length) this._pending = true;
+//                            for (var i = 0, l = changes.length; i < l; i++) {
+//                                this.trigger('change:' + changes[i], this, current[changes[i]], options);
+//                            }
+//                        }
+                        it('should fire a change event on the top level property when setting a nested attribute',
+                            function () {
+                                var listener = _.extend({}, Backbone.Events),
+                                    callback = sinon.spy();
 
-                            listener.listenTo(modelInstance, 'change:nestedName', callback);
+                                modelInstance.set('nestedName.name', 'PapaEmeritus');
 
-                            modelInstance.set('nestedName.name', 'PopeGandolfi');
+                                listener.listenTo(modelInstance, 'change:nestedName', callback);
 
-                            callback.should.have.been.calledOnce;
-                        });
+                                modelInstance.set('nestedName.name', 'PopeGandolfi');
+
+                                callback.should.have.been.calledOnce;
+                            });
+                    });
                 });
 
                 describe('(getting nested fields)', function () {
@@ -176,21 +187,32 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'backbone', 'masseu
                     nestedModel = new Model();
                     modelInstance.set('nested', nestedModel);
                 });
-                it('changing a value on a nested model should trigger a change event on the parent model',
-                    function (done) {
-                        modelInstance.on('change', done.bind(null, undefined));
-                        nestedModel.set('test', 'test');
+                describe('change events', function() {
+                    // Should trigger with the model, the new attribute value, and in options
+                    it('changing a value on a nested model should trigger a change event on the parent model',
+                        function (done) {
+                            modelInstance.on('change:nested', function(model, value, options) {
+                                model.should.equal(modelInstance);
+                                value.should.equal(nestedModel);
+                                options.should.deep.equal({});
+                                done();
+                            });
+                            nestedModel.set('test', 'test');
 
-                    });
-                it('changing a value on a deeply nested model should trigger a change event on the parent model',
-                    function (done) {
-                        var deepModel = new Model();
-                        modelInstance.set('nestedModel.one.two', deepModel);
-                        modelInstance.get('nestedModel.one.two').should.equal(deepModel);
-                        modelInstance.set('nestedModel.one.two.three.four', deepModel);
-                        modelInstance.on('change', _.once(done.bind(null, undefined)));
-                        deepModel.set('boom', 'shakalaka');
-                    });
+                        });
+                    it('changing a value on a deeply nested model should trigger a change event on the parent model',
+                        function (done) {
+                            var deepModel = new Model();
+                            modelInstance.set('nestedModel.one.two', deepModel);
+                            modelInstance.get('nestedModel.one.two').should.equal(deepModel);
+                            modelInstance.set('nestedModel.one.two.three.four', deepModel);
+                            modelInstance.on('change', function() {
+                                window.console.log(arguments);
+                            });
+                            modelInstance.on('change', _.once(done.bind(null, undefined)));
+                            deepModel.set('boom', 'shakalaka');
+                        });
+                });
             });
         });
     });
