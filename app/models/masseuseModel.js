@@ -130,6 +130,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                     } else if (attrValue instanceof Backbone.Model) {
                         self.listenTo(attrValue, 'change', function() {
                             self.trigger('change:' + attrKey, self, self.get(attrKey), options);
+                            self.trigger('change', self, options);
                         });
                     } else {
                         listenToNestedModels(attrValue, self, 0);
@@ -143,7 +144,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                 if (val instanceof Backbone.Model) {
                     self.listenTo(val, 'change', function() {
                         self.trigger('change:' + key, self, self.get(key), options);
-                        self.trigger('change',this,options);
+                        self.trigger('change', self, options);
                     });
                 }
                 if (_.isString(key) && key.indexOf('.') > 0) {
