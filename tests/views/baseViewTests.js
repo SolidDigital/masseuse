@@ -22,7 +22,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 methodSpy;
 
             beforeEach(function () {
-                BaseView = masseuse.BaseView;
+                BaseView = masseuse.View;
                 RivetsView = masseuse.plugins.rivets.RivetsView;
                 viewInstance = new BaseView({
                     name : VIEW1_NAME
@@ -685,7 +685,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     ViewContext,
                     model;
                 beforeEach(function() {
-                    MasseuseModel = masseuse.MasseuseModel;
+                    MasseuseModel = masseuse.Model;
                     ProxyProperty = masseuse.ProxyProperty;
                     ViewContext = masseuse.ViewContext;
                     model = new MasseuseModel({
@@ -717,7 +717,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 var view;
 
                 beforeEach(function (done) {
-                    view = new masseuse.BaseView({
+                    view = new masseuse.View({
                         tagName: 'div',
                         template: '<div id="el"><div id="test1"></div><div id="test2"></div></div>'
                     });

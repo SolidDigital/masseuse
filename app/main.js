@@ -39,12 +39,12 @@ define([
 
         // Old fields : @deprecated
         // TODO: remove these and bump major version
-        BaseView : BaseView,
-        MasseuseModel : MasseuseModel,
-        MasseuseRouter : MasseuseRouter,
-        utilities : {
-            channels : channels
-        },
+//        BaseView : BaseView,
+//        MasseuseModel : MasseuseModel,
+//        MasseuseRouter : MasseuseRouter,
+//        utilities : {
+//            channels : channels
+//        },
         // TODO: move this out of this package, so this can be optimized w/o RivetsView
         plugins : {
             rivets : {

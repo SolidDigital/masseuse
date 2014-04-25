@@ -7,6 +7,7 @@ define(['underscore'], function (_) {
         booleantoenabled : booleantoenabled,
         centsToDollars: centsToDollars,
         asDollars : asDollars,
+        decrement : decrement,
         equals: equals,
         existsOr: existsOr,
         humanize: {
@@ -14,6 +15,7 @@ define(['underscore'], function (_) {
             publish : publish
         },
         includes: includes,
+        increment : increment,
         joinWithComma: joinWithComma,
         jsonAsString: jsonAsString,
         limit: limit,
@@ -39,6 +41,14 @@ define(['underscore'], function (_) {
 
     function withComma(value) {
         return value + ', ';
+    }
+
+    function decrement(value) {
+        return --value;
+    }
+
+    function increment(value) {
+        return ++value;
     }
 
     function joinWithComma(value) {
