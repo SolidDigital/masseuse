@@ -24,5 +24,23 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     should.exist(masseuse[property]);
                 });
             });
+
+            describe('aliases - these will be removed in 3.0.0', function() {
+                _.each([
+                    ['BaseView', 'View'],
+                    ['MasseuseModel', 'Model'],
+                    ['MasseuseRouter', 'Router']
+                ], function(alias) {
+                    it('masseuse.'+alias[0]+' should be an alias to masseuse.'+alias[1],
+                        function() {
+                            masseuse[alias[0]].should.equal(masseuse[alias[1]]);
+                        });
+                });
+
+                it('masseuse.utilities.channels should be an alias to masseuse.channels',
+                    function() {
+                        masseuse.utilities.channels.should.equal(masseuse.channels);
+                    });
+            });
         });
     });
