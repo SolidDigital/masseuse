@@ -108,7 +108,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                 return this;
             } else if (typeof key == 'object') {
                 attrs = key;
-                options = val;
+                options = val || {};
 
                 _.each(key, function (attrValue, attrKey) {
                     if (attrValue instanceof ComputedProperty) {
@@ -128,7 +128,10 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                         self.bindObserver(attrKey, attrValue);
                         delete attrs[attrKey];
                     } else if (attrValue instanceof Backbone.Model) {
-                        self.listenTo(attrValue, 'change', self.trigger.bind(self, 'change'));
+                        self.listenTo(attrValue, 'change', function() {
+                            self.trigger('change:' + attrKey, self, self.get(attrKey), options);
+                            self.trigger('change', self, options);
+                        });
                     } else {
                         listenToNestedModels(attrValue, self, 0);
                         if (self.computedCallbacks[attrKey]) {
@@ -137,13 +140,16 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                     }
                 });
             } else {
+                options = options || {};
                 if (val instanceof Backbone.Model) {
-                    self.listenTo(val, 'change', self.trigger.bind(self, 'change'));
+                    self.listenTo(val, 'change', function() {
+                        self.trigger('change:' + key, self, self.get(key), options);
+                        self.trigger('change', self, options);
+                    });
                 }
                 if (_.isString(key) && key.indexOf('.') > 0) {
                     propertyOn = key.slice(key.indexOf('.') + 1);
-                    key = key.split('.');
-                    key = key[0];
+                    key = key.split('.')[0];
 
                     wholeObj = this.get(key) || {};
 
