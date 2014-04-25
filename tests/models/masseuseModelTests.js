@@ -98,16 +98,8 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'backbone', 'masseu
                         should.not.exist(modelInstance.attributes.nestedProperty.title);
 
                     });
-                    describe('change events', function() {
-                        // test for model.changed
+                    describe('change events', function () {
 
-                        // Trigger all relevant attribute changes.
-//                        if (!silent) {
-//                            if (changes.length) this._pending = true;
-//                            for (var i = 0, l = changes.length; i < l; i++) {
-//                                this.trigger('change:' + changes[i], this, current[changes[i]], options);
-//                            }
-//                        }
                         it('should fire a change event on the top level property when setting a nested attribute',
                             function () {
                                 var listener = _.extend({}, Backbone.Events),
@@ -187,11 +179,11 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'backbone', 'masseu
                     nestedModel = new Model();
                     modelInstance.set('nested', nestedModel);
                 });
-                describe('change events', function() {
+                describe('change events', function () {
                     // Should trigger with the model, the new attribute value, and in options
                     it('changing a value on a nested model should trigger a change event on the parent model',
                         function (done) {
-                            modelInstance.on('change:nested', function(model, value, options) {
+                            modelInstance.on('change:nested', function (model, value, options) {
                                 model.should.equal(modelInstance);
                                 value.should.equal(nestedModel);
                                 options.should.deep.equal({});
@@ -206,9 +198,6 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'backbone', 'masseu
                             modelInstance.set('nestedModel.one.two', deepModel);
                             modelInstance.get('nestedModel.one.two').should.equal(deepModel);
                             modelInstance.set('nestedModel.one.two.three.four', deepModel);
-                            modelInstance.on('change', function() {
-                                window.console.log(arguments);
-                            });
                             modelInstance.on('change', _.once(done.bind(null, undefined)));
                             deepModel.set('boom', 'shakalaka');
                         });

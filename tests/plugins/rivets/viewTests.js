@@ -132,9 +132,6 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                                 });
                                 it('test dom changes when nested model changes', function(done) {
                                     rivetView.start().done(function() {
-                                        rivetView.model.on('change', function() {
-                                            window.console.log(arguments);
-                                        });
                                         nested.set('title', 'other');
                                         $('#' + riveted).html().should.equal('other');
                                         done();
