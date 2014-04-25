@@ -29,7 +29,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonS
 
 
             beforeEach(function (done) {
-                BaseView = masseuse.View;
+                BaseView = masseuse.BaseView;
                 AsyncExtendedBaseView = BaseView.extend({
                     beforeRender : function (deferred) {
                         $beforeRenderDeferred = deferred;

@@ -8,7 +8,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
             riveted = 'riveted',
             $body = $('body'),
             RivetView = masseuse.plugins.rivets.RivetsView,
-            Model = masseuse.Model,
+            Model = masseuse.MasseuseModel,
             should = chai.should();
 
         chai.use(sinonChai);
@@ -239,6 +239,35 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                                 });
                             });
                         });
+
+                        describe('when instaUpdate is true', function() {
+                            var attributeOptions;
+
+                            beforeEach(function() {
+                                attributeOptions = {
+                                    el : '#' + testDom,
+                                    rivetsConfig : {
+                                        instaUpdate : true
+                                    },
+                                    template : '<input data-rv-value="model:name" id="' + riveted +
+                                    '" />',
+                                    modelData : {
+                                        name : 'Sir Benedict Cucumber'
+                                    }
+                                };
+                                rivetView = new RivetView(attributeOptions);
+                            });
+
+                            it('should Instantly update the bound value with only a keypress event', function(done) {
+                                rivetView.start().done(function() {
+                                    rivetView.model.get('name').should.equal('Sir Benedict Cucumber');
+                                    $('#'+ riveted).val('Sir Arthur Conan Doyle').keypress();
+                                    rivetView.model.get('name').should.equal('Sir Arthur Conan Doyle');
+                                    done();
+                                });
+                            });
+                        });
+
                     });
 
                     describe('iteration', function() {
