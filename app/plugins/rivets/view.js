@@ -1,6 +1,6 @@
-define(['../../views/baseView', './plugin'], function(BaseView, plugin) {
+define(['masseuse', './plugin'], function(masseuse, plugin) {
     'use strict';
-    return BaseView.extend({
+    return masseuse.View.extend({
         initialize : initialize
     });
 
@@ -41,6 +41,6 @@ define(['../../views/baseView', './plugin'], function(BaseView, plugin) {
     function initialize (options) {
         options.plugins = options.plugins || [];
         options.plugins.push(plugin);
-        BaseView.prototype.initialize.call(this, options);
+        masseuse.View.prototype.initialize.call(this, options);
     }
 });

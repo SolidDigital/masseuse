@@ -34,7 +34,7 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
             rivetsOptions.rivetsBinders =
                 [{}, defaultBinders].concat(
                     rivetsOptions.binders || options.rivetsBinders || options.rivetBinders);
-            if (undefined === rivetsOptions.rivetsInstaUpdate) {
+            if (undefined !== options.rivetsInstaUpdate && undefined === rivetsOptions.instaUpdate) {
                 rivetsOptions.instaUpdate = options.rivetsInstaUpdate;
             }
             rivetsOptions.rivetsDelimiters =

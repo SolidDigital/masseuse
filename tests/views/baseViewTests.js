@@ -1,15 +1,14 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'backbone', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, masseuse, Backbone) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'backbone', 'loadRivets', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse, Backbone, loadRivets) {
 
         'use strict';
         var VIEW1_NAME = 'testView1',
             CHILD_VIEW_NAME = 'childView',
             should = chai.should();
 
-
+        loadRivets();
         chai.use(sinonChai);
         mocha.setup('bdd');
-
 
         describe('An instance of the BaseView', function () {
 
@@ -23,7 +22,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
             beforeEach(function () {
                 BaseView = masseuse.View;
-                RivetsView = masseuse.plugins.rivets.RivetsView;
+                RivetsView = masseuse.plugins.rivets.View;
                 viewInstance = new BaseView({
                     name : VIEW1_NAME
                 });

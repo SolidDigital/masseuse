@@ -1,17 +1,31 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'backbone', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, masseuse, Backbone) {
+define([
+        'jquery',
+        'underscore',
+        'chai',
+        'mocha',
+        'sinon',
+        'sinonChai',
+        'masseuse',
+        'backbone',
+        'loadRivets',
+        'sinonSpy'
+    ],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse, Backbone, loadRivets) {
 
         'use strict';
 
         var testDom = 'testDom',
             $body = $('body'),
             $testDom,
-            RivetView = masseuse.plugins.rivets.RivetsView,
+            RivetsView,
             rivetView,
             options,
             template,
             masseuseModel,
             modelsCollection;
+
+        loadRivets();
+        RivetsView = masseuse.plugins.rivets.View;
 
         chai.use(sinonChai);
         mocha.setup('bdd');
@@ -65,7 +79,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
             describe('model to view riveting', function() {
                 it('should change the view when adding models', function(done) {
-                    rivetView = new RivetView(options);
+                    rivetView = new RivetsView(options);
 
                     rivetView.start()
                         .done(function() {
@@ -79,7 +93,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 });
 
                 it('should change the view when removing models', function(done) {
-                    rivetView = new RivetView(options);
+                    rivetView = new RivetsView(options);
 
                     rivetView.start()
                         .done(function() {
@@ -97,7 +111,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 });
 
                 it('should change the view when changing models attributes', function(done) {
-                    rivetView = new RivetView(options);
+                    rivetView = new RivetsView(options);
 
                     rivetView.start()
                         .done(function() {
