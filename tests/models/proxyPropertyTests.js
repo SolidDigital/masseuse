@@ -16,7 +16,7 @@ define(['underscore','chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSp
 
         beforeEach(function () {
                 ProxyProperty = masseuse.ProxyProperty;
-                Model = masseuse.MasseuseModel;
+                Model = masseuse.Model;
                 modelInstance = new Model();
                 otherModel = new Model();
                 otherModel.set('name', 'Jack');

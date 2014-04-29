@@ -1,15 +1,18 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, masseuse) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'loadRivets', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse, loadRivets) {
 
         'use strict';
 
         var testDom = 'testDom',
             $body = $('body'),
             $testDom,
-            RivetView = masseuse.plugins.rivets.RivetsView,
+            RivetsView,
             rivetView,
             options,
             template;
+
+        loadRivets();
+        RivetsView = masseuse.plugins.rivets.View;
 
         chai.use(sinonChai);
         mocha.setup('bdd');
@@ -39,8 +42,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                 top : 3
                             }
                         ]
-                    },
-                    rivetsConfig : true
+                    }
                 };
             });
 
@@ -57,12 +59,14 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
 
             it('simple component', function (done) {
-                rivetView = new RivetView(_.extend({}, options, {
-                    rivetsComponents : {
-                        list : {
-                            attributes : [],
-                            build : function () {
-                                return $('<p data-rv-text="datum.top"></p>')[0];
+                rivetView = new RivetsView(_.extend({}, options, {
+                    rivetsConfig : {
+                        components : {
+                            list : {
+                                attributes : [],
+                                build : function () {
+                                    return $('<p data-rv-text="datum.top"></p>')[0];
+                                }
                             }
                         }
                     }

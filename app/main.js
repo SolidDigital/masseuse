@@ -1,9 +1,9 @@
 define([
     './views/baseView', './utilities/channels', './views/viewContext', './routers/masseuseRouter',
     './models/masseuseModel', './models/computedProperty', './models/proxyProperty', './models/observerProperty',
-    './plugins/rivets/view', './collections/masseuseCollection'
+    './collections/masseuseCollection'
 ], function (BaseView, channels, ViewContext, MasseuseRouter, MasseuseModel, ComputedProperty, ProxyProperty,
-             ObserverProperty, RivetsView, MasseuseCollection) {
+             ObserverProperty, MasseuseCollection) {
     'use strict';
 
     /** @description `Masseuse` is:
@@ -36,20 +36,10 @@ define([
         ProxyProperty : ProxyProperty,
         ObserverProperty : ObserverProperty,
         channels : channels,
-
-        // Old fields : @deprecated
-        // TODO: remove these and bump major version
-        BaseView : BaseView,
-        MasseuseModel : MasseuseModel,
-        MasseuseRouter : MasseuseRouter,
-        utilities : {
-            channels : channels
-        },
-        // TODO: move this out of this package, so this can be optimized w/o RivetsView
         plugins : {
-            rivets : {
-                RivetsView : RivetsView
-            }
+            // convenience object to dynamically load your plugins into
+            // by default none of the available plugins are loaded, so that rjs only includes them if you want them
+                // this will reduce the size of the optimized build if you don't use a plugin
         }
     };
 });
