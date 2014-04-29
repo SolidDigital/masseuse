@@ -42,8 +42,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                 top : 3
                             }
                         ]
-                    },
-                    rivetsConfig : true
+                    }
                 };
             });
 
@@ -61,11 +60,13 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
             it('simple component', function (done) {
                 rivetView = new RivetsView(_.extend({}, options, {
-                    rivetsComponents : {
-                        list : {
-                            attributes : [],
-                            build : function () {
-                                return $('<p data-rv-text="datum.top"></p>')[0];
+                    rivetsConfig : {
+                        components : {
+                            list : {
+                                attributes : [],
+                                build : function () {
+                                    return $('<p data-rv-text="datum.top"></p>')[0];
+                                }
                             }
                         }
                     }
