@@ -1,15 +1,14 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'backbone', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, masseuse, Backbone) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'backbone', 'loadRivets', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse, Backbone, loadRivets) {
 
         'use strict';
         var VIEW1_NAME = 'testView1',
             CHILD_VIEW_NAME = 'childView',
             should = chai.should();
 
-
+        loadRivets();
         chai.use(sinonChai);
         mocha.setup('bdd');
-
 
         describe('An instance of the BaseView', function () {
 
@@ -22,8 +21,8 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 methodSpy;
 
             beforeEach(function () {
-                BaseView = masseuse.BaseView;
-                RivetsView = masseuse.plugins.rivets.RivetsView;
+                BaseView = masseuse.View;
+                RivetsView = masseuse.plugins.rivets.View;
                 viewInstance = new BaseView({
                     name : VIEW1_NAME
                 });
@@ -685,7 +684,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     ViewContext,
                     model;
                 beforeEach(function() {
-                    MasseuseModel = masseuse.MasseuseModel;
+                    MasseuseModel = masseuse.Model;
                     ProxyProperty = masseuse.ProxyProperty;
                     ViewContext = masseuse.ViewContext;
                     model = new MasseuseModel({
@@ -717,7 +716,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 var view;
 
                 beforeEach(function (done) {
-                    view = new masseuse.BaseView({
+                    view = new masseuse.View({
                         tagName: 'div',
                         template: '<div id="el"><div id="test1"></div><div id="test2"></div></div>'
                     });

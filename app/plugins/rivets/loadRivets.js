@@ -6,7 +6,7 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
         return function (optionsForRivets) {
             Rivets.configure({
                 preloadData : true,
-                prefix : optionsForRivets.rivetsPrefix,
+                prefix : optionsForRivets.prefix,
                 // This fires when you use data-rv-on-click.
                 handler : function(context, ev, binding) {
                     // https://github.com/mikeric/rivets/pull/275#issuecomment-36464555
@@ -16,18 +16,18 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
             });
             // Rivets works off of listening to the change event, which doesn't happen on inputs until loss of focus
             // Work around that if desired
-            if (optionsForRivets.rivetsInstaUpdate) {
+            if (optionsForRivets.instaUpdate) {
                 this.$('input').on('keypress paste textInput input',
                     function () {
                         $(this).trigger('change');
                     });
             }
 
-            Rivets.config.templateDelimiters = optionsForRivets.rivetsDelimiters;
-            _.extend(Rivets.components, optionsForRivets.rivetsComponents);
-            _.extend(Rivets.formatters, optionsForRivets.rivetsFormatters);
-            _.extend(Rivets.adapters, optionsForRivets.rivetsAdapters);
-            _.extend(Rivets.binders, optionsForRivets.rivetsBinders,
+            Rivets.config.templateDelimiters = optionsForRivets.delimiters;
+            _.extend(Rivets.components, optionsForRivets.components);
+            _.extend(Rivets.formatters, optionsForRivets.formatters);
+            _.extend(Rivets.adapters, optionsForRivets.adapters);
+            _.extend(Rivets.binders, optionsForRivets.binders,
                 _createBinders.call(this, optionsForRivets.childViewBinders));
 
             return _getBoundViews.call(this, optionsForRivets);
