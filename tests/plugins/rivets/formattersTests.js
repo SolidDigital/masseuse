@@ -1,16 +1,15 @@
 define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../app/plugins/rivets/formatters',
-    'masseuse', 'jquery', 'loadRivets', 'sinonSpy'],
-    function (_, chai, mocha, sinon, sinonChai, check, formatters, masseuse, $, loadRivets) {
+    'masseuse', 'jquery', 'sinonSpy'],
+    function (_, chai, mocha, sinon, sinonChai, check, formatters, masseuse, $) {
 
         'use strict';
-        var $body = $('body'),
-            RivetsView;
+        var should = chai.should(),
+            $body = $('body'),
+            RivetView = masseuse.plugins.rivets.RivetsView;
 
-        loadRivets();
-        RivetsView = masseuse.plugins.rivets.View;
+        should;
 
-        chai.should();
-
+        require(['sinonCall', 'sinonSpy']);
         // Using Sinon-Chai assertions for spies etc. https://github.com/domenic/sinon-chai
         chai.use(sinonChai);
         mocha.setup('bdd');
@@ -41,7 +40,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'check', '../../../
                         }
                     };
 
-                rivetView = new RivetsView(options);
+                rivetView = new RivetView(options);
 
                 rivetView.start().done(function() {
                     $('#riveted').html().should.equal('Inferno : ');

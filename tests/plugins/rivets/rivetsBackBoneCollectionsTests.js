@@ -1,30 +1,17 @@
-define([
-        'jquery',
-        'underscore',
-        'chai',
-        'mocha',
-        'sinon',
-        'backbone',
-        'sinonChai',
-        'masseuse',
-        'loadRivets',
-        'sinonSpy'
-    ],
-    function ($, _, chai, mocha, sinon, Backbone, sinonChai, masseuse, loadRivets) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'backbone', 'sinonChai', 'masseuse', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, Backbone, sinonChai, masseuse) {
 
         'use strict';
 
         var testDom = 'testDom',
             riveted = 'riveted',
             $body = $('body'),
-            RivetsView,
+            RivetView = masseuse.plugins.rivets.RivetsView,
             collectionTemplate,
             options,
             rivetView,
             beatles;
 
-        loadRivets();
-        RivetsView = masseuse.plugins.rivets.View,
 
         chai.should();
 
@@ -87,7 +74,7 @@ define([
                         collection : beatles
                     };
 
-                    rivetView = new RivetsView(options);
+                    rivetView = new RivetView(options);
                 });
 
 
@@ -153,7 +140,7 @@ define([
                             collection : beatles
                         };
 
-                        rivetView = new RivetsView(options);
+                        rivetView = new RivetView(options);
                     });
                     it('should add more elements to the dom when more models are added', function(done) {
                         rivetView.start().done(function() {

@@ -1,19 +1,16 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'loadRivets', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, masseuse, loadRivets) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
 
         var testDom = 'testDom',
             $body = $('body'),
             $testDom,
-            RivetsView,
+            RivetView = masseuse.plugins.rivets.RivetsView,
             rivetView,
             options,
             templateWithAttribute,
             templateWithoutAttribute;
-
-        loadRivets();
-        RivetsView = masseuse.plugins.rivets.View;
 
         chai.use(sinonChai);
         mocha.setup('bdd');
@@ -37,7 +34,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         var TestView,
                             options;
                         beforeEach(function() {
-                            TestView = RivetsView.extend({
+                            TestView = RivetView.extend({
                                 defaultOptions : {
                                     template : '<ul><li data-rv-text="model:name"></li></ul>'
                                 }
@@ -62,7 +59,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                 }
                             });
 
-                            new RivetsView(options).start();
+                            new RivetView(options).start();
                             $('#childView').html()
                                 .should.equal('<p data-rv-new-testview="model">' +
                                 '<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul></p>');
@@ -97,7 +94,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                     }
                                 });
 
-                                new RivetsView(options).start();
+                                new RivetView(options).start();
                                 $('#childView').text()
                                     .should.equal('Kareem Abdul JabbarAda Lovelace');
                             });
@@ -113,14 +110,14 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                     }
                                 });
 
-                                new RivetsView(options).start();
+                                new RivetView(options).start();
                                 $('#childView').html()
                                     .should.equal('<ul><li data-rv-text="model:name">Kareem Abdul Jabbar</li></ul>');
                             });
                     });
                     it('child view template can include a text node that is riveted', function() {
                         var template = '<div id="childView"><p data-rv-new-TestView="model"></p></div>',
-                            TestView = RivetsView.extend({
+                            TestView = RivetView.extend({
                                 defaultOptions : {
                                     template : '{{ model:name }}'
                                 }
@@ -139,13 +136,13 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                 }
                             };
 
-                        new RivetsView(options).start();
+                        new RivetView(options).start();
                         $('#childView').html()
                             .should.equal('<p data-rv-new-testview="model">Kareem Abdul Jabbar</p>');
                     });
                     it('child view template can include text nodes that are riveted', function() {
                         var template = '<div id="childView"><p data-rv-new-TestView="model"></p></div>',
-                            TestView = RivetsView.extend({
+                            TestView = RivetView.extend({
                                 defaultOptions : {
                                     template : '{{ model:name }}<p>Something</p>{{ model:name }}'
                                 }
@@ -164,7 +161,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                                 }
                             };
 
-                        new RivetsView(options).start();
+                        new RivetView(options).start();
                         $('#childView').html()
                             .should.equal('<p data-rv-new-testview="model">Kareem Abdul Jabbar<p>Something</p>' +
                             'Kareem Abdul Jabbar</p>');
@@ -177,12 +174,12 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                             options;
 
                         beforeEach(function() {
-                            ViewA = RivetsView.extend({
+                            ViewA = RivetView.extend({
                                 defaultOptions : {
                                     template : '<div>a</div>'
                                 }
                             });
-                            ViewB = RivetsView.extend({
+                            ViewB = RivetView.extend({
                                 defaultOptions : {
                                     template :'<div>b</div>',
                                     wrapper : false
@@ -219,12 +216,12 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         it('the factory should be called once per child view binder', function() {
                             var factorySpy = sinon.spy(options.rivetsConfig.childViewBinders, 'ab-factory');
                             factorySpy.should.not.have.been.called;
-                            parentView = new RivetsView(options);
+                            parentView = new RivetView(options);
                             parentView.start();
                             factorySpy.should.have.been.calledTwice;
                         });
                         it('is possible as a childViewBinder value', function() {
-                            parentView = new RivetsView(options);
+                            parentView = new RivetView(options);
                             parentView.start();
                             $childView = $('#childView');
                             $childView.find('li:eq(0)').text().should.equal('a');
@@ -266,7 +263,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 });
 
                 it('should add the contenteditable attribute if it is not there', function (done) {
-                    rivetView = new RivetsView(options, {
+                    rivetView = new RivetView(options, {
                         template : templateWithoutAttribute
                     });
                     rivetView
@@ -279,7 +276,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
                 describe('when riveting to backbone models', function() {
                     it('should support model to view binding', function (done) {
-                        rivetView = new RivetsView(_.extend({}, options));
+                        rivetView = new RivetView(_.extend({}, options));
                         rivetView
                             .start()
                             .done(function() {
@@ -292,7 +289,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     });
 
                     it('should support view to model binding', function (done) {
-                        rivetView = new RivetsView(_.extend({}, options));
+                        rivetView = new RivetView(_.extend({}, options));
                         rivetView
                             .start()
                             .done(function() {
@@ -307,7 +304,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     });
 
                     it('should set the model when the user loses focus', function(done) {
-                        rivetView = new RivetsView(_.extend({}, options));
+                        rivetView = new RivetView(_.extend({}, options));
                         rivetView
                             .start()
                             .done(function() {
