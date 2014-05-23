@@ -16,7 +16,7 @@ define(['underscore','chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSp
 
             beforeEach(function () {
                 ObserverProperty = masseuse.ObserverProperty;
-                Model = masseuse.Model;
+                Model = masseuse.MasseuseModel;
                 modelInstance = new Model();
                 otherModel = new Model();
                 otherModel.set('name', 'Jack');

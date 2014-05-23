@@ -1,19 +1,15 @@
 define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
-    'masseuse', 'backbone', 'loadRivets', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, masseuse, Backbone, loadRivets) {
+    'masseuse', 'backbone', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse, Backbone) {
 
         'use strict';
 
         var testDom = 'testDom',
             riveted = 'riveted',
             $body = $('body'),
-            RivetsView,
-            Model = masseuse.Model,
+            RivetView = masseuse.plugins.rivets.RivetsView,
+            Model = masseuse.MasseuseModel,
             should = chai.should();
-
-        loadRivets();
-
-        RivetsView = masseuse.plugins.rivets.View;
 
         chai.use(sinonChai);
         mocha.setup('bdd');
@@ -56,7 +52,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                                     title : 'There it is.'
                                 }
                             };
-                            rivetView = new RivetsView(options);
+                            rivetView = new RivetView(options);
                         });
                         it('test dom is riveted with initial data', function(done) {
                             rivetView.start().done(function() {
@@ -88,7 +84,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                                         }
                                     }
                                 };
-                                rivetView = new RivetsView(options);
+                                rivetView = new RivetView(options);
                             });
                             it('test dom is riveted with nested data in a model', function(done) {
                                 rivetView.start().done(function() {
@@ -126,7 +122,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                                             nested : nested
                                         }
                                     };
-                                    rivetView = new RivetsView(options);
+                                    rivetView = new RivetView(options);
                                 });
                                 it('test dom is riveted with nested model in a model', function(done) {
                                     rivetView.start().done(function() {
@@ -158,7 +154,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                                             nested : nested
                                         }
                                     };
-                                    rivetView = new RivetsView(options);
+                                    rivetView = new RivetView(options);
                                 });
                                 it('test dom is riveted when deeply nested model changes', function(done) {
                                     rivetView.start().done(function() {
@@ -197,7 +193,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                                         href : 'http://www.blah.com'
                                     }
                                 };
-                                rivetView = new RivetsView(attributeOptions);
+                                rivetView = new RivetView(attributeOptions);
                             });
                             it('test dom is riveted with initial data', function(done) {
                                 rivetView.start().done(function() {
@@ -227,7 +223,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                                         href : ['http://www.blah.com']
                                     }
                                 };
-                                rivetView = new RivetsView(attributeOptions);
+                                rivetView = new RivetView(attributeOptions);
                             });
                             it('test dom is riveted with initial data', function(done) {
                                 rivetView.start().done(function() {
@@ -259,7 +255,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                                         name : 'Sir Benedict Cucumber'
                                     }
                                 };
-                                rivetView = new RivetsView(attributeOptions);
+                                rivetView = new RivetView(attributeOptions);
                             });
 
                             it('should Instantly update the bound value with only a keypress event', function(done) {
@@ -301,7 +297,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                                         ]
                                     }
                                 };
-                                rivetView = new RivetsView(options);
+                                rivetView = new RivetView(options);
                             });
                             it('should iterate over a array when initialized', function(done) {
                                 rivetView.start().done(function() {
@@ -353,7 +349,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                                         ]
                                     }
                                 };
-                                rivetView = new RivetsView(options);
+                                rivetView = new RivetView(options);
                             });
                             it('should iterate over a array of objects when initialized', function(done) {
                                 rivetView.start().done(function() {
