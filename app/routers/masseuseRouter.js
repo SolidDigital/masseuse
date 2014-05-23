@@ -28,6 +28,8 @@ define([
             if (_.isFunction(this.beforeRouting)) {
                 _(this.routes).chain()
                     .omit(this.excludeFromBeforeRouting)
+                    .values()
+                    .uniq()
                     .each(function (methodName) {
                         wrapRoute.call(self, methodName);
                     });
