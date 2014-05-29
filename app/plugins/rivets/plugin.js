@@ -64,8 +64,15 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
                 if (rivetedViews) {
                     _.each(rivetedViews, function(view) {
                         view.unbind();
+                        _.each(view.bindings, function (binding) {
+                            delete binding.el;
+                        });
+                        delete view.bindings;
+                        delete view.els;
+                        delete view.models;
                     });
                 }
+                rivetedViews = undefined;
             });
         }
     });
