@@ -338,7 +338,29 @@ define([
 
         this.trigger('onRemove');
 
+
+        if (this.model) {
+            this.model.off();
+            this.model.stopListening();
+            delete this.model;
+        }
+
+        if (!this.$el) {
+            this.$el = $('<div/>');
+        }
         Backbone.View.prototype.remove.apply(this, arguments);
+
+
+        if (this.$el) {
+            this.undelegateEvents();
+            this.$el.removeData().unbind();
+            this.$el.empty();
+            delete this.$el;
+        }
+
+        if (this.el) {
+            delete this.el;
+        }
     }
 
     /**
