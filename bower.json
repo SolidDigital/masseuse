@@ -2,10 +2,10 @@
   "name": "masseuse",
   "dependencies": {
     "backbone-amd": "1.1.0",
-    "jquery": "2.1.0",
-    "requirejs": "2.1.11",
+    "jquery": "2.1.1",
+    "requirejs": "2.1.14",
     "lodash-amd": "2.4.1",
-    "rivets": "0.6.7"
+    "rivets": "0.6.8"
 
   },
   "devDependencies": {
