@@ -2,30 +2,41 @@ define(['jquery'], function ($) {
     'use strict';
 
     return {
-
         addclass : addClass,
-        width : width,
         editable : {
-            routine: function(el, model) {
-                this.view.binders.text.call(this, el, model);
-            },
-            bind : function(el) {
-                var $el = $(el);
-                if(!$el.attr('contenteditable')) {
-                    $el.attr('contenteditable', true);
-                }
-
-                el.addEventListener('keypress', _callback.bind(this, el), false);
-                el.addEventListener('blur', _callback.bind(this, el), false);
-            },
-            unbind: function(el) {
-                el.removeEventListener('keypress', _callback.bind(this, el), false);
-                el.removeEventListener('blur', _callback.bind(this, el), false);
-            }
+            routine: routineEditable,
+            bind : bindEditable,
+            unbind: unbindEditable
+        },
+        width : width,
+        'on-enter-key-press' : {
+            bind : bindKeypress,
+            unbind : unbindKeypress
         }
     };
 
-    function _callback(el, evt) {
+    function bindEditable(el) {
+        var $el = $(el);
+        if(!$el.attr('contenteditable')) {
+            $el.attr('contenteditable', true);
+        }
+
+        this.callback = callback.bind(this, el);
+        $el.on('keypress', this.callback);
+        $el.on('blur', this.callback);
+    }
+
+    function unbindEditable(el) {
+        var $el = $(el);
+        $el.off('keypress');
+        $el.off('blur');
+    }
+
+    function routineEditable(el, model) {
+        this.view.binders.text.call(this, el, model);
+    }
+
+    function callback(el, evt) {
         // listen for the enter key or Blur to save to the model.
         if(evt.keyCode === 13 || evt.type === 'blur') {
             this.view.adapters[':'].publish(
@@ -48,5 +59,21 @@ define(['jquery'], function ($) {
 
     function width(el, value) {
         el.style.width = value;
+    }
+
+    function bindKeypress(el) {
+        var rivetsView = this,
+            $el = $(el);
+
+        $el.on('keypress', function(event) {
+            if(event.keyCode === 13) {
+                $el.blur();
+                rivetsView.view.models.view[rivetsView.keypath](event);
+            }
+        });
+    }
+
+    function unbindKeypress(el) {
+        $(el).off('keypress');
     }
 });

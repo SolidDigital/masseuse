@@ -21,6 +21,10 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
                     function () {
                         $(this).trigger('change');
                     });
+
+                this.listenTo(this, 'onRemove', function() {
+                    this.$('input').off('keypress paste textInput input');
+                });
             }
 
             Rivets.config.templateDelimiters = optionsForRivets.rivetsDelimiters;
