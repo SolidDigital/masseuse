@@ -67,6 +67,7 @@
         './plugins/rivets/componentsTest',
         './plugins/rivets/binderTests',
         './plugins/rivets/formattersTests',
+        './utilities/accessorsTests',
         './utilities/channelsTests',
         './utilities/createOptionsTests',
         './utilities/deferMethodTests',

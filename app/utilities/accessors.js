@@ -1,4 +1,4 @@
-define(['backbone'], function (Backbone) {
+define(['backbone', 'underscore'], function (Backbone, _) {
 
     'use strict';
     return {
@@ -14,7 +14,7 @@ define(['backbone'], function (Backbone) {
         var part;
 
         if (typeof parts === 'string') {
-            parts = parts.split('.');
+            parts = _.compact(parts.split(/\.|\[|]/));
         }
 
         while (typeof obj === 'object' && obj && parts.length) {
@@ -22,7 +22,7 @@ define(['backbone'], function (Backbone) {
             if (!(part in obj) && create) {
                 obj[part] = {};
             }
-            obj = getModelProperty(obj, part);
+            obj = getObjectProperty(obj, part);
         }
 
         return obj;
@@ -58,11 +58,21 @@ define(['backbone'], function (Backbone) {
         }
     }
 
-    function getModelProperty(model, keypath) {
+    function getObjectProperty(model, keypath) {
+        var number;
         if (model instanceof Backbone.Model) {
             return model.get(keypath);
+        } else if(model instanceof Backbone.Collection) {
+            return model.at(keypath);
         } else {
-            return model[keypath];
+            number = parseInt(keypath, 10);
+            // TODO: strings access array indices
+            if (_.isNaN(number)) {
+                return model[keypath];
+            } else {
+                return model[number];
+            }
+
         }
     }
 
