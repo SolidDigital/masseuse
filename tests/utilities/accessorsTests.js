@@ -36,6 +36,35 @@ define(['underscore', 'backbone', 'chai', 'mocha', 'sinon', 'sinonChai', '../../
                     });
                 });
             });
+            describe('set', function() {
+                describe('for arrays', function() {
+                    it('raw array', function() {
+                        accessors
+                            .setProperty([0,2,2], '[1]', 1)
+                            .should.deep.equal([0,1,2]);
+                    });
+                });
+                describe('for Collections', function() {
+                    it('should update model by index', function() {
+                        var collection = simpleCollection();
+                        accessors.setProperty(collection, '[1]', {value:'Felix'});
+                        collection.at(1).get('value').should.equal('Felix');
+                    });
+                    it('should update value on model by index', function() {
+                        var collection = simpleCollection();
+                        accessors.setProperty(collection, '[1].value', 'Bomfour');
+                        collection.at(1).get('value').should.equal('Bomfour');
+                    });
+                    it('should add models to the collection as needed', function() {
+                        var collection = simpleCollection();
+                        accessors.setProperty(collection, '[3]', {value:'Felix'});
+                        collection.at(0).get('value').should.equal('Johan');
+                        collection.at(1).get('value').should.equal('Gertrude');
+                        collection.at(2).get('value').should.equal('JoJo');
+                        collection.at(3).get('value').should.equal('Felix');
+                    });
+                });
+            });
         });
 
         function arrayInObject() {

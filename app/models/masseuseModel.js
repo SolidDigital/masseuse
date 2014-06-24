@@ -3,6 +3,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
     function (Backbone, $, ComputedProperty, ProxyProperty, ObserverProperty, accessors, _) {
         'use strict';
 
+        // TODO: add in square bracket accessors
         var maxRecursionDepth = 10;
         /**
          * A Backbone Model with Proxy and Computed Properties.

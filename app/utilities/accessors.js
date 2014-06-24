@@ -1,6 +1,9 @@
 define(['backbone', 'underscore'], function (Backbone, _) {
 
     'use strict';
+
+    var separators = /\.|\[|]/;
+
     return {
         getProperty : getProperty,
         setProperty : setProperty,
@@ -11,16 +14,22 @@ define(['backbone', 'underscore'], function (Backbone, _) {
      * Get properties from a passed in object based on a string descriptor of the desired field.
      */
     function getProperty (obj, parts, create) {
-        var part;
+        var part,
+            number;
 
         if (typeof parts === 'string') {
-            parts = _.compact(parts.split(/\.|\[|]/));
+            parts = _.compact(parts.split(separators));
         }
 
         while (typeof obj === 'object' && obj && parts.length) {
             part = parts.shift();
             if (!(part in obj) && create) {
-                obj[part] = {};
+                number = parseInt(part, 10);
+                if (_.isNaN(number)) {
+                    obj[part] = {};
+                } else {
+                    obj[part] = [];
+                }
             }
             obj = getObjectProperty(obj, part);
         }
@@ -32,7 +41,7 @@ define(['backbone', 'underscore'], function (Backbone, _) {
         var part;
 
         if (typeof parts === 'string') {
-            parts = parts.split('.');
+            parts = _.compact(parts.split(separators));
         }
 
         part = parts.pop();
@@ -66,7 +75,6 @@ define(['backbone', 'underscore'], function (Backbone, _) {
             return model.at(keypath);
         } else {
             number = parseInt(keypath, 10);
-            // TODO: strings access array indices
             if (_.isNaN(number)) {
                 return model[keypath];
             } else {
@@ -77,13 +85,28 @@ define(['backbone', 'underscore'], function (Backbone, _) {
     }
 
     function setModelProperty(model, keypath, value) {
+        var number,
+            oldModel;
+
         if (model instanceof Backbone.Model) {
             model.set(keypath, value);
             if (value instanceof Backbone.Model) {
                 model.listenTo(value, 'change', model.trigger.bind(model, 'change'));
             }
+        } else if(model instanceof Backbone.Collection) {
+            oldModel = model.at(keypath);
+            if (oldModel) {
+                oldModel.set(value);
+            } else {
+                model.models[keypath] = new Backbone.Model(value);
+            }
         } else {
-            model[keypath] = value;
+            number = parseInt(keypath, 10);
+            if (_.isNaN(number)) {
+                model[keypath] = value;
+            } else {
+                model[number] = value;
+            }
         }
     }
 

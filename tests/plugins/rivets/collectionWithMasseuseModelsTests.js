@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'backbone', 'sinonSpy'],
-    function ($, _, chai, mocha, sinon, sinonChai, masseuse, Backbone) {
+define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSpy'],
+    function ($, _, chai, mocha, sinon, sinonChai, masseuse) {
 
         'use strict';
 
@@ -22,10 +22,10 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 $testDom = $('<div id="' + testDom + '"></div>');
                 $body.append($testDom);
                 template = '<ul id="testHere">' +
-                    '<li data-rv-each-field="collection:" data-rv-text="field:name"></li></ul>',
+                    '<li data-rv-each-field="model:collection:" data-rv-text="field:name"></li></ul>';
                 masseuseModel = masseuse.MasseuseModel.extend({
                     defaults : {}
-                }),
+                });
                 modelsCollection = [
                     {
                         name: 'James Hetfield'
@@ -39,16 +39,15 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     {
                         name: 'Cliff Burton'
                     }
-                ],
+                ];
                 options = {
                     appendTo : '#' + testDom,
                     wrapper : false,
                     template : template,
-                    modelData : {},
-                    rivetsConfig : true,
-                    collection : new (Backbone.Collection.extend({
-                        model : masseuseModel
-                    }))([], {})
+                    modelData : {
+                        collection : new masseuse.Collection([], {})
+                    },
+                    rivetsConfig : true
                 };
             });
 
@@ -71,11 +70,22 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         .done(function() {
                             $testDom.find('li').length.should.equal(0);
 
-                            rivetView.collection.add(modelsCollection);
+                            rivetView.model.get('collection').add(modelsCollection);
 
                             $testDom.find('li').length.should.equal(4);
                             done();
                         });
+                });
+
+                // TODO: addin in square bracket accessors to models
+                xit('should change the view when updating models using square bracked notation', function() {
+                    rivetView = new RivetView(options);
+                    rivetView.model.get('collection').add(modelsCollection);
+                    rivetView.start();
+                    $testDom.find('li').eq(2).text().should.equal('Lars Ulrich');
+                    rivetView.model.set('collection[2].name', 'Giovanni Martonelli');
+                    rivetView.model.get('collection').at(2).get('name').should.equal('Giovanni Martonelli');
+//                    $testDom.find('li').eq(2).text().should.equal('Giovanni Martonelli');
                 });
 
                 it('should change the view when removing models', function(done) {
@@ -85,11 +95,11 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         .done(function() {
                             $testDom.find('li').length.should.equal(0);
 
-                            rivetView.collection.add(modelsCollection);
+                            rivetView.model.get('collection').add(modelsCollection);
 
                             $testDom.find('li').length.should.equal(4);
 
-                            rivetView.collection.pop();
+                            rivetView.model.get('collection').pop();
 
                             $testDom.find('li').length.should.equal(3);
                             done();
@@ -101,11 +111,11 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
                     rivetView.start()
                         .done(function() {
-                            rivetView.collection.add(modelsCollection);
+                            rivetView.model.get('collection').add(modelsCollection);
 
                             $testDom.find('li').last().html().should.equal('Cliff Burton');
 
-                            rivetView.collection.last().set('name', 'Robert Trujillo');
+                            rivetView.model.get('collection').last().set('name', 'Robert Trujillo');
 
                             $testDom.find('li').last().html().should.equal('Robert Trujillo');
                             done();
