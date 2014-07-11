@@ -3,6 +3,3 @@ node_js:
 - '0.10'
 before_script:
 - npm install -g grunt-cli bower phantomjs mocha-phantomjs
-notifications:
-  hipchat:
-    secure: "odrrzZB2340xYKjDE77/BscM7ZKuF4ExM+QLaZyWkFSMUIq0PfRfZVVJBCT+OkMQJcQzabko7hN5tWMFx/HqTKqBqU2NWfwch69WHfRhyXyja4w6VT1EIREMDeya5cQ27ZT2GH8VYo23H/Q35tc892olC7mNNgQCRJxlZcg2daw="
