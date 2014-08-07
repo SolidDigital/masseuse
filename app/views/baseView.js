@@ -346,7 +346,6 @@ define([
         }
 
         if (!this.$el) {
-            this.$el.off();
             this.$el = $('<div/>');
         }
         Backbone.View.prototype.remove.apply(this, arguments);
