@@ -84,7 +84,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'backbone', 'masseu
                         });
                 });
 
-                describe('(setting nested fields)', function () {
+                describe('(setting nest(ed fields)', function () {
                     it('should set a nested field on a model', function () {
                         modelInstance.set('nestedProperty.subProperty', 'JohnyDeepNested');
                         modelInstance.get('nestedProperty').subProperty.should.equal('JohnyDeepNested');
@@ -178,7 +178,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'backbone', 'masseu
                 });
                 it('changing a value on a nested model should trigger a change event on the parent model',
                     function (done) {
-                        modelInstance.on('change', done.bind(null, undefined));
+                        modelInstance.on('change:test', done.bind(null, undefined));
                         nestedModel.set('test', 'test');
 
                     });

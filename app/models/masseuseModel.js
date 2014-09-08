@@ -29,6 +29,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
             toggleAttribute : toggleAttribute,
             get : get,
             set : set,
+            setProxy : setProxy,
             unset : unset,
             bindComputed : bindComputed,
             bindProxy : bindProxy,
@@ -71,13 +72,23 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
 
 
         function listenToNestedModels(obj, parentModel, depth) {
+            console.log('nested', obj);
             if (depth > maxRecursionDepth) {
                 return;
             }
             if (typeof obj == 'object') {
-                _.each(obj, function(value) {
+                _.each(obj, function(value, property) {
                     if (value instanceof Backbone.Model) {
-                        parentModel.listenTo(value, 'change', parentModel.trigger.bind(parentModel, 'change'));
+                        console.log('setting up', 'change:' + property);
+                        value.on('all', function(event, model, current, options) {
+                            console.log(event);
+                            if (/^change:/.test(event)) {
+                                parentModel.trigger('change:' + property + '.' + event.replace('change:',''), model, current, options);
+                            }
+                        });
+                        parentModel.listenTo(value, 'change:' + property, function() {
+                            console.log('changed: ' + property);
+                        });
                     } else if (typeof value == 'object') {
                         listenToNestedModels(value, parentModel, ++depth);
                     }
@@ -101,7 +112,10 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                 delayInitial = [],
                 callSelf = false,
                 propertyOn,
-                wholeObj;
+                wholeObj,
+                originalKeyArray,
+                originallySilent,
+                fireNestedEvents = false;
 
             this.computedCallbacks = this.computedCallbacks || {};
             if (key === null) {
@@ -121,9 +135,6 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                             });
                         }
                         delete attrs[attrKey];
-                    } else if (attrValue instanceof ProxyProperty) {
-                        self.bindProxy(attrKey, attrValue);
-                        delete attrs[attrKey];
                     } else if (attrValue instanceof ObserverProperty) {
                         self.bindObserver(attrKey, attrValue);
                         delete attrs[attrKey];
@@ -137,19 +148,52 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                     }
                 });
             } else {
+                // a.b.c.d
+                // a is model
+                // c is model
+                // a.b
+                //    c.d
+                //
+                // c.set('d',0)
+                //
+                // c >
+                // change:d
+                // change
+                //
+                // a >
+                // 
                 if (val instanceof Backbone.Model) {
-                    self.listenTo(val, 'change', self.trigger.bind(self, 'change'));
+                    self.listenTo(val, 'all', function(event, model, current, options) {
+                        console.log('=========> ', arguments);
+                        var keyPath = _.compact(event.split('change:'));
+                        console.log('kp', keyPath);
+                        if (keyPath.length) {
+                            console.log('triggering::::', 'change:' + key + '.' + keyPath[0]);
+                            self.trigger('change');
+                        }
+                    });
                 }
                 if (_.isString(key) && key.indexOf('.') > 0) {
+                    originalKeyArray = key.split('.');
                     propertyOn = key.slice(key.indexOf('.') + 1);
-                    key = key.split('.')[0];
+                    key = originalKeyArray[0];
 
                     wholeObj = this.get(key) || {};
 
                     // This is a hack to have the change event fire exactly once without having to clone wholeObj
+                    fireNestedEvents = true;
                     this.set(key, {}, {silent:true});
 
-                    if (options && options.unset) {
+                    options = options || {};
+
+                    // Backbone should not trigger change events, we will trigger nested change events ourselves
+                    if (options.silent) {
+                        originallySilent = true;
+                    } else {
+                        options.silent = true;
+                    }
+
+                    if (options.unset) {
                         accessors.unsetProperty(wholeObj, propertyOn);
                         options.unset = false;
                     } else {
@@ -161,9 +205,6 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                 attrs[key] = val;
                 if (val instanceof ComputedProperty) {
                     this.bindComputed(key, val);
-                    return;
-                } else if (val instanceof ProxyProperty) {
-                    this.bindProxy(key, val);
                     return;
                 } else if (val instanceof ObserverProperty) {
                     this.bindObserver(key, val);
@@ -177,6 +218,9 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                 this.set.apply(this, [attrs, options]);
             } else {
                 Backbone.Model.prototype.set.apply(this, [attrs, options]);
+                if (fireNestedEvents && !originallySilent) {
+                    _fireChangeEvents.call(this, originalKeyArray);
+                }
                 _.forEach(stack, function (callbackArray) {
                     _.forEach(callbackArray, function (callback) {
                         callback.call(self);
@@ -188,6 +232,23 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                     cb();
                 });
             }
+        }
+
+        function _fireChangeEvents(keyArray) {
+            var keyPath;
+            while (keyArray.length) {
+                keyPath = keyArray.join('.');
+                this.trigger('change:' + keyPath, this, this.get(keyPath));
+                keyArray.pop();
+            }
+        }
+
+        /**
+         * A convenience method for setting proxy properties to this model.
+         * @param toProperty
+         */
+        function setProxy(toProperty) {
+            return new ProxyProperty().to(toProperty, this);
         }
 
         function unset(attr, options) {
@@ -289,4 +350,3 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
             }
         }
     });
-

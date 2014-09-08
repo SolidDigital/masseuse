@@ -11,11 +11,15 @@ define(['jquery', 'rivets', 'backbone'],
                 subscribe : function (model, keypath, callback) {
                     keypath = keypath.replace(keySeparator,'.');
                     if (model instanceof Backbone.Collection) {
-                        model.on('add remove reset change', function (obj, keypath) {
+                        model.on('add remove reset change:' + keypath, function (obj, keypath) {
                             callback(obj.get(keypath));
                         });
                     } else if (model instanceof Backbone.Model) {
-                        model.on('change', function () {
+                        console.log('keypath', keypath);
+                        model.on('all', function() {
+                            console.log(arguments);
+                        });
+                        model.on('change:' + keypath, function () {
                             // TODO: make this more efficient / specific
                             callback(model.get(keypath));
                         });

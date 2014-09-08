@@ -28,8 +28,11 @@ define(['underscore','chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSp
                 });
             });
 
+        // TODO: test that from to can be in to from order too
+        // TODO: update proxy prop documentation
+        // TODO: test for deep nesting both to and from
         it('should allow the user to see changes of a property on another model', function() {
-            modelInstance.set('nameProxy', new ProxyProperty('name', otherModel));
+            modelInstance.setProxy('nameProxy').from('name', otherModel);
             modelInstance.get('nameProxy').should.equal('Jack');
 
 
@@ -39,29 +42,25 @@ define(['underscore','chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSp
 
         it('should allow the user to see changes of another model on the current model', function() {
 
-            modelInstance.set('nameProxy', new ProxyProperty('name', otherModel));
+            modelInstance.setProxy('nameProxy').from('name', otherModel);
             otherModel.get('name').should.equal('Jack');
             modelInstance.set('nameProxy', 'George');
             otherModel.get('name').should.equal('George');
 
         });
 
-        it('should allow the user to set multiple ProxyProperties at once', function() {
-            modelInstance.set({
-                'nameProxy': new ProxyProperty('name', otherModel),
-                'nameProxy2': new ProxyProperty('name', otherModel)
-            });
-            modelInstance.get('nameProxy').should.equal('Jack');
-            modelInstance.get('nameProxy2').should.equal('Jack');
-        });
-
         it('should allow the user to set nested ProxyProperties', function() {
-            modelInstance.set('nameProxy', new ProxyProperty('nestedName.name', otherModel));
+            modelInstance.setProxy('nameProxy').from('nestedName.name', otherModel);
             modelInstance.get('nameProxy').should.equal('DanteAleghieri');
         });
 
+        it('should allow the user to set nested to ProxyProperties', function() {
+            modelInstance.setProxy('nested.property').from('nestedName.name', otherModel);
+            modelInstance.attributes.nested.property.should.equal('DanteAleghieri');
+        });
+
         it('should allow the user to see changes on nested ProxyProperties from the proxy', function() {
-            modelInstance.set('nameProxy', new ProxyProperty('nestedName.subNestedName.b', otherModel));
+            modelInstance.setProxy('nameProxy').from('nestedName.subNestedName.b', otherModel);
             modelInstance.get('nameProxy').should.equal('DanteAleghieri');
             otherModel.get('nestedName').subNestedName.b.should.equal('DanteAleghieri');
             otherModel.set('nestedName.subNestedName.b', 'DanBrown');
@@ -70,7 +69,7 @@ define(['underscore','chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSp
         });
 
         it('should allow the user to see changes on the original proxy from the proxied property', function() {
-            modelInstance.set('nameProxy', new ProxyProperty('nestedName.subNestedName.b', otherModel));
+            modelInstance.setProxy('nameProxy').from('nestedName.subNestedName.b', otherModel);
             modelInstance.get('nameProxy').should.equal('DanteAleghieri');
             modelInstance.set('nameProxy', 'DanBrown');
             otherModel.get('nestedName').subNestedName.b.should.equal('DanBrown');
@@ -78,15 +77,14 @@ define(['underscore','chai', 'mocha', 'sinon', 'sinonChai', 'masseuse', 'sinonSp
 
         it('should create the property on the original proxy when the proxied property is set, ' +
             'if the original did not exist', function() {
-            modelInstance.set('nameProxy', new ProxyProperty('nonExistingProperty', otherModel));
+            modelInstance.setProxy('nameProxy').from('nonExistingProperty', otherModel);
             modelInstance.set('nameProxy', 'DanBrown');
             otherModel.get('nonExistingProperty').should.equal('DanBrown');
         });
 
         it('should create the property on the original proxy when the nested proxied property is set, ' +
             'if the original did not exist', function() {
-            modelInstance.set('nameProxy',
-                new ProxyProperty('nonExistingProperty.nestedNonExistingProperty', otherModel));
+            modelInstance.setProxy('nameProxy').from('nonExistingProperty.nestedNonExistingProperty', otherModel);
 
             modelInstance.set('nameProxy', 'DanBrown');
             otherModel.get('nonExistingProperty').nestedNonExistingProperty.should.equal('DanBrown');

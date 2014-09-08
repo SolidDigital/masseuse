@@ -692,23 +692,16 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                         mark : 'twain'
                     });
                 });
+                // TODO: test leaving both from and to with only 1 string property
                 it('ProxyProperties can be set via modelData', function() {
                     var view = new BaseView({
-                        modelData : {
-                            depth : ProxyProperty('mark', model)
-                        }
+                        proxies : [
+                            {
+                                from : ['mark', model],
+                                to : ['depth']
+                            }
+                        ]
                     });
-                    view.model.get('depth').should.equal('twain');
-                });
-                it('ViewContext can be used on ProxyProperties via modelData', function() {
-                    var view = new BaseView({
-                            modelData : {
-                                depth : ProxyProperty('mark', ViewContext('depthData'))
-                            },
-                            depthData : model,
-                            viewOptions : ['depthData']
-                        });
-
                     view.model.get('depth').should.equal('twain');
                 });
             });

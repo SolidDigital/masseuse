@@ -1,7 +1,50 @@
-define(function () {
+define(['underscore'], function (_) {
     'use strict';
 
+    // TODO: destroy event
+    _.extend(ProxyProperty.prototype, {
+        from : from,
+        to : to
+    });
+
     return ProxyProperty;
+
+    function from(property, model) {
+        this.models.from = {
+            property : property,
+            model : model
+        };
+        _setupListeners.call(this);
+        return this;
+    }
+
+    function to(property, model) {
+        this.models.to = {
+            property : property,
+            model : model
+        };
+        _setupListeners.call(this);
+        return this;
+    }
+
+    function _setupListeners() {
+        var self = this;
+
+        if (!this.models.to || !this.models.from) {
+            return;
+        }
+
+        // TODO: bypass initial option
+        self.models.to.model.set(self.models.to.property, self.models.from.model.get(self.models.from.property));
+
+        this.models.to.model.on('change:' + this.models.to.property, function(model, value) {
+            self.models.from.model.set(self.models.from.property, value, {silent:true});
+        });
+
+        this.models.from.model.on('change:' + this.models.from.property, function(model, value) {
+            self.models.to.model.set(self.models.to.property, value, {silent:true});
+        });
+    }
 
     /**
      * A ProxyProperty will allow a field on a model to depend on a field on another model.
@@ -49,12 +92,7 @@ define(function () {
      * @param propertyNameOnModel
      * @param model
      */
-    function ProxyProperty (propertyNameOnModel, model) {
-        if (!(this instanceof ProxyProperty)) {
-            return new ProxyProperty(propertyNameOnModel, model);
-        }
-
-        this.propertyNameOnModel = propertyNameOnModel;
-        this.model = model;
+    function ProxyProperty () {
+        this.models = {};
     }
 });

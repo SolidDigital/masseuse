@@ -191,6 +191,7 @@ define([
 
         _setTemplate.call(this, options);
         _setModel.call(this, options);
+        _setCalculated.call(this, options);
         _setBoundEventListeners.call(this, options);
         if (options && options.plugins && options.plugins.length) {
             _.each(options.plugins, function (plugin) {
@@ -529,7 +530,7 @@ define([
                 if (datum instanceof ViewContext) {
                     modelData[key] = datum.getBoundFunction(self);
                 }
-                if (datum instanceof ProxyProperty || datum instanceof ObserverProperty) {
+                if (datum instanceof ObserverProperty) {
                     if (datum.model instanceof ViewContext) {
                         datum.model = datum.model.getBoundFunction(self);
                     }
@@ -539,6 +540,29 @@ define([
         } else {
             this.model = options.model;
         }
+    }
+
+    function _setCalculated (options) {
+        var self = this;
+
+        if (!options) {
+            return;
+        }
+
+        _.each(options.proxies, function(value) {
+
+            // Add this model where only the property is given
+            _.each(value, function(direction) {
+                if (1 === direction.length) {
+                    direction.push(self.model);
+                }
+            });
+
+            console.log(value);
+            new ProxyProperty()
+                .from(value.from[0], value.from[1])
+                .to(value.to[0], value.to[1]);
+        });
     }
 
     function _setBoundEventListeners (options) {
