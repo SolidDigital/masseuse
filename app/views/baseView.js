@@ -558,7 +558,6 @@ define([
                 }
             });
 
-            console.log(value);
             new ProxyProperty()
                 .from(value.from[0], value.from[1])
                 .to(value.to[0], value.to[1]);

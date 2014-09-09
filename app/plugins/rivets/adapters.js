@@ -15,9 +15,7 @@ define(['jquery', 'rivets', 'backbone'],
                             callback(obj.get(keypath));
                         });
                     } else if (model instanceof Backbone.Model) {
-                        console.log('keypath', keypath);
                         model.on('all', function() {
-                            console.log(arguments);
                         });
                         model.on('change:' + keypath, function () {
                             // TODO: make this more efficient / specific

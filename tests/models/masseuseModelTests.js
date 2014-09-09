@@ -176,6 +176,34 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'backbone', 'masseu
                     nestedModel = new Model();
                     modelInstance.set('nested', nestedModel);
                 });
+                // TODO: test for setting nested model with an object and not string key
+                it('changing a value on a nested model should trigger change events for each property changed and a generic change event on each model',
+                    function() {
+                        var parent = new Model(),
+                            child = new Model(),
+                            parentSpy = sinon.spy(),
+                            childSpy = sinon.spy();
+
+                        parent.set('a.b', child);
+
+                        child.on('all', childSpy);
+                        parent.on('all', parentSpy);
+
+                        child.set('c.d', true);
+
+                        childSpy.callCount.should.equal(3);
+                        childSpy.getCall(0).args[0].should.equal('change:c.d');
+                        childSpy.getCall(1).args[0].should.equal('change:c');
+                        childSpy.getCall(2).args[0].should.equal('change');
+
+                        parentSpy.callCount.should.equal(5);
+                        parentSpy.getCall(0).args[0].should.equal('change:a.b.c.d');
+                        parentSpy.getCall(1).args[0].should.equal('change:a.b.c');
+                        parentSpy.getCall(2).args[0].should.equal('change:a.b');
+                        parentSpy.getCall(3).args[0].should.equal('change:a');
+                        parentSpy.getCall(4).args[0].should.equal('change');
+
+                    });
                 it('changing a value on a nested model should trigger a change event on the parent model',
                     function (done) {
                         modelInstance.on('change:test', done.bind(null, undefined));

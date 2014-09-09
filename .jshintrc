@@ -20,7 +20,7 @@
     "strict" : true,
     "undef" : true,
     "unused" : true,
-    "maxlen" : 121,
+    "maxlen" : 242,
     "newcap" : false,
     "trailing" : true,
     "indent" : 4,

@@ -72,22 +72,18 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
 
 
         function listenToNestedModels(obj, parentModel, depth) {
-            console.log('nested', obj);
             if (depth > maxRecursionDepth) {
                 return;
             }
             if (typeof obj == 'object') {
                 _.each(obj, function(value, property) {
                     if (value instanceof Backbone.Model) {
-                        console.log('setting up', 'change:' + property);
                         value.on('all', function(event, model, current, options) {
-                            console.log(event);
                             if (/^change:/.test(event)) {
                                 parentModel.trigger('change:' + property + '.' + event.replace('change:',''), model, current, options);
                             }
                         });
                         parentModel.listenTo(value, 'change:' + property, function() {
-                            console.log('changed: ' + property);
                         });
                     } else if (typeof value == 'object') {
                         listenToNestedModels(value, parentModel, ++depth);
@@ -115,7 +111,8 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                 wholeObj,
                 originalKeyArray,
                 originallySilent,
-                fireNestedEvents = false;
+                fireNestedEvents = false,
+                triggerKey;
 
             this.computedCallbacks = this.computedCallbacks || {};
             if (key === null) {
@@ -161,15 +158,29 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                 // change
                 //
                 // a >
-                // 
+                //
                 if (val instanceof Backbone.Model) {
-                    self.listenTo(val, 'all', function(event, model, current, options) {
-                        console.log('=========> ', arguments);
-                        var keyPath = _.compact(event.split('change:'));
-                        console.log('kp', keyPath);
-                        if (keyPath.length) {
-                            console.log('triggering::::', 'change:' + key + '.' + keyPath[0]);
-                            self.trigger('change');
+
+                    triggerKey = key;
+
+                    self.listenTo(val, 'all', function(event, model) {
+                        var change = 'change:',
+                            keyPath,
+                            suffix;
+
+                        // TODO: cleanup 2 indexOf checks
+                        if (0 === event.indexOf(change)) {
+                            keyPath = event.slice(change.length);
+                            suffix = '';
+
+                            if (_.isString(triggerKey)) {
+                                if (keyPath) {
+                                    suffix = '.' + keyPath;
+                                }
+                                self.trigger('change:' + triggerKey + suffix, model);
+                            }
+                        } else if (0 === event.indexOf('change')) {
+                            _fireChangeEvents.call(self, triggerKey.split('.'));
                         }
                     });
                 }
@@ -241,6 +252,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                 this.trigger('change:' + keyPath, this, this.get(keyPath));
                 keyArray.pop();
             }
+            this.trigger('change', this, this.get(keyPath));
         }
 
         /**
