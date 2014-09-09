@@ -57,6 +57,7 @@
         './views/lifeCycleTests',
         './views/viewContextTests',
         './models/masseuseModelTests',
+        './models/nestedMasseuseModelTests',
         './models/computedPropertyTests',
         './models/proxyPropertyTests',
         './models/observerPropertyTests',
