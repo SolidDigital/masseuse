@@ -206,7 +206,7 @@ define(['underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'backbone', 'masseu
                     });
                 it('changing a value on a nested model should trigger a change event on the parent model',
                     function (done) {
-                        modelInstance.on('change:test', done.bind(null, undefined));
+                        modelInstance.on('change:nested.test', done.bind(null, undefined));
                         nestedModel.set('test', 'test');
 
                     });
