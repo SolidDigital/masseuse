@@ -33,6 +33,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
             unset : unset,
             bindComputed : bindComputed,
             bindProxy : bindProxy,
+            bindNestedModel : bindNestedModel,
             bindObserver : bindObserver,
             getListenableValues : getListenableValues
         });
@@ -92,6 +93,17 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
             }
         }
 
+        function bindNestedModel(childModel, parentModel, property) {
+            if (childModel instanceof Backbone.Model) {
+                childModel.on('all', function(event, model, current, options) {
+                    if (/^change:/.test(event)) {
+                        parentModel.trigger('change:' + property + '.' + event.replace('change:',''), model, current, options);
+                    }
+                });
+                parentModel.listenTo(childModel, 'change:' + property, function() {
+                });
+            }
+        }
         /**
          * @function
          * @memberof masseuse/MasseuseModel#
@@ -111,8 +123,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                 wholeObj,
                 originalKeyArray,
                 originallySilent,
-                fireNestedEvents = false,
-                triggerKey;
+                fireNestedEvents = false;
 
             this.computedCallbacks = this.computedCallbacks || {};
             if (key === null) {
@@ -120,6 +131,8 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
             } else if (typeof key == 'object') {
                 attrs = key;
                 options = val;
+
+                attachNestedModels.call(key);
 
                 _.each(key, function (attrValue, attrKey) {
                     if (attrValue instanceof ComputedProperty) {
@@ -132,11 +145,8 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                             });
                         }
                         delete attrs[attrKey];
-                    } else if (attrValue instanceof ObserverProperty) {
-                        self.bindObserver(attrKey, attrValue);
-                        delete attrs[attrKey];
                     } else if (attrValue instanceof Backbone.Model) {
-                        self.listenTo(attrValue, 'change', self.trigger.bind(self, 'change'));
+                        self.bindNestedModel(attrValue, self, attrKey);
                     } else {
                         listenToNestedModels(attrValue, self, 0);
                         if (self.computedCallbacks[attrKey]) {
@@ -160,29 +170,7 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
                 // a >
                 //
                 if (val instanceof Backbone.Model) {
-
-                    triggerKey = key;
-
-                    self.listenTo(val, 'all', function(event, model) {
-                        var change = 'change:',
-                            keyPath,
-                            suffix;
-
-                        // TODO: cleanup 2 indexOf checks
-                        if (0 === event.indexOf(change)) {
-                            keyPath = event.slice(change.length);
-                            suffix = '';
-
-                            if (_.isString(triggerKey)) {
-                                if (keyPath) {
-                                    suffix = '.' + keyPath;
-                                }
-                                self.trigger('change:' + triggerKey + suffix, model);
-                            }
-                        } else if (0 === event.indexOf('change')) {
-                            _fireChangeEvents.call(self, triggerKey.split('.'));
-                        }
-                    });
+                    attachModel.call(this, key, val);
                 }
                 if (_.isString(key) && key.indexOf('.') > 0) {
                     originalKeyArray = key.split('.');
@@ -346,6 +334,47 @@ define(['backbone', 'jquery', './computedProperty', './proxyProperty', './observ
             });
 
             return args;
+        }
+
+        function attachNestedModels(obj, keypath) {
+            var self = this;
+
+            keypath = keypath || '';
+
+            _.forEach(obj, function(val, key) {
+                if (val instanceof Backbone.Model) {
+                    attachModel.call(self, keypath + key, val);
+                }
+            });
+        }
+
+        /**
+         * Sets up listeners for a nested model to trigger events on the parent model.
+         * The key should be the trigger key should be the full keypath.
+         */
+        function attachModel(triggerKey, val) {
+            var self = this;
+
+            self.listenTo(val, 'all', function(event, model) {
+                var change = 'change:',
+                    keyPath,
+                    suffix;
+
+                // TODO: cleanup 2 indexOf checks
+                if (0 === event.indexOf(change)) {
+                    keyPath = event.slice(change.length);
+                    suffix = '';
+
+                    if (_.isString(triggerKey)) {
+                        if (keyPath) {
+                            suffix = '.' + keyPath;
+                        }
+                        self.trigger('change:' + triggerKey + suffix, model);
+                    }
+                } else if (0 === event.indexOf('change')) {
+                    _fireChangeEvents.call(self, triggerKey.split('.'));
+                }
+            });
         }
 
         /**
