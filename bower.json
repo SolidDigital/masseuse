@@ -5,7 +5,7 @@
     "jquery": "2.1.1",
     "requirejs": "2.1.14",
     "lodash-amd": "2.4.1",
-    "rivets": "0.6.9"
+    "rivets": "0.7.0-rc2"
 
   },
   "devDependencies": {
