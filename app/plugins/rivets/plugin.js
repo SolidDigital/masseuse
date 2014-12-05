@@ -53,7 +53,8 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
                 rivetsAdapters : _.extend.apply(_, rivetsOptions.rivetsAdapters),
                 rivetsBinders : _.extend.apply(_, rivetsOptions.rivetsBinders),
                 childViewBinders : rivetsOptions.childViewBinders,
-                skipRoot : rivetsOptions.skipRoot || options._rivetsSkipRoot
+                skipRoot : rivetsOptions.skipRoot || options._rivetsSkipRoot,
+                bindings : rivetsOptions.bindings || {}
             };
 
             this.listenTo(this, 'afterTemplatingDone', function() {
