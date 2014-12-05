@@ -8,7 +8,7 @@ define(['jquery', 'rivets', 'backbone'],
         return {
             ':' :  {
 
-                subscribe : function (model, keypath, callback) {
+                observe : function (model, keypath, callback) {
                     keypath = keypath.replace(keySeparator,'.');
                     if (model instanceof Backbone.Collection) {
                         model.on('add remove reset change', function (obj, keypath) {
@@ -22,7 +22,7 @@ define(['jquery', 'rivets', 'backbone'],
                     }
                 },
 
-                unsubscribe : function (model, keypath) {
+                unobserve : function (model, keypath) {
                     if (typeof (model) == 'undefined') {
                         return;
                     }
@@ -33,14 +33,14 @@ define(['jquery', 'rivets', 'backbone'],
                     }
                 },
 
-                read : function (model, keypath) {
+                get : function (model, keypath) {
                     if(model instanceof Backbone.Collection) {
                         return model.models;
                     }
                     return model.get(keypath.replace(keySeparator,'.'));
                 },
 
-                publish : function (model, keypath, value) {
+                set : function (model, keypath, value) {
                     if (model instanceof Backbone.Model) {
                         model.set(keypath.replace(keySeparator,'.'), value);
                     }
