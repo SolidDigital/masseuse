@@ -393,5 +393,42 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai',
                     });
                 });
             });
+
+            describe('arbitrary objects through the views.rivetsConfig.bindings object', function() {
+                var rivetView,
+                    resources = {
+                        gimmePizza : 'I love pizza.'
+                    },
+                    template = '<div id="' + riveted + '">{{resources.gimmePizza}}</div>',
+                    options = {
+                        el : '#' + testDom,
+                        template : template,
+                        rivetsConfig : {
+                            bindings : {
+                                resources : resources
+                            }
+                        },
+                        modelData : {
+                            title : 'There it is.'
+                        }
+                    };
+
+                afterEach(function() {
+                    if (rivetView) {
+                        rivetView.remove();
+                    }
+                });
+
+                beforeEach(function() {
+                    rivetView = new RivetView(options);
+                });
+
+                it('additional bindings are present in the test dom.', function(done) {
+                    rivetView.start().done(function() {
+                        $('#' + riveted).html().should.equal('I love pizza.');
+                        done();
+                    });
+                });
+            });
         });
     });
