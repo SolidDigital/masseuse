@@ -10,15 +10,6 @@ define(['jquery'], function ($) {
         }
     };
 
-    function callback(el, evt) {
-        // listen for the enter key or Blur to save to the model.
-        if(evt.keyCode === 13 || evt.type === 'blur') {
-            this.view.adapters[':'].set(
-                this.model,this.keypath.substring(this.keypath.indexOf(':')+1), el.textContent);
-        }
-
-    }
-
     function addClass(el, value) {
         if (el.addedClass) {
             $(el).removeClass(el.addedClass);

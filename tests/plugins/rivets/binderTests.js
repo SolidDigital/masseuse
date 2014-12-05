@@ -7,10 +7,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
             $body = $('body'),
             $testDom,
             RivetView = masseuse.plugins.rivets.RivetsView,
-            rivetView,
-            options,
-            templateWithAttribute,
-            templateWithoutAttribute;
+            rivetView;
 
         chai.use(sinonChai);
         mocha.setup('bdd');
@@ -33,6 +30,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                     describe('passing data in', function() {
                         var TestView,
                             options;
+
                         beforeEach(function() {
                             TestView = RivetView.extend({
                                 defaultOptions : {
