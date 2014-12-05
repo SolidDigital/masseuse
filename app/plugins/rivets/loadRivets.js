@@ -12,22 +12,10 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
                     // https://github.com/mikeric/rivets/pull/275#issuecomment-36464555
                     // http://jsfiddle.net/t2sxB/2/
                     this.call(binding.observer.target, ev, binding.view.models);
-                }
+                },
+                templateDelimiters : optionsForRivets.rivetsDelimiters
             });
-            // Rivets works off of listening to the change event, which doesn't happen on inputs until loss of focus
-            // Work around that if desired
-            if (optionsForRivets.rivetsInstaUpdate) {
-                this.$('input').on('keypress paste textInput input',
-                    function () {
-                        $(this).trigger('change');
-                    });
 
-                this.listenTo(this, 'onRemove', function() {
-                    this.$('input').off('keypress paste textInput input');
-                });
-            }
-
-            Rivets.config.templateDelimiters = optionsForRivets.rivetsDelimiters;
             _.extend(Rivets.components, optionsForRivets.rivetsComponents);
             _.extend(Rivets.formatters, optionsForRivets.rivetsFormatters);
             _.extend(Rivets.adapters, optionsForRivets.rivetsAdapters);

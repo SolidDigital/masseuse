@@ -35,17 +35,12 @@ define(['underscore', './loadRivets', './binders', './formatters', './adapters']
                 [{}, defaultBinders].concat(
                     rivetsOptions.binders || options.rivetsBinders || options.rivetBinders);
 
-            if (undefined !== rivetsOptions.rivetsInstaUpdate && undefined === rivetsOptions.instaUpdate) {
-                rivetsOptions.instaUpdate = options.rivetsInstaUpdate;
-            }
-
             rivetsOptions.rivetsDelimiters =
                 rivetsOptions.delimiters || options.rivetsDelimiters || options.rivetDelimiters;
             rivetsOptions.rivetsPrefix =
                 rivetsOptions.prefix || options.rivetsPrefix || options.rivetPrefix;
 
             rivetsOptions = {
-                rivetsInstaUpdate : rivetsOptions.instaUpdate,
                 rivetsDelimiters : rivetsOptions.rivetsDelimiters || ['{{', '}}'],
                 rivetsPrefix : options.rivetsPrefix || 'data-rv',
                 rivetsComponents : _.extend.apply(_, rivetsOptions.rivetsComponents),
