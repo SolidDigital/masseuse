@@ -39,22 +39,18 @@ define(['jquery', 'rivets', 'backbone', 'underscore'],
 
         function _getBoundViews(optionsForRivets) {
             var boundViews = [],
-                self = this;
-
-            if (optionsForRivets.skipRoot) {
-                _.each(this.$el.contents(), function(element) {
-                    boundViews.push(Rivets.bind($(element), {
-                        model : self.model,
-                        view : self,
-                        collection: self.collection
-                    }));
-                });
-            } else {
-                boundViews.push(Rivets.bind(this.$el, {
+                bindings = _.extend({
                     model : this.model,
                     view : this,
                     collection: this.collection
-                }));
+                }, optionsForRivets.bindings);
+
+            if (optionsForRivets.skipRoot) {
+                _.each(this.$el.contents(), function(element) {
+                    boundViews.push(Rivets.bind($(element), bindings));
+                });
+            } else {
+                boundViews.push(Rivets.bind(this.$el, bindings));
             }
             return boundViews;
         }
