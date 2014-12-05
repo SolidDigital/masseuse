@@ -22,10 +22,18 @@
             sinonStub : {
                 deps : ['sinonCall'],
                 exports : 'sinonStub'
+            },
+            sightglass : {
+                exports : 'sightglass'
+            },
+            rivets : {
+                deps : ['jquery', 'sightglass'],
+                exports : 'rivets'
             }
         },
         paths : {
             jquery : '../app/vendor/jquery/dist/jquery',
+            sightglass : '../app/vendor/sightglass/index',
             rivets : '../app/vendor/rivets/dist/rivets',
             backbone : '../app/vendor/backbone-amd/backbone',
             text : '../app/vendor/requirejs-text/text',

@@ -1,23 +1,34 @@
-# Rivets.KeypathParser
-# --------------------
+# Rivets.TypeParser
+# ---------------------
 
-# Parser and tokenizer for keypaths in binding declarations.
-class Rivets.KeypathParser
-  # Parses the keypath and returns a set of adapter interface + path tokens.
-  @parse: (keypath, interfaces, root) ->
-    tokens = []
-    current = {interface: root, path: ''}
+# Parser and tokenizer for getting the type and value of a primitive or keypath.
+class Rivets.TypeParser
+  @types:
+    primitive: 0
+    keypath: 1
 
-    for index in [0...keypath.length] by 1
-      char = keypath.charAt index
-      if char in interfaces
-        tokens.push current
-        current = {interface: char, path: ''}
+  @parse: (string) ->
+      if /^'.*'$|^".*"$/.test string
+        type: @types.primitive
+        value: string.slice 1, -1
+      else if string is 'true'
+        type: @types.primitive
+        value: true
+      else if string is 'false'
+        type: @types.primitive
+        value: false
+      else if string is 'null'
+        type: @types.primitive
+        value: null
+      else if string is 'undefined'
+        type: @types.primitive
+        value: undefined
+      else if isNaN(Number(string)) is false
+        type: @types.primitive
+        value: Number string
       else
-        current.path += char
-
-    tokens.push current
-    tokens
+        type: @types.keypath
+        value: string
 
 # Rivets.TextTemplateParser
 # -------------------------

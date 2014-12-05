@@ -1,40 +1,44 @@
 # Basic set of core binders that are included with Rivets.js.
 
 # Sets the element's text value.
-Rivets.binders.text = (el, value) ->
+Rivets.public.binders.text = (el, value) ->
   if el.textContent?
     el.textContent = if value? then value else ''
   else
     el.innerText = if value? then value else ''
 
 # Sets the element's HTML content.
-Rivets.binders.html = (el, value) ->
+Rivets.public.binders.html = (el, value) ->
   el.innerHTML = if value? then value else ''
 
 # Shows the element when value is true.
-Rivets.binders.show = (el, value) ->
+Rivets.public.binders.show = (el, value) ->
   el.style.display = if value then '' else 'none'
 
 # Hides the element when value is true (negated version of `show` binder).
-Rivets.binders.hide = (el, value) ->
+Rivets.public.binders.hide = (el, value) ->
   el.style.display = if value then 'none' else ''
 
 # Enables the element when value is true.
-Rivets.binders.enabled = (el, value) ->
+Rivets.public.binders.enabled = (el, value) ->
   el.disabled = !value
 
 # Disables the element when value is true (negated version of `enabled` binder).
-Rivets.binders.disabled = (el, value) ->
+Rivets.public.binders.disabled = (el, value) ->
   el.disabled = !!value
 
 # Checks a checkbox or radio input when the value is true. Also sets the model
 # property when the input is checked or unchecked (two-way binder).
-Rivets.binders.checked =
+Rivets.public.binders.checked =
   publishes: true
+  priority: 2000
+
   bind: (el) ->
     Rivets.Util.bindEvent el, 'change', @publish
+
   unbind: (el) ->
     Rivets.Util.unbindEvent el, 'change', @publish
+
   routine: (el, value) ->
     if el.type is 'radio'
       el.checked = el.value?.toString() is value?.toString()
@@ -44,12 +48,16 @@ Rivets.binders.checked =
 # Unchecks a checkbox or radio input when the value is true (negated version of
 # `checked` binder). Also sets the model property when the input is checked or
 # unchecked (two-way binder).
-Rivets.binders.unchecked =
+Rivets.public.binders.unchecked =
   publishes: true
+  priority: 2000
+
   bind: (el) ->
     Rivets.Util.bindEvent el, 'change', @publish
+
   unbind: (el) ->
     Rivets.Util.unbindEvent el, 'change', @publish
+
   routine: (el, value) ->
     if el.type is 'radio'
       el.checked = el.value?.toString() isnt value?.toString()
@@ -58,12 +66,17 @@ Rivets.binders.unchecked =
 
 # Sets the element's value. Also sets the model property when the input changes
 # (two-way binder).
-Rivets.binders.value =
+Rivets.public.binders.value =
   publishes: true
+  priority: 2000
+
   bind: (el) ->
-    Rivets.Util.bindEvent el, 'change', @publish
+    @event = if el.tagName is 'SELECT' then 'change' else 'input'
+    Rivets.Util.bindEvent el, @event, @publish
+
   unbind: (el) ->
-    Rivets.Util.unbindEvent el, 'change', @publish
+    Rivets.Util.unbindEvent el, @event, @publish
+
   routine: (el, value) ->
     if window.jQuery?
       el = jQuery el
@@ -77,15 +90,17 @@ Rivets.binders.value =
         el.value = if value? then value else ''
 
 # Inserts and binds the element and it's child nodes into the DOM when true.
-Rivets.binders.if =
+Rivets.public.binders.if =
   block: true
+  priority: 3000
 
   bind: (el) ->
     unless @marker?
-      attr = [@view.config.prefix, @type].join('-').replace '--', '-'
+      attr = [@view.prefix, @type].join('-').replace '--', '-'
       declaration = el.getAttribute attr
 
       @marker = document.createComment " rivets: #{@type} #{declaration} "
+      @bound = false
 
       el.removeAttribute attr
       el.parentNode.insertBefore @marker, el
@@ -95,47 +110,44 @@ Rivets.binders.if =
     @nested?.unbind()
 
   routine: (el, value) ->
-    if !!value is not @nested?
+    if !!value is not @bound
       if value
         models = {}
         models[key] = model for key, model of @view.models
 
-        options =
-          binders: @view.options.binders
-          formatters: @view.options.formatters
-          adapters: @view.options.adapters
-          config: @view.options.config
-
-        (@nested = new Rivets.View(el, models, options)).bind()
+        (@nested or= new Rivets.View(el, models, @view.options())).bind()
         @marker.parentNode.insertBefore el, @marker.nextSibling
+        @bound = true
       else
         el.parentNode.removeChild el
         @nested.unbind()
-        delete @nested
+        @bound = false
 
   update: (models) ->
     @nested?.update models
 
 # Removes and unbinds the element and it's child nodes into the DOM when true
 # (negated version of `if` binder).
-Rivets.binders.unless =
+Rivets.public.binders.unless =
   block: true
+  priority: 3000
 
   bind: (el) ->
-    Rivets.binders.if.bind.call @, el
+    Rivets.public.binders.if.bind.call @, el
 
   unbind: ->
-    Rivets.binders.if.unbind.call @
+    Rivets.public.binders.if.unbind.call @
 
   routine: (el, value) ->
-    Rivets.binders.if.routine.call @, el, not value
+    Rivets.public.binders.if.routine.call @, el, not value
 
   update: (models) ->
-    Rivets.binders.if.update.call @, models
+    Rivets.public.binders.if.update.call @, models
 
 # Binds an event handler on the element.
-Rivets.binders['on-*'] =
+Rivets.public.binders['on-*'] =
   function: true
+  priority: 1000
 
   unbind: (el) ->
     Rivets.Util.unbindEvent el, @args[0], @handler if @handler
@@ -145,12 +157,13 @@ Rivets.binders['on-*'] =
     Rivets.Util.bindEvent el, @args[0], @handler = @eventHandler value
 
 # Appends bound instances of the element in place for each item in the array.
-Rivets.binders['each-*'] =
+Rivets.public.binders['each-*'] =
   block: true
+  priority: 3000
 
   bind: (el) ->
     unless @marker?
-      attr = [@view.config.prefix, @type].join('-').replace '--', '-'
+      attr = [@view.prefix, @type].join('-').replace '--', '-'
       @marker = document.createComment " rivets: #{@type} "
       @iterated = []
 
@@ -188,14 +201,8 @@ Rivets.binders['each-*'] =
         else
           @marker
 
-        options =
-          binders: @view.options.binders
-          formatters: @view.options.formatters
-          adapters: @view.options.adapters
-          config: {}
-
-        options.config[k] = v for k, v of @view.options.config
-        options.config.preloadData = true
+        options = @view.options()
+        options.preloadData = true
 
         template = el.cloneNode true
         view = new Rivets.View(template, data, options)
@@ -220,7 +227,7 @@ Rivets.binders['each-*'] =
     view.update data for view in @iterated
 
 # Adds or removes the class from the element when value is true or false.
-Rivets.binders['class-*'] = (el, value) ->
+Rivets.public.binders['class-*'] = (el, value) ->
   elClass = " #{el.className} "
 
   if !value is (elClass.indexOf(" #{@args[0]} ") isnt -1)
@@ -231,7 +238,7 @@ Rivets.binders['class-*'] = (el, value) ->
 
 # Sets the attribute on the element. If no binder above is matched it will fall
 # back to using this binder.
-Rivets.binders['*'] = (el, value) ->
+Rivets.public.binders['*'] = (el, value) ->
   if value?
     el.setAttribute @type, value
   else
