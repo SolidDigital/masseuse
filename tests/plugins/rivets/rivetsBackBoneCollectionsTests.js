@@ -177,7 +177,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'backbone', 'sinonChai
                             var $riveted = $('#' + riveted);
                             $riveted.children().first().val().should.equal('George Harrison');
                             $riveted.children().first().val('Johnathan');
-                            $riveted.children().first().change();
+                            $riveted.children().first().trigger('input');
 
                             this.collection.first().get('name').should.equal('Johnathan');
                             done();
