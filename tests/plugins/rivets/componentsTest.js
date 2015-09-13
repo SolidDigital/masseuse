@@ -20,7 +20,7 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
                 $body.append($testDom);
                 template = '<ul>' +
                                 '<li data-rv-each-item="model:items">' +
-                                    '<data-rv-list datum="item"></data-rv-list>' +
+                                    '<list model="item"></list>' +
                                 '</li>' +
                             '</ul>';
                 options = {
@@ -58,20 +58,28 @@ define(['jquery', 'underscore', 'chai', 'mocha', 'sinon', 'sinonChai', 'masseuse
 
             it('simple component', function (done) {
                 rivetView = new RivetView(_.extend({}, options, {
-                    rivetsComponents : {
-                        list : {
-                            attributes : [],
-                            build : function () {
-                                return $('<p data-rv-text="datum.top"></p>')[0];
+                    rivetsConfig : {
+                        components : [
+                            {
+                                list : {
+                                    initialize : function(el, dataAttributes) {
+                                        return {
+                                            model : dataAttributes.model
+                                        };
+                                    },
+                                    template : function () {
+                                        return '<p data-rv-text="model.top"></p>';
+                                    }
+                                }
                             }
-                        }
+                        ]
                     }
                 }));
                 rivetView
                     .start()
                     .done(function() {
-                        $testDom.find('ul > li > p').length.should.equal(3);
-                        $testDom.find('ul li:eq(1) p').html().should.equal('2');
+                        $testDom.find('ul > li > list').length.should.equal(3);
+                        $testDom.find('ul li:eq(1) list p').html().should.equal('2');
                         done();
                     });
             });
